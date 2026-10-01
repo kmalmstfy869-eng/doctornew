@@ -1,0 +1,166 @@
+/* Public site visual system — layered on existing home CSS */
+
+.site-header {
+    backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 var(--border);
+}
+
+.site-logo-icon {
+    border-radius: var(--dd-radius, 12px);
+    box-shadow: 0 8px 18px rgba(18, 100, 200, 0.18);
+}
+
+.main-navigation a {
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+.header-join-button {
+    box-shadow: none;
+    font-weight: 800;
+}
+
+.home-hero {
+    min-height: 0;
+    background:
+        radial-gradient(1200px 420px at 10% -10%, rgba(90, 170, 235, 0.28), transparent 55%),
+        linear-gradient(160deg, #07233f 0%, #0d4f8c 58%, #1b78c7 100%);
+}
+
+.home-hero-content h2 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.home-hero-content > p {
+    line-height: 1.9;
+    font-size: 15px;
+}
+
+.home-search-form {
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.home-search-button {
+    background: #1a8a6a;
+}
+
+.home-section,
+.doctors-section {
+    padding: 56px 0;
+}
+
+.home-section-head h2 {
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 800;
+}
+
+.home-all-link {
+    box-shadow: none;
+}
+
+.specialty-card,
+.doctor-card,
+.job-card {
+    border-radius: var(--dd-radius-lg, 16px);
+    box-shadow: none;
+}
+
+.specialty-card:hover,
+.doctor-card:hover,
+.job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--dd-shadow);
+}
+
+.specialty-card h3 {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.specialty-card p {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.specialty-number,
+.doctor-count {
+    font-size: 12px;
+}
+
+.doctor-card {
+    min-height: 0;
+}
+
+.doctor-cover {
+    height: 96px;
+}
+
+.subscription-badge {
+    font-size: 11px;
+    height: 30px;
+}
+
+.doctors-search-panel,
+.specialties-search-box {
+    border: 1px solid var(--border);
+    background: var(--card);
+    box-shadow: var(--dd-shadow-sm);
+}
+
+.site-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-description {
+    line-height: 1.85;
+}
+
+body.dark .home-hero {
+    background:
+        radial-gradient(900px 360px at 90% 0%, rgba(56, 140, 210, 0.18), transparent 50%),
+        linear-gradient(160deg, #041018 0%, #0a2438 60%, #12324c 100%);
+}
+
+body.dark .header-join-button {
+    color: #fff;
+}
+
+@media (max-width: 800px) {
+    .header-login-button,
+    .header-join-button,
+    .header-user {
+        display: none;
+    }
+
+    .site-header {
+        height: auto;
+        min-height: 68px;
+        padding: 8px 0;
+    }
+
+    .site-logo-text p {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .top-bar {
+        display: none;
+    }
+
+    .home-section,
+    .doctors-section {
+        padding: 36px 0;
+    }
+
+    .specialty-card {
+        min-height: 0;
+        padding: 16px;
+    }
+
+    .home-floating-card {
+        display: none;
+    }
+}

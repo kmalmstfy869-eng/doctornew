@@ -1,0 +1,32 @@
+/* Readability layer for doctor dashboard: subscription.
+   Generated from subscription.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.sub-label { font-size: 13.5px; }
+.sub-status { font-size: 13px; }
+.sub-description { font-size: 13.5px; }
+.sub-progress-head { font-size: 13.5px; }
+.sub-feature { font-size: 13px; }
+.expire-label { font-size: 13.5px; }
+.upgrade-btn { font-size: 13.5px; }
+@media (max-width: 700px) {
+    .sub-description { font-size: 13px; }
+    .sub-progress-head { font-size: 12.5px; }
+    .sub-feature { font-size: 12.5px; }
+}
+@media (max-width: 450px) {
+    .sub-label { font-size: 12.5px; }
+    .sub-status { font-size: 12px; }
+    .sub-description { font-size: 12.5px; }
+    .sub-progress-head { font-size: 12px; }
+    .sub-feature { font-size: 12px; }
+    .expire-label { font-size: 12.5px; }
+    .upgrade-btn { font-size: 13px; }
+}
+@media (max-width: 350px) {
+    .sub-description { font-size: 12px; }
+    .sub-feature { font-size: 12px; }
+    .expire-label { font-size: 12px; }
+    .upgrade-btn { font-size: 12.5px; }
+}

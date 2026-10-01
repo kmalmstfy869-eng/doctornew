@@ -1,0 +1,2499 @@
+/* =========================================================
+   MEDICAL REVIEWS SYSTEM
+   Shared CSS for:
+   1) Dashboard Latest Reviews
+   2) Admin Reviews
+   3) Doctor Reviews
+
+   Responsive / RTL / Dark Mode
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL BOX SIZING
+========================================================= */
+
+.doctor-reviews-page,
+.doctor-reviews-page *,
+.doctor-latest-reviews,
+.doctor-latest-reviews *,
+.bottom-grid > .doctor-latest-reviews {
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   DASHBOARD BOTTOM GRID
+========================================================= */
+
+.bottom-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 20px;
+
+    width: 100%;
+    min-width: 0;
+
+    align-items: stretch;
+}
+
+
+.bottom-grid > * {
+    min-width: 0;
+    max-width: 100%;
+}
+
+
+.bottom-grid > .doctor-latest-reviews {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   DASHBOARD LATEST REVIEWS
+========================================================= */
+
+.doctor-latest-reviews {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
+
+.doctor-latest-reviews .doctor-reviews-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-bottom: 18px;
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+
+.doctor-latest-reviews .reviews-header-content {
+    min-width: 0;
+    flex: 1;
+}
+
+
+.doctor-latest-reviews .doctor-reviews-header h3 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 17px;
+    font-weight: 800;
+
+    line-height: 1.5;
+}
+
+
+.doctor-latest-reviews .doctor-reviews-header p {
+    margin: 4px 0 0;
+
+    color: #8a95a6;
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   VIEW ALL
+========================================================= */
+
+.doctor-latest-reviews .reviews-card-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    flex-shrink: 0;
+
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition: all .2s ease;
+}
+
+
+.doctor-latest-reviews .reviews-card-link:hover {
+    color: #1d4ed8;
+}
+
+
+.doctor-latest-reviews .reviews-card-link i {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   DASHBOARD REVIEWS LIST
+========================================================= */
+
+.doctor-reviews-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   DASHBOARD REVIEW ITEM
+========================================================= */
+
+.doctor-review-item {
+    display: grid;
+
+    grid-template-columns:
+        minmax(150px, 0.75fr)
+        minmax(0, 2fr)
+        minmax(90px, 100px);
+
+    align-items: stretch;
+
+    gap: 18px;
+
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    padding: 14px;
+
+    border: 1px solid #e8edf4;
+    border-radius: 13px;
+
+    background: #fbfcfe;
+
+    overflow: hidden;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.doctor-review-item:hover {
+    background: #ffffff;
+
+    border-color: #cbdcf7;
+
+    box-shadow:
+        0 6px 18px rgba(37, 99, 235, .05);
+}
+
+
+/* =========================================================
+   DASHBOARD PATIENT
+========================================================= */
+
+.doctor-review-patient {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+
+.doctor-review-avatar {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+.doctor-review-patient-info {
+    min-width: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+.doctor-review-patient-info strong {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: #273449;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.doctor-review-patient-info span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #8a95a6;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DASHBOARD CONTENT
+========================================================= */
+
+.doctor-review-content {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DOCTOR + STARS
+========================================================= */
+
+.doctor-review-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+.doctor-review-doctor {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+.doctor-review-doctor strong {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: #273449;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.doctor-review-doctor span {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #8a95a6;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   DASHBOARD STARS
+========================================================= */
+
+.doctor-review-stars {
+    display: flex;
+    align-items: center;
+
+    gap: 2px;
+
+    flex-shrink: 0;
+
+    direction: ltr;
+
+    white-space: nowrap;
+}
+
+
+.doctor-review-stars i {
+    font-size: 11px;
+}
+
+
+.doctor-star-filled {
+    color: #f59e0b;
+}
+
+
+.doctor-star-empty {
+    color: #d7dee8;
+}
+
+
+/* =========================================================
+   DASHBOARD COMMENT
+========================================================= */
+
+.doctor-review-comment-area {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    margin-top: 9px;
+    padding: 8px 9px;
+
+    border: 1px solid #edf1f6;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    overflow: hidden;
+}
+
+
+.doctor-review-comment-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #98a2b3;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+.doctor-review-comment-text,
+.doctor-review-comment-empty {
+    display: -webkit-box;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #475569;
+
+    font-size: 10px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    white-space: normal;
+
+    -webkit-box-orient: vertical;
+}
+
+
+.doctor-review-comment-empty {
+    color: #a0aabd;
+}
+
+
+/* =========================================================
+   DASHBOARD ACTIONS
+========================================================= */
+
+.doctor-review-actions {
+    width: 100%;
+    min-width: 90px;
+    max-width: 100px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 7px;
+}
+
+
+.doctor-review-delete-form {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   DASHBOARD BUTTONS
+========================================================= */
+
+.doctor-review-edit-btn,
+.doctor-review-delete-btn {
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0 8px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: all .2s ease;
+}
+
+
+.doctor-review-edit-btn {
+    background: #eff6ff;
+
+    border: 1px solid #bfdbfe;
+
+    color: #2563eb;
+}
+
+
+.doctor-review-edit-btn:hover {
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+.doctor-review-delete-btn {
+    background: #fff1f2;
+
+    border: 1px solid #fecdd3;
+
+    color: #dc2626;
+}
+
+
+.doctor-review-delete-btn:hover {
+    background: #ffe4e6;
+
+    color: #b91c1c;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY - SHARED
+========================================================= */
+
+.doctor-reviews-empty,
+.reviews-empty {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+.doctor-reviews-empty {
+    min-height: 180px;
+}
+
+
+.doctor-reviews-empty-icon,
+.reviews-empty-icon {
+    width: 56px;
+    height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+
+    border-radius: 15px;
+
+    background: #fff7ed;
+    color: #f59e0b;
+
+    font-size: 22px;
+}
+
+
+.doctor-reviews-empty p,
+.reviews-empty p {
+    margin: 0;
+
+    color: #8a95a6;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   FULL REVIEWS PAGES
+========================================================= */
+
+.doctor-reviews-page {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    direction: rtl;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.doctor-reviews-page > .doctor-reviews-header {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    margin-bottom: 22px;
+
+    padding: 20px;
+
+    border: 1px solid #e8edf4;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, .04);
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.doctor-reviews-title {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    flex: 1;
+}
+
+
+.reviews-title-icon {
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #fff7ed;
+    color: #f59e0b;
+
+    font-size: 21px;
+}
+
+
+.reviews-title-content {
+    min-width: 0;
+}
+
+
+.reviews-title-small {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+.reviews-title-content h1 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 22px;
+    font-weight: 900;
+
+    line-height: 1.4;
+}
+
+
+.reviews-title-content p {
+    margin: 4px 0 0;
+
+    color: #8a95a6;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   HEADER STATISTICS
+========================================================= */
+
+.reviews-header-stats {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    justify-content: flex-end;
+}
+
+
+.reviews-stat-item {
+    min-width: 145px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 9px 11px;
+
+    border: 1px solid #edf1f6;
+    border-radius: 11px;
+
+    background: #fbfcfe;
+}
+
+
+.reviews-stat-icon {
+    width: 34px;
+    height: 34px;
+
+    min-width: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+}
+
+
+.reviews-stat-icon.doctors {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+
+.reviews-stat-icon.rating {
+    background: #fff7ed;
+    color: #f59e0b;
+}
+
+
+.reviews-stat-info {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.reviews-stat-info span {
+    color: #8a95a6;
+
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+
+.reviews-stat-info strong {
+    margin-top: 2px;
+
+    color: #273449;
+
+    font-size: 13px;
+    font-weight: 900;
+}
+
+
+.reviews-count-badge {
+    min-height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MAIN REVIEWS CARD
+========================================================= */
+
+.doctor-reviews-page > .reviews-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    padding: 20px;
+
+    border: 1px solid #e8edf4;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 4px 18px rgba(15, 23, 42, .04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.doctor-reviews-page .reviews-card-header {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 20px;
+    padding-bottom: 17px;
+
+    border-bottom: 1px solid #edf1f6;
+}
+
+
+.doctor-reviews-page .reviews-card-header > div:first-child {
+    min-width: 0;
+    flex: 1;
+}
+
+
+.doctor-reviews-page .reviews-card-header h2 {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 16px;
+    font-weight: 900;
+}
+
+
+.doctor-reviews-page .reviews-card-header h2 i {
+    color: #f59e0b;
+
+    font-size: 14px;
+}
+
+
+.doctor-reviews-page .reviews-card-header p {
+    margin: 5px 0 0;
+
+    color: #8a95a6;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.reviews-search-form {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+}
+
+
+.reviews-search-box {
+    position: relative;
+
+    width: 260px;
+    max-width: 100%;
+
+    min-width: 0;
+}
+
+
+.reviews-search-box > i {
+    position: absolute;
+
+    right: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #94a3b8;
+
+    font-size: 12px;
+
+    pointer-events: none;
+}
+
+
+.reviews-search-box input {
+    width: 100%;
+    height: 38px;
+
+    padding:
+        0 34px
+        0 35px;
+
+    border: 1px solid #dfe6ef;
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #fbfcfe;
+
+    color: #273449;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    transition: all .2s ease;
+}
+
+
+.reviews-search-box input::placeholder {
+    color: #a0aabd;
+}
+
+
+.reviews-search-box input:focus {
+    border-color: #93b4ef;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, .07);
+}
+
+
+.reviews-search-clear {
+    position: absolute;
+
+    left: 10px;
+    top: 50%;
+
+    width: 22px;
+    height: 22px;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    color: #94a3b8;
+
+    text-decoration: none;
+}
+
+
+.reviews-search-clear:hover {
+    background: #f1f5f9;
+    color: #dc2626;
+}
+
+
+.reviews-search-button {
+    height: 38px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 0 14px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: all .2s ease;
+}
+
+
+.reviews-search-button:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   FULL PAGE REVIEWS LIST
+========================================================= */
+
+.doctor-reviews-page .reviews-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   FULL PAGE REVIEW ITEM
+========================================================= */
+
+.doctor-reviews-page .review-item {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    display: grid;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border: 1px solid #e8edf4;
+    border-radius: 13px;
+
+    background: #fbfcfe;
+
+    overflow: hidden;
+
+    transition: all .2s ease;
+}
+
+
+.doctor-reviews-page .review-item:hover {
+    background: #ffffff;
+
+    border-color: #cbdcf7;
+
+    box-shadow:
+        0 5px 16px rgba(37, 99, 235, .045);
+}
+
+
+/* =========================================================
+   ADMIN REVIEW ITEM
+========================================================= */
+
+.doctor-reviews-page .review-item:not(.doctor-review-item) {
+    grid-template-columns:
+        minmax(145px, 1.1fr)
+        minmax(145px, 1.1fr)
+        minmax(95px, .7fr)
+        minmax(200px, 2fr)
+        minmax(100px, .8fr)
+        minmax(80px, .65fr)
+        minmax(70px, .55fr);
+}
+
+
+/* =========================================================
+   DOCTOR REVIEW ITEM
+========================================================= */
+
+.doctor-reviews-page .review-item.doctor-review-item {
+    grid-template-columns:
+        minmax(150px, 1fr)
+        minmax(110px, .75fr)
+        minmax(260px, 2.3fr)
+        minmax(120px, .8fr);
+}
+
+
+/* =========================================================
+   USER / DOCTOR BLOCKS
+========================================================= */
+
+.doctor-reviews-page .review-user,
+.doctor-reviews-page .review-doctor {
+    min-width: 0;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    overflow: hidden;
+}
+
+
+.doctor-reviews-page .review-user-avatar,
+.doctor-reviews-page .review-doctor-avatar {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+}
+
+
+.doctor-reviews-page .review-user-avatar {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+
+.doctor-reviews-page .review-doctor-avatar {
+    background: #eefcf7;
+    color: #10b981;
+}
+
+
+.doctor-reviews-page .review-user-info,
+.doctor-reviews-page .review-doctor-info {
+    min-width: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+.doctor-reviews-page .review-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #98a2b3;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.doctor-reviews-page .review-user-info strong,
+.doctor-reviews-page .review-doctor-info strong {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+
+    color: #273449;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.doctor-reviews-page .review-user-info small,
+.doctor-reviews-page .review-doctor-info small {
+    display: block;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+
+    color: #94a3b8;
+
+    font-size: 8px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RATING
+========================================================= */
+
+.doctor-reviews-page .review-rating {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+.doctor-reviews-page .stars {
+    display: flex;
+    align-items: center;
+
+    gap: 2px;
+
+    direction: ltr;
+
+    white-space: nowrap;
+}
+
+
+.doctor-reviews-page .stars i {
+    font-size: 10px;
+}
+
+
+.doctor-reviews-page .stars i.active {
+    color: #f59e0b;
+}
+
+
+.doctor-reviews-page .review-rating > strong {
+    margin-top: 3px;
+
+    color: #273449;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   COMMENT
+========================================================= */
+
+.doctor-reviews-page .review-comment {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    overflow: hidden;
+}
+
+
+.doctor-reviews-page .comment-box {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    gap: 7px;
+
+    padding: 8px 9px;
+
+    border: 1px solid #edf1f6;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    overflow: hidden;
+}
+
+
+.doctor-reviews-page .comment-box > i {
+    flex-shrink: 0;
+
+    margin-top: 2px;
+
+    color: #cbd5e1;
+
+    font-size: 10px;
+}
+
+
+.doctor-reviews-page .comment-box p {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    color: #475569;
+
+    font-size: 9px;
+    line-height: 1.7;
+
+    overflow: hidden;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    white-space: normal;
+
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.doctor-reviews-page .review-date {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    overflow: hidden;
+}
+
+
+.doctor-reviews-page .review-date > i {
+    flex-shrink: 0;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #f8fafc;
+    color: #64748b;
+
+    font-size: 11px;
+}
+
+
+.doctor-reviews-page .review-date > div {
+    min-width: 0;
+}
+
+
+.doctor-reviews-page .review-date strong {
+    display: block;
+
+    color: #273449;
+
+    font-size: 9px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.doctor-reviews-page .review-status {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.doctor-reviews-page .review-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 27px;
+
+    padding: 0 8px;
+
+    border-radius: 7px;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+
+.doctor-reviews-page .review-status-badge.approved {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+
+.doctor-reviews-page .review-status-badge.rejected {
+    background: #fff1f2;
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.doctor-reviews-page .review-actions {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.doctor-reviews-page .review-actions-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    width: 100%;
+}
+
+
+.doctor-reviews-page .review-actions-buttons form {
+    margin: 0;
+    padding: 0;
+}
+
+
+.doctor-reviews-page .review-action-btn {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    border: 1px solid transparent;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all .2s ease;
+}
+
+
+.doctor-reviews-page .review-action-btn.edit {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #2563eb;
+}
+
+
+.doctor-reviews-page .review-action-btn.edit:hover {
+    background: #dbeafe;
+}
+
+
+.doctor-reviews-page .review-action-btn.delete {
+    background: #fff1f2;
+    border-color: #fecdd3;
+    color: #dc2626;
+}
+
+
+.doctor-reviews-page .review-action-btn.delete:hover {
+    background: #ffe4e6;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.doctor-reviews-page .reviews-pagination {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   LARGE TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) {
+        grid-template-columns:
+            minmax(130px, 1fr)
+            minmax(130px, 1fr)
+            minmax(90px, .7fr)
+            minmax(170px, 1.7fr)
+            minmax(95px, .7fr)
+            minmax(75px, .6fr)
+            70px;
+    }
+
+
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns:
+            minmax(135px, 1fr)
+            minmax(100px, .75fr)
+            minmax(220px, 2fr)
+            minmax(105px, .7fr);
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .doctor-reviews-page > .doctor-reviews-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .reviews-header-stats {
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+
+    .doctor-reviews-page .reviews-card-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .reviews-search-form {
+        width: 100%;
+    }
+
+
+    .reviews-search-box {
+        flex: 1;
+
+        width: auto;
+    }
+
+
+    /* Admin */
+    .doctor-reviews-page .review-item:not(.doctor-review-item) {
+        grid-template-columns:
+            minmax(150px, 1fr)
+            minmax(150px, 1fr)
+            minmax(100px, .7fr);
+
+        gap: 13px;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-user {
+        grid-column: span 1;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-doctor {
+        grid-column: span 1;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-rating {
+        grid-column: span 1;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-comment {
+        grid-column: 1 / -1;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-date {
+        grid-column: 1 / 2;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-status {
+        grid-column: 2 / 3;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-actions {
+        grid-column: 3 / 4;
+    }
+
+
+    /* Doctor */
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns:
+            minmax(140px, 1fr)
+            minmax(100px, .7fr)
+            minmax(0, 1.7fr);
+
+        gap: 13px;
+    }
+
+
+    .doctor-reviews-page .review-item.doctor-review-item .review-date {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .doctor-reviews-page > .doctor-reviews-header {
+        padding: 16px;
+    }
+
+
+    .doctor-reviews-page > .reviews-card {
+        padding: 16px;
+    }
+
+
+    .reviews-header-stats {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        width: 100%;
+    }
+
+
+    .reviews-stat-item {
+        min-width: 0;
+    }
+
+
+    .reviews-count-badge {
+        width: 100%;
+    }
+
+
+    /* Admin */
+    .doctor-reviews-page .review-item:not(.doctor-review-item) {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-user,
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-doctor,
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-rating,
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-comment,
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-date,
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-status,
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-actions {
+        grid-column: auto;
+    }
+
+
+    .doctor-reviews-page .review-item:not(.doctor-review-item) .review-comment {
+        grid-column: 1 / -1;
+    }
+
+
+    /* Doctor */
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns:
+            minmax(140px, 1fr)
+            minmax(100px, .7fr);
+    }
+
+
+    .doctor-reviews-page .review-item.doctor-review-item .review-comment {
+        grid-column: 1 / -1;
+    }
+
+
+    .doctor-reviews-page .review-item.doctor-review-item .review-date {
+        grid-column: 1 / -1;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+    .doctor-latest-reviews .doctor-reviews-header {
+        align-items: flex-start;
+    }
+
+
+    .doctor-latest-reviews .reviews-card-link span {
+        display: none;
+    }
+
+
+    .doctor-review-item {
+        grid-template-columns: 1fr;
+
+        gap: 11px;
+
+        padding: 12px;
+    }
+
+
+    .doctor-review-patient,
+    .doctor-review-content,
+    .doctor-review-actions {
+        grid-column: auto;
+    }
+
+
+    .doctor-review-actions {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+
+        flex-direction: row;
+    }
+
+
+    .doctor-review-edit-btn,
+    .doctor-review-delete-btn {
+        flex: 1;
+    }
+
+
+    /* Full pages */
+    .doctor-reviews-page > .doctor-reviews-header {
+        padding: 14px;
+
+        border-radius: 13px;
+    }
+
+
+    .doctor-reviews-page > .reviews-card {
+        padding: 13px;
+
+        border-radius: 13px;
+    }
+
+
+    .doctor-reviews-title {
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+
+    .reviews-title-icon {
+        width: 44px;
+        height: 44px;
+
+        min-width: 44px;
+
+        border-radius: 11px;
+
+        font-size: 17px;
+    }
+
+
+    .reviews-title-content h1 {
+        font-size: 18px;
+    }
+
+
+    .reviews-title-content p {
+        font-size: 9px;
+    }
+
+
+    .reviews-header-stats {
+        grid-template-columns: 1fr;
+
+        gap: 7px;
+    }
+
+
+    .reviews-stat-item {
+        width: 100%;
+    }
+
+
+    .reviews-count-badge {
+        width: 100%;
+    }
+
+
+    .doctor-reviews-page .reviews-card-header {
+        gap: 14px;
+    }
+
+
+    .reviews-search-form {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        width: 100%;
+    }
+
+
+    .reviews-search-box {
+        width: 100%;
+    }
+
+
+    .reviews-search-button {
+        width: 100%;
+    }
+
+
+    /* All review items */
+    .doctor-reviews-page .review-item,
+    .doctor-reviews-page .review-item:not(.doctor-review-item),
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+
+        padding: 12px;
+    }
+
+
+    .doctor-reviews-page .review-item .review-user,
+    .doctor-reviews-page .review-item .review-doctor,
+    .doctor-reviews-page .review-item .review-rating,
+    .doctor-reviews-page .review-item .review-comment,
+    .doctor-reviews-page .review-item .review-date,
+    .doctor-reviews-page .review-item .review-status,
+    .doctor-reviews-page .review-item .review-actions {
+        grid-column: auto;
+    }
+
+
+    .doctor-reviews-page .review-comment {
+        width: 100%;
+    }
+
+
+    .doctor-reviews-page .review-actions {
+        width: 100%;
+
+        align-items: stretch;
+    }
+
+
+    .doctor-reviews-page .review-actions-buttons {
+        justify-content: flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .doctor-latest-reviews {
+        padding: 12px;
+    }
+
+
+    .doctor-latest-reviews .doctor-reviews-header h3 {
+        font-size: 15px;
+    }
+
+
+    .doctor-latest-reviews .doctor-reviews-header p {
+        font-size: 9px;
+    }
+
+
+    .doctor-review-item {
+        padding: 10px;
+    }
+
+
+    .doctor-review-avatar {
+        width: 35px;
+        height: 35px;
+
+        min-width: 35px;
+
+        font-size: 12px;
+    }
+
+
+    .doctor-review-comment-text,
+    .doctor-review-comment-empty {
+        font-size: 9px;
+    }
+
+
+    .doctor-reviews-page > .reviews-card {
+        padding: 10px;
+    }
+
+
+    .doctor-reviews-page .review-item {
+        padding: 10px;
+    }
+
+
+    .doctor-reviews-page .review-user-avatar,
+    .doctor-reviews-page .review-doctor-avatar {
+        width: 34px;
+        height: 34px;
+
+        min-width: 34px;
+    }
+
+
+    .doctor-reviews-page .review-user-info strong,
+    .doctor-reviews-page .review-doctor-info strong {
+        font-size: 10px;
+    }
+
+
+    .doctor-reviews-page .comment-box {
+        padding: 7px;
+    }
+
+
+    .doctor-reviews-page .comment-box p {
+        font-size: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   DARK MODE
+   يدعم:
+   body.dark
+   body.dark-mode
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
+
+body.dark .doctor-latest-reviews .doctor-reviews-header,
+body.dark-mode .doctor-latest-reviews .doctor-reviews-header,
+
+body.dark .doctor-reviews-page > .doctor-reviews-header,
+body.dark-mode .doctor-reviews-page > .doctor-reviews-header,
+
+body.dark .doctor-reviews-page .reviews-card-header,
+body.dark-mode .doctor-reviews-page .reviews-card-header {
+    border-color: #293b52;
+}
+
+
+/* ---------------------------------------------------------
+   TITLES
+--------------------------------------------------------- */
+
+body.dark .doctor-latest-reviews .doctor-reviews-header h3,
+body.dark-mode .doctor-latest-reviews .doctor-reviews-header h3,
+
+body.dark .reviews-title-content h1,
+body.dark-mode .reviews-title-content h1,
+
+body.dark .doctor-reviews-page .reviews-card-header h2,
+body.dark-mode .doctor-reviews-page .reviews-card-header h2 {
+    color: #f1f5f9;
+}
+
+
+body.dark .doctor-latest-reviews .doctor-reviews-header p,
+body.dark-mode .doctor-latest-reviews .doctor-reviews-header p,
+
+body.dark .reviews-title-content p,
+body.dark-mode .reviews-title-content p,
+
+body.dark .reviews-title-small,
+body.dark-mode .reviews-title-small,
+
+body.dark .doctor-reviews-page .reviews-card-header p,
+body.dark-mode .doctor-reviews-page .reviews-card-header p {
+    color: #94a3b8;
+}
+
+
+/* ---------------------------------------------------------
+   VIEW ALL
+--------------------------------------------------------- */
+
+body.dark .doctor-latest-reviews .reviews-card-link,
+body.dark-mode .doctor-latest-reviews .reviews-card-link {
+    color: #60a5fa;
+}
+
+
+body.dark .doctor-latest-reviews .reviews-card-link:hover,
+body.dark-mode .doctor-latest-reviews .reviews-card-link:hover {
+    color: #93c5fd;
+}
+
+
+/* ---------------------------------------------------------
+   REVIEW ITEM
+--------------------------------------------------------- */
+
+body.dark .doctor-review-item,
+body.dark-mode .doctor-review-item,
+
+body.dark .doctor-reviews-page .review-item,
+body.dark-mode .doctor-reviews-page .review-item {
+    background: #172333;
+
+    border-color: #293b52;
+}
+
+
+body.dark .doctor-review-item:hover,
+body.dark-mode .doctor-review-item:hover,
+
+body.dark .doctor-reviews-page .review-item:hover,
+body.dark-mode .doctor-reviews-page .review-item:hover {
+    background: #1a2a3d;
+
+    border-color: #36557c;
+}
+
+
+/* ---------------------------------------------------------
+   FULL PAGE CARDS
+--------------------------------------------------------- */
+
+body.dark .doctor-reviews-page > .doctor-reviews-header,
+body.dark-mode .doctor-reviews-page > .doctor-reviews-header,
+
+body.dark .doctor-reviews-page > .reviews-card,
+body.dark-mode .doctor-reviews-page > .reviews-card {
+    background: #172333;
+
+    border-color: #293b52;
+}
+
+
+/* ---------------------------------------------------------
+   AVATARS
+--------------------------------------------------------- */
+
+body.dark .doctor-review-avatar,
+body.dark-mode .doctor-review-avatar,
+
+body.dark .doctor-reviews-page .review-user-avatar,
+body.dark-mode .doctor-reviews-page .review-user-avatar {
+    background: #1e3554;
+
+    color: #60a5fa;
+}
+
+
+body.dark .doctor-reviews-page .review-doctor-avatar,
+body.dark-mode .doctor-reviews-page .review-doctor-avatar {
+    background: #173b35;
+
+    color: #34d399;
+}
+
+
+/* ---------------------------------------------------------
+   TEXT
+--------------------------------------------------------- */
+
+body.dark .doctor-review-patient-info strong,
+body.dark-mode .doctor-review-patient-info strong,
+
+body.dark .doctor-review-doctor strong,
+body.dark-mode .doctor-review-doctor strong,
+
+body.dark .doctor-reviews-page .review-user-info strong,
+body.dark-mode .doctor-reviews-page .review-user-info strong,
+
+body.dark .doctor-reviews-page .review-doctor-info strong,
+body.dark-mode .doctor-reviews-page .review-doctor-info strong,
+
+body.dark .doctor-reviews-page .review-rating > strong,
+body.dark-mode .doctor-reviews-page .review-rating > strong,
+
+body.dark .doctor-reviews-page .review-date strong,
+body.dark-mode .doctor-reviews-page .review-date strong {
+    color: #e2e8f0;
+}
+
+
+body.dark .doctor-review-patient-info span,
+body.dark-mode .doctor-review-patient-info span,
+
+body.dark .doctor-review-doctor span,
+body.dark-mode .doctor-review-doctor span,
+
+body.dark .doctor-reviews-page .review-label,
+body.dark-mode .doctor-reviews-page .review-label,
+
+body.dark .doctor-reviews-page .review-user-info small,
+body.dark-mode .doctor-reviews-page .review-user-info small,
+
+body.dark .doctor-reviews-page .review-doctor-info small,
+body.dark-mode .doctor-reviews-page .review-doctor-info small {
+    color: #7f8ea3;
+}
+
+
+/* =========================================================
+   DASHBOARD COMMENT BOX
+   مهم جدًا:
+   هنا تم تحويل الـ comment-area نفسه من أبيض إلى
+   Dark Mode بدل الاعتماد على العنصر الداخلي.
+========================================================= */
+
+body.dark .doctor-latest-reviews .doctor-review-comment-area,
+body.dark-mode .doctor-latest-reviews .doctor-review-comment-area {
+    background: #1a2a3d !important;
+
+    border: 1px solid #293b52 !important;
+
+    border-radius: 8px !important;
+}
+
+
+body.dark .doctor-latest-reviews .doctor-review-comment-label,
+body.dark-mode .doctor-latest-reviews .doctor-review-comment-label {
+    color: #94a3b8 !important;
+
+    background: transparent !important;
+}
+
+
+body.dark .doctor-latest-reviews .doctor-review-comment-text,
+body.dark-mode .doctor-latest-reviews .doctor-review-comment-text {
+    color: #cbd5e1 !important;
+
+    background: transparent !important;
+}
+
+
+body.dark .doctor-latest-reviews .doctor-review-comment-empty,
+body.dark-mode .doctor-latest-reviews .doctor-review-comment-empty {
+    color: #64748b !important;
+
+    background: transparent !important;
+}
+
+
+/* ---------------------------------------------------------
+   FULL PAGE COMMENT BOX
+--------------------------------------------------------- */
+
+body.dark .doctor-reviews-page .comment-box,
+body.dark-mode .doctor-reviews-page .comment-box {
+    background: #1a2a3d !important;
+
+    border-color: #293b52 !important;
+}
+
+
+body.dark .doctor-reviews-page .comment-box p,
+body.dark-mode .doctor-reviews-page .comment-box p {
+    color: #cbd5e1;
+}
+
+
+body.dark .doctor-reviews-page .comment-box > i,
+body.dark-mode .doctor-reviews-page .comment-box > i {
+    color: #64748b;
+}
+
+
+/* ---------------------------------------------------------
+   DATE ICON
+--------------------------------------------------------- */
+
+body.dark .doctor-reviews-page .review-date > i,
+body.dark-mode .doctor-reviews-page .review-date > i {
+    background: #1e2c3d;
+
+    color: #94a3b8;
+}
+
+
+/* ---------------------------------------------------------
+   SEARCH
+--------------------------------------------------------- */
+
+body.dark .doctor-reviews-page .reviews-search-box input,
+body.dark-mode .doctor-reviews-page .reviews-search-box input {
+    background: #1a2a3d;
+
+    border-color: #36506e;
+
+    color: #e2e8f0;
+}
+
+
+body.dark .doctor-reviews-page .reviews-search-box input:focus,
+body.dark-mode .doctor-reviews-page .reviews-search-box input:focus {
+    background: #20334a;
+
+    border-color: #4f7fba;
+}
+
+
+body.dark .doctor-reviews-page .reviews-search-clear:hover,
+body.dark-mode .doctor-reviews-page .reviews-search-clear:hover {
+    background: #24364a;
+}
+
+
+/* ---------------------------------------------------------
+   STARS
+--------------------------------------------------------- */
+
+body.dark .doctor-star-empty,
+body.dark-mode .doctor-star-empty,
+
+body.dark .doctor-reviews-page .stars i:not(.active),
+body.dark-mode .doctor-reviews-page .stars i:not(.active) {
+    color: #475569;
+}
+
+
+/* ---------------------------------------------------------
+   DASHBOARD BUTTONS
+--------------------------------------------------------- */
+
+body.dark .doctor-review-edit-btn,
+body.dark-mode .doctor-review-edit-btn {
+    background: #1e3554;
+
+    border-color: #36557c;
+
+    color: #60a5fa;
+}
+
+
+body.dark .doctor-review-edit-btn:hover,
+body.dark-mode .doctor-review-edit-btn:hover {
+    background: #24456c;
+}
+
+
+body.dark .doctor-review-delete-btn,
+body.dark-mode .doctor-review-delete-btn {
+    background: #3a2027;
+
+    border-color: #66333e;
+
+    color: #f87171;
+}
+
+
+body.dark .doctor-review-delete-btn:hover,
+body.dark-mode .doctor-review-delete-btn:hover {
+    background: #4a252e;
+}
+
+
+/* ---------------------------------------------------------
+   FULL PAGE ACTION BUTTONS
+--------------------------------------------------------- */
+
+body.dark .doctor-reviews-page .review-action-btn.edit,
+body.dark-mode .doctor-reviews-page .review-action-btn.edit {
+    background: #1e3554;
+
+    border-color: #36557c;
+
+    color: #60a5fa;
+}
+
+
+body.dark .doctor-reviews-page .review-action-btn.edit:hover,
+body.dark-mode .doctor-reviews-page .review-action-btn.edit:hover {
+    background: #24456c;
+}
+
+
+body.dark .doctor-reviews-page .review-action-btn.delete,
+body.dark-mode .doctor-reviews-page .review-action-btn.delete {
+    background: #3a2027;
+
+    border-color: #66333e;
+
+    color: #f87171;
+}
+
+
+body.dark .doctor-reviews-page .review-action-btn.delete:hover,
+body.dark-mode .doctor-reviews-page .review-action-btn.delete:hover {
+    background: #4a252e;
+}
+
+
+/* =========================================================
+   RESPONSIVE - DARK MODE
+   لا يوجد تغيير إضافي هنا
+========================================================= */
+
+
+/* =========================================================
+   END
+========================================================= */
+.reviews-card-header p {
+margin-top: 8px;
+
+
+color: #64748b;
+
+font-size: 13px;
+font-weight: 600;
+
+line-height: 1.8;
+
+
+}
+
+.reviews-card-header p strong {
+display: inline-flex;
+align-items: center;
+
+
+margin: 0 4px;
+padding: 4px 10px;
+
+border-radius: 8px;
+
+background: rgba(99, 91, 255, .08);
+
+border: 1px solid rgba(99, 91, 255, .14);
+
+color: #635bff;
+
+font-size: 13px;
+font-weight: 800;
+
+line-height: 1.4;
+
+
+}
+
+.reviews-card-header p .results-count {
+display: inline-flex;
+align-items: center;
+
+
+margin-right: 5px;
+
+color: #334155;
+
+font-size: 13px;
+font-weight: 800;
+
+
+}
+
+@media (max-width: 600px) {
+
+
+.reviews-card-header p {
+    font-size: 12px;
+    line-height: 1.9;
+}
+
+.reviews-card-header p strong {
+    padding: 3px 8px;
+    font-size: 12px;
+}
+
+.reviews-card-header p .results-count {
+    font-size: 12px;
+}
+
+
+}

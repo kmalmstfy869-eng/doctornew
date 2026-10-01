@@ -1,0 +1,41 @@
+/* Readability layer for doctor dashboard: sidebar.
+   Generated from sidebar.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.logo-info span { font-size: 12.5px; }
+.sidebar-section { font-size: 12.5px; }
+.sidebar-badge { font-size: 12.5px; }
+.notification-dot { font-size: 12px; }
+.system-entry-top span { font-size: 12.5px; }
+.system-entry-text { font-size: 13px; }
+.system-entry-button { font-size: 13px; }
+.profile-info span { font-size: 12.5px; }
+@media (max-height: 650px) {
+    .logo-info span { font-size: 12px; }
+    .system-entry-top span { font-size: 12px; }
+    .system-entry-text { font-size: 12.5px; }
+    .system-entry-button { font-size: 12.5px; }
+    .profile-info strong { font-size: 13px; }
+    .profile-info span { font-size: 12px; }
+}
+@media (max-width: 992px) {
+    .side-link { font-size: 13.5px; }
+}
+@media (max-width: 480px) {
+    .side-link { font-size: 13.5px; }
+    .profile-info strong { font-size: 13.5px; }
+    .profile-info span { font-size: 12px; }
+}
+@media (max-width: 350px) {
+    .logo-info strong { font-size: 13.5px; }
+    .logo-info span { font-size: 12px; }
+    .sidebar-section { font-size: 12px; }
+    .side-link { font-size: 13px; }
+    .system-entry-top strong { font-size: 13px; }
+    .system-entry-top span { font-size: 12px; }
+    .system-entry-text { font-size: 12px; }
+    .system-entry-button { font-size: 12px; }
+    .profile-info strong { font-size: 12.5px; }
+    .profile-info span { font-size: 12px; }
+}

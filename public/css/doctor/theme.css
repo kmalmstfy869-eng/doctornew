@@ -1,0 +1,122 @@
+/* Doctor portal visual system — medical navy, not generic purple */
+
+:root {
+    --primary: #1264c8;
+    --primary-dark: #084b96;
+    --purple: #2b7bc4;
+    --cyan: #1a8a6a;
+}
+
+.blob {
+    opacity: 0.12;
+    filter: blur(90px);
+    animation: none;
+}
+
+.blob.one {
+    background: #93c5fd;
+}
+
+.blob.two {
+    background: #99f6e4;
+}
+
+.grid-bg {
+    opacity: 0.12;
+}
+
+.sidebar {
+    --sidebar-primary: #3b8fe0;
+    --sidebar-primary-2: #6eb6f2;
+    --sidebar-radius: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+    border: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    background: linear-gradient(180deg, #0b1c33 0%, #0a1628 100%);
+}
+
+.logo-mark,
+.header-icon,
+.med-placeholder-icon {
+    background: linear-gradient(135deg, #1264c8, #3b8fe0);
+    box-shadow: 0 8px 18px rgba(18, 100, 200, 0.2);
+}
+
+.med-placeholder-icon,
+.med-placeholder-icon span {
+    color: #fff;
+}
+
+.topbar {
+    border-radius: 14px;
+    animation: none;
+    backdrop-filter: blur(10px);
+}
+
+.main {
+    margin-right: var(--sidebar);
+    padding: 18px 22px 40px;
+}
+
+.side-link.active {
+    background: rgba(59, 143, 224, 0.16);
+}
+
+.system-entry-button {
+    background: #1264c8;
+}
+
+body.dark .account-row,
+body.dark .notification-item {
+    background: rgba(18, 100, 200, 0.08);
+}
+
+body.dark .account-row-icon,
+body.dark .notification-icon,
+body.dark .empty-icon {
+    background: rgba(18, 100, 200, 0.16);
+}
+
+body.dark .account-intro,
+body.dark .notification-item.unread {
+    background: linear-gradient(135deg, rgba(18, 100, 200, 0.14), rgba(26, 138, 106, 0.06));
+}
+
+@media (max-width: 1200px) {
+    .main {
+        margin-right: var(--sidebar);
+    }
+}
+
+@media (max-width: 1000px) {
+    .main {
+        margin-right: 0;
+    }
+
+    .sidebar {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        border-radius: 0 !important;
+        width: min(20rem, calc(100% - 2.5rem)) !important;
+    }
+}
+
+@media (max-width: 350px) {
+    .sidebar {
+        border-radius: 0 !important;
+    }
+}

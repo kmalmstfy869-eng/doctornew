@@ -1,0 +1,8 @@
+/* Readability layer for doctor dashboard: account&notification.
+   Generated from account&notification.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.notification-content span { font-size: 13.5px; }
+.notification-time { font-size: 13px; }
+.notification-count { font-size: 13.5px; }

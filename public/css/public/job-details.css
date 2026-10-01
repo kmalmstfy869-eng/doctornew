@@ -1,0 +1,140 @@
+/* =========================================================
+   Job details page — readability & responsive layer
+   Loaded after home/test.css; overrides only type sizes,
+   spacing and breakpoints. No colors or layout identity changed.
+   ========================================================= */
+
+/* --- Hero --- */
+.job-details-category {
+    font-size: 12.5px;
+    padding: 6px 12px;
+}
+
+.job-details-title {
+    font-size: clamp(22px, 4.5vw, 28px);
+    line-height: 1.5;
+}
+
+.company-name {
+    font-size: 14.5px;
+}
+
+/* --- Data grid --- */
+.data-text span {
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.data-text strong {
+    font-size: 14px;
+}
+
+.data-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+}
+
+/* --- Content sections --- */
+.section-title {
+    font-size: 17px;
+}
+
+.section-title i {
+    font-size: 16px;
+}
+
+.section-text {
+    font-size: 15px;
+    line-height: 2.1;
+}
+
+.extra-item span {
+    font-size: 12px;
+}
+
+.extra-item strong {
+    font-size: 14px;
+}
+
+/* --- Sidebar: apply card --- */
+.apply-card h3 {
+    font-size: 18px;
+}
+
+.apply-card p {
+    font-size: 13.5px;
+    line-height: 1.9;
+}
+
+.apply-btn {
+    font-size: 15px;
+    height: 50px;
+}
+
+.contact-btn {
+    font-size: 14px;
+    height: 48px;
+}
+
+/* --- Sidebar: publisher card --- */
+.publisher-title {
+    font-size: 15px;
+}
+
+.publisher-info h4 {
+    font-size: 14.5px;
+}
+
+.publisher-info p {
+    font-size: 12.5px;
+}
+
+/* --- Sidebar: security note --- */
+.security-note strong {
+    font-size: 14px;
+}
+
+.security-note p {
+    font-size: 12.5px;
+    line-height: 1.9;
+}
+
+/* --- Responsive --- */
+@media (max-width: 992px) {
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .job-details-data {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .job-details-hero,
+    .details-content {
+        padding: 20px 16px;
+    }
+
+    .job-details-data {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .job-details-title-area {
+        gap: 12px;
+    }
+
+    .job-details-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 22px;
+        border-radius: 14px;
+    }
+
+    .extra-info {
+        grid-template-columns: 1fr;
+    }
+}

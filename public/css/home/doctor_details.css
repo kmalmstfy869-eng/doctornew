@@ -1,0 +1,5713 @@
+
+/* =========================================================
+   MEDICAL PROFILE — PREMIUM UI
+   RTL / RESPONSIVE / DARK MODE
+========================================================= */
+
+.med-profile-page,
+.med-profile-page * {
+    box-sizing: border-box;
+}
+
+.med-profile-page {
+    direction: rtl;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding: 42px 0 80px;
+    overflow-x: clip;
+
+    --med-primary: #1677d2;
+    --med-primary-dark: #0b5eae;
+    --med-primary-light: #eaf5ff;
+    --med-primary-soft: #f4f9ff;
+
+    --med-success: #18a36b;
+    --med-success-soft: #eaf9f2;
+
+    --med-warning: #e8a91f;
+    --med-warning-soft: #fff9e9;
+
+    --med-card-bg: #ffffff;
+    --med-surface: #f7fafd;
+    --med-surface-2: #f1f6fb;
+
+    --med-border: #e5ebf2;
+    --med-border-light: #edf2f7;
+
+    --med-text: #172337;
+    --med-text-soft: #627086;
+    --med-muted: #8c98a8;
+
+    --med-shadow-sm:
+        0 4px 18px rgba(20, 45, 75, .045);
+
+    --med-shadow:
+        0 14px 40px rgba(20, 45, 75, .075);
+
+    --med-shadow-lg:
+        0 22px 60px rgba(20, 45, 75, .11);
+
+    --med-radius: 22px;
+    --med-radius-sm: 15px;
+
+    font-family: inherit;
+}
+
+.med-profile-page a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.med-profile-page button,
+.med-profile-page input,
+.med-profile-page textarea,
+.med-profile-page select {
+    font-family: inherit;
+    max-width: 100%;
+}
+
+.med-profile-page img,
+.med-profile-page iframe {
+    max-width: 100%;
+}
+
+.med-container {
+    width: min(1220px, calc(100% - 32px));
+    max-width: 100%;
+    margin: auto;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   01. HERO
+========================================================= */
+
+.med-doctor-hero {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding: 30px;
+    margin-bottom: 26px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #ffffff 65%,
+            #f5faff 100%
+        );
+
+    border: 1px solid var(--med-border);
+    border-radius: 26px;
+    box-shadow: var(--med-shadow);
+    overflow: hidden;
+}
+
+.med-doctor-hero::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: -190px;
+    left: -100px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(22, 119, 210, .12),
+            rgba(22, 119, 210, 0) 70%
+        );
+
+    pointer-events: none;
+}
+
+.med-doctor-hero::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    bottom: -120px;
+    right: 35%;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(22, 119, 210, .06),
+            rgba(22, 119, 210, 0) 70%
+        );
+
+    pointer-events: none;
+}
+
+.med-doctor-main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   02. DOCTOR IMAGE
+========================================================= */
+
+.med-doctor-image-wrap {
+    position: relative;
+    flex: 0 0 215px;
+    width: 215px;
+    height: 245px;
+    max-width: 215px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.med-doctor-image-wrap::before,
+.med-doctor-image-wrap::after {
+    content: none !important;
+    display: none !important;
+}
+
+.med-doctor-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 21px;
+    max-width: 100%;
+
+    box-shadow:
+        0 16px 35px rgba(20, 55, 90, .16);
+
+    transition:
+        transform .45s ease,
+        box-shadow .45s ease;
+}
+
+.med-doctor-image-wrap:hover .med-doctor-image {
+    transform: scale(1.015);
+
+    box-shadow:
+        0 20px 45px rgba(20, 55, 90, .21);
+}
+
+.med-verified-badge {
+    position: absolute;
+    right: 13px;
+    bottom: 13px;
+    z-index: 3;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    max-width: calc(100% - 26px);
+    padding: 8px 12px;
+
+    border-radius: 999px;
+    background: rgba(255,255,255,.94);
+    color: #138257;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.14);
+
+    backdrop-filter: blur(10px);
+}
+
+.med-verified-badge i {
+    font-size: 13px;
+    flex: 0 0 auto;
+}
+
+
+/* =========================================================
+   03. DOCTOR INFO
+========================================================= */
+
+.med-doctor-info {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.med-doctor-name-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    min-width: 0;
+}
+
+.med-doctor-name-row > div:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.med-doctor-label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: var(--med-primary);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .3px;
+    margin-bottom: 8px;
+}
+
+.med-doctor-label::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: var(--med-primary);
+
+    box-shadow:
+        0 0 0 5px rgba(22,119,210,.09);
+}
+
+.med-section-kicker {
+    display: block;
+    color: var(--med-primary);
+    font-size: 10px;
+    font-weight: 900;
+    margin-bottom: 5px;
+    letter-spacing: .3px;
+}
+
+.med-doctor-info h1,
+.med-doctor-name {
+    margin: 0;
+    color: var(--med-text);
+    font-size: clamp(29px, 4vw, 40px);
+    line-height: 1.22;
+    font-weight: 950;
+    letter-spacing: -.7px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.med-doctor-name {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.med-doctor-name > span:last-child {
+    position: relative;
+    display: inline-block;
+    min-width: 0;
+    padding-bottom: 4px;
+}
+
+.med-doctor-name > span:last-child::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 33%;
+    height: 3px;
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2563eb,
+            #60a5fa
+        );
+
+    opacity: .9;
+}
+
+.med-doctor-name-icon {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+    color: var(--med-primary);
+
+    background:
+        linear-gradient(
+            145deg,
+            #edf7ff,
+            #e3f1ff
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(22,119,210,.06);
+
+    font-size: 18px;
+}
+
+.med-doctor-job {
+    margin: 9px 0 0;
+    color: var(--med-text-soft);
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   04. TOP BUTTONS
+========================================================= */
+
+.med-doctor-buttons {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 auto;
+}
+
+.med-favorite-button,
+.med-share-button {
+    position: relative;
+
+    width: 47px;
+    height: 47px;
+    flex: 0 0 47px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--med-border);
+    background: rgba(255,255,255,.82);
+    color: #687589;
+    border-radius: 14px;
+
+    cursor: pointer;
+    font-size: 18px;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        box-shadow .25s ease;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.med-favorite-button:hover,
+.med-share-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 9px 22px rgba(20,50,80,.09);
+}
+
+.med-favorite-button:hover,
+.med-favorite-button.active {
+    color: #e5484d;
+    border-color: #f2c9cb;
+    background: #fff6f6;
+}
+
+.med-share-button {
+    color: var(--med-primary);
+}
+
+.med-share-button:hover {
+    color: var(--med-primary-dark);
+    border-color: #c9e1f8;
+    background: #f3f9ff;
+}
+
+.med-share-button:active,
+.med-favorite-button:active {
+    transform: translateY(-1px);
+}
+
+.med-share-button i,
+.med-favorite-button i {
+    line-height: 1;
+}
+
+
+/* =========================================================
+   05. META
+========================================================= */
+
+.med-doctor-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 22px;
+    min-width: 0;
+}
+
+.med-doctor-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 34px;
+    min-width: 0;
+
+    padding: 7px 11px;
+
+    color: #536176;
+    background: #f7fafd;
+    border: 1px solid #edf2f7;
+    border-radius: 10px;
+
+    font-size: 12px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.med-doctor-meta i {
+    color: var(--med-warning);
+    flex: 0 0 auto;
+}
+
+.med-doctor-meta span:nth-child(2) i,
+.med-doctor-meta span:nth-child(3) i {
+    color: var(--med-primary);
+}
+
+.med-doctor-meta small {
+    color: #929dad;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   06. HERO ACTIONS
+========================================================= */
+
+.med-doctor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+    min-width: 0;
+}
+
+.med-primary-action,
+.med-whatsapp-action,
+.med-book-now-action {
+    min-height: 48px;
+    min-width: 0;
+    padding: 0 21px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    border-radius: 13px;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 900;
+    white-space: nowrap;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.med-primary-action {
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1983df,
+            #116bc4
+        );
+
+    box-shadow:
+        0 8px 22px rgba(22,119,210,.18);
+}
+
+.med-primary-action:hover {
+    color: #fff;
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 30px rgba(22,119,210,.25);
+}
+
+.med-whatsapp-action {
+    color: #12865b;
+    background: #edfaf4;
+    border: 1px solid #d5f0e2;
+}
+
+.med-whatsapp-action:hover {
+    color: #12865b;
+    background: #e2f7ed;
+    border-color: #c4e9d6;
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 24px rgba(24,163,107,.10);
+}
+
+.med-book-now-action {
+    color: #fff;
+    border: 1px solid transparent;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1454c0
+        );
+
+    box-shadow:
+        0 8px 22px rgba(37,99,235,.18);
+}
+
+.med-book-now-action:hover {
+    color: #fff;
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 13px 30px rgba(37,99,235,.25);
+}
+
+
+/* =========================================================
+   07. MAIN LAYOUT
+========================================================= */
+
+.med-profile-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr)
+        350px;
+
+    gap: 25px;
+    align-items: start;
+    min-width: 0;
+}
+
+.med-profile-content,
+.med-profile-sidebar {
+    min-width: 0;
+    width: 100%;
+}
+
+
+/* =========================================================
+   08. CARDS
+========================================================= */
+
+.med-content-card,
+.med-sidebar-card {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+
+    background: var(--med-card-bg);
+    border: 1px solid var(--med-border);
+    border-radius: var(--med-radius);
+    padding: 27px;
+    margin-bottom: 22px;
+
+    box-shadow: var(--med-shadow-sm);
+    overflow: hidden;
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+.med-content-card:hover,
+.med-sidebar-card:hover {
+    border-color: #dce6f0;
+
+    box-shadow:
+        0 15px 42px rgba(20,45,75,.065);
+}
+
+
+/* =========================================================
+   09. CARD TITLE
+========================================================= */
+
+.med-card-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid var(--med-border-light);
+    min-width: 0;
+}
+
+.med-card-title-icon {
+    position: relative;
+
+    width: 49px;
+    height: 49px;
+    flex: 0 0 49px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #edf7ff,
+            #e6f2ff
+        );
+
+    color: var(--med-primary);
+    font-size: 19px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(22,119,210,.055);
+}
+
+.med-card-title-icon::after {
+    content: "";
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    left: 7px;
+    bottom: 7px;
+
+    border-radius: 50%;
+    background: rgba(22,119,210,.12);
+}
+
+.med-card-title > div:last-child {
+    min-width: 0;
+}
+
+.med-card-title h2 {
+    margin: 0;
+    color: var(--med-text);
+    font-size: 21px;
+    font-weight: 950;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.med-card-title p {
+    margin: 4px 0 0;
+    color: var(--med-muted);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   10. ABOUT
+========================================================= */
+
+.med-about-text,
+.med-about-content {
+    margin: 0;
+    color: #5d6b7d;
+    line-height: 2;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+.med-about-text {
+    margin-top: 0;
+    padding: 21px 22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fbfe,
+            #f4f8fc
+        );
+
+    border: 1px solid #e7eef5;
+    border-right: 4px solid var(--med-primary);
+    border-radius: 16px;
+
+    text-align: right;
+    white-space: pre-line;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.7);
+}
+
+.med-about-content p {
+    margin: 0 0 12px;
+}
+
+.med-about-content p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   11. WORKING HOURS
+========================================================= */
+
+.med-working-hours-box {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px;
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7fbff,
+            #f1f8ff
+        );
+
+    border: 1px solid #dcecfb;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.med-working-hours-box::after {
+    content: "";
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    left: -55px;
+    bottom: -55px;
+
+    border-radius: 50%;
+    background: rgba(22,119,210,.05);
+}
+
+.med-working-hours-icon {
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+    background: #e7f4ff;
+    color: var(--med-primary);
+    font-size: 19px;
+
+    box-shadow:
+        0 7px 18px rgba(22,119,210,.08);
+}
+
+.med-working-hours-content {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+}
+
+.med-working-hours-content strong {
+    display: block;
+    color: #243247;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.med-working-hours-content p {
+    margin: 4px 0 0;
+    color: #68778a;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   12. SERVICES
+========================================================= */
+
+.med-services-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+    min-width: 0;
+}
+
+.med-service-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-width: 0;
+    min-height: 82px;
+    padding: 16px;
+
+    border: 1px solid #e8eef4;
+    border-radius: 17px;
+    background: #fff;
+
+    transition:
+        transform .28s ease,
+        border-color .28s ease,
+        box-shadow .28s ease,
+        background .28s ease;
+
+    overflow: hidden;
+}
+
+.med-service-card::before {
+    content: "";
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    left: -45px;
+    bottom: -45px;
+
+    border-radius: 50%;
+    background: rgba(22,119,210,.035);
+
+    transition: transform .35s ease;
+}
+
+.med-service-card:hover {
+    border-color: #cfe3f8;
+    transform: translateY(-4px);
+    background: #fcfeff;
+
+    box-shadow:
+        0 13px 28px rgba(23,119,210,.09);
+}
+
+.med-service-card:hover::before {
+    transform: scale(1.5);
+}
+
+.med-service-card > div:last-child {
+    min-width: 0;
+}
+
+.med-service-icon {
+    position: relative;
+    z-index: 1;
+
+    width: 45px;
+    height: 45px;
+    flex: 0 0 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #edf7ff,
+            #e5f2ff
+        );
+
+    color: var(--med-primary);
+    border-radius: 13px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(22,119,210,.05);
+}
+
+.med-service-card h3 {
+    position: relative;
+    z-index: 1;
+
+    margin: 0;
+    color: #243247;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   13. GALLERY
+========================================================= */
+
+.med-gallery {
+    display: grid;
+
+    grid-template-columns:
+        1.4fr 1fr;
+
+    grid-template-rows:
+        190px 190px;
+
+    gap: 11px;
+    min-width: 0;
+}
+
+.med-gallery-image {
+    position: relative;
+
+    overflow: hidden;
+    min-width: 0;
+    min-height: 0;
+
+    border-radius: 17px;
+    cursor: pointer;
+    background: #edf2f6;
+
+    box-shadow:
+        0 5px 16px rgba(20,40,60,.05);
+}
+
+.med-gallery-large {
+    grid-row: 1 / 3;
+}
+
+.med-gallery-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: inherit;
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+.med-gallery-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+
+    transition:
+        transform .55s cubic-bezier(.2,.7,.2,1),
+        filter .35s ease;
+}
+
+.med-gallery-image:hover img {
+    transform: scale(1.075);
+    filter: saturate(1.06);
+}
+
+.med-image-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8,28,50,.05),
+            rgba(8,28,50,.48)
+        );
+
+    color: #fff;
+    opacity: 0;
+
+    transition: opacity .3s ease;
+}
+
+.med-gallery-image:hover .med-image-overlay {
+    opacity: 1;
+}
+
+.med-image-overlay i {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.5);
+    border-radius: 50%;
+
+    backdrop-filter: blur(9px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.15);
+
+    transition: transform .3s ease;
+}
+
+.med-gallery-image:hover .med-image-overlay i {
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   14. BOOKING
+========================================================= */
+
+.med-booking-card {
+    scroll-margin-top: 25px;
+}
+
+.med-booking-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    padding: 16px 17px;
+    margin-bottom: 14px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fbfe,
+            #f3f8fc
+        );
+
+    border: 1px solid #e8eef4;
+    min-width: 0;
+}
+
+.med-booking-info > div:first-child {
+    min-width: 0;
+}
+
+.med-booking-info strong {
+    display: block;
+    color: #253247;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.med-booking-info span {
+    display: block;
+    margin-top: 4px;
+    color: #8792a1;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.med-booking-available {
+    display: inline-flex;
+    align-items: center;
+
+    white-space: nowrap;
+    flex: 0 0 auto;
+
+    padding: 7px 10px;
+    border-radius: 999px;
+
+    color: #158357;
+    background: #eaf9f2;
+    border: 1px solid #d6f0e3;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.med-booking-available i {
+    font-size: 6px;
+    margin-left: 5px;
+}
+
+
+/* =========================================================
+   15. DAYS
+========================================================= */
+
+.med-days-list {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+}
+
+.med-day-accordion {
+    overflow: hidden;
+    min-width: 0;
+
+    border: 1px solid #e5ebf1;
+    border-radius: 16px;
+    background: #fff;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.med-day-accordion.active {
+    border-color: #cfe2f5;
+
+    box-shadow:
+        0 7px 22px rgba(22,119,210,.055);
+}
+
+.med-day-header {
+    width: 100%;
+
+    border: 0;
+    background: #fff;
+    padding: 17px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    text-align: right;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+
+    min-width: 0;
+
+    transition: background .2s ease;
+}
+
+.med-day-header:hover {
+    background: #fafdff;
+}
+
+.med-day-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.med-day-name {
+    min-width: 50px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 27px;
+    padding: 4px 8px;
+
+    border-radius: 8px;
+    color: var(--med-primary);
+    background: #eef7ff;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    flex: 0 0 auto;
+}
+
+.med-day-info strong {
+    color: #253247;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.med-day-header-meta {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    flex: 0 0 auto;
+}
+
+.med-day-header-meta span {
+    color: #8993a2;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.med-day-header-meta i {
+    color: var(--med-primary);
+
+    transition:
+        transform .3s ease;
+}
+
+.med-day-accordion.active .med-day-header-meta i {
+    transform: rotate(180deg);
+}
+
+.med-day-times {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 8px;
+    padding: 0 18px 18px;
+    min-width: 0;
+}
+
+.med-day-accordion:not(.active) .med-day-times {
+    display: none;
+}
+
+.med-day-times button {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+
+    border: 1px solid #dce6f0;
+    background: #fff;
+    color: #34445a;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+
+    transition: .2s ease;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.med-day-times button:hover:not(:disabled) {
+    color: var(--med-primary);
+    border-color: var(--med-primary);
+    background: #f5faff;
+    transform: translateY(-1px);
+}
+
+.med-day-times button.selected {
+    color: #fff;
+    border-color: var(--med-primary);
+
+    background:
+        linear-gradient(
+            135deg,
+            #1983df,
+            #116bc4
+        );
+
+    box-shadow:
+        0 7px 17px rgba(23,119,210,.2);
+}
+
+.med-day-times button.unavailable,
+.med-day-times button:disabled {
+    cursor: not-allowed;
+    color: #b0b7c0;
+    background: #f5f6f8;
+    border-color: #e8ebee;
+    text-decoration: line-through;
+}
+
+
+/* =========================================================
+   16. SELECTED APPOINTMENT
+========================================================= */
+
+.med-selected-appointment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    margin-top: 17px;
+    padding: 16px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f6fbff,
+            #edf7ff
+        );
+
+    border: 1px solid #d8ebfa;
+    min-width: 0;
+}
+
+.med-selected-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.med-selected-icon {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 46px;
+
+    color: var(--med-primary);
+    background: #e5f3ff;
+    border-radius: 13px;
+}
+
+.med-selected-info > div:last-child {
+    min-width: 0;
+}
+
+.med-selected-info span {
+    display: block;
+    color: #8a95a5;
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+
+.med-selected-info strong {
+    display: block;
+    color: #253247;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.med-confirm-button {
+    min-height: 45px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 12px;
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1983df,
+            #116bc4
+        );
+
+    font-family: inherit;
+    font-weight: 900;
+    cursor: pointer;
+    flex: 0 0 auto;
+
+    transition: .25s ease;
+
+    box-shadow:
+        0 7px 18px rgba(23,119,210,.15);
+}
+
+.med-confirm-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 11px 24px rgba(23,119,210,.22);
+}
+
+.med-confirm-button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.med-confirm-button i {
+    margin-right: 7px;
+}
+
+
+/* =========================================================
+   17. REVIEWS
+========================================================= */
+
+.med-review-summary {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+
+    padding: 20px;
+    margin-bottom: 20px;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf6,
+            #fff9e9
+        );
+
+    border: 1px solid #f3e6b9;
+    min-width: 0;
+}
+
+.med-big-rating {
+    position: relative;
+    text-align: center;
+    min-width: 115px;
+    flex: 0 0 115px;
+}
+
+.med-big-rating strong {
+    display: block;
+    color: #273449;
+    font-size: 44px;
+    line-height: 1;
+    font-weight: 950;
+}
+
+.med-big-rating div {
+    margin: 9px 0 4px;
+    color: #e7a71e;
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
+.med-big-rating span {
+    color: #8d96a3;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.med-review-summary-text {
+    min-width: 0;
+}
+
+.med-review-summary-text h3 {
+    margin: 0 0 5px;
+    color: #29364a;
+    font-size: 18px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.med-review-summary-text p {
+    margin: 0;
+    color: #8a94a2;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   18. REVIEW FORM
+========================================================= */
+
+.med-add-review {
+    padding: 20px;
+    margin-bottom: 20px;
+
+    border: 1px solid #e8edf3;
+    border-radius: 17px;
+    background: #fbfcfe;
+}
+
+.med-add-review h3 {
+    margin: 0;
+    color: #273449;
+    font-size: 17px;
+}
+
+.med-add-review > p {
+    margin: 5px 0 18px;
+    color: #8791a0;
+    font-size: 13px;
+}
+
+.med-review-field {
+    margin-bottom: 16px;
+    min-width: 0;
+}
+
+.med-review-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #364358;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.med-star-rating {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+}
+
+.med-star-rating button {
+    width: auto;
+    border: 0;
+    background: transparent;
+    color: #d7dce3;
+    font-size: 22px;
+    padding: 2px;
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        color .2s ease;
+}
+
+.med-star-rating button:hover,
+.med-star-rating button.active {
+    color: #e8aa23;
+    transform: translateY(-2px);
+}
+
+.med-star-rating span {
+    margin-right: 8px;
+    color: #7d8795;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.med-review-textarea {
+    width: 100%;
+    max-width: 100%;
+    min-height: 120px;
+
+    resize: vertical;
+    padding: 13px 14px;
+
+    border: 1px solid #dfe6ee;
+    border-radius: 13px;
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.8;
+
+    background: #fff;
+    color: #273449;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.med-review-textarea::placeholder {
+    color: #a1aab7;
+}
+
+.med-review-textarea:focus {
+    border-color: var(--med-primary);
+
+    box-shadow:
+        0 0 0 4px rgba(23,119,210,.08);
+}
+
+.med-submit-review {
+    min-height: 45px;
+    border: 0;
+    border-radius: 11px;
+    padding: 0 19px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1983df,
+            #116bc4
+        );
+
+    font-family: inherit;
+    font-weight: 900;
+    cursor: pointer;
+
+    transition: .25s ease;
+}
+
+.med-submit-review:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 22px rgba(23,119,210,.18);
+}
+
+.med-submit-review i {
+    margin-left: 6px;
+}
+
+
+/* =========================================================
+   19. REVIEW ITEMS
+========================================================= */
+
+.med-review-item {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--med-border-light);
+    min-width: 0;
+}
+
+.med-review-item:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.med-review-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    margin-bottom: 12px;
+    min-width: 0;
+}
+
+.med-review-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.med-user-avatar {
+    width: 43px;
+    height: 43px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 43px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #eaf5ff,
+            #e1f1ff
+        );
+
+    color: var(--med-primary);
+    font-weight: 950;
+    border: 1px solid #d9eafa;
+}
+
+.med-review-user > div:last-child {
+    min-width: 0;
+}
+
+.med-review-user h4 {
+    margin: 0 0 3px;
+    color: #2b374a;
+    font-size: 14px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.med-review-user span {
+    color: #9aa2ad;
+    font-size: 10px;
+}
+
+.med-review-stars {
+    color: #e8aa23;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.med-review-item > p {
+    margin: 0;
+    padding: 13px 15px;
+
+    color: #657184;
+    line-height: 1.9;
+    font-size: 13px;
+
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #eef2f6;
+
+    overflow-wrap: anywhere;
+}
+
+.med-no-reviews {
+    margin-top: 22px;
+    padding: 45px 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fafcfe,
+            #f6f9fc
+        );
+
+    border: 1px dashed #d9e2ec;
+    border-radius: 18px;
+}
+
+.med-no-reviews > i {
+    width: 65px;
+    height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+
+    border-radius: 50%;
+    background: #fff;
+    color: #f5b82e;
+    font-size: 27px;
+
+    box-shadow:
+        0 8px 25px rgba(20,40,60,.07);
+}
+
+.med-no-reviews h3 {
+    margin: 0 0 8px;
+    color: #1e293b;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.med-no-reviews p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.med-reviews-pagination {
+    margin-top: 20px;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   20. SIDEBAR
+========================================================= */
+
+.med-sidebar-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding-bottom: 17px;
+    margin-bottom: 17px;
+
+    border-bottom: 1px solid var(--med-border-light);
+    min-width: 0;
+}
+
+.med-sidebar-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 45px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #edf7ff,
+            #e5f2ff
+        );
+
+    color: var(--med-primary);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(22,119,210,.05);
+}
+
+.med-sidebar-heading > div:last-child {
+    min-width: 0;
+}
+
+.med-sidebar-heading h3 {
+    margin: 0;
+    color: #273449;
+    font-size: 15px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.med-sidebar-heading p {
+    margin: 4px 0 0;
+    color: #9099a6;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   21. CONTACT
+========================================================= */
+
+.med-sidebar-contact {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-height: 66px;
+    padding: 10px 11px;
+    margin-bottom: 9px;
+
+    border-radius: 14px;
+    text-decoration: none;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    min-width: 0;
+    border: 1px solid transparent;
+}
+
+.med-sidebar-contact:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(20,40,60,.06);
+}
+
+.med-sidebar-contact > div {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 40px;
+
+    border-radius: 11px;
+}
+
+.med-sidebar-contact span {
+    flex: 1;
+    min-width: 0;
+}
+
+.med-sidebar-contact small,
+.med-sidebar-contact strong {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+.med-sidebar-contact small {
+    color: #929aa7;
+    font-size: 9px;
+    margin-bottom: 3px;
+}
+
+.med-sidebar-contact strong {
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.med-sidebar-contact > i {
+    font-size: 10px;
+    flex: 0 0 auto;
+}
+
+.med-sidebar-contact.phone {
+    color: var(--med-primary);
+    background: #f3f8fe;
+    border-color: #e4eff9;
+}
+
+.med-sidebar-contact.phone > div {
+    background: #e4f1ff;
+}
+
+.med-sidebar-contact.phone strong {
+    color: #2b3b50;
+}
+
+.med-sidebar-contact.whatsapp {
+    color: #16845b;
+    background: #f0fbf6;
+    border-color: #def2e8;
+}
+
+.med-sidebar-contact.whatsapp > div {
+    background: #ddf6e9;
+}
+
+.med-sidebar-contact.whatsapp strong {
+    color: #2b3b50;
+}
+
+.med-copy-number {
+    width: 100%;
+    min-height: 38px;
+
+    padding: 8px 10px;
+    margin-bottom: 10px;
+
+    border: 1px dashed #d8e1ea;
+    border-radius: 10px;
+
+    background: #fff;
+    color: #667386;
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.med-copy-number:hover {
+    color: var(--med-primary);
+    border-color: var(--med-primary);
+    background: #f8fbff;
+}
+
+
+/* =========================================================
+   22. CLINIC
+========================================================= */
+
+.med-clinic-name {
+    margin: 0 0 14px;
+    color: #273449;
+    font-size: 16px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.med-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    margin-bottom: 14px;
+
+    color: #6c7889;
+    font-size: 11px;
+    line-height: 1.8;
+    min-width: 0;
+}
+
+.med-address i {
+    color: var(--med-primary);
+    margin-top: 3px;
+    flex: 0 0 auto;
+}
+
+.med-address span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.med-map-box {
+    overflow: hidden;
+    width: 100%;
+    height: 190px;
+
+    border-radius: 14px;
+    margin-bottom: 11px;
+    border: 1px solid #e5ebf1;
+}
+
+.med-map-box iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+}
+
+.med-map-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    min-height: 42px;
+    border-radius: 11px;
+
+    background: #f2f7fc;
+    color: var(--med-primary);
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    transition: .25s ease;
+}
+
+.med-map-button:hover {
+    background: #e8f2fb;
+    color: #1268bd;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   23. PRICE
+========================================================= */
+
+.med-price-card {
+    text-align: center;
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f7fbff
+        );
+}
+
+.med-price-card::before {
+    content: "";
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    top: -75px;
+    right: -55px;
+
+    border-radius: 50%;
+    background: rgba(22,119,210,.06);
+}
+
+.med-price-card > span {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+    color: #8c96a4;
+    font-size: 11px;
+    margin-bottom: 6px;
+}
+
+.med-price-card > strong {
+    position: relative;
+    z-index: 1;
+
+    display: block;
+    color: #172337;
+    font-size: 36px;
+    line-height: 1.1;
+    font-weight: 950;
+    overflow-wrap: anywhere;
+}
+
+.med-price-card > strong small {
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.med-price-card p {
+    position: relative;
+    z-index: 1;
+
+    margin: 7px 0 18px;
+    color: #9099a5;
+    font-size: 10px;
+}
+
+.med-book-sidebar {
+    position: relative;
+    z-index: 1;
+
+    min-height: 47px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1983df,
+            #116bc4
+        );
+
+    color: #fff;
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 900;
+
+    transition: .25s ease;
+
+    box-shadow:
+        0 8px 20px rgba(23,119,210,.15);
+}
+
+.med-book-sidebar:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #218ce8,
+            #0f63b7
+        );
+
+    transform: translateY(-2px);
+    color: #fff;
+
+    box-shadow:
+        0 12px 26px rgba(23,119,210,.23);
+}
+
+
+/* =========================================================
+   24. IMAGE PLACEHOLDER
+========================================================= */
+
+.med-doctor-image-placeholder {
+    width: 100%;
+    height: 245px;
+    min-height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 30px;
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f0f6fb,
+            #e7eef5
+        );
+
+    border-radius: 21px;
+    color: #64748b;
+
+    position: relative;
+    overflow: hidden;
+
+    box-shadow:
+        0 16px 35px rgba(20,55,90,.08);
+}
+
+.med-doctor-image-placeholder::before {
+    content: "";
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+    background: rgba(255,255,255,.55);
+
+    top: -110px;
+    right: -90px;
+}
+
+.med-doctor-image-placeholder::after {
+    content: "";
+    position: absolute;
+
+    width: 210px;
+    height: 210px;
+
+    border-radius: 50%;
+    background: rgba(255,255,255,.4);
+
+    bottom: -100px;
+    left: -70px;
+}
+
+.med-placeholder-icon {
+    width: 84px;
+    height: 84px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: #fff;
+    color: #2563eb;
+    font-size: 34px;
+
+    box-shadow:
+        0 14px 32px rgba(15,23,42,.09);
+
+    position: relative;
+    z-index: 1;
+}
+
+.med-doctor-image-placeholder strong {
+    font-size: 16px;
+    font-weight: 900;
+    color: #334155;
+
+    position: relative;
+    z-index: 1;
+
+    overflow-wrap: anywhere;
+}
+
+.med-doctor-image-placeholder span {
+    font-size: 12px;
+    color: #64748b;
+
+    position: relative;
+    z-index: 1;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   25. IMAGE MODAL
+========================================================= */
+
+.med-image-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    background: rgba(4,14,27,.91);
+    backdrop-filter: blur(5px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+}
+
+.med-image-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.med-image-modal img {
+    width: auto;
+    height: auto;
+
+    max-width: min(1050px, 95vw);
+    max-height: 90vh;
+
+    border-radius: 17px;
+    object-fit: contain;
+    display: block;
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.35);
+}
+
+.med-close-modal {
+    position: absolute;
+
+    top: 20px;
+    left: 25px;
+
+    width: 46px;
+    height: 46px;
+
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.1);
+    color: #fff;
+
+    font-size: 18px;
+    cursor: pointer;
+
+    transition: .25s ease;
+    backdrop-filter: blur(8px);
+}
+
+.med-close-modal:hover {
+    background: rgba(255,255,255,.2);
+    transform: rotate(90deg) scale(1.05);
+}
+
+
+/* =========================================================
+   26. FOCUS
+========================================================= */
+
+.med-primary-action:focus-visible,
+.med-whatsapp-action:focus-visible,
+.med-book-now-action:focus-visible,
+.med-book-sidebar:focus-visible,
+.med-confirm-button:focus-visible,
+.med-submit-review:focus-visible,
+.med-share-button:focus-visible,
+.med-favorite-button:focus-visible,
+.med-copy-number:focus-visible,
+.med-day-header:focus-visible,
+.med-day-times button:focus-visible,
+.med-close-modal:focus-visible,
+.med-patient-booking-close:focus-visible,
+.med-patient-booking-cancel:focus-visible,
+.med-patient-booking-submit:focus-visible {
+    outline: 2px solid var(--med-primary);
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   27. TABLET — 1100
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .med-profile-layout {
+        grid-template-columns:
+            minmax(0, 1fr)
+            315px;
+
+        gap: 20px;
+    }
+
+    .med-doctor-hero {
+        padding: 25px;
+    }
+
+    .med-doctor-main {
+        gap: 23px;
+    }
+
+    .med-doctor-image-wrap {
+        flex-basis: 190px;
+        width: 190px;
+        height: 225px;
+        max-width: 190px;
+    }
+
+    .med-doctor-image,
+    .med-doctor-image-placeholder {
+        width: 100%;
+        height: 225px;
+    }
+
+    .med-content-card,
+    .med-sidebar-card {
+        padding: 23px;
+    }
+
+    .med-day-times {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   28. TABLET — 900
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .med-profile-page {
+        padding-top: 30px;
+        padding-bottom: 55px;
+    }
+
+    .med-container {
+        width: min(calc(100% - 24px), 760px);
+    }
+
+    .med-doctor-main {
+        align-items: flex-start;
+    }
+
+    .med-profile-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .med-price-card {
+        grid-column: 1 / -1;
+    }
+
+    .med-profile-sidebar {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+        align-items: start;
+    }
+
+    .med-profile-sidebar .med-sidebar-card {
+        margin-bottom: 0;
+    }
+
+    .med-profile-sidebar .med-price-card {
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* =========================================================
+   29. MOBILE — 700
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .med-profile-page {
+        width: 100%;
+        padding: 20px 0 42px;
+    }
+
+    .med-container {
+        width: calc(100% - 20px);
+        max-width: 100%;
+    }
+
+    .med-doctor-hero {
+        padding: 17px;
+        border-radius: 20px;
+        margin-bottom: 18px;
+    }
+
+    .med-doctor-main {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 19px;
+    }
+
+    .med-doctor-image-wrap {
+        width: 100%;
+        max-width: 100%;
+        height: 280px;
+        flex: none;
+    }
+
+    .med-doctor-image,
+    .med-doctor-image-placeholder {
+        width: 100%;
+        height: 280px;
+        border-radius: 18px;
+    }
+
+    .med-doctor-name-row {
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .med-doctor-info h1,
+    .med-doctor-name {
+        font-size: clamp(24px, 7vw, 31px);
+        line-height: 1.3;
+    }
+
+    .med-doctor-name {
+        gap: 7px;
+    }
+
+    .med-doctor-name-icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        font-size: 15px;
+    }
+
+    .med-doctor-job {
+        font-size: 13px;
+    }
+
+    .med-doctor-buttons {
+        gap: 6px;
+    }
+
+    .med-favorite-button,
+    .med-share-button {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+        border-radius: 11px;
+        font-size: 16px;
+    }
+
+    .med-doctor-meta {
+        margin-top: 17px;
+        gap: 7px;
+
+        display: grid;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .med-doctor-meta span {
+        min-width: 0;
+        min-height: 32px;
+        padding: 6px 8px;
+        font-size: 11px;
+        gap: 6px;
+        border-radius: 9px;
+    }
+
+    .med-doctor-meta span:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .med-doctor-actions {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+        margin-top: 17px;
+    }
+
+    .med-primary-action,
+    .med-whatsapp-action,
+    .med-book-now-action {
+        width: 100%;
+        min-width: 0;
+        min-height: 46px;
+        padding: 0 9px;
+        border-radius: 11px;
+        font-size: 11px;
+        gap: 6px;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .med-book-now-action {
+        grid-column: 1 / -1;
+    }
+
+    .med-profile-sidebar {
+        display: block;
+    }
+
+    .med-profile-sidebar .med-sidebar-card {
+        margin-bottom: 16px;
+    }
+
+    .med-profile-sidebar .med-price-card {
+        grid-column: auto;
+    }
+
+    .med-content-card,
+    .med-sidebar-card {
+        padding: 18px;
+        border-radius: 18px;
+        margin-bottom: 16px;
+    }
+
+    .med-card-title {
+        gap: 10px;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .med-card-title-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+
+    .med-card-title h2 {
+        font-size: 18px;
+    }
+
+    .med-card-title p {
+        font-size: 10px;
+        line-height: 1.7;
+    }
+
+    .med-section-kicker {
+        font-size: 9px;
+        margin-bottom: 4px;
+    }
+
+    .med-about-text,
+    .med-about-content {
+        font-size: 13px;
+        line-height: 1.95;
+    }
+
+    .med-about-text {
+        padding: 17px;
+        border-radius: 14px;
+    }
+
+    .med-working-hours-box {
+        align-items: flex-start;
+        gap: 11px;
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .med-working-hours-icon {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+        border-radius: 11px;
+    }
+
+    .med-working-hours-content strong {
+        font-size: 12px;
+    }
+
+    .med-working-hours-content p {
+        font-size: 11px;
+    }
+
+    .med-services-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .med-service-card {
+        min-height: 68px;
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .med-service-icon {
+        width: 39px;
+        height: 39px;
+        flex-basis: 39px;
+        border-radius: 10px;
+    }
+
+    .med-service-card h3 {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .med-gallery {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 165px 165px;
+        gap: 7px;
+    }
+
+    .med-gallery-image {
+        border-radius: 12px;
+    }
+
+    .med-booking-info {
+        align-items: flex-start;
+        padding: 12px;
+        gap: 9px;
+    }
+
+    .med-booking-info strong {
+        font-size: 12px;
+    }
+
+    .med-booking-info span {
+        font-size: 9px;
+    }
+
+    .med-booking-available {
+        font-size: 9px;
+        padding: 6px 8px;
+    }
+
+    .med-day-header {
+        padding: 13px;
+        gap: 9px;
+    }
+
+    .med-day-info {
+        gap: 7px;
+    }
+
+    .med-day-name {
+        min-width: auto;
+        font-size: 10px;
+    }
+
+    .med-day-info strong {
+        font-size: 11px;
+    }
+
+    .med-day-header-meta {
+        gap: 7px;
+    }
+
+    .med-day-header-meta span {
+        font-size: 9px;
+    }
+
+    .med-day-times {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 6px;
+        padding: 0 13px 13px;
+    }
+
+    .med-day-times button {
+        min-height: 39px;
+        border-radius: 9px;
+        font-size: 10px;
+    }
+
+    .med-selected-appointment {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 11px;
+        padding: 13px;
+        border-radius: 14px;
+    }
+
+    .med-selected-info {
+        gap: 9px;
+    }
+
+    .med-selected-icon {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+        border-radius: 11px;
+    }
+
+    .med-selected-info strong {
+        font-size: 11px;
+    }
+
+    .med-confirm-button {
+        width: 100%;
+        min-height: 43px;
+        font-size: 11px;
+    }
+
+    .med-review-summary {
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .med-big-rating {
+        min-width: 85px;
+        flex-basis: 85px;
+    }
+
+    .med-big-rating strong {
+        font-size: 34px;
+    }
+
+    .med-big-rating div {
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+
+    .med-review-summary-text h3 {
+        font-size: 14px;
+    }
+
+    .med-review-summary-text p {
+        font-size: 10px;
+    }
+
+    .med-review-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .med-review-stars {
+        padding-right: 52px;
+    }
+
+    .med-review-item > p {
+        font-size: 12px;
+        line-height: 1.85;
+        padding: 11px 12px;
+    }
+
+    .med-no-reviews {
+        padding: 35px 15px;
+    }
+
+    .med-no-reviews h3 {
+        font-size: 16px;
+    }
+
+    .med-no-reviews p {
+        font-size: 11px;
+    }
+
+    .med-price-card {
+        padding: 20px;
+    }
+
+    .med-price-card > strong {
+        font-size: 31px;
+    }
+
+    .med-map-box {
+        height: 200px;
+    }
+
+    .med-image-modal {
+        padding: 15px;
+    }
+
+    .med-image-modal img {
+        max-width: 96vw;
+        max-height: 82vh;
+        border-radius: 11px;
+    }
+
+    .med-close-modal {
+        top: 12px;
+        left: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+
+/* =========================================================
+   30. SMALL MOBILE — 480
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .med-profile-page {
+        padding-top: 14px;
+    }
+
+    .med-container {
+        width: calc(100% - 14px);
+    }
+
+    .med-doctor-hero {
+        padding: 13px;
+        border-radius: 17px;
+    }
+
+    .med-doctor-image-wrap {
+        height: 245px;
+    }
+
+    .med-doctor-image,
+    .med-doctor-image-placeholder {
+        height: 245px;
+        border-radius: 15px;
+    }
+
+    .med-verified-badge {
+        right: 9px;
+        bottom: 9px;
+        padding: 6px 9px;
+        font-size: 9px;
+    }
+
+    .med-doctor-name-row {
+        gap: 6px;
+    }
+
+    .med-doctor-info h1,
+    .med-doctor-name {
+        font-size: 21px;
+        letter-spacing: -.3px;
+    }
+
+    .med-doctor-name-icon {
+        width: 31px;
+        height: 31px;
+        border-radius: 9px;
+        font-size: 13px;
+    }
+
+    .med-doctor-job {
+        font-size: 11px;
+        margin-top: 5px;
+    }
+
+    .med-favorite-button,
+    .med-share-button {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        border-radius: 9px;
+        font-size: 14px;
+    }
+
+    .med-doctor-meta {
+        grid-template-columns: 1fr;
+        margin-top: 13px;
+    }
+
+    .med-doctor-meta span:last-child {
+        grid-column: auto;
+    }
+
+    .med-doctor-actions {
+        grid-template-columns: 1fr;
+        margin-top: 14px;
+    }
+
+    .med-primary-action,
+    .med-whatsapp-action,
+    .med-book-now-action {
+        grid-column: auto;
+        min-height: 43px;
+        font-size: 10px;
+    }
+
+    .med-content-card,
+    .med-sidebar-card {
+        padding: 14px;
+        border-radius: 15px;
+    }
+
+    .med-card-title {
+        gap: 8px;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+
+    .med-card-title-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .med-card-title h2 {
+        font-size: 15px;
+    }
+
+    .med-card-title p {
+        font-size: 9px;
+    }
+
+    .med-about-text,
+    .med-about-content {
+        font-size: 11px;
+        line-height: 1.9;
+    }
+
+    .med-about-text {
+        padding: 14px;
+        border-right-width: 3px;
+    }
+
+    .med-gallery {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 130px 130px;
+        gap: 6px;
+    }
+
+    .med-gallery-image {
+        border-radius: 10px;
+    }
+
+    .med-day-header {
+        padding: 11px;
+    }
+
+    .med-day-info {
+        flex-wrap: wrap;
+        gap: 4px 6px;
+    }
+
+    .med-day-name {
+        padding: 3px 6px;
+        font-size: 9px;
+    }
+
+    .med-day-info strong {
+        font-size: 10px;
+    }
+
+    .med-day-header-meta span {
+        display: none;
+    }
+
+    .med-day-times {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 6px;
+        padding: 0 11px 11px;
+    }
+
+    .med-day-times button {
+        min-height: 38px;
+        font-size: 10px;
+    }
+
+    .med-review-summary {
+        flex-direction: column;
+        text-align: center;
+        gap: 9px;
+    }
+
+    .med-big-rating {
+        min-width: 0;
+        flex-basis: auto;
+    }
+
+    .med-review-summary-text {
+        width: 100%;
+    }
+
+    .med-review-stars {
+        padding-right: 0;
+    }
+
+    .med-star-rating {
+        gap: 1px;
+    }
+
+    .med-star-rating button {
+        font-size: 20px;
+    }
+
+    .med-star-rating span {
+        width: 100%;
+        margin-right: 0;
+        margin-top: 3px;
+    }
+
+    .med-submit-review {
+        width: 100%;
+    }
+
+    .med-review-user h4 {
+        font-size: 12px;
+    }
+
+    .med-review-item > p {
+        font-size: 11px;
+    }
+
+    .med-sidebar-heading {
+        gap: 8px;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+    }
+
+    .med-sidebar-icon {
+        width: 39px;
+        height: 39px;
+        flex-basis: 39px;
+        border-radius: 10px;
+    }
+
+    .med-sidebar-heading h3 {
+        font-size: 13px;
+    }
+
+    .med-sidebar-heading p {
+        font-size: 9px;
+    }
+
+    .med-sidebar-contact {
+        min-height: 57px;
+        padding: 8px;
+    }
+
+    .med-sidebar-contact > div {
+        width: 35px;
+        height: 35px;
+        flex-basis: 35px;
+    }
+
+    .med-sidebar-contact small {
+        font-size: 8px;
+    }
+
+    .med-sidebar-contact strong {
+        font-size: 11px;
+    }
+
+    .med-copy-number {
+        font-size: 10px;
+    }
+
+    .med-clinic-name {
+        font-size: 13px;
+    }
+
+    .med-address {
+        font-size: 10px;
+        gap: 7px;
+    }
+
+    .med-map-box {
+        height: 170px;
+    }
+
+    .med-price-card > strong {
+        font-size: 27px;
+    }
+}
+
+
+/* =========================================================
+   31. VERY SMALL MOBILE — 360
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .med-container {
+        width: calc(100% - 10px);
+    }
+
+    .med-doctor-hero {
+        padding: 10px;
+    }
+
+    .med-doctor-image-wrap {
+        height: 220px;
+    }
+
+    .med-doctor-image,
+    .med-doctor-image-placeholder {
+        height: 220px;
+    }
+
+    .med-doctor-info h1,
+    .med-doctor-name {
+        font-size: 19px;
+    }
+
+    .med-doctor-name-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .med-doctor-buttons {
+        gap: 4px;
+    }
+
+    .med-favorite-button,
+    .med-share-button {
+        width: 35px;
+        height: 35px;
+        flex-basis: 35px;
+        font-size: 13px;
+    }
+
+    .med-doctor-actions {
+        gap: 6px;
+    }
+
+    .med-primary-action,
+    .med-whatsapp-action,
+    .med-book-now-action {
+        min-height: 41px;
+        font-size: 9px;
+    }
+
+    .med-content-card,
+    .med-sidebar-card {
+        padding: 11px;
+    }
+
+    .med-card-title h2 {
+        font-size: 14px;
+    }
+
+    .med-gallery {
+        grid-template-rows: 110px 110px;
+    }
+
+    .med-day-times {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .med-day-times button {
+        font-size: 9px;
+    }
+
+    .med-selected-info {
+        align-items: flex-start;
+    }
+
+    .med-selected-icon {
+        width: 36px;
+        height: 36px;
+        flex-basis: 36px;
+    }
+}
+
+
+/* =========================================================
+   32. DARK MODE
+========================================================= */
+
+body.dark .med-profile-page {
+    --med-primary: #58a9f3;
+    --med-primary-dark: #3d93e4;
+    --med-primary-light: rgba(88,169,243,.13);
+    --med-primary-soft: rgba(88,169,243,.07);
+
+    --med-card-bg: #111a27;
+    --med-surface: #141f2d;
+    --med-surface-2: #182433;
+
+    --med-border: rgba(255,255,255,.075);
+    --med-border-light: rgba(255,255,255,.065);
+
+    --med-text: #f1f5f9;
+    --med-text-soft: #aab7c6;
+    --med-muted: #8491a3;
+
+    background: transparent;
+}
+
+
+/* =========================================================
+   DARK — HERO
+========================================================= */
+
+body.dark .med-doctor-hero {
+    background:
+        linear-gradient(
+            135deg,
+            #111a27 0%,
+            #111a27 60%,
+            #142131 100%
+        );
+
+    border-color: rgba(255,255,255,.075);
+
+    box-shadow:
+        0 18px 50px rgba(0,0,0,.23);
+}
+
+body.dark .med-doctor-hero::before {
+    background:
+        radial-gradient(
+            circle,
+            rgba(88,169,243,.11),
+            rgba(88,169,243,0) 70%
+        );
+}
+
+body.dark .med-doctor-hero::after {
+    background:
+        radial-gradient(
+            circle,
+            rgba(88,169,243,.05),
+            rgba(88,169,243,0) 70%
+        );
+}
+
+body.dark .med-doctor-info h1,
+body.dark .med-doctor-name {
+    color: #f1f5f9;
+}
+
+body.dark .med-doctor-job {
+    color: #a7b3c2;
+}
+
+body.dark .med-doctor-label,
+body.dark .med-section-kicker {
+    color: #65b0f5;
+}
+
+body.dark .med-doctor-label::before {
+    background: #65b0f5;
+
+    box-shadow:
+        0 0 0 5px rgba(88,169,243,.08);
+}
+
+body.dark .med-doctor-name-icon {
+    background: rgba(88,169,243,.11);
+    color: #66b1f5;
+}
+
+body.dark .med-doctor-name > span:last-child::after {
+    background:
+        linear-gradient(
+            90deg,
+            #3b82f6,
+            #60a5fa
+        );
+}
+
+body.dark .med-doctor-meta span {
+    color: #aab6c5;
+    background: #141f2d;
+    border-color: rgba(255,255,255,.065);
+}
+
+body.dark .med-doctor-meta small {
+    color: #7e8b9d;
+}
+
+body.dark .med-favorite-button,
+body.dark .med-share-button {
+    background: rgba(255,255,255,.035);
+    border-color: rgba(255,255,255,.09);
+    color: #aeb9c8;
+}
+
+body.dark .med-favorite-button:hover,
+body.dark .med-favorite-button.active {
+    color: #ff7378;
+    border-color: rgba(255,107,112,.25);
+    background: rgba(229,72,77,.10);
+}
+
+body.dark .med-share-button {
+    color: #67adf3;
+}
+
+body.dark .med-share-button:hover {
+    background: rgba(23,119,210,.12);
+    border-color: rgba(23,119,210,.28);
+    color: #78b8f5;
+}
+
+body.dark .med-primary-action {
+    background:
+        linear-gradient(
+            135deg,
+            #258de4,
+            #126bc2
+        );
+}
+
+body.dark .med-whatsapp-action {
+    color: #59d29a;
+    background: rgba(22,132,91,.09);
+    border-color: rgba(22,132,91,.17);
+}
+
+body.dark .med-whatsapp-action:hover {
+    background: rgba(22,132,91,.15);
+}
+
+body.dark .med-book-now-action {
+    background:
+        linear-gradient(
+            135deg,
+            #3276ee,
+            #205bc5
+        );
+}
+
+
+/* =========================================================
+   DARK — IMAGE
+========================================================= */
+
+body.dark .med-doctor-image {
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.28);
+}
+
+body.dark .med-verified-badge {
+    background: rgba(23,35,42,.94);
+    color: #55c793;
+
+    box-shadow:
+        0 7px 25px rgba(0,0,0,.3);
+}
+
+body.dark .med-doctor-image-placeholder {
+    background:
+        linear-gradient(
+            145deg,
+            #1a2635,
+            #121c2a
+        );
+
+    color: #9eabbc;
+}
+
+body.dark .med-doctor-image-placeholder::before {
+    background: rgba(255,255,255,.035);
+}
+
+body.dark .med-doctor-image-placeholder::after {
+    background: rgba(255,255,255,.025);
+}
+
+body.dark .med-placeholder-icon {
+    background: #1c2939;
+    color: #63aaf2;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.20);
+}
+
+body.dark .med-doctor-image-placeholder strong {
+    color: #dbe4ee;
+}
+
+body.dark .med-doctor-image-placeholder span {
+    color: #8997a9;
+}
+
+
+/* =========================================================
+   DARK — CARDS
+========================================================= */
+
+body.dark .med-content-card,
+body.dark .med-sidebar-card {
+    background: #111a27;
+    border-color: rgba(255,255,255,.075);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.17);
+}
+
+body.dark .med-content-card:hover,
+body.dark .med-sidebar-card:hover {
+    border-color: rgba(255,255,255,.11);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.22);
+}
+
+body.dark .med-card-title {
+    border-color: rgba(255,255,255,.065);
+}
+
+body.dark .med-card-title-icon {
+    background: rgba(23,119,210,.13);
+    color: #60aaf1;
+}
+
+body.dark .med-card-title h2 {
+    color: #edf3f9;
+}
+
+body.dark .med-card-title p {
+    color: #8491a2;
+}
+
+body.dark .med-about-text,
+body.dark .med-about-content {
+    color: #aab6c5;
+}
+
+body.dark .med-about-text {
+    background:
+        linear-gradient(
+            135deg,
+            #141f2d,
+            #121d2a
+        );
+
+    border-color: rgba(255,255,255,.065);
+    border-right-color: #58a9f3;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   DARK — WORKING HOURS
+========================================================= */
+
+body.dark .med-working-hours-box {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23,119,210,.09),
+            rgba(23,119,210,.05)
+        );
+
+    border-color:
+        rgba(23,119,210,.18);
+}
+
+body.dark .med-working-hours-icon {
+    background: rgba(23,119,210,.13);
+    color: #61acf2;
+}
+
+body.dark .med-working-hours-content strong {
+    color: #e3ebf3;
+}
+
+body.dark .med-working-hours-content p {
+    color: #99a7b8;
+}
+
+
+/* =========================================================
+   DARK — SERVICES
+========================================================= */
+
+body.dark .med-service-card {
+    background: #141f2d;
+    border-color: rgba(255,255,255,.07);
+}
+
+body.dark .med-service-card:hover {
+    background: #172332;
+    border-color: rgba(23,119,210,.35);
+
+    box-shadow:
+        0 12px 28px rgba(23,119,210,.08);
+}
+
+body.dark .med-service-card h3 {
+    color: #dbe5ef;
+}
+
+body.dark .med-service-icon {
+    background: rgba(23,119,210,.12);
+    color: #62acf2;
+}
+
+
+/* =========================================================
+   DARK — GALLERY
+========================================================= */
+
+body.dark .med-gallery-image {
+    background: #182332;
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.18);
+}
+
+
+/* =========================================================
+   DARK — BOOKING
+========================================================= */
+
+body.dark .med-booking-info {
+    background:
+        linear-gradient(
+            135deg,
+            #141f2d,
+            #121d2a
+        );
+
+    border-color: rgba(255,255,255,.065);
+}
+
+body.dark .med-booking-info strong {
+    color: #dfe8f1;
+}
+
+body.dark .med-booking-info span {
+    color: #8795a7;
+}
+
+body.dark .med-booking-available {
+    color: #58d39a;
+    background: rgba(22,132,91,.09);
+    border-color: rgba(22,132,91,.17);
+}
+
+body.dark .med-day-accordion {
+    background: #141f2d;
+    border-color: rgba(255,255,255,.08);
+}
+
+body.dark .med-day-accordion.active {
+    border-color: rgba(88,169,243,.22);
+
+    box-shadow:
+        0 9px 25px rgba(0,0,0,.15);
+}
+
+body.dark .med-day-header {
+    background: #141f2d;
+}
+
+body.dark .med-day-header:hover {
+    background: #172433;
+}
+
+body.dark .med-day-name {
+    color: #65b0f5;
+    background: rgba(23,119,210,.11);
+}
+
+body.dark .med-day-info strong {
+    color: #dce5ef;
+}
+
+body.dark .med-day-header-meta span {
+    color: #8492a4;
+}
+
+body.dark .med-day-times button {
+    background: #101a27;
+    border-color: rgba(255,255,255,.10);
+    color: #bdc9d6;
+}
+
+body.dark .med-day-times button:hover:not(:disabled) {
+    color: #69aff1;
+    border-color: #277fce;
+    background: rgba(23,119,210,.10);
+}
+
+body.dark .med-day-times button.selected {
+    color: #fff;
+    border-color: #1777d2;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1983df,
+            #116bc4
+        );
+}
+
+body.dark .med-day-times button.unavailable,
+body.dark .med-day-times button:disabled {
+    color: #626e7e;
+    background: #1a222e;
+    border-color: rgba(255,255,255,.05);
+}
+
+body.dark .med-selected-appointment {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23,119,210,.09),
+            rgba(23,119,210,.05)
+        );
+
+    border-color:
+        rgba(23,119,210,.18);
+}
+
+body.dark .med-selected-icon {
+    background: rgba(23,119,210,.13);
+    color: #62acf2;
+}
+
+body.dark .med-selected-info span {
+    color: #8492a4;
+}
+
+body.dark .med-selected-info strong {
+    color: #dce5ef;
+}
+
+
+/* =========================================================
+   DARK — REVIEWS
+========================================================= */
+
+body.dark .med-review-summary {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(232,170,35,.08),
+            rgba(232,170,35,.045)
+        );
+
+    border-color:
+        rgba(232,170,35,.17);
+}
+
+body.dark .med-big-rating strong {
+    color: #f0f4f8;
+}
+
+body.dark .med-big-rating span {
+    color: #8794a5;
+}
+
+body.dark .med-review-summary-text h3 {
+    color: #e2eaf2;
+}
+
+body.dark .med-review-summary-text p {
+    color: #8996a7;
+}
+
+body.dark .med-add-review {
+    background: #141f2d;
+    border-color: rgba(255,255,255,.08);
+}
+
+body.dark .med-add-review h3 {
+    color: #e5edf5;
+}
+
+body.dark .med-add-review > p {
+    color: #8795a6;
+}
+
+body.dark .med-review-field label {
+    color: #bdc9d5;
+}
+
+body.dark .med-star-rating span {
+    color: #8795a6;
+}
+
+body.dark .med-review-textarea {
+    background: #0f1926;
+    border-color: rgba(255,255,255,.10);
+    color: #dce5ee;
+}
+
+body.dark .med-review-textarea::placeholder {
+    color: #687586;
+}
+
+body.dark .med-review-textarea:focus {
+    border-color: #3188d4;
+
+    box-shadow:
+        0 0 0 4px rgba(23,119,210,.12);
+}
+
+body.dark .med-review-item {
+    border-color: rgba(255,255,255,.07);
+}
+
+body.dark .med-user-avatar {
+    background: rgba(23,119,210,.13);
+    border-color: rgba(23,119,210,.18);
+    color: #68aff1;
+}
+
+body.dark .med-review-user h4 {
+    color: #dce5ee;
+}
+
+body.dark .med-review-user span {
+    color: #778597;
+}
+
+body.dark .med-review-item > p {
+    color: #9eacbc;
+    background: #141f2d;
+    border-color: rgba(255,255,255,.055);
+}
+
+body.dark .med-no-reviews {
+    background: #141f2d;
+    border-color: rgba(255,255,255,.12);
+}
+
+body.dark .med-no-reviews > i {
+    background: #1b2736;
+    color: #f5b82e;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.18);
+}
+
+body.dark .med-no-reviews h3 {
+    color: #e1e9f1;
+}
+
+body.dark .med-no-reviews p {
+    color: #8d9bad;
+}
+
+
+/* =========================================================
+   DARK — SIDEBAR
+========================================================= */
+
+body.dark .med-sidebar-heading {
+    border-color: rgba(255,255,255,.07);
+}
+
+body.dark .med-sidebar-icon {
+    background: rgba(23,119,210,.13);
+    color: #61acf2;
+}
+
+body.dark .med-sidebar-heading h3 {
+    color: #e1e9f1;
+}
+
+body.dark .med-sidebar-heading p {
+    color: #8491a2;
+}
+
+body.dark .med-sidebar-contact.phone {
+    background: rgba(23,119,210,.08);
+    border-color: rgba(23,119,210,.12);
+    color: #62acf2;
+}
+
+body.dark .med-sidebar-contact.phone > div {
+    background: rgba(23,119,210,.14);
+}
+
+body.dark .med-sidebar-contact.phone strong {
+    color: #dce6ef;
+}
+
+body.dark .med-sidebar-contact.whatsapp {
+    background: rgba(22,132,91,.08);
+    border-color: rgba(22,132,91,.12);
+    color: #54c792;
+}
+
+body.dark .med-sidebar-contact.whatsapp > div {
+    background: rgba(22,132,91,.14);
+}
+
+body.dark .med-sidebar-contact.whatsapp strong {
+    color: #dce6ef;
+}
+
+body.dark .med-sidebar-contact small {
+    color: #8492a3;
+}
+
+body.dark .med-copy-number {
+    background: #141f2d;
+    border-color: rgba(255,255,255,.10);
+    color: #8997a8;
+}
+
+body.dark .med-copy-number:hover {
+    color: #62acf2;
+    border-color: #3188d4;
+    background: #172433;
+}
+
+body.dark .med-clinic-name {
+    color: #e0e8f0;
+}
+
+body.dark .med-address {
+    color: #98a6b6;
+}
+
+body.dark .med-map-box {
+    border-color: rgba(255,255,255,.08);
+}
+
+body.dark .med-map-button {
+    background: rgba(23,119,210,.08);
+    color: #62acf2;
+}
+
+body.dark .med-map-button:hover {
+    background: rgba(23,119,210,.13);
+    color: #76b8f5;
+}
+
+body.dark .med-price-card {
+    background:
+        linear-gradient(
+            145deg,
+            #111a27,
+            #142131
+        );
+}
+
+body.dark .med-price-card::before {
+    background: rgba(88,169,243,.055);
+}
+
+body.dark .med-price-card > span {
+    color: #8794a5;
+}
+
+body.dark .med-price-card > strong {
+    color: #f0f4f8;
+}
+
+body.dark .med-price-card p {
+    color: #7f8c9d;
+}
+
+
+/* =========================================================
+   DARK — PATIENT BOOKING MODAL
+========================================================= */
+
+body.dark .med-patient-booking-dialog {
+    background: #111a27;
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+}
+
+body.dark .med-patient-booking-close {
+    background: #1b2736;
+    color: #9eacbc;
+}
+
+body.dark .med-patient-booking-close:hover {
+    background: rgba(220,38,38,.12);
+    color: #ff7378;
+}
+
+body.dark .med-patient-booking-header-icon {
+    background: rgba(23,119,210,.13);
+    color: #62acf2;
+}
+
+body.dark .med-patient-booking-header span {
+    color: #65b0f5;
+}
+
+body.dark .med-patient-booking-header h2 {
+    color: #edf3f9;
+}
+
+body.dark .med-patient-booking-header p {
+    color: #8997a8;
+}
+
+body.dark .med-patient-selected-slot {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23,119,210,.09),
+            rgba(23,119,210,.05)
+        );
+
+    border-color: rgba(23,119,210,.20);
+}
+
+body.dark .med-patient-selected-slot-icon {
+    background: rgba(23,119,210,.14);
+    color: #62acf2;
+}
+
+body.dark .med-patient-selected-slot span {
+    color: #8492a4;
+}
+
+body.dark .med-patient-selected-slot strong {
+    color: #dce5ef;
+}
+
+body.dark .med-patient-booking-field label {
+    color: #bdc9d5;
+}
+
+body.dark .med-patient-booking-field label small {
+    color: #778597;
+}
+
+body.dark .med-patient-booking-field input {
+    background: #0f1926;
+    border-color: rgba(255,255,255,.10);
+    color: #dce5ee;
+}
+
+body.dark .med-patient-booking-field input::placeholder {
+    color: #687586;
+}
+
+body.dark .med-patient-booking-field input:hover {
+    border-color: rgba(255,255,255,.18);
+}
+
+body.dark .med-patient-booking-field input:focus {
+    border-color: #3188d4;
+    background: #101b29;
+
+    box-shadow:
+        0 0 0 4px rgba(23,119,210,.12);
+}
+
+body.dark .med-booking-modal-error {
+    background: rgba(220,38,38,.10);
+    border-color: rgba(248,113,113,.20);
+    color: #ff8589;
+}
+
+body.dark .med-patient-booking-cancel {
+    background: #141f2d;
+    border-color: rgba(255,255,255,.10);
+    color: #8997a8;
+}
+
+body.dark .med-patient-booking-cancel:hover {
+    background: #1a2736;
+    color: #c4cfdb;
+}
+
+body.dark .med-patient-booking-submit {
+    background:
+        linear-gradient(
+            135deg,
+            #3276ee,
+            #205bc5
+        );
+}
+
+
+/* =========================================================
+   33. PATIENT BOOKING MODAL
+========================================================= */
+
+.med-patient-booking-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+.med-patient-booking-modal.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.med-patient-booking-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(15,23,42,.68);
+    backdrop-filter: blur(5px);
+}
+
+.med-patient-booking-dialog {
+    position: relative;
+    z-index: 2;
+
+    width: min(100%, 560px);
+    max-width: 100%;
+
+    max-height: calc(100dvh - 40px);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 28px;
+
+    box-shadow:
+        0 25px 70px rgba(15,23,42,.25);
+
+    direction: rtl;
+
+    transform:
+        translateY(20px)
+        scale(.97);
+
+    transition:
+        transform .25s ease;
+}
+
+.med-patient-booking-modal.active
+.med-patient-booking-dialog {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.med-patient-booking-close {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: #f1f5f9;
+    color: #64748b;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    font-size: 16px;
+
+    transition: .2s ease;
+}
+
+.med-patient-booking-close:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.med-patient-booking-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding-left: 40px;
+    margin-bottom: 22px;
+
+    min-width: 0;
+}
+
+.med-patient-booking-header > div:last-child {
+    min-width: 0;
+}
+
+.med-patient-booking-header-icon {
+    flex: 0 0 52px;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+    background: #eff6ff;
+    color: #2167cf;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+.med-patient-booking-header span {
+    display: block;
+    margin-bottom: 4px;
+    color: #2167cf;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.med-patient-booking-header h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 22px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.med-patient-booking-header p {
+    margin: 6px 0 0;
+    color: #64748b;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.med-patient-selected-slot {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 14px 16px;
+    margin-bottom: 24px;
+
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+    background: #f8fbff;
+
+    min-width: 0;
+}
+
+.med-patient-selected-slot > div:last-child {
+    min-width: 0;
+}
+
+.med-patient-selected-slot-icon {
+    flex: 0 0 42px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+    background: #e0edff;
+    color: #2167cf;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.med-patient-selected-slot span {
+    display: block;
+    margin-bottom: 4px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.med-patient-selected-slot strong {
+    display: block;
+    color: #172033;
+    font-size: 14px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.med-patient-booking-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.med-patient-booking-field {
+    min-width: 0;
+    width: 100%;
+}
+
+.med-patient-booking-field input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .med-patient-booking-fields {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .med-patient-booking-field input {
+        height: 44px;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+}
+
+/* الشاشات الصغيرة جدًا */
+@media (max-width: 340px) {
+    .med-patient-booking-fields {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .med-patient-booking-field {
+        width: 100%;
+    }
+
+    .med-patient-booking-field input {
+        width: 100%;
+    }
+}
+
+
+.med-patient-booking-field label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    margin-bottom: 8px;
+
+    color: #263247;
+    font-size: 14px;
+    font-weight: 700;
+
+    min-width: 0;
+}
+
+.med-patient-booking-field label span {
+    color: #dc2626;
+}
+
+.med-patient-booking-field label small {
+    margin-right: auto;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.med-patient-booking-field input {
+    width: 100%;
+    max-width: 100%;
+    height: 50px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d8e0ea;
+    border-radius: 12px;
+    outline: none;
+
+    background: #ffffff;
+    color: #172033;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.med-patient-booking-field input::placeholder {
+    color: #a1acbb;
+}
+
+.med-patient-booking-field input:hover {
+    border-color: #b8c5d6;
+}
+
+.med-patient-booking-field input:focus {
+    border-color: #2167cf;
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 4px rgba(33,103,207,.10);
+}
+
+.med-patient-booking-field input.is-invalid,
+.med-patient-booking-field input:has(+ .field-error) {
+    border-color: #dc2626;
+}
+
+.med-patient-booking-field .field-error {
+    display: block;
+    margin-top: 7px;
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.med-booking-modal-error {
+    margin-top: 16px;
+    padding: 11px 14px;
+
+    border-radius: 10px;
+
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.7;
+}
+
+.med-patient-booking-actions {
+    display: grid;
+
+    grid-template-columns:
+        140px minmax(0, 1fr);
+
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.med-patient-booking-cancel,
+.med-patient-booking-submit {
+    width: 100%;
+    min-width: 0;
+    height: 50px;
+
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.med-patient-booking-cancel {
+    border: 1px solid #dbe2ea;
+    background: #ffffff;
+    color: #64748b;
+}
+
+.med-patient-booking-cancel:hover {
+    background: #f8fafc;
+    color: #334155;
+}
+
+.med-patient-booking-submit {
+    border: 0;
+
+    background: #2167cf;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    box-shadow:
+        0 7px 18px rgba(33,103,207,.20);
+}
+
+.med-patient-booking-submit:hover {
+    background: #1858b5;
+    transform: translateY(-1px);
+}
+
+.med-patient-booking-submit:active {
+    transform: translateY(0);
+}
+
+body.med-booking-modal-open {
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FIX — PATIENT BOOKING MODAL MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .med-patient-booking-modal {
+        padding: 8px;
+        align-items: center;
+    }
+
+    .med-patient-booking-dialog {
+        width: 100%;
+        max-width: 100%;
+        max-height: calc(100dvh - 16px);
+
+        padding: 18px 15px;
+        border-radius: 17px;
+
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .med-patient-booking-close {
+        top: 11px;
+        left: 11px;
+
+        width: 34px;
+        height: 34px;
+
+        font-size: 14px;
+    }
+
+    .med-patient-booking-header {
+        gap: 10px;
+
+        padding-left: 38px;
+        margin-bottom: 14px;
+    }
+
+    .med-patient-booking-header-icon {
+        flex: 0 0 42px;
+
+        width: 42px;
+        height: 42px;
+
+        border-radius: 11px;
+        font-size: 17px;
+    }
+
+    .med-patient-booking-header span {
+        margin-bottom: 2px;
+        font-size: 10px;
+    }
+
+    .med-patient-booking-header h2 {
+        font-size: 17px;
+        line-height: 1.35;
+    }
+
+    .med-patient-booking-header p {
+        margin-top: 3px;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .med-patient-selected-slot {
+        gap: 9px;
+
+        padding: 10px 11px;
+        margin-bottom: 15px;
+
+        border-radius: 11px;
+    }
+
+    .med-patient-selected-slot-icon {
+        flex: 0 0 35px;
+
+        width: 35px;
+        height: 35px;
+
+        border-radius: 9px;
+        font-size: 15px;
+    }
+
+    .med-patient-selected-slot span {
+        margin-bottom: 2px;
+        font-size: 9px;
+    }
+
+    .med-patient-selected-slot strong {
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+
+
+    .med-patient-booking-field:last-child {
+        grid-column: auto;
+    }
+
+    .med-patient-booking-field label {
+        margin-bottom: 5px;
+        font-size: 11px;
+    }
+
+    .med-patient-booking-field label small {
+        font-size: 9px;
+    }
+
+    .med-patient-booking-field input {
+        width: 100%;
+        height: 44px;
+
+        padding: 0 12px;
+
+        border-radius: 10px;
+        font-size: 12px;
+    }
+
+    .med-patient-booking-field .field-error {
+        margin-top: 4px;
+        font-size: 10px;
+    }
+
+    .med-booking-modal-error {
+        margin-top: 10px;
+        padding: 8px 10px;
+
+        border-radius: 8px;
+        font-size: 10px;
+        line-height: 1.6;
+    }
+
+    .med-patient-booking-actions {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    .med-patient-booking-cancel,
+    .med-patient-booking-submit {
+        height: 43px;
+
+        border-radius: 10px;
+        font-size: 11px;
+    }
+
+    .med-patient-booking-submit {
+        order: 0;
+    }
+}
+
+
+/* =========================================================
+   EXTRA SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .med-patient-booking-modal {
+        padding: 6px;
+    }
+
+    .med-patient-booking-dialog {
+        max-height: calc(100dvh - 12px);
+
+        padding: 15px 12px;
+        border-radius: 15px;
+    }
+
+    .med-patient-booking-close {
+        top: 9px;
+        left: 9px;
+
+        width: 31px;
+        height: 31px;
+
+        font-size: 13px;
+    }
+
+    .med-patient-booking-header {
+        gap: 8px;
+        padding-left: 34px;
+        margin-bottom: 12px;
+    }
+
+    .med-patient-booking-header-icon {
+        flex-basis: 37px;
+
+        width: 37px;
+        height: 37px;
+
+        border-radius: 9px;
+        font-size: 15px;
+    }
+
+    .med-patient-booking-header span {
+        font-size: 9px;
+    }
+
+    .med-patient-booking-header h2 {
+        font-size: 15px;
+    }
+
+    .med-patient-booking-header p {
+        font-size: 9px;
+    }
+
+    .med-patient-selected-slot {
+        padding: 8px 9px;
+        margin-bottom: 12px;
+    }
+
+    .med-patient-selected-slot-icon {
+        flex-basis: 32px;
+
+        width: 32px;
+        height: 32px;
+
+        font-size: 13px;
+    }
+
+    .med-patient-selected-slot span {
+        font-size: 8px;
+    }
+
+    .med-patient-selected-slot strong {
+        font-size: 10px;
+    }
+
+
+    .med-patient-booking-field label {
+        margin-bottom: 4px;
+        font-size: 10px;
+    }
+
+    .med-patient-booking-field input {
+        height: 41px;
+        padding: 0 10px;
+        font-size: 11px;
+        border-radius: 9px;
+    }
+
+    .med-patient-booking-actions {
+        gap: 6px;
+        margin-top: 11px;
+    }
+
+    .med-patient-booking-cancel,
+    .med-patient-booking-submit {
+        height: 40px;
+        border-radius: 9px;
+        font-size: 10px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 340px) {
+
+    .med-patient-booking-dialog {
+        padding: 13px 10px;
+    }
+
+    .med-patient-booking-header {
+        padding-left: 30px;
+    }
+
+    .med-patient-booking-header-icon {
+        flex-basis: 34px;
+
+        width: 34px;
+        height: 34px;
+
+        font-size: 13px;
+    }
+
+    .med-patient-booking-header h2 {
+        font-size: 14px;
+    }
+
+    .med-patient-booking-field input {
+        height: 39px;
+        font-size: 10px;
+    }
+
+    .med-patient-booking-actions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* =========================================================
+   35. SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .med-patient-booking-modal {
+        padding: 8px;
+    }
+
+    .med-patient-booking-dialog {
+        max-height: calc(100dvh - 16px);
+        padding: 20px 14px;
+        border-radius: 16px;
+    }
+
+    .med-patient-booking-header {
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .med-patient-booking-header-icon {
+        flex-basis: 42px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .med-patient-booking-header h2 {
+        font-size: 18px;
+    }
+
+    .med-patient-booking-header p {
+        font-size: 12px;
+    }
+
+    .med-patient-selected-slot {
+        padding: 12px;
+    }
+
+    .med-patient-selected-slot-icon {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .med-patient-booking-field input {
+        height: 47px;
+        font-size: 13px;
+    }
+
+    .med-patient-booking-actions {
+        gap: 9px;
+        margin-top: 20px;
+    }
+
+    .med-patient-booking-cancel,
+    .med-patient-booking-submit {
+        height: 47px;
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   36. EXTRA SMALL PHONES
+========================================================= */
+
+@media (max-width: 340px) {
+
+    .med-patient-booking-dialog {
+        padding: 18px 11px;
+    }
+
+    .med-patient-booking-header {
+        padding-left: 30px;
+    }
+
+    .med-patient-booking-header-icon {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .med-patient-booking-header h2 {
+        font-size: 16px;
+    }
+
+    .med-patient-booking-header p {
+        font-size: 11px;
+    }
+
+    .med-patient-selected-slot {
+        gap: 9px;
+        padding: 10px;
+    }
+
+    .med-patient-selected-slot-icon {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+        font-size: 15px;
+    }
+
+    .med-patient-selected-slot span {
+        font-size: 10px;
+    }
+
+    .med-patient-selected-slot strong {
+        font-size: 12px;
+    }
+
+    .med-patient-booking-field input {
+        height: 45px;
+        padding: 0 12px;
+        font-size: 12px;
+    }
+}
+
+
+/* =========================================================
+   37. GLOBAL RESPONSIVE SAFETY
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .med-profile-page,
+    .med-container,
+    .med-doctor-hero,
+    .med-doctor-main,
+    .med-doctor-info,
+    .med-profile-layout,
+    .med-profile-content,
+    .med-profile-sidebar,
+    .med-content-card,
+    .med-sidebar-card {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .med-doctor-name-row,
+    .med-card-title,
+    .med-review-head,
+    .med-sidebar-heading,
+    .med-booking-info,
+    .med-day-header {
+        min-width: 0;
+    }
+
+    .med-doctor-name-row > *,
+    .med-card-title > *,
+    .med-review-head > *,
+    .med-sidebar-heading > *,
+    .med-booking-info > *,
+    .med-day-header > * {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .med-doctor-name {
+        min-width: 0;
+    }
+
+    .med-doctor-name > span:last-child {
+        max-width: 100%;
+    }
+
+    .med-map-box iframe {
+        max-width: none;
+    }
+}
+
+
+/* =========================================================
+   38. REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .med-profile-page *,
+    .med-profile-page *::before,
+    .med-profile-page *::after {
+        scroll-behavior: auto !important;
+
+        transition-duration: .01ms !important;
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   FINAL RESPONSIVE FIX
+   بدون التأثير على الشاشات الكبيرة
+========================================================= */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.med-profile-page {
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+.med-container {
+    width: min(1220px, calc(100% - 32px));
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 701px) {
+
+    .med-container {
+        width: min(1220px, calc(100% - 32px));
+        max-width: 1220px;
+    }
+
+    .med-doctor-main {
+        display: flex;
+        min-width: 0;
+    }
+
+    .med-doctor-image-wrap {
+        flex-shrink: 0;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .med-profile-page {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .med-container {
+        width: calc(100% - 20px);
+        max-width: none;
+        min-width: 0;
+    }
+
+    .med-doctor-main {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        flex-direction: column;
+    }
+
+    .med-doctor-image-wrap {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        flex: 0 0 auto;
+
+        height: 280px;
+    }
+
+    .med-doctor-image-wrap .med-doctor-image {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+    }
+
+    .med-profile-layout {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .med-profile-content,
+    .med-profile-sidebar {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .med-container {
+        width: calc(100% - 14px);
+    }
+
+    .med-doctor-image-wrap {
+        width: 100%;
+        max-width: 100%;
+        height: 245px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .med-container {
+        width: calc(100% - 10px);
+    }
+
+    .med-doctor-image-wrap {
+        width: 100%;
+        max-width: 100%;
+        height: 220px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.med-patient-booking-fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.med-patient-booking-field {
+    min-width: 0;
+    width: 100%;
+}
+
+.med-patient-booking-field input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .med-patient-booking-fields {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .med-patient-booking-field input {
+        height: 44px;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+}
+
+/* الشاشات الصغيرة جدًا */
+@media (max-width: 340px) {
+    .med-patient-booking-fields {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .med-patient-booking-field {
+        width: 100%;
+    }
+
+    .med-patient-booking-field input {
+        width: 100%;
+    }
+}
+
+
+/* =====================================================
+   Booked Slot - Dark Mode
+   ===================================================== */
+
+body.dark .med-slot-button.booked {
+    background: linear-gradient(
+        135deg,
+        #252a32 0%,
+        #1d2229 100%
+    ) !important;
+
+    border-color: #3a414b !important;
+    color: #8f98a5 !important;
+}
+
+body.dark .med-slot-button.booked::before {
+    background: repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 8px,
+        rgba(255, 255, 255, 0.025) 8px,
+        rgba(255, 255, 255, 0.025) 10px
+    );
+}
+
+body.dark .med-slot-button.booked .med-slot-booked-label {
+    background: rgba(220, 53, 69, 0.14);
+    color: #ff6876;
+}
+
+body.dark .med-slot-button.booked .med-slot-booked-label::before {
+    background: #ff4d5d;
+    box-shadow: 0 0 0 3px rgba(255, 77, 93, 0.10);
+}
+
+body.dark .med-slot-button.booked:hover {
+    background: linear-gradient(
+        135deg,
+        #252a32 0%,
+        #1d2229 100%
+    ) !important;
+}
+
+
+
+
+
+
+
+
+
+/* =================================================
+   Expired Slot
+================================================= */
+
+.med-slot-button.expired {
+    position: relative;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
+    background: linear-gradient(
+        135deg,
+        #f4f5f7 0%,
+        #e9ebef 100%
+    ) !important;
+    border: 1px solid #d2d6dc !important;
+    color: #9298a1 !important;
+    box-shadow: none !important;
+    overflow: hidden;
+}
+
+.med-slot-button.expired::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 8px,
+        rgba(120, 128, 140, 0.045) 8px,
+        rgba(120, 128, 140, 0.045) 10px
+    );
+
+    pointer-events: none;
+}
+
+.med-slot-button.expired::after {
+    content: "✓";
+
+    position: absolute;
+    top: -9px;
+    left: -6px;
+
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #8b929c;
+    color: #fff;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+
+    box-shadow: 0 3px 10px rgba(100, 108, 120, 0.20);
+
+    z-index: 2;
+}
+
+.med-slot-button.expired .med-slot-expired-label {
+    position: relative;
+    z-index: 3;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    margin-right: 7px;
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: rgba(100, 108, 120, 0.10);
+    color: #737a84;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    white-space: nowrap;
+}
+
+.med-slot-button.expired .med-slot-expired-label::before {
+    content: "";
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #8b929c;
+
+    box-shadow:
+        0 0 0 3px rgba(139, 146, 156, 0.10);
+}
+
+.med-slot-button.expired:hover {
+    transform: none !important;
+
+    background: linear-gradient(
+        135deg,
+        #f4f5f7 0%,
+        #e9ebef 100%
+    ) !important;
+}
+
+.med-slot-button.expired:disabled {
+    pointer-events: none;
+}
+
+
+/* =================================================
+   Dark Mode
+================================================= */
+
+body.dark .med-slot-button.expired {
+    background: linear-gradient(
+        135deg,
+        #252a32 0%,
+        #1e232a 100%
+    ) !important;
+
+    border-color: #3a414b !important;
+    color: #858d98 !important;
+}
+
+body.dark .med-slot-button.expired::before {
+    background: repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 8px,
+        rgba(255, 255, 255, 0.022) 8px,
+        rgba(255, 255, 255, 0.022) 10px
+    );
+}
+
+body.dark .med-slot-button.expired .med-slot-expired-label {
+    background: rgba(139, 146, 156, 0.14);
+    color: #a5adb8;
+}
+
+body.dark .med-slot-button.expired .med-slot-expired-label::before {
+    background: #969faa;
+
+    box-shadow:
+        0 0 0 3px rgba(150, 159, 170, 0.10);
+}
+
+body.dark .med-slot-button.expired:hover {
+    background: linear-gradient(
+        135deg,
+        #252a32 0%,
+        #1e232a 100%
+    ) !important;
+}
+
+                /* =================================================
+                                       Booked Slot
+                                    ================================================== */
+
+                                .med-slot-button.booked {
+                                    position: relative;
+                                    cursor: not-allowed !important;
+                                    opacity: 1 !important;
+                                    background: linear-gradient(135deg, #f8f9fb 0%, #eef1f5 100%) !important;
+                                    border: 1px solid #d8dde5 !important;
+                                    color: #8a919d !important;
+                                    box-shadow: none !important;
+                                    overflow: hidden;
+                                }
+
+                                .med-slot-button.booked::before {
+                                    content: "";
+                                    position: absolute;
+                                    inset: 0;
+                                    background: repeating-linear-gradient(135deg,
+                                            transparent 0,
+                                            transparent 8px,
+                                            rgba(120, 128, 140, 0.055) 8px,
+                                            rgba(120, 128, 140, 0.055) 10px);
+                                    pointer-events: none;
+                                }
+
+                                .med-slot-button.booked::after {
+                                    content: "×";
+                                    position: absolute;
+                                    top: -9px;
+                                    left: -6px;
+                                    width: 28px;
+                                    height: 28px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border-radius: 50%;
+                                    background: #dc3545;
+                                    color: #fff;
+                                    font-size: 19px;
+                                    font-weight: 800;
+                                    line-height: 1;
+                                    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.28);
+                                    z-index: 2;
+                                }
+
+                                .med-slot-button.booked .med-slot-booked-label {
+                                    position: relative;
+                                    z-index: 3;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 4px;
+                                    margin-right: 7px;
+                                    padding: 3px 7px;
+                                    border-radius: 999px;
+                                    background: rgba(220, 53, 69, 0.10);
+                                    color: #c92f3e;
+                                    font-size: 10px;
+                                    font-weight: 800;
+                                    white-space: nowrap;
+                                }
+
+                                .med-slot-button.booked .med-slot-booked-label::before {
+                                    content: "";
+                                    width: 5px;
+                                    height: 5px;
+                                    border-radius: 50%;
+                                    background: #dc3545;
+                                    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.10);
+                                }
+
+                                .med-slot-button.booked:hover {
+                                    transform: none !important;
+                                    background: linear-gradient(135deg, #f8f9fb 0%, #eef1f5 100%) !important;
+                                }
+
+                                .med-slot-button.booked:disabled {
+                                    pointer-events: none;
+                                }
+
+
+                                /* =================================================
+                                       Expired Slot
+                                    ================================================== */
+
+                                .med-slot-button.expired {
+                                    position: relative;
+                                    cursor: not-allowed !important;
+                                    opacity: 1 !important;
+                                    background: linear-gradient(135deg, #f4f5f7 0%, #e9ebef 100%) !important;
+                                    border: 1px solid #d2d6dc !important;
+                                    color: #9298a1 !important;
+                                    box-shadow: none !important;
+                                    overflow: hidden;
+                                }
+
+                                .med-slot-button.expired::before {
+                                    content: "";
+                                    position: absolute;
+                                    inset: 0;
+                                    background: repeating-linear-gradient(135deg,
+                                            transparent 0,
+                                            transparent 8px,
+                                            rgba(120, 128, 140, 0.045) 8px,
+                                            rgba(120, 128, 140, 0.045) 10px);
+                                    pointer-events: none;
+                                }
+
+                                .med-slot-button.expired::after {
+                                    content: "✓";
+                                    position: absolute;
+                                    top: -9px;
+                                    left: -6px;
+                                    width: 28px;
+                                    height: 28px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border-radius: 50%;
+                                    background: #8b929c;
+                                    color: #fff;
+                                    font-size: 15px;
+                                    font-weight: 800;
+                                    line-height: 1;
+                                    box-shadow: 0 3px 10px rgba(100, 108, 120, 0.20);
+                                    z-index: 2;
+                                }
+
+                                .med-slot-button.expired .med-slot-expired-label {
+                                    position: relative;
+                                    z-index: 3;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 4px;
+                                    margin-right: 7px;
+                                    padding: 3px 7px;
+                                    border-radius: 999px;
+                                    background: rgba(100, 108, 120, 0.10);
+                                    color: #737a84;
+                                    font-size: 10px;
+                                    font-weight: 800;
+                                    white-space: nowrap;
+                                }
+
+                                .med-slot-button.expired .med-slot-expired-label::before {
+                                    content: "";
+                                    width: 5px;
+                                    height: 5px;
+                                    border-radius: 50%;
+                                    background: #8b929c;
+                                    box-shadow: 0 0 0 3px rgba(139, 146, 156, 0.10);
+                                }
+
+                                .med-slot-button.expired:hover {
+                                    transform: none !important;
+                                    background: linear-gradient(135deg, #f4f5f7 0%, #e9ebef 100%) !important;
+                                }
+
+                                .med-slot-button.expired:disabled {
+                                    pointer-events: none;
+                                }
+
+
+                                /* =================================================
+                                       Dark Mode - Booked
+                                    ================================================== */
+
+                                body.dark .med-slot-button.booked {
+                                    background: linear-gradient(135deg,
+                                            #252a32 0%,
+                                            #1d2229 100%) !important;
+                                    border-color: #3a414b !important;
+                                    color: #8f98a5 !important;
+                                }
+
+                                body.dark .med-slot-button.booked::before {
+                                    background: repeating-linear-gradient(135deg,
+                                            transparent 0,
+                                            transparent 8px,
+                                            rgba(255, 255, 255, 0.025) 8px,
+                                            rgba(255, 255, 255, 0.025) 10px);
+                                }
+
+                                body.dark .med-slot-button.booked .med-slot-booked-label {
+                                    background: rgba(220, 53, 69, 0.14);
+                                    color: #ff6876;
+                                }
+
+                                body.dark .med-slot-button.booked .med-slot-booked-label::before {
+                                    background: #ff4d5d;
+                                    box-shadow: 0 0 0 3px rgba(255, 77, 93, 0.10);
+                                }
+
+                                body.dark .med-slot-button.booked:hover {
+                                    background: linear-gradient(135deg,
+                                            #252a32 0%,
+                                            #1d2229 100%) !important;
+                                }
+
+
+                                /* =================================================
+                                       Dark Mode - Expired
+                                    ================================================== */
+
+                                body.dark .med-slot-button.expired {
+                                    background: linear-gradient(135deg,
+                                            #252a32 0%,
+                                            #1e232a 100%) !important;
+                                    border-color: #3a414b !important;
+                                    color: #858d98 !important;
+                                }
+
+                                body.dark .med-slot-button.expired::before {
+                                    background: repeating-linear-gradient(135deg,
+                                            transparent 0,
+                                            transparent 8px,
+                                            rgba(255, 255, 255, 0.022) 8px,
+                                            rgba(255, 255, 255, 0.022) 10px);
+                                }
+
+                                body.dark .med-slot-button.expired .med-slot-expired-label {
+                                    background: rgba(139, 146, 156, 0.14);
+                                    color: #a5adb8;
+                                }
+
+                                body.dark .med-slot-button.expired .med-slot-expired-label::before {
+                                    background: #969faa;
+                                    box-shadow: 0 0 0 3px rgba(150, 159, 170, 0.10);
+                                }
+
+                                body.dark .med-slot-button.expired:hover {
+                                    background: linear-gradient(135deg,
+                                            #252a32 0%,
+                                            #1e232a 100%) !important;
+                                }
+
+
+                                /* =================================================
+                                       Mobile
+                                    ================================================== */
+
+                                @media (max-width: 480px) {
+
+                                    .med-slot-button.booked .med-slot-booked-label,
+                                    .med-slot-button.expired .med-slot-expired-label {
+                                        font-size: 9px;
+                                        padding: 2px 5px;
+                                        margin-right: 4px;
+                                    }
+
+                                    .med-slot-button.booked::after,
+                                    .med-slot-button.expired::after {
+                                        width: 24px;
+                                        height: 24px;
+                                    }
+
+                                    .med-slot-button.booked::after {
+                                        font-size: 17px;
+                                    }
+
+                                    .med-slot-button.expired::after {
+                                        font-size: 13px;
+                                    }
+                                }

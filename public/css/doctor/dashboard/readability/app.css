@@ -1,0 +1,76 @@
+/* Readability layer for doctor dashboard: app.
+   Generated from app.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.profile-info strong { font-size: 13px; }
+.profile-info span { font-size: 12.5px; }
+.top-doctor-info span { font-size: 12.5px; }
+.today-title span { font-size: 12px; }
+.live { font-size: 12px; }
+.today-number span { font-size: 13px; }
+.today-bottom { font-size: 12px; }
+.account-intro-info>span { font-size: 13.5px; }
+.account-status { font-size: 12.5px; }
+.account-row-content span { font-size: 12.5px; }
+.account-row-content strong { font-size: 13.5px; }
+.account-action { font-size: 13px; }
+.footer-brand p { font-size: 13px; }
+.footer-col a { font-size: 13px; }
+.whatsapp-box { font-size: 12.5px !important; }
+.footer-copy { font-size: 12px; }
+.toast { font-size: 13px; }
+.doctor-profile-progress-eyebrow { font-size: 13px; }
+.doctor-profile-progress-heading p { font-size: 13px; }
+.doctor-profile-progress-score span { font-size: 12px; }
+.doctor-profile-progress-message strong { font-size: 13.5px; }
+.doctor-profile-progress-message div span { font-size: 12.5px; }
+.doctor-profile-progress-item { font-size: 12.5px; }
+.doctor-profile-progress-check { font-size: 12.5px; }
+.doctor-profile-progress-button { font-size: 13px; }
+@media (max-width: 700px) {
+    .header-title span { font-size: 12px; }
+    .welcome-main p { font-size: 13px; }
+}
+@media (max-width: 430px) {
+    .header-title strong { font-size: 13px; }
+    .header-title span { font-size: 12px; }
+    .welcome-main p { font-size: 12.5px; }
+    .welcome-label { font-size: 12px; }
+    .welcome-subscription-note strong { font-size: 12.5px; }
+    .welcome-subscription-note span { font-size: 12px; }
+    .metric-label { font-size: 12px; }
+    .metric-change { font-size: 12px; }
+    .notification-content strong { font-size: 12.5px; }
+    .notification-content span { font-size: 12px; }
+}
+@media (max-width: 350px) {
+    .header-title strong { font-size: 12.5px; }
+    .header-title span { font-size: 12px; }
+    .welcome-main p { font-size: 12px; }
+    .welcome-subscription-note strong { font-size: 12px; }
+    .welcome-subscription-note span { font-size: 12px; }
+    .metric-label { font-size: 12px; }
+}
+.subscribe-card-label { font-size: 13px; }
+.subscribe-card-text { font-size: 13.5px; }
+.subscribe-benefit i { font-size: 13.5px; }
+.subscribe-benefit p { font-size: 13.5px; }
+.subscribe-card-btn i { font-size: 13.5px; }
+.subscribe-card-note { font-size: 12.5px; }
+.subscribe-card-note i { font-size: 13px; }
+@media (max-width: 600px) {
+    .subscribe-card-text { font-size: 13px; }
+}
+.booking-notice-content p { font-size: 13.5px; }
+@media (max-width: 600px) {
+    .booking-notice-content p { font-size: 13px; }
+}
+@media (max-width: 430px) {
+    .booking-notice-title { font-size: 13.5px; }
+    .booking-notice-content p { font-size: 12.5px; }
+}
+@media (max-width: 600px) {
+    .flash-content span { font-size: 13.5px; }
+}
+.notification-dot { font-size: 13px; }

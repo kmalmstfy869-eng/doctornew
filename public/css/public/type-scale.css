@@ -1,0 +1,111 @@
+/* ===================================================================
+   Public site — shared readability layer
+   The original public stylesheet uses 7–10px type for labels, badges,
+   meta rows and pagination, which is below a readable size on every
+   screen. This file lifts only those shared elements to a sane scale.
+   Page/module-specific type lives in its own file (cards-doctor.css,
+   cards-job.css, …), never here.
+   =================================================================== */
+
+/* ---------- Section eyebrows & headings ---------- */
+.section-label,
+.section-badge,
+.home-section-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0;
+}
+
+.section-heading p,
+.section-top p {
+    font-size: 14.5px;
+    line-height: 1.8;
+}
+
+.home-all-link {
+    font-size: 14px;
+    font-weight: 700;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ---------- Search / filter bars ---------- */
+.doctors-search-info p,
+.result-box {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.clear-button {
+    font-size: 13.5px;
+    font-weight: 700;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sort-box select,
+.doctors-search-row select,
+.doctors-search-row input,
+.specialties-search-input input {
+    font-size: 14.5px;
+}
+
+.doctors-search-button,
+.specialties-search-button,
+.home-search-button {
+    font-size: 14.5px;
+    font-weight: 700;
+    min-height: 46px;
+}
+
+/* ---------- Pagination ---------- */
+.pagination {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.page-button {
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 44px;
+}
+
+/* ---------- Empty states ---------- */
+.empty-results h3,
+.no-results h3 {
+    font-size: 19px;
+    line-height: 1.5;
+}
+
+.empty-results p,
+.no-results p {
+    font-size: 14.5px;
+    line-height: 1.8;
+}
+
+/* ---------- Footer ---------- */
+.footer-links a,
+.footer-grid p,
+.footer-bottom {
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 768px) {
+    .section-heading h2,
+    .section-top h2 {
+        font-size: clamp(22px, 6vw, 28px);
+        line-height: 1.4;
+    }
+
+    .doctors-search-info {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}

@@ -1,0 +1,240 @@
+/* Doctor dashboard — shared UX layer (all dashboard pages).
+   Focus rings, touch targets, form inputs, RTL-safe spacing and
+   phone overflow. Presentational only; uses existing colours. */
+
+.main :is(a, button, [role="button"], input, select, textarea):focus-visible,
+.sidebar :is(a, button):focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.side-link { min-height: 44px; }
+
+.main :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) {
+    font-family: inherit;
+    font-size: max(16px, 1em); /* stops iOS zoom */
+}
+
+.main :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select) {
+    min-height: 46px;
+}
+
+.main textarea { line-height: 1.8; }
+
+.main :is(p, li) { line-height: 1.8; }
+
+.main table { font-size: 14px; }
+
+@media (max-width: 700px) {
+    .main { padding-inline: 12px; }
+    .main table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .main :is(.btn, button[type="submit"]) { min-height: 46px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .main *, .sidebar * { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* =========================================================
+   Doctor Dashboard Footer Polish & Responsive Layout
+   ========================================================= */
+.footer {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1.2fr;
+    gap: 28px 20px;
+    align-items: start;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+    position: relative;
+    direction: rtl;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.footer-brand {
+    position: relative;
+    z-index: 1;
+}
+
+.footer-brand strong {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.footer-brand p {
+    margin: 8px 0 0;
+    line-height: 1.8;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 420px;
+}
+
+.footer-col {
+    position: relative;
+    z-index: 1;
+    text-align: right;
+}
+
+.footer-col strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.footer-col a {
+    display: block;
+    margin: 6px 0;
+    font-size: 12.5px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+    color: var(--primary);
+}
+
+.whatsapp-box {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px !important;
+    border-radius: 10px;
+    font-size: 12px !important;
+    font-weight: 700;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-copy {
+    grid-column: 1 / -1;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line, rgba(255, 255, 255, 0.08));
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 18px 14px !important;
+        text-align: right !important;
+        margin-top: 24px !important;
+        padding-top: 18px !important;
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1 !important;
+        text-align: right !important;
+    }
+
+    .footer-brand p {
+        font-size: 12.5px !important;
+        line-height: 1.7 !important;
+        margin: 6px 0 0 !important;
+        max-width: 100% !important;
+    }
+
+    .footer-col {
+        text-align: right !important;
+    }
+
+    .footer-col strong {
+        font-size: 12.5px !important;
+        margin-bottom: 8px !important;
+        text-align: right !important;
+    }
+
+    .footer-col strong::after {
+        margin: 6px 0 0 0 !important;
+    }
+
+    .footer-col a {
+        font-size: 12px !important;
+        margin: 5px 0 !important;
+        padding: 2px 0 !important;
+        display: block !important;
+        width: auto !important;
+        text-align: right !important;
+    }
+
+    .whatsapp-box {
+        margin: 4px 0 0 !important;
+        padding: 6px 10px !important;
+        font-size: 11.5px !important;
+        width: auto !important;
+        max-width: 100% !important;
+    }
+
+    .footer-copy {
+        grid-column: 1 / -1 !important;
+        margin-top: 14px !important;
+        padding-top: 12px !important;
+        font-size: 11px !important;
+        text-align: center !important;
+        line-height: 1.6 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .footer {
+        gap: 14px 10px !important;
+    }
+
+    .footer-brand strong {
+        font-size: 14.5px !important;
+    }
+
+    .footer-brand p {
+        font-size: 11.5px !important;
+    }
+
+    .footer-col strong {
+        font-size: 12px !important;
+    }
+
+    .footer-col a {
+        font-size: 11.5px !important;
+    }
+
+    .whatsapp-box {
+        font-size: 11px !important;
+        padding: 5px 8px !important;
+        gap: 6px !important;
+    }
+}
+
+/* =========================================================
+   Sidebar Notification Badge Polish
+   ========================================================= */
+.sidebar .sidebar-badge,
+.sidebar .notification-badge {
+    margin-right: auto !important;
+    margin-inline-start: auto !important;
+    min-width: 22px !important;
+    height: 22px !important;
+    padding: 0 7px !important;
+    box-sizing: border-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 999px !important;
+    background: linear-gradient(135deg, #ef4444, #f97316) !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25) !important;
+}
+

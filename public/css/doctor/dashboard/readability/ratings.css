@@ -1,0 +1,42 @@
+/* Readability layer for doctor dashboard: ratings.
+   Generated from ratings.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.doctor-latest-reviews .doctor-reviews-header p { font-size: 13.5px; }
+.doctor-latest-reviews .reviews-card-link { font-size: 13.5px; }
+.doctor-latest-reviews .reviews-card-link i { font-size: 13px; }
+.doctor-review-patient-info span { font-size: 12.5px; }
+.doctor-review-doctor strong { font-size: 13.5px; }
+.doctor-review-doctor span { font-size: 12.5px; }
+.doctor-review-stars i { font-size: 13.5px; }
+.doctor-review-comment-label { font-size: 12.5px; }
+.doctor-review-comment-text, .doctor-review-comment-empty { font-size: 13px; }
+.doctor-review-edit-btn, .doctor-review-delete-btn { font-size: 13px; }
+.doctor-reviews-empty p, .reviews-empty p { font-size: 13.5px; }
+.reviews-title-small { font-size: 13px; }
+.reviews-title-content p { font-size: 13.5px; }
+.reviews-stat-info span { font-size: 12.5px; }
+.reviews-count-badge { font-size: 13px; }
+.doctor-reviews-page .reviews-card-header p { font-size: 13px; }
+.reviews-search-box input { font-size: 13.5px; }
+.reviews-search-button { font-size: 13px; }
+.doctor-reviews-page .review-label { font-size: 12px; }
+.doctor-reviews-page .review-user-info strong, .doctor-reviews-page .review-doctor-info strong { font-size: 13.5px; }
+.doctor-reviews-page .review-user-info small, .doctor-reviews-page .review-doctor-info small { font-size: 12px; }
+.doctor-reviews-page .stars i { font-size: 13px; }
+.doctor-reviews-page .review-rating > strong { font-size: 13px; }
+.doctor-reviews-page .comment-box > i { font-size: 13px; }
+.doctor-reviews-page .comment-box p { font-size: 12.5px; }
+.doctor-reviews-page .review-date > i { font-size: 13.5px; }
+.doctor-reviews-page .review-date strong { font-size: 12.5px; }
+.doctor-reviews-page .review-status-badge { font-size: 12px; }
+@media (max-width: 560px) {
+    .reviews-title-content p { font-size: 12.5px; }
+}
+@media (max-width: 380px) {
+    .doctor-latest-reviews .doctor-reviews-header p { font-size: 12.5px; }
+    .doctor-review-comment-text, .doctor-review-comment-empty { font-size: 12.5px; }
+    .doctor-reviews-page .review-user-info strong, .doctor-reviews-page .review-doctor-info strong { font-size: 13px; }
+    .doctor-reviews-page .comment-box p { font-size: 12px; }
+}

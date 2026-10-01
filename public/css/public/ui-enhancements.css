@@ -1,0 +1,1089 @@
+/* ===================================================================
+   Public site — UI & Responsive Enhancements Layer
+   Loaded after all existing public sheets.
+   Purely presentational: preserves all IDs, names, routes, and logic.
+   Supports RTL, Dark Mode, and all screen sizes (375px, 390px, 430px, 768px, 1024px, 1200px+).
+   =================================================================== */
+
+/* ===================================================================
+   1. New Doctor Grid Component (.public-doctors-grid)
+   =================================================================== */
+.public-doctors-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+    direction: rtl;
+}
+
+.public-doctors-grid > * {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+}
+
+.public-doctors-grid .doctor-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.public-doctors-grid .doctor-card .doctor-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.public-doctors-grid .doctor-card .doctor-button-card {
+    margin-top: auto;
+    width: 100%;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .public-doctors-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .public-doctors-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* ===================================================================
+   2. Home Banner: "هل أنت طبيب؟" Responsive Polish
+   =================================================================== */
+.home-join-card {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.home-join-card h2 {
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+.home-join-card > div > p {
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+.home-join-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.home-join-features span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .home-join-section {
+        padding: 48px 0 !important;
+    }
+
+    .home-join-card {
+        grid-template-columns: 1fr !important;
+        padding: 32px 24px !important;
+        border-radius: 22px !important;
+        gap: 20px !important;
+    }
+
+    .home-join-visual {
+        display: none !important;
+    }
+
+    .home-join-card h2 {
+        font-size: clamp(21px, 5.5vw, 27px) !important;
+        line-height: 1.4 !important;
+        margin-top: 8px !important;
+    }
+
+    .home-join-card > div > p {
+        font-size: 13.5px !important;
+        line-height: 1.85 !important;
+        margin-top: 8px !important;
+    }
+
+    .home-join-features {
+        gap: 8px !important;
+        margin-top: 16px !important;
+    }
+
+    .home-join-features span {
+        padding: 7px 12px !important;
+        font-size: 12px !important;
+        border-radius: 8px !important;
+    }
+
+    .home-join-button {
+        width: 100% !important;
+        min-height: 48px !important;
+        justify-content: center !important;
+        font-size: 14px !important;
+        margin-top: 18px !important;
+        box-sizing: border-box !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .home-join-card {
+        padding: 24px 16px !important;
+        border-radius: 18px !important;
+    }
+
+    .home-join-features span {
+        font-size: 11.5px !important;
+        padding: 6px 10px !important;
+    }
+}
+
+/* ===================================================================
+   3. Result Count Presentation: "تم العثور على..."
+   =================================================================== */
+/* Title is primary visual element, result count is secondary */
+.section-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.section-top > div:first-child {
+    min-width: 0;
+    flex: 1;
+}
+
+.section-top h2 {
+    font-size: clamp(22px, 3.5vw, 30px);
+    font-weight: 800;
+    line-height: 1.35;
+    margin-top: 6px;
+    color: var(--text);
+}
+
+.result-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.result-box strong {
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.doctors-search-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 6px 0;
+}
+
+.doctors-search-info p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.doctors-search-info strong {
+    color: var(--primary);
+    font-size: 14.5px;
+    font-weight: 800;
+}
+
+@media (max-width: 768px) {
+    .section-top {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+    }
+
+    .result-box {
+        align-self: flex-start !important;
+        font-size: 12.5px !important;
+        padding: 6px 12px !important;
+    }
+
+    .doctors-search-info {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .clear-button {
+        align-self: flex-start;
+    }
+}
+
+/* ===================================================================
+   4. About Us Page Responsive Audit (.section, .features-grid, etc.)
+   =================================================================== */
+.section {
+    padding: 60px 0;
+}
+
+.features-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    box-sizing: border-box;
+}
+
+.feature-card {
+    min-width: 0;
+    padding: 24px;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.feature-card h3 {
+    font-size: 17px;
+    font-weight: 800;
+    margin-top: 14px;
+    color: var(--text);
+}
+
+.feature-card p {
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-top: 6px;
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+.mission-content {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: center;
+    gap: 48px;
+    box-sizing: border-box;
+}
+
+.mission-visual {
+    width: 100%;
+    min-height: 320px;
+    border-radius: 24px;
+    box-sizing: border-box;
+}
+
+.mission-text h2 {
+    font-size: clamp(22px, 4vw, 32px);
+    line-height: 1.4;
+    word-break: normal;
+}
+
+.company-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 48px;
+    border-radius: 28px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.company-content {
+    max-width: 650px;
+    min-width: 0;
+}
+
+.company-content h2 {
+    font-size: clamp(24px, 4.5vw, 34px);
+    line-height: 1.35;
+}
+
+.company-services {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.company-services span {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+@media (max-width: 992px) {
+    .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .mission-content {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .mission-visual {
+        min-height: 220px;
+    }
+
+    .company-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 36px 24px;
+        gap: 24px;
+        border-radius: 22px;
+    }
+
+    .company-visual {
+        display: none !important;
+    }
+
+    .company-button {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+    }
+}
+
+@media (max-width: 640px) {
+    .section {
+        padding: 40px 0;
+    }
+
+    .section-head {
+        margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+        font-size: clamp(20px, 6vw, 26px);
+        line-height: 1.35;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .feature-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+
+    .company-card {
+        padding: 28px 18px;
+        border-radius: 18px;
+    }
+
+    .mission-list li {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+}
+
+/* ===================================================================
+   5. Top Bar Polish
+   =================================================================== */
+.top-bar {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.top-bar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12.5px;
+}
+
+.top-bar-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.top-bar-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        padding: 6px 0;
+        height: auto;
+    }
+
+    .top-bar-content {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .top-bar-links {
+        display: none;
+    }
+
+    .top-bar-info {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .top-bar-info span {
+        font-size: 11.5px;
+    }
+}
+
+@media (max-width: 430px) {
+    .top-bar-info span:nth-child(2) {
+        display: none;
+    }
+}
+
+/* ===================================================================
+   6. Modern Professional Footer
+   =================================================================== */
+.site-footer {
+    width: 100%;
+    background: var(--footer, #040d15);
+    color: #e2e8f0;
+    padding: 48px 0 14px;
+    border-top: 1px solid var(--border, #1a2a3a);
+    direction: rtl;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.site-footer .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+    box-sizing: border-box;
+}
+
+.site-footer .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.site-footer .footer-logo-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary, #1264c8), #4facfe);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 18px rgba(18, 100, 200, 0.25);
+}
+
+.site-footer .footer-logo h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+}
+
+.site-footer .footer-description {
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: #94a3b8;
+    margin: 0 0 16px;
+    max-width: 320px;
+}
+
+.site-footer .footer-trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+    font-weight: 700;
+    color: #38bdf8;
+}
+
+.site-footer .footer-col-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.site-footer .footer-col-title::after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--primary, #1264c8);
+    border-radius: 2px;
+}
+
+.site-footer .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.site-footer .footer-links a {
+    color: #94a3b8;
+    font-size: 13.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    transition: all 0.2s ease;
+}
+
+.site-footer .footer-links a i {
+    font-size: 11px;
+    color: var(--primary, #1264c8);
+    transition: transform 0.2s ease;
+}
+
+.site-footer .footer-links a:hover {
+    color: #ffffff;
+    transform: translateX(-4px);
+}
+
+.site-footer .footer-links a:hover i {
+    color: #38bdf8;
+}
+
+.site-footer .footer-grid {
+    padding-bottom: 0 !important;
+}
+
+.site-footer .footer-bottom {
+    margin-top: 28px;
+    padding-top: 16px;
+    padding-bottom: 6px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+    box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+    .site-footer .footer-grid {
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 32px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 30px 0 10px !important;
+    }
+
+    .site-footer .footer-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 20px 12px !important;
+        padding-bottom: 0 !important;
+    }
+
+    .site-footer .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+        margin-bottom: 6px;
+    }
+
+    .site-footer .footer-description {
+        max-width: 100%;
+        font-size: 12.5px;
+        line-height: 1.75;
+        margin-bottom: 12px;
+    }
+
+    .site-footer .footer-col-title {
+        font-size: 13px;
+        margin-bottom: 10px;
+        gap: 6px;
+    }
+
+    .site-footer .footer-col-title::after {
+        width: 14px;
+        height: 2px;
+    }
+
+    .site-footer .footer-links {
+        gap: 6px;
+    }
+
+    .site-footer .footer-links a {
+        min-height: 28px;
+        padding: 2px 0;
+        font-size: 12px;
+        gap: 5px;
+        white-space: nowrap;
+    }
+
+    .site-footer .footer-links a i {
+        font-size: 9px;
+    }
+
+    .site-footer .footer-bottom {
+        margin-top: 16px !important;
+        padding-top: 12px !important;
+        padding-bottom: 4px !important;
+        font-size: 11.5px;
+    }
+}
+
+@media (max-width: 380px) {
+    .site-footer .footer-grid {
+        gap: 16px 8px !important;
+    }
+
+    .site-footer .footer-col-title {
+        font-size: 12px;
+    }
+
+    .site-footer .footer-links a {
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .site-footer .footer-links a i {
+        font-size: 8px;
+    }
+}
+
+/* ===================================================================
+   7. Sidebar Drawer (.public-mobile-nav) Professional Enhancements
+   =================================================================== */
+.public-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+}
+
+.public-mobile-nav-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.public-mobile-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.public-mobile-nav-logo-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary, #1264c8), #4facfe);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.public-mobile-nav-brand strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.25;
+}
+
+.public-mobile-nav-brand small {
+    display: block;
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.public-mobile-nav-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.public-mobile-nav-label {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-light);
+    padding: 0 10px 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.public-mobile-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.18s ease;
+    text-decoration: none;
+}
+
+.public-mobile-nav-link i {
+    width: 20px;
+    font-size: 15px;
+    color: var(--primary);
+    text-align: center;
+}
+
+.public-mobile-nav-link:hover,
+.public-mobile-nav-link.active {
+    background: var(--primary-light, #eaf3ff);
+    color: var(--primary, #1264c8);
+}
+
+.public-mobile-nav-link.is-ui-item {
+    cursor: default;
+    color: var(--text-light);
+}
+
+.public-mobile-nav-link.is-ui-item i {
+    color: var(--text-light);
+}
+
+.public-mobile-nav-link.is-ui-item:hover {
+    background: var(--input);
+    color: var(--text);
+}
+
+.public-nav-pill {
+    margin-right: auto;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--input);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+}
+
+/* Auth / Account Area in Mobile Drawer */
+.public-mobile-auth-area {
+    margin-top: auto;
+    padding-top: 14px;
+}
+
+.public-mobile-guest-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.public-mobile-auth-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+/* Login button: visually strong, equal weight */
+.public-mobile-auth-btn.is-login {
+    background: var(--card);
+    border: 1.5px solid var(--primary, #1264c8);
+    color: var(--primary, #1264c8);
+}
+
+.public-mobile-auth-btn.is-login:hover {
+    background: var(--primary-light, #eaf3ff);
+}
+
+/* Join button: prominent primary button */
+.public-mobile-auth-btn.is-join {
+    background: linear-gradient(135deg, var(--primary, #1264c8), #1e7be3);
+    color: #ffffff;
+    border: 1.5px solid transparent;
+    box-shadow: 0 4px 12px rgba(18, 100, 200, 0.25);
+}
+
+.public-mobile-auth-btn.is-join:hover {
+    background: var(--primary-dark, #0b4e91);
+    color: #ffffff;
+}
+
+/* Logged-in user area in Drawer */
+.public-mobile-user-card {
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.public-mobile-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.public-mobile-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.public-mobile-user-info strong {
+    display: block;
+    font-size: 13px;
+    color: var(--text);
+}
+
+.public-mobile-user-info small {
+    display: block;
+    font-size: 11.5px;
+    color: var(--text-light);
+}
+
+.public-mobile-user-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.public-mobile-btn-profile,
+.public-mobile-btn-logout {
+    flex: 1;
+    min-height: 40px;
+    padding: 0 10px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 0;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.public-mobile-btn-profile {
+    background: var(--primary);
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.public-mobile-logout-form {
+    flex: 1;
+    margin: 0;
+}
+
+.public-mobile-btn-logout {
+    width: 100%;
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+}
+
+.public-mobile-btn-logout:hover {
+    background: #dc2626;
+    color: #ffffff;
+}
+
+/* ===================================================================
+   8. Login & Register Polish
+   =================================================================== */
+.doctor-login-page {
+    overflow-x: hidden;
+}
+
+.doctor-login-wrapper {
+    box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+    .doctor-login-main {
+        padding: 30px 14px !important;
+        min-height: auto !important;
+    }
+
+    .doctor-login-wrapper {
+        width: 100% !important;
+        max-width: 450px !important;
+        margin: 0 auto !important;
+        border-radius: 20px !important;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .doctor-login-form-panel {
+        padding: 28px 18px !important;
+    }
+
+    .doctor-login-form-container {
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .doctor-login-main {
+        padding: 20px 10px !important;
+    }
+
+    .doctor-login-form-panel {
+        padding: 22px 14px !important;
+    }
+
+    .doctor-login-input > input {
+        height: 50px !important;
+        font-size: 16px !important;
+    }
+
+    .doctor-login-button {
+        min-height: 50px !important;
+        font-size: 15px !important;
+    }
+}
+
+/* ===================================================================
+   9. Specialties & Jobs Search Box Mobile Polish
+   =================================================================== */
+@media (max-width: 768px) {
+    .specialties-search-box {
+        grid-template-columns: 1fr auto !important;
+        gap: 8px !important;
+        padding: 8px 10px !important;
+        border-radius: 16px !important;
+        width: min(94%, 560px) !important;
+    }
+
+    .specialties-search-input {
+        height: 48px !important;
+        padding: 0 12px !important;
+        border-radius: 12px !important;
+        min-width: 0 !important;
+    }
+
+    .specialties-search-input input {
+        font-size: 14px !important;
+        width: 100% !important;
+    }
+
+    .specialties-search-input input::placeholder {
+        font-size: 13.5px !important;
+        opacity: 0.8;
+    }
+
+    .specialties-search-button {
+        min-width: 80px !important;
+        padding: 0 18px !important;
+        height: 48px !important;
+        font-size: 13.5px !important;
+        border-radius: 12px !important;
+        flex-shrink: 0 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .specialties-search-box {
+        padding: 6px 8px !important;
+        gap: 6px !important;
+    }
+
+    .specialties-search-input {
+        height: 44px !important;
+        padding: 0 10px !important;
+    }
+
+    .specialties-search-input input {
+        font-size: 13px !important;
+    }
+
+    .specialties-search-input input::placeholder {
+        font-size: 12px !important;
+    }
+
+    .specialties-search-button {
+        min-width: 68px !important;
+        padding: 0 12px !important;
+        height: 44px !important;
+        font-size: 12.5px !important;
+    }
+}
+

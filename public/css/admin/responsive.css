@@ -1,0 +1,57 @@
+/* Admin panel mobile drawer overlay and overflow safety */
+
+.admin-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(8, 16, 28, 0.48);
+}
+
+.admin-sidebar-overlay.is-open {
+    display: block;
+}
+
+.header-title h1,
+.header-title p {
+    white-space: normal;
+}
+
+@media (min-width: 992px) {
+    .admin-sidebar-overlay {
+        display: none !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .mobile-menu {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+    }
+
+    .top-header {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .header-title h1 {
+        white-space: nowrap;
+    }
+
+    .dashboard-content {
+        overflow-x: auto;
+        max-width: 100%;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 430px) {
+    .header-actions .admin-header-text {
+        display: none;
+    }
+
+    .header-title p {
+        display: none;
+    }
+}

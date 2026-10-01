@@ -1,0 +1,135 @@
+/* ===================================================================
+   Public site — Doctor profile page (home/doctors/doctor_details)
+   Presentational only: readable type, comfortable tap targets and a
+   calmer booking flow. No markup, ids, data-* or JS hooks depend on
+   this file.
+   =================================================================== */
+
+/* ---------- Headings & identity ---------- */
+.med-section-kicker {
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.med-doctor-name {
+    line-height: 1.4;
+}
+
+.med-doctor-job,
+.med-clinic-name,
+.med-address {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.med-doctor-meta small {
+    font-size: 12.5px;
+}
+
+.med-verified-badge {
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* ---------- Actions ---------- */
+.med-primary-action,
+.med-whatsapp-action,
+.med-book-now-action,
+.med-copy-number,
+.med-confirm-button {
+    min-height: 46px;
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* ---------- About ---------- */
+.med-about-text,
+.med-about-content {
+    font-size: 14.5px;
+    line-height: 1.95;
+}
+
+/* ---------- Booking: days & slots ---------- */
+.med-booking-info span,
+.med-booking-available,
+.med-booking-available i,
+.med-day-info,
+.med-day-times,
+.med-day-header-meta,
+.med-day-header-meta span,
+.med-selected-info span {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.med-day-name {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.med-slot-booked-label,
+.med-slot-expired-label {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* ---------- Reviews ---------- */
+.med-big-rating span,
+.med-star-rating span,
+.med-review-user span {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ---------- Sidebar ---------- */
+.med-sidebar-heading p {
+    font-size: 13.5px;
+    line-height: 1.8;
+}
+
+.med-sidebar-contact small {
+    font-size: 12.5px;
+}
+
+.med-sidebar-contact > i {
+    font-size: 15px;
+}
+
+/* ---------- Booking dialog ---------- */
+.med-patient-booking-field label small {
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+.med-patient-booking-cancel,
+.med-patient-booking-submit {
+    min-height: 46px;
+    font-size: 14.5px;
+    font-weight: 700;
+}
+
+.med-booking-modal-error,
+.field-error {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ---------- Phones ---------- */
+@media (max-width: 768px) {
+    .med-patient-booking-submit,
+    .med-patient-booking-cancel,
+    .med-primary-action,
+    .med-whatsapp-action,
+    .med-book-now-action {
+        min-height: 48px;
+    }
+
+    .med-day-times {
+        overflow-wrap: anywhere;
+    }
+}

@@ -1,0 +1,202 @@
+/* =========================================================
+   EMPTY RESULTS
+   Reusable Empty State
+========================================================= */
+
+.empty-results {
+    width: 100%;
+    min-height: 280px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 45px 25px;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.empty-results > i {
+    width: 76px;
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 22px;
+
+    border-radius: 22px;
+
+    font-size: 29px;
+
+    color: #6d7cff;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(109, 124, 255, .14),
+            rgba(109, 124, 255, .035)
+        );
+
+    border: 1px solid rgba(109, 124, 255, .16);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, .14),
+        inset 0 1px 0 rgba(255, 255, 255, .07);
+
+    position: relative;
+}
+
+
+/* Glow */
+
+.empty-results > i::after {
+    content: "";
+
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+
+    background: rgba(109, 124, 255, .13);
+
+    filter: blur(25px);
+
+    z-index: -1;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.empty-results h3 {
+    margin: 0 0 10px;
+
+    font-size: 23px;
+
+    line-height: 1.5;
+
+    font-weight: 800;
+
+    letter-spacing: -.3px;
+
+    color: var(--text-primary, #f1f5f9);
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.empty-results p {
+    width: min(100%, 520px);
+
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 1.9;
+
+    font-weight: 500;
+
+    color: var(--text-secondary, #94a3b8);
+}
+
+
+/* =========================================================
+   SMALL DECORATIVE LINE
+========================================================= */
+
+.empty-results p::after {
+    content: "";
+
+    display: block;
+
+    width: 42px;
+    height: 3px;
+
+    margin: 23px auto 0;
+
+    border-radius: 999px;
+
+    background: currentColor;
+
+    opacity: .25;
+}
+
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
+body:not(.dark) .empty-results > i {
+    color: #6366f1;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(99, 102, 241, .09),
+            rgba(99, 102, 241, .025)
+        );
+
+    border-color: rgba(99, 102, 241, .12);
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, .07),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+body:not(.dark) .empty-results h3 {
+    color: #172033;
+}
+
+body:not(.dark) .empty-results p {
+    color: #64748b;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .empty-results {
+        min-height: 240px;
+
+        padding: 35px 18px;
+    }
+
+    .empty-results > i {
+        width: 64px;
+        height: 64px;
+
+        margin-bottom: 18px;
+
+        border-radius: 19px;
+
+        font-size: 24px;
+    }
+
+    .empty-results h3 {
+        font-size: 20px;
+    }
+
+    .empty-results p {
+        font-size: 13px;
+
+        line-height: 1.85;
+    }
+}

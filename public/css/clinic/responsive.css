@@ -1,0 +1,100 @@
+/* Clinic operational UI — mobile safety without changing workflow */
+
+.clinic-content-area {
+    max-width: 100%;
+}
+
+.btn {
+    max-width: 100%;
+}
+
+.modal-overlay {
+    padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+    align-items: flex-end;
+}
+
+.modal-panel {
+    max-width: min(32rem, 100%);
+    max-height: min(90vh, calc(100dvh - 24px));
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 1.15rem;
+}
+
+.modal-panel.modal-lg {
+    max-width: min(40rem, 100%);
+}
+
+.dropdown-menu {
+    max-width: calc(100vw - 24px);
+}
+
+.tabs-list {
+    max-width: 100%;
+}
+
+table.clinic-table {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .modal-overlay {
+        align-items: stretch;
+        justify-content: flex-end;
+    }
+
+    .modal-panel {
+        margin-top: auto;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        max-height: min(92dvh, calc(100dvh - 8px));
+    }
+
+    .section-card,
+    .section-card-body {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table.clinic-table {
+        min-width: 640px;
+    }
+
+    .btn {
+        white-space: normal;
+        height: auto;
+        min-height: 2.25rem;
+        padding-block: 0.45rem;
+        text-align: center;
+    }
+
+    .stat-card {
+        min-width: 0;
+    }
+
+    .stat-card p {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 430px) {
+    .clinic-content-area {
+        overflow-x: hidden;
+    }
+
+    h1 {
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (min-width: 1024px) {
+    .modal-overlay {
+        align-items: center;
+    }
+
+    .modal-panel {
+        margin-top: 0;
+        border-radius: var(--radius-xl);
+    }
+}

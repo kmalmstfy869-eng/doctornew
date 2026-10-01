@@ -1,0 +1,138 @@
+/* =========================================================
+   Auth pages (login / register / forgot / reset / verify)
+   Readability & mobile layer — loaded after auth/auth.css.
+   Overrides type sizes, touch targets and stacking only;
+   colors, illustration and identity are untouched.
+   ========================================================= */
+
+/* --- Hero side --- */
+.doctor-login-online-badge,
+.doctor-forgot-security-badge {
+    font-size: 12.5px;
+    padding: 8px 14px;
+}
+
+.doctor-login-hero-title p,
+.doctor-forgot-creative-content p {
+    font-size: 15px;
+    line-height: 2;
+}
+
+.doctor-login-stat strong {
+    font-size: 20px;
+}
+
+.doctor-login-stat span {
+    font-size: 12.5px;
+}
+
+/* --- Form panel --- */
+.doctor-login-welcome h2,
+.doctor-forgot-form-header h2 {
+    font-size: 24px;
+}
+
+.doctor-login-welcome p,
+.doctor-forgot-form-header p {
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.doctor-login-field label,
+.doctor-forgot-email-group label {
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+/* 16px inputs prevent iOS auto-zoom on focus */
+.doctor-login-input input,
+.doctor-forgot-input-wrapper input {
+    font-size: 16px;
+    min-height: 50px;
+}
+
+.doctor-login-input input::placeholder,
+.doctor-forgot-input-wrapper input::placeholder {
+    font-size: 14px;
+}
+
+.doctor-login-password-toggle {
+    min-width: 44px;
+    min-height: 44px;
+}
+
+/* --- Options row --- */
+.doctor-login-remember {
+    font-size: 13.5px;
+}
+
+.doctor-login-forgot {
+    font-size: 13.5px;
+}
+
+/* --- Submit --- */
+.doctor-login-button,
+.doctor-forgot-send-button {
+    font-size: 16px;
+    min-height: 52px;
+}
+
+/* --- Divider & secondary links --- */
+.doctor-login-divider {
+    font-size: 13px;
+}
+
+.doctor-login-create-account {
+    font-size: 14px;
+}
+
+.doctor-login-create-account a,
+.doctor-forgot-back-link {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* --- Notes & errors --- */
+.doctor-login-secure-note,
+.doctor-forgot-security-note {
+    font-size: 12.5px;
+}
+
+.doctor-register-auth-error,
+.doctor-forgot-auth-status {
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* --- Mobile: hide decorative hero, give the form full width --- */
+@media (max-width: 992px) {
+    .doctor-login-hero,
+    .doctor-forgot-creative {
+        display: none;
+    }
+
+    .doctor-login-wrapper,
+    .doctor-forgot-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-login-form-panel,
+    .doctor-forgot-form-panel {
+        min-height: auto;
+        padding: 28px 16px;
+    }
+
+    .doctor-login-form-container,
+    .doctor-forgot-form-container {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .doctor-login-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}

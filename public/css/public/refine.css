@@ -1,0 +1,350 @@
+/* ===================================================================
+   Public site — refinement layer (mobile-first polish)
+   Loaded LAST in home/layout/app.blade.php. Purely presentational:
+   no class, id or data-* used by JS is renamed or depends on this file.
+   Keeps the existing blue identity; fixes composition on phones.
+   =================================================================== */
+
+:root {
+    --pr-ink: #10263b;
+    --pr-muted: #5f7186;
+    --pr-line: #e3e9f1;
+    --pr-blue: #1264c8;
+    --pr-blue-soft: #eaf3ff;
+    --pr-radius: 14px;
+    --pr-touch: 44px;
+}
+
+/* ---------- Global rhythm & typography ---------- */
+body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+}
+
+main :is(h1, h2, h3) {
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+}
+
+main p {
+    text-wrap: pretty;
+}
+
+:is(a, button, select, input, textarea):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--pr-blue) 45%, transparent);
+    outline-offset: 2px;
+}
+
+/* ---------- Header ---------- */
+.site-header .header-content {
+    gap: 12px;
+}
+
+.main-navigation a {
+    position: relative;
+}
+
+.header-actions > * {
+    min-height: var(--pr-touch);
+}
+
+/* ---------- Section heads: title + link on one clean row ---------- */
+.home-section-head,
+.section-heading {
+    align-items: end;
+    gap: 16px 24px;
+}
+
+.home-all-link {
+    white-space: nowrap;
+}
+
+/* ---------- Doctor card ---------- */
+.doctor-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.doctor-card .doctor-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.doctor-card .doctor-button-card {
+    margin-top: auto;
+    min-height: var(--pr-touch);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.doctor-name-title span {
+    overflow-wrap: anywhere;
+}
+
+.doctor-services {
+    flex-wrap: wrap;
+}
+
+/* ---------- Jobs / join banner: CTA never squeezed ---------- */
+.home-jobs-banner {
+    gap: 20px 32px;
+}
+
+.home-jobs-banner > div {
+    min-width: 0;
+    flex: 1 1 320px;
+}
+
+.home-jobs-button {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* ---------- Doctor profile ---------- */
+.med-doctor-name {
+    overflow-wrap: anywhere;
+}
+
+.med-doctor-buttons a,
+.med-doctor-buttons button {
+    min-height: var(--pr-touch);
+}
+
+/* ---------- Empty state ---------- */
+.empty-results {
+    max-width: 520px;
+    margin-inline: auto;
+    padding: 48px 20px;
+    text-align: center;
+}
+
+/* ===================================================================
+   Tablet
+   =================================================================== */
+@media (max-width: 1024px) {
+    .home-hero-visual {
+        max-width: 420px;
+        margin-inline: auto;
+    }
+}
+
+/* ===================================================================
+   Phones
+   =================================================================== */
+@media (max-width: 768px) {
+    /* keep the brand name visible next to the logo */
+    .site-logo-text {
+        display: block !important;
+        min-width: 0;
+    }
+
+    .site-logo-text h1 {
+        font-size: 16px;
+        line-height: 1.3;
+        white-space: nowrap;
+    }
+
+    .site-logo-text p {
+        display: none;
+    }
+
+    .site-logo {
+        min-width: 0;
+        gap: 10px;
+    }
+
+    /* hero: the decorative doctor illustration eats a full screen on
+       phones and conveys no information — hide it, keep content first */
+    .home-hero-visual {
+        display: none !important;
+    }
+
+    .home-hero {
+        padding-block: 32px 40px !important;
+    }
+
+    .home-hero-content h2 {
+        font-size: clamp(28px, 8vw, 36px) !important;
+        line-height: 1.3 !important;
+    }
+
+    .home-search-button,
+    .doctors-search-button,
+    .home-search-field,
+    .doctors-search-row .field {
+        min-height: 48px;
+    }
+
+    /* inputs >=16px prevent iOS zoom-on-focus */
+    main input,
+    main select,
+    main textarea {
+        font-size: 16px !important;
+    }
+
+    /* section heads stack with the "view all" link as a compact row */
+    .home-section-head,
+    .section-heading {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .home-all-link {
+        align-self: flex-start;
+    }
+
+    .sort-box {
+        width: 100%;
+    }
+
+    .sort-box select {
+        width: 100%;
+    }
+
+    /* specialties: compact two-column tiles instead of tall single cards */
+    .specialties-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .specialty-card {
+        padding: 16px !important;
+        min-height: 0 !important;
+    }
+
+    .specialty-card .card-top {
+        margin-bottom: 12px !important;
+    }
+
+    .specialty-card .specialty-icon {
+        width: 44px !important;
+        height: 44px !important;
+        font-size: 18px !important;
+    }
+
+    .specialty-card h3 {
+        font-size: 15px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .specialty-card p {
+        font-size: 12.5px !important;
+        line-height: 1.7 !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .specialty-card .card-bottom {
+        padding-top: 10px !important;
+        margin-top: 10px !important;
+    }
+
+    .specialty-card .doctor-count {
+        font-size: 12px !important;
+    }
+
+    /* banners: stacked, readable title, full-width CTA */
+    .home-jobs-banner {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 24px 20px !important;
+        text-align: start;
+    }
+
+    .home-jobs-banner > div {
+        flex: none;
+    }
+
+    .home-jobs-banner h2 {
+        font-size: clamp(22px, 6.4vw, 28px) !important;
+        line-height: 1.45 !important;
+        word-break: normal;
+    }
+
+    .home-jobs-button,
+    .home-join-button {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+    }
+
+    .home-join-visual {
+        display: none !important;
+    }
+
+    /* doctor profile: shorter photo block, full-width actions */
+    .med-doctor-image-wrap {
+        max-height: 240px;
+        overflow: hidden;
+    }
+
+    .med-doctor-buttons {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px !important;
+    }
+
+    .med-doctor-buttons > * {
+        width: 100% !important;
+        justify-content: center;
+    }
+
+    .med-profile-layout {
+        gap: 16px !important;
+    }
+
+    .med-content-card,
+    .med-sidebar-card {
+        padding: 18px !important;
+    }
+
+    /* booking dialog fits small screens & the open keyboard */
+    .med-patient-booking-dialog {
+        width: calc(100vw - 24px) !important;
+        max-height: calc(100dvh - 24px) !important;
+        overflow-y: auto !important;
+    }
+
+    .med-image-modal img {
+        max-width: 100%;
+        max-height: 80dvh;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 24px !important;
+    }
+
+    .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+    }
+
+    .footer-links a {
+        display: inline-flex;
+        min-height: 36px;
+        align-items: center;
+    }
+}
+
+@media (max-width: 360px) {
+    .specialties-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .med-doctor-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .site-logo-text h1 {
+        font-size: 14px;
+    }
+}

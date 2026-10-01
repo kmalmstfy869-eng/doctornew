@@ -1,0 +1,76 @@
+/* Admin visual system — calm medical operations desk */
+
+.top-header {
+    border-bottom: 1px solid var(--border);
+}
+
+.welcome-row h2 {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.stat-card,
+.dashboard-card,
+.doctor-pending-requests-card,
+.doctor-pending-stat-card {
+    border-radius: 14px;
+    box-shadow: var(--dd-shadow-sm, 0 1px 2px rgba(15, 40, 70, 0.05));
+}
+
+.sidebar {
+    box-shadow: none;
+}
+
+.dashboard-content {
+    max-width: 100%;
+}
+
+.admin-sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(8, 16, 28, 0.48);
+}
+
+.admin-sidebar-overlay.is-open {
+    display: block;
+}
+
+body.admin-nav-locked {
+    overflow: hidden;
+}
+
+@media (min-width: 992px) {
+    .admin-sidebar-overlay {
+        display: none !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .header-title h1 {
+        font-size: 18px;
+        white-space: normal;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .stat-card {
+        min-width: 0;
+        padding: 14px;
+    }
+
+    .stat-info h3 {
+        font-size: 22px;
+    }
+
+    .welcome-text h2 {
+        font-size: 20px;
+        overflow-wrap: anywhere;
+    }
+}

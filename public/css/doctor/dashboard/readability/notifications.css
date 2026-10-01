@@ -1,0 +1,25 @@
+/* Readability layer for doctor dashboard: notifications.
+   Generated from notifications.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.notification-time { font-size: 13.5px; }
+.notification-time i { font-size: 13px; }
+.notification-new { font-size: 13px; }
+@media (max-width: 480px) {
+    .notifications-title p { font-size: 13.5px; }
+    .notifications-count { font-size: 13.5px; }
+    .delete-all-notifications { font-size: 13.5px; }
+    .notification-new { font-size: 12.5px; }
+    .notification-content p { font-size: 13.5px; }
+    .notification-time { font-size: 13px; }
+}
+@media (max-width: 360px) {
+    .notifications-title p { font-size: 13px; }
+    .notifications-count { font-size: 13px; }
+    .delete-all-notifications { font-size: 13px; }
+    .delete-all-notifications i { font-size: 13px; }
+    .notification-content p { font-size: 13px; }
+    .notification-time { font-size: 12.5px; }
+    .delete-notification-btn { font-size: 13.5px; }
+}

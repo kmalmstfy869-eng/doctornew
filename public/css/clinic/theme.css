@@ -1,0 +1,640 @@
+/* ===================================================================
+   Clinic System — Premium visual layer
+   -------------------------------------------------------------------
+   Loaded AFTER css/doctor/clinic/style.css. This file is purely
+   presentational: it refines tokens, surfaces, typography, controls
+   and states for the clinic system. No markup, class names, ids,
+   data-attributes or behaviour depend on anything defined here.
+   RTL-first: all directional spacing uses logical properties.
+   =================================================================== */
+
+/* -------------------------------------------------------------------
+   1. Refined palette & elevation (calm clinical blue + teal accents)
+   ------------------------------------------------------------------- */
+:root {
+    --radius: 0.75rem;
+
+    --background: oklch(0.974 0.006 240);
+    --surface: oklch(0.995 0.002 240);
+    --card: oklch(1 0 0);
+    --foreground: oklch(0.235 0.031 258);
+
+    --primary: oklch(0.505 0.135 249);
+    --primary-foreground: oklch(0.995 0.002 240);
+    --primary-soft: oklch(0.955 0.027 249);
+
+    --secondary: oklch(0.963 0.008 247);
+    --secondary-foreground: oklch(0.32 0.032 256);
+
+    --muted: oklch(0.964 0.007 247);
+    --muted-foreground: oklch(0.517 0.024 256);
+
+    --accent: oklch(0.955 0.027 249);
+    --accent-foreground: oklch(0.4 0.115 249);
+
+    --success: oklch(0.552 0.118 163);
+    --success-soft: oklch(0.955 0.04 163);
+    --warning: oklch(0.69 0.152 65);
+    --warning-soft: oklch(0.965 0.045 78);
+    --destructive: oklch(0.558 0.199 24);
+    --destructive-soft: oklch(0.958 0.03 24);
+    --info: oklch(0.56 0.128 236);
+    --info-soft: oklch(0.955 0.03 236);
+    --purple: oklch(0.552 0.164 298);
+    --purple-soft: oklch(0.957 0.026 300);
+
+    --border: oklch(0.922 0.008 250);
+    --input: oklch(0.906 0.01 250);
+    --ring: oklch(0.505 0.135 249);
+
+    --sidebar: oklch(0.999 0.001 240);
+    --sidebar-foreground: oklch(0.335 0.026 256);
+    --sidebar-accent: oklch(0.958 0.026 249);
+    --sidebar-accent-foreground: oklch(0.38 0.12 249);
+    --sidebar-border: oklch(0.928 0.008 250);
+
+    --shadow-soft: 0 1px 1px 0 oklch(0.25 0.04 250 / 0.03),
+        0 1px 3px -1px oklch(0.25 0.04 250 / 0.05);
+    --shadow-raised: 0 1px 2px -1px oklch(0.25 0.04 250 / 0.06),
+        0 10px 28px -10px oklch(0.25 0.04 250 / 0.16);
+
+    /* layout rhythm */
+    --clinic-gutter: 1rem;
+    --clinic-sidebar-w: 16rem;
+}
+
+.dark {
+    --background: oklch(0.181 0.019 259);
+    --surface: oklch(0.214 0.021 259);
+    --card: oklch(0.226 0.022 259);
+    --foreground: oklch(0.962 0.006 247);
+
+    --primary: oklch(0.678 0.142 250);
+    --primary-foreground: oklch(0.16 0.026 259);
+    --primary-soft: oklch(0.302 0.055 252);
+
+    --secondary: oklch(0.278 0.022 259);
+    --secondary-foreground: oklch(0.95 0.008 247);
+    --muted: oklch(0.275 0.021 259);
+    --muted-foreground: oklch(0.72 0.022 256);
+    --accent: oklch(0.302 0.055 252);
+    --accent-foreground: oklch(0.87 0.07 250);
+
+    --border: oklch(0.309 0.02 259);
+    --input: oklch(0.335 0.022 259);
+
+    --sidebar: oklch(0.203 0.02 259);
+    --sidebar-foreground: oklch(0.915 0.01 247);
+    --sidebar-accent: oklch(0.3 0.05 252);
+    --sidebar-accent-foreground: oklch(0.89 0.065 250);
+    --sidebar-border: oklch(0.298 0.02 259);
+
+    --shadow-soft: 0 1px 2px 0 oklch(0 0 0 / 0.3);
+    --shadow-raised: 0 12px 34px -12px oklch(0 0 0 / 0.6);
+}
+
+/* -------------------------------------------------------------------
+   2. Typography
+   ------------------------------------------------------------------- */
+body {
+    font-feature-settings: "ss01" on;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+h2,
+h3 {
+    font-weight: 700;
+}
+
+.clinic-page-title,
+main > * h1 {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+}
+
+/* numeric alignment for Arabic UI mixing digits */
+.tabular-nums,
+table.clinic-table td,
+.stat-card p {
+    font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------------
+   3. Shell: sidebar + header
+   ------------------------------------------------------------------- */
+#clinic-sidebar {
+    background:
+        linear-gradient(to bottom, color-mix(in oklab, var(--primary) 5%, var(--sidebar)), var(--sidebar) 22rem);
+    border-inline-start: 0;
+}
+
+#clinic-sidebar nav {
+    padding-inline: 0.625rem;
+}
+
+#clinic-sidebar nav > div {
+    margin-bottom: 1.1rem;
+}
+
+#clinic-sidebar nav > div > p {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: none;
+    color: color-mix(in oklab, var(--muted-foreground) 88%, transparent);
+    padding-bottom: 0.4rem;
+}
+
+#clinic-sidebar nav a {
+    position: relative;
+    border-radius: 0.625rem;
+    padding: 0.55rem 0.7rem;
+    min-height: 2.5rem;
+    line-height: 1.35;
+    transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+#clinic-sidebar nav a:hover {
+    background-color: color-mix(in oklab, var(--sidebar-accent) 55%, transparent);
+}
+
+/* active item gets a quiet inline marker instead of a loud fill */
+#clinic-sidebar nav a.bg-sidebar-accent {
+    background-color: color-mix(in oklab, var(--sidebar-accent) 85%, transparent);
+    font-weight: 700;
+}
+
+#clinic-sidebar nav a.bg-sidebar-accent::before {
+    content: "";
+    position: absolute;
+    inset-inline-end: -0.625rem;
+    inset-block: 0.35rem;
+    width: 3px;
+    border-radius: 999px;
+    background-color: var(--primary);
+}
+
+#clinic-sidebar nav a i,
+#clinic-sidebar nav a svg {
+    opacity: 0.85;
+}
+
+#clinic-sidebar nav a.bg-sidebar-accent i,
+#clinic-sidebar nav a.bg-sidebar-accent svg {
+    opacity: 1;
+}
+
+/* brand block */
+#clinic-sidebar > div > div:first-child {
+    padding-block: 1.05rem;
+}
+
+header.clinic-no-print {
+    border-bottom: 1px solid var(--border);
+    background-color: color-mix(in oklab, var(--surface) 82%, transparent);
+}
+
+header.clinic-no-print .btn-ghost:hover {
+    background-color: color-mix(in oklab, var(--muted) 70%, transparent);
+}
+
+.clinic-content-area {
+    /* sidebar is physically on the right in this RTL shell */
+    padding-right: var(--clinic-sidebar-w);
+    padding-left: 0;
+    background-image:
+        radial-gradient(120% 60% at 85% -10%, color-mix(in oklab, var(--primary) 6%, transparent), transparent 70%);
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 1023px) {
+    .clinic-content-area {
+        padding-right: 0;
+    }
+}
+
+/* -------------------------------------------------------------------
+   4. Surfaces: cards, sections, stats
+   ------------------------------------------------------------------- */
+.section-card,
+.clinic-surface-card {
+    border: 1px solid var(--border);
+    border-radius: 0.875rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.section-card-header {
+    padding: 0.9rem 1.05rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+}
+
+.section-card-header h2,
+.section-card-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.section-card-body {
+    padding: 1.05rem;
+}
+
+.stat-card {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 0.875rem;
+    box-shadow: var(--shadow-soft);
+    padding: 1rem 1.05rem;
+    transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 1rem;
+    height: 2px;
+    border-radius: 0 0 999px 999px;
+    background: linear-gradient(to left,
+            color-mix(in oklab, var(--primary) 70%, transparent),
+            transparent);
+    opacity: 0.55;
+}
+
+.stat-card:hover {
+    border-color: color-mix(in oklab, var(--primary) 26%, var(--border));
+    box-shadow: var(--shadow-raised);
+}
+
+.stat-card p:first-child,
+.stat-card .text-muted-foreground {
+    letter-spacing: -0.01em;
+}
+
+.stat-card .text-2xl {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+/* icon chips inside stat cards / headers */
+.stat-card span.rounded-xl,
+.section-card-header span.rounded-xl {
+    border-radius: 0.7rem;
+}
+
+/* -------------------------------------------------------------------
+   5. Controls: buttons, inputs, tabs, badges
+   ------------------------------------------------------------------- */
+.btn {
+    border-radius: 0.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    height: 2.375rem;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+        color 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+}
+
+.btn:active {
+    transform: translateY(0.5px);
+}
+
+.btn-default {
+    box-shadow: 0 1px 2px oklch(0.25 0.1 250 / 0.18);
+}
+
+.btn-outline {
+    border-color: var(--input);
+    background-color: var(--card);
+}
+
+.btn-outline:hover {
+    border-color: color-mix(in oklab, var(--primary) 35%, var(--input));
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+}
+
+.btn-sm {
+    height: 2.125rem;
+    font-size: 0.78rem;
+    padding-inline: 0.85rem;
+}
+
+.btn-icon {
+    width: 2.375rem;
+    height: 2.375rem;
+}
+
+.field-label {
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: color-mix(in oklab, var(--foreground) 88%, transparent);
+    margin-bottom: 0.4rem;
+}
+
+.field-input,
+.field-select,
+.field-textarea {
+    background-color: var(--card);
+    border-radius: 0.6rem;
+    box-shadow: none;
+    min-height: 2.625rem;
+    height: auto;
+    padding-block: 0.55rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field-select {
+    height: 2.625rem;
+}
+
+.field-input:hover,
+.field-select:hover,
+.field-textarea:hover {
+    border-color: color-mix(in oklab, var(--primary) 28%, var(--input));
+}
+
+.field-input:focus,
+.field-select:focus,
+.field-textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 18%, transparent);
+}
+
+.field-error {
+    font-weight: 600;
+}
+
+.badge {
+    padding: 0.2rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    border: 1px solid transparent;
+}
+
+.badge-success {
+    border-color: color-mix(in oklab, var(--success) 22%, transparent);
+}
+
+.badge-warning {
+    border-color: color-mix(in oklab, var(--warning) 26%, transparent);
+}
+
+.badge-danger {
+    border-color: color-mix(in oklab, var(--destructive) 22%, transparent);
+}
+
+.badge-primary,
+.badge-info {
+    border-color: color-mix(in oklab, var(--primary) 20%, transparent);
+}
+
+/* tabs: quieter segmented control */
+.tabs-list {
+    background-color: color-mix(in oklab, var(--muted) 80%, transparent);
+    border: 1px solid var(--border);
+    padding: 0.25rem;
+    border-radius: 0.7rem;
+    gap: 0.15rem;
+}
+
+.tab-trigger {
+    min-height: 2.125rem;
+    padding: 0.4rem 0.95rem;
+    font-size: 0.8rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.tab-trigger:hover:not(.active) {
+    color: var(--foreground);
+}
+
+.tab-trigger.active {
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border);
+}
+
+/* -------------------------------------------------------------------
+   6. Data: tables, scrollers, empty states, pagination
+   ------------------------------------------------------------------- */
+.clinic-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: 0.875rem;
+    background: var(--card);
+}
+
+table.clinic-table thead {
+    background-color: color-mix(in oklab, var(--muted) 75%, transparent);
+}
+
+table.clinic-table th {
+    white-space: nowrap;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding-block: 0.7rem;
+    color: var(--muted-foreground);
+}
+
+table.clinic-table td {
+    padding-block: 0.8rem;
+    vertical-align: middle;
+    border-top: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+}
+
+table.clinic-table tbody tr {
+    transition: background-color 0.14s ease;
+}
+
+table.clinic-table tbody tr:hover {
+    background-color: color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.clinic-scroll-y::-webkit-scrollbar,
+.clinic-table-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.clinic-scroll-y::-webkit-scrollbar-thumb,
+.clinic-table-scroll::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--muted-foreground) 30%, transparent);
+    border-radius: 999px;
+}
+
+/* queue cards (booking screens) */
+.bq-queue-card {
+    border-radius: 0.875rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-soft);
+    transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.bq-queue-card:hover {
+    border-color: color-mix(in oklab, var(--primary) 26%, var(--border));
+    box-shadow: var(--shadow-raised);
+}
+
+.bq-queue-num {
+    font-variant-numeric: tabular-nums;
+    font-weight: 800;
+}
+
+/* -------------------------------------------------------------------
+   7. Overlays: modals, dropdowns
+   ------------------------------------------------------------------- */
+.modal-overlay {
+    background-color: color-mix(in oklab, oklch(0.22 0.03 258) 55%, transparent);
+    backdrop-filter: blur(4px);
+}
+
+.modal-panel {
+    border-radius: 1rem;
+    box-shadow: var(--shadow-raised);
+    animation: clinic-pop 0.18s ease-out;
+}
+
+@keyframes clinic-pop {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.99);
+    }
+}
+
+.dropdown-menu {
+    border-radius: 0.75rem;
+    padding: 0.35rem;
+    animation: clinic-pop 0.14s ease-out;
+}
+
+.dropdown-item {
+    min-height: 2.25rem;
+    border-radius: 0.55rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .modal-panel,
+    .dropdown-menu {
+        animation: none;
+    }
+}
+
+/* -------------------------------------------------------------------
+   8. Mobile adaptations (presentation only — nothing hidden)
+   ------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .clinic-content-area {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .stat-card {
+        padding: 0.85rem 0.9rem;
+    }
+
+    .stat-card .text-2xl {
+        font-size: 1.35rem;
+    }
+
+    .stat-card p {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .section-card-header {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+        padding: 0.8rem 0.9rem;
+    }
+
+    .section-card-body {
+        padding: 0.9rem;
+    }
+
+    .tabs-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        scrollbar-width: none;
+    }
+
+    .tabs-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* comfortable touch targets */
+    .btn,
+    .dropdown-item,
+    .tab-trigger {
+        min-height: 2.5rem;
+    }
+
+    .btn-icon {
+        width: 2.5rem;
+    }
+}
+
+@media (max-width: 430px) {
+    .stat-card::after {
+        inset-inline: 0.75rem;
+    }
+
+    .btn-sm {
+        padding-inline: 0.7rem;
+    }
+}
+
+/* -------------------------------------------------------------------
+   9. Print — keep clinical documents clean
+   ------------------------------------------------------------------- */
+@media print {
+
+    .section-card,
+    .stat-card,
+    .clinic-table-scroll {
+        box-shadow: none !important;
+        border-color: #d8dee6 !important;
+    }
+
+    .clinic-content-area {
+        padding: 0 !important;
+        background: #fff !important;
+    }
+}
+
+/* -------------------------------------------------------------------
+   10. Long Arabic labels: wrap instead of truncating information
+   ------------------------------------------------------------------- */
+.stat-card p.truncate {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: unset;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.35;
+}
+
+.section-card-header h2.truncate,
+.section-card-header h3.truncate {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}

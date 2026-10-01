@@ -1,0 +1,1294 @@
+
+/* =========================================================
+   PROFILE PAGE
+========================================================= */
+
+.profile-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 45px 25px 70px;
+    font-family: 'Cairo', sans-serif;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.profile-page-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 35px;
+    padding: 25px 28px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.profile-header-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 22px;
+}
+
+.profile-header-content h1 {
+    margin: 0 0 4px;
+    color: #111827;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.profile-header-content p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   PROFILE CONTAINER
+========================================================= */
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/* =========================================================
+   PROFILE SECTION
+========================================================= */
+
+.profile-section {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 22px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.profile-section:hover {
+    transform: translateY(-2px);
+    border-color: #dbeafe;
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.08);
+}
+
+
+/* =========================================================
+   SECTION ICON
+========================================================= */
+
+.profile-section-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background: #eff6ff;
+    color: #2563eb;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   SECTION CONTENT
+========================================================= */
+
+.profile-section-content {
+    flex: 1;
+    min-width: 0;
+    max-width: 700px;
+}
+
+
+/* إزالة قيود Breeze */
+
+.profile-section-content > div {
+    max-width: none !important;
+}
+
+
+/* =========================================================
+   GENERAL FORM
+========================================================= */
+
+.profile-form {
+    width: 100%;
+}
+
+.profile-form-header {
+    margin-bottom: 24px;
+}
+
+.profile-form-header h2 {
+    margin: 0 0 7px;
+
+    color: #111827;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.profile-form-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   BREEZE FORM HEADERS
+========================================================= */
+
+.profile-section-content header {
+    margin-bottom: 24px;
+}
+
+.profile-section-content header h2 {
+    margin: 0 0 7px;
+
+    color: #111827;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.profile-section-content header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FORM LABEL
+========================================================= */
+
+.profile-section-content label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
+.profile-section-content input[type="text"],
+.profile-section-content input[type="email"],
+.profile-section-content input[type="password"] {
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-family: 'Cairo', sans-serif;
+
+    font-size: 13px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.profile-section-content input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================================
+   FORM SPACING
+========================================================= */
+
+.profile-section-content .mt-1 {
+    margin-top: 0 !important;
+}
+
+.profile-section-content .mt-2 {
+    margin-top: 7px !important;
+}
+
+.profile-section-content .mt-4 {
+    margin-top: 18px !important;
+}
+
+.profile-section-content .mt-6 {
+    margin-top: 24px !important;
+}
+
+
+/* =========================================================
+   FORM BUTTON AREA
+========================================================= */
+
+.profile-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 22px;
+}
+
+.profile-section-content form .flex.justify-end {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.profile-section-content button {
+    min-height: 42px;
+
+    padding: 9px 18px;
+
+    border-radius: 10px;
+
+    font-family: 'Cairo', sans-serif;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.profile-section-content button:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DELETE CARD
+========================================================= */
+
+.profile-delete-card {
+    border-color: #fee2e2;
+}
+
+.profile-delete-card .profile-section-icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.profile-delete-card:hover {
+    border-color: #fecaca;
+
+    box-shadow:
+        0 12px 32px rgba(220, 38, 38, 0.08);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.profile-delete-card button {
+    background: #dc2626;
+    border: 1px solid #dc2626;
+
+    color: #ffffff;
+}
+
+.profile-delete-card button:hover {
+    background: #b91c1c;
+    border-color: #b91c1c;
+
+    box-shadow:
+        0 6px 16px rgba(220, 38, 38, 0.20);
+}
+
+
+/* =========================================================
+   DELETE MODAL
+========================================================= */
+
+.profile-delete-card [x-data] {
+    width: auto;
+}
+
+.profile-delete-card .p-6 {
+    padding: 28px !important;
+}
+
+.profile-delete-card .p-6 h2 {
+    margin: 0 0 8px;
+
+    color: #111827;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.profile-delete-card .p-6 p {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   JOBS
+========================================================= */
+
+.profile-jobs-card {
+    align-items: flex-start;
+}
+
+.profile-jobs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.profile-jobs-header h2 {
+    margin: 0 0 6px;
+
+    color: #111827;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+.profile-jobs-header p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   JOB LIST
+========================================================= */
+
+.profile-jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-job-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 17px 18px;
+
+    background: #f9fafb;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.profile-job-item:hover {
+    background: #ffffff;
+
+    border-color: #bfdbfe;
+}
+
+.profile-job-info {
+    min-width: 0;
+}
+
+.profile-job-info h3 {
+    margin: 0 0 5px;
+
+    color: #111827;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.profile-job-info span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   JOB ACTIONS
+========================================================= */
+
+.profile-job-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    flex-shrink: 0;
+}
+
+.profile-job-actions form {
+    margin: 0;
+}
+
+.profile-job-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    min-height: 36px;
+
+    padding: 7px 12px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-family: 'Cairo', sans-serif;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.profile-job-btn:hover {
+    transform: translateY(-1px);
+}
+
+.profile-job-view {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.profile-job-view:hover {
+    background: #dbeafe;
+}
+
+.profile-job-edit {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.profile-job-edit:hover {
+    background: #e5e7eb;
+}
+
+.profile-job-delete {
+    background: #fef2f2;
+    color: #dc2626;
+
+    border: 0;
+}
+
+.profile-job-delete:hover {
+    background: #fee2e2;
+}
+
+
+/* =========================================================
+   EMPTY JOBS
+========================================================= */
+
+.profile-jobs-empty {
+    padding: 35px 20px;
+
+    text-align: center;
+
+    background: #f9fafb;
+
+    border: 1px dashed #d1d5db;
+
+    border-radius: 15px;
+}
+
+.profile-jobs-empty > i {
+    margin-bottom: 12px;
+
+    color: #9ca3af;
+
+    font-size: 30px;
+}
+
+.profile-jobs-empty h3 {
+    margin: 0 0 5px;
+
+    color: #374151;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.profile-jobs-empty p {
+    margin: 0 0 18px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.profile-jobs-add {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 7px;
+
+    padding: 9px 15px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.profile-jobs-add:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.profile-section-content .text-red-600 {
+    color: #dc2626 !important;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .profile-page {
+        padding: 25px 15px 50px;
+    }
+
+    .profile-page-header {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .profile-header-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 13px;
+    }
+
+    .profile-header-content h1 {
+        font-size: 20px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        gap: 16px;
+        padding: 22px;
+        border-radius: 16px;
+    }
+
+    .profile-section-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+    }
+
+    .profile-job-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .profile-job-actions {
+        width: 100%;
+    }
+
+    .profile-job-btn {
+        flex: 1;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .profile-page {
+        padding: 18px 12px 40px;
+    }
+
+    .profile-page-header {
+        gap: 13px;
+        padding: 17px;
+    }
+
+    .profile-header-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+    }
+
+    .profile-header-content h1 {
+        font-size: 18px;
+    }
+
+    .profile-header-content p {
+        font-size: 12px;
+    }
+
+    .profile-section {
+        padding: 18px;
+    }
+
+    .profile-form-header h2,
+    .profile-section-content header h2,
+    .profile-jobs-header h2 {
+        font-size: 17px;
+    }
+
+    .profile-section-content form .flex.justify-end {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .profile-section-content form .flex.justify-end button {
+        width: 100%;
+    }
+
+    .profile-delete-card .p-6 {
+        padding: 20px !important;
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE — DARK MODE
+========================================================= */
+
+html.dark .profile-page,
+.dark .profile-page {
+    color: #e5e7eb;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+html.dark .profile-page-header,
+.dark .profile-page-header {
+    background: #111827;
+    border-color: #1f2937;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+html.dark .profile-header-content h1,
+.dark .profile-header-content h1 {
+    color: #f9fafb;
+}
+
+html.dark .profile-header-content p,
+.dark .profile-header-content p {
+    color: #9ca3af;
+}
+
+html.dark .profile-header-icon,
+.dark .profile-header-icon {
+    background: #172554;
+    color: #60a5fa;
+}
+
+
+/* =========================================================
+   PROFILE CARDS
+========================================================= */
+
+html.dark .profile-section,
+.dark .profile-section {
+    background: #111827;
+    border-color: #1f2937;
+
+    box-shadow:
+        0 6px 24px rgba(0, 0, 0, 0.20);
+}
+
+html.dark .profile-section:hover,
+.dark .profile-section:hover {
+    border-color: #1e3a8a;
+
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   SECTION ICON
+========================================================= */
+
+html.dark .profile-section-icon,
+.dark .profile-section-icon {
+    background: #172554;
+    color: #60a5fa;
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+html.dark .profile-section-content h1,
+html.dark .profile-section-content h2,
+html.dark .profile-section-content h3,
+.dark .profile-section-content h1,
+.dark .profile-section-content h2,
+.dark .profile-section-content h3 {
+    color: #f9fafb;
+}
+
+html.dark .profile-section-content p,
+html.dark .profile-section-content span,
+.dark .profile-section-content p,
+.dark .profile-section-content span {
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+html.dark .profile-section-content input[type="text"],
+html.dark .profile-section-content input[type="email"],
+html.dark .profile-section-content input[type="password"],
+.dark .profile-section-content input[type="text"],
+.dark .profile-section-content input[type="email"],
+.dark .profile-section-content input[type="password"] {
+    background: #0f172a;
+    border-color: #374151;
+
+    color: #f9fafb;
+}
+
+html.dark .profile-section-content input::placeholder,
+.dark .profile-section-content input::placeholder {
+    color: #6b7280;
+}
+
+html.dark .profile-section-content input:focus,
+.dark .profile-section-content input:focus {
+    border-color: #60a5fa;
+
+    box-shadow:
+        0 0 0 3px rgba(96, 165, 250, 0.12);
+}
+
+
+/* =========================================================
+   JOBS
+========================================================= */
+
+html.dark .profile-job-item,
+.dark .profile-job-item {
+    background: #0f172a;
+    border-color: #1f2937;
+}
+
+html.dark .profile-job-item:hover,
+.dark .profile-job-item:hover {
+    background: #111827;
+    border-color: #1e40af;
+}
+
+html.dark .profile-job-info h3,
+.dark .profile-job-info h3 {
+    color: #f9fafb;
+}
+
+html.dark .profile-job-info span,
+.dark .profile-job-info span {
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   JOB BUTTONS
+========================================================= */
+
+html.dark .profile-job-view,
+.dark .profile-job-view {
+    background: #172554;
+    color: #60a5fa;
+}
+
+html.dark .profile-job-view:hover,
+.dark .profile-job-view:hover {
+    background: #1e3a8a;
+}
+
+html.dark .profile-job-edit,
+.dark .profile-job-edit {
+    background: #1f2937;
+    color: #d1d5db;
+}
+
+html.dark .profile-job-edit:hover,
+.dark .profile-job-edit:hover {
+    background: #374151;
+}
+
+html.dark .profile-job-delete,
+.dark .profile-job-delete {
+    background: #450a0a;
+    color: #f87171;
+}
+
+html.dark .profile-job-delete:hover,
+.dark .profile-job-delete:hover {
+    background: #7f1d1d;
+}
+
+
+/* =========================================================
+   EMPTY JOBS
+========================================================= */
+
+html.dark .profile-jobs-empty,
+.dark .profile-jobs-empty {
+    background: #0f172a;
+    border-color: #374151;
+}
+
+html.dark .profile-jobs-empty h3,
+.dark .profile-jobs-empty h3 {
+    color: #e5e7eb;
+}
+
+html.dark .profile-jobs-empty p,
+.dark .profile-jobs-empty p {
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   DELETE CARD
+========================================================= */
+
+html.dark .profile-delete-card,
+.dark .profile-delete-card {
+    background: #111827;
+    border-color: #7f1d1d;
+}
+
+html.dark .profile-delete-card .profile-section-icon,
+.dark .profile-delete-card .profile-section-icon {
+    background: #450a0a;
+    color: #f87171;
+}
+
+html.dark .profile-delete-card:hover,
+.dark .profile-delete-card:hover {
+    border-color: #991b1b;
+
+    box-shadow:
+        0 12px 32px rgba(220, 38, 38, 0.12);
+}
+
+
+/* =========================================================
+   DELETE MODAL CONTENT
+========================================================= */
+
+html.dark .profile-delete-card .p-6 h2,
+.dark .profile-delete-card .p-6 h2 {
+    color: #f9fafb;
+}
+
+html.dark .profile-delete-card .p-6 p,
+.dark .profile-delete-card .p-6 p {
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   RESPONSIVE — FONT SAFE
+========================================================= */
+
+.profile-page,
+.profile-page * {
+    box-sizing: border-box;
+}
+
+.profile-page img,
+.profile-page svg {
+    max-width: 100%;
+}
+
+.profile-page h1,
+.profile-page h2,
+.profile-page h3,
+.profile-page p {
+    overflow-wrap: anywhere;
+}
+
+.profile-page button,
+.profile-page a,
+.profile-page input {
+    max-width: 100%;
+}
+
+.profile-page a,
+.profile-page button {
+    white-space: normal;
+}
+
+.profile-job-info h3 {
+    overflow-wrap: anywhere;
+}
+
+.profile-header-content,
+.profile-section-content,
+.profile-job-info {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .profile-page {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .profile-page-header {
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .profile-section {
+        padding: 15px;
+    }
+
+    .profile-job-actions {
+        flex-wrap: wrap;
+    }
+
+    .profile-job-btn {
+        min-width: 0;
+    }
+}
+
+
+/* =========================================================
+   JOB META & STATUS
+========================================================= */
+
+.profile-job-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.profile-job-meta > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PENDING
+========================================================= */
+
+.profile-job-status-pending {
+    padding: 4px 9px;
+
+    background: #fff7ed;
+    color: #c2410c !important;
+
+    border: 1px solid #fed7aa;
+    border-radius: 7px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   APPROVED
+========================================================= */
+
+.profile-job-status-approved {
+    padding: 4px 9px;
+
+    background: #ecfdf5;
+    color: #047857 !important;
+
+    border: 1px solid #a7f3d0;
+    border-radius: 7px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   REJECTED
+========================================================= */
+
+.profile-job-status-rejected {
+    padding: 4px 9px;
+
+    background: #fef2f2;
+    color: #b91c1c !important;
+
+    border: 1px solid #fecaca;
+    border-radius: 7px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+html.dark .profile-job-status-pending,
+.dark .profile-job-status-pending {
+    background: #431407;
+    color: #fdba74 !important;
+    border-color: #7c2d12;
+}
+
+html.dark .profile-job-status-approved,
+.dark .profile-job-status-approved {
+    background: #052e1b;
+    color: #6ee7b7 !important;
+    border-color: #065f46;
+}
+
+html.dark .profile-job-status-rejected,
+.dark .profile-job-status-rejected {
+    background: #450a0a;
+    color: #fca5a5 !important;
+    border-color: #7f1d1d;
+}
+
+/* =========================================================
+   PROFILE SAVE BUTTON
+========================================================= */
+
+.profile-information-card .x-primary-button,
+.profile-information-card button[type="submit"] {
+    display: block;
+
+    min-width: 150px;
+
+    margin: 25px auto 0;
+
+    padding: 12px 28px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.profile-information-card .x-primary-button:hover,
+.profile-information-card button[type="submit"]:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+}
+
+.profile-information-card .x-primary-button:active,
+.profile-information-card button[type="submit"]:active {
+    transform: translateY(0);
+
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
+}
+/* =========================================================
+   PASSWORD SAVE BUTTON
+========================================================= */
+
+.profile-password-card button[type="submit"] {
+    display: block;
+
+    min-width: 150px;
+    margin: 25px auto 0;
+    padding: 12px 28px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.profile-password-card button[type="submit"]:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+}
+
+.profile-password-card button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
+}
+
+
+
+
+
+.profile-back {
+    margin-bottom: 20px;
+}
+
+.profile-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: #fff;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.profile-back-btn i {
+    font-size: 13px;
+}
+
+.profile-back-btn:hover {
+    background: #f8fafc;
+    color: #2563eb;
+    border-color: #2563eb;
+}

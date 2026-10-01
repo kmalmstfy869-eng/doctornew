@@ -1,0 +1,37 @@
+/* ===== رسائل المستخدمين: layout خاص (يلغي grid التقييمات) ===== */
+.review-item.cm-item {
+    display: grid !important;
+    grid-template-areas: "user comment date actions" !important;
+    grid-template-columns: 230px minmax(0, 1fr) 120px auto !important;
+    gap: 20px !important;
+    align-items: center !important;
+}
+
+.cm-item .review-user    { grid-area: user !important; }
+.cm-item .review-comment { grid-area: comment !important; min-width: 0; }
+.cm-item .review-date    { grid-area: date !important; }
+.cm-item .review-actions { grid-area: actions !important; }
+
+.cm-item .comment-box {
+    width: 100%;
+    max-width: none;
+}
+
+.cm-item .comment-box p {
+    max-height: 120px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* موبايل/تابلت: عمود واحد */
+@media (max-width: 991px) {
+    .review-item.cm-item {
+        grid-template-areas:
+            "user"
+            "comment"
+            "date"
+            "actions" !important;
+        grid-template-columns: 1fr !important;
+    }
+}

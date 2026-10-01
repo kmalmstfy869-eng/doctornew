@@ -1,0 +1,1201 @@
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 17px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   WELCOME MAIN
+========================================================= */
+
+.welcome-main {
+    min-width: 0;
+    width: 100%;
+
+    padding: 34px;
+
+    position: relative;
+    overflow: hidden;
+
+    border-radius: 30px;
+
+    color: #fff;
+
+    background:
+        radial-gradient(
+            circle at 75% 10%,
+            rgba(255, 255, 255, .12),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #11172d,
+            #202650 55%,
+            #5047c9
+        );
+
+    box-shadow:
+        0 25px 70px rgba(40, 34, 115, .17);
+
+    animation: welcomeIn .8s .08s ease both;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   WELCOME ANIMATION
+========================================================= */
+
+@keyframes welcomeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   DECORATIVE ELEMENTS
+========================================================= */
+
+.welcome-main::before {
+    content: "";
+
+    position: absolute;
+
+    width: 330px;
+    height: 330px;
+
+    left: -170px;
+    bottom: -220px;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+
+    border-radius: 50%;
+
+    pointer-events: none;
+}
+
+.welcome-main::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    left: 45%;
+    top: -120px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, .04);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.welcome-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.welcome-label {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    max-width: 100%;
+
+    padding: 7px 10px;
+
+    border-radius: 9px;
+
+    color: #c8c5ff;
+
+    background: rgba(255, 255, 255, .08);
+
+    border: 1px solid rgba(255, 255, 255, .06);
+
+    font-size: 10px;
+    font-weight: 600;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SUBSCRIPTION STATUS
+========================================================= */
+
+.welcome-status {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    color: #c7f9df;
+
+    background: rgba(34, 197, 94, .08);
+
+    border: 1px solid rgba(74, 222, 128, .14);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.welcome-status i {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #4ade80;
+
+    box-shadow:
+        0 0 0 4px rgba(74, 222, 128, .10);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.welcome-main h1 {
+    margin-top: 15px;
+
+    max-width: 100%;
+
+    font-size: clamp(28px, 3vw, 40px);
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.welcome-main p {
+    max-width: 700px;
+
+    margin-top: 10px;
+
+    color: #b5b8cc;
+
+    font-size: 13px;
+
+    line-height: 2;
+
+    overflow-wrap: break-word;
+}
+
+
+/* =========================================================
+   SUBSCRIPTION SUMMARY
+========================================================= */
+
+.welcome-subscription-summary {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin-top: 21px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   SUMMARY ITEM
+========================================================= */
+
+.welcome-summary-item {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    padding: 11px 12px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, .055);
+
+    border: 1px solid rgba(255, 255, 255, .075);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+
+    box-sizing: border-box;
+}
+
+.welcome-summary-item:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 255, 255, .08);
+
+    border-color: rgba(255, 255, 255, .13);
+}
+
+
+/* =========================================================
+   SUMMARY ICON
+========================================================= */
+
+.welcome-summary-icon {
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    border-radius: 10px;
+
+    color: #d8d5ff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(99, 91, 255, .25),
+            rgba(139, 92, 246, .18)
+        );
+
+    border: 1px solid rgba(139, 92, 246, .12);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SUMMARY CONTENT
+========================================================= */
+
+.welcome-summary-item > div:last-child {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.welcome-summary-item span {
+    display: block;
+
+    color: #858ba4;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+
+    white-space: nowrap;
+}
+
+.welcome-summary-item strong {
+    display: block;
+
+    min-width: 0;
+    max-width: 100%;
+
+    margin-top: 2px;
+
+    color: #f4f4fa;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   PROFILE STATISTICS
+========================================================= */
+
+.welcome-statistics {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    width: 100%;
+    max-width: 760px;
+
+    margin-top: 10px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.welcome-stat {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+
+    padding: 11px 12px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, .035);
+
+    border: 1px solid rgba(255, 255, 255, .055);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+
+    box-sizing: border-box;
+}
+
+.welcome-stat:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 255, 255, .065);
+
+    border-color: rgba(255, 255, 255, .10);
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.welcome-stat-icon {
+    display: grid;
+    place-items: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    border-radius: 10px;
+
+    color: #c8c5ff;
+
+    background: rgba(99, 91, 255, .10);
+
+    border: 1px solid rgba(139, 92, 246, .10);
+
+    font-size: 13px;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+}
+
+.welcome-stat:hover .welcome-stat-icon {
+    transform: scale(1.06);
+
+    background: rgba(99, 91, 255, .16);
+}
+
+
+/* =========================================================
+   STAT INFO
+========================================================= */
+
+.welcome-stat-info {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.welcome-stat-info span {
+    display: block;
+
+    color: #858ba4;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+
+    white-space: nowrap;
+}
+
+.welcome-stat-info strong {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SUBSCRIPTION NOTE
+========================================================= */
+
+.welcome-subscription-note {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 23px;
+
+    padding: 10px 13px;
+
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, .07);
+
+    border: 1px solid rgba(255, 255, 255, .09);
+
+    color: #d9d9e7;
+
+    font-size: 10px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SUBSCRIPTION BUTTON
+========================================================= */
+
+.welcome-subscription-btn {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 11px;
+
+    padding: 10px 12px;
+
+    border-radius: 14px;
+
+    color: inherit;
+
+    text-decoration: none;
+
+    background: rgba(255, 255, 255, .055);
+
+    border: 1px solid rgba(255, 255, 255, .075);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+
+    box-sizing: border-box;
+}
+
+.welcome-subscription-btn:hover {
+    color: inherit;
+
+    text-decoration: none;
+
+    transform: translateY(-1px);
+
+    background: rgba(255, 255, 255, .08);
+
+    border-color: rgba(255, 255, 255, .13);
+}
+
+
+/* =========================================================
+   SUBSCRIPTION ICON
+========================================================= */
+
+.welcome-subscription-icon {
+    display: grid;
+    place-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    flex: 0 0 32px;
+
+    margin-left: 10px;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(99, 91, 255, .9),
+            rgba(139, 92, 246, .9)
+        );
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   ACTION TEXT
+========================================================= */
+
+.welcome-subscription-text {
+    min-width: 0;
+    flex: 1;
+}
+
+.welcome-subscription-text strong {
+    display: block;
+
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    overflow-wrap: break-word;
+}
+
+.welcome-subscription-text span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #9298ae;
+
+    font-size: 8px;
+
+    line-height: 1.6;
+
+    overflow-wrap: break-word;
+}
+
+
+/* =========================================================
+   ACTION ARROW
+========================================================= */
+
+.welcome-subscription-arrow {
+    display: grid;
+    place-items: center;
+
+    width: 28px;
+    height: 28px;
+
+    flex: 0 0 28px;
+
+    margin-right: auto;
+
+    border-radius: 9px;
+
+    color: #c8c5ff;
+
+    background: rgba(99, 91, 255, .13);
+
+    border: 1px solid rgba(139, 92, 246, .12);
+
+    font-size: 14px;
+
+    transition:
+        transform .25s ease,
+        background .25s ease;
+}
+
+.welcome-subscription-btn:hover
+.welcome-subscription-arrow {
+    transform: translateX(-4px);
+
+    background: rgba(99, 91, 255, .2);
+}
+
+
+/* =========================================================
+   SUBSCRIPTION HINT — NOT SUBSCRIBED
+========================================================= */
+
+.welcome-subscription-hint {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+
+    margin-top: 24px;
+    padding: 16px 18px;
+
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(212, 175, 55, 0.08),
+            rgba(255, 255, 255, 0.02)
+        );
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HINT ICON
+========================================================= */
+
+.welcome-hint-icon {
+    flex: 0 0 42px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(212, 175, 55, 0.12);
+
+    font-size: 19px;
+    line-height: 1;
+
+    color: #d4af37;
+}
+
+
+/* =========================================================
+   HINT CONTENT
+========================================================= */
+
+.welcome-hint-content {
+    min-width: 0;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    text-align: right;
+}
+
+.welcome-hint-content strong {
+    display: block;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    line-height: 1.5;
+
+    overflow-wrap: break-word;
+}
+
+.welcome-hint-content span {
+    display: block;
+
+    font-size: 13px;
+    line-height: 1.8;
+
+    opacity: .72;
+
+    overflow-wrap: break-word;
+}
+
+.welcome-hint-content b {
+    font-weight: 800;
+
+    color: #d4af37;
+}
+
+
+/* =========================================================
+   NOT SUBSCRIBED BUTTON
+========================================================= */
+
+.welcome-not-subscribed .welcome-subscribe-btn {
+    width: fit-content;
+    max-width: 100%;
+    min-width: 190px;
+
+    margin: 20px auto 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 13px 24px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #c9a227,
+            #e0bd55
+        );
+
+    box-shadow:
+        0 8px 20px rgba(201, 162, 39, .18);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+    box-sizing: border-box;
+}
+
+.welcome-not-subscribed .welcome-subscribe-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 26px rgba(201, 162, 39, .25);
+}
+
+.welcome-subscribe-arrow {
+    font-size: 17px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   WELCOME RESPONSIVE
+========================================================= */
+
+/*
+   مهم:
+   الـ1000px موجود بالفعل في الـRESPONSIVE العام عندك
+   وبيحوّل .welcome إلى عمود واحد بشكل صحيح.
+*/
+
+
+@media (max-width: 700px) {
+
+    .welcome {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .welcome-main {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .welcome-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .welcome-label,
+    .welcome-status {
+        max-width: 100%;
+    }
+
+    .welcome-subscription-summary,
+    .welcome-statistics {
+        grid-template-columns: 1fr;
+
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .welcome-summary-item,
+    .welcome-stat {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .welcome-subscription-btn {
+        width: 100%;
+        max-width: 100%;
+
+        align-items: center;
+    }
+
+    .welcome-subscription-text {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .welcome-subscription-arrow {
+        flex-shrink: 0;
+    }
+
+    .welcome-subscription-hint {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE — 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .welcome-main {
+        padding: 24px;
+    }
+
+    .welcome-main h1 {
+        font-size: 25px;
+        line-height: 1.5;
+    }
+
+    .welcome-main p {
+        font-size: 10px;
+        line-height: 1.9;
+    }
+
+    .welcome-subscription-hint {
+        align-items: flex-start;
+
+        gap: 11px;
+
+        padding: 14px;
+    }
+
+    .welcome-hint-icon {
+        flex-basis: 38px;
+
+        width: 38px;
+        height: 38px;
+    }
+
+    .welcome-hint-content {
+        flex: 1;
+    }
+
+    .welcome-hint-content strong {
+        font-size: 13px;
+    }
+
+    .welcome-hint-content span {
+        font-size: 12px;
+        line-height: 1.7;
+    }
+
+    .welcome-not-subscribed .welcome-subscribe-btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE — 450px
+========================================================= */
+
+@media (max-width: 450px) {
+
+    .welcome-main {
+        padding: 20px 16px;
+        border-radius: 22px;
+    }
+
+    .welcome-main h1 {
+        font-size: 21px;
+    }
+
+    .welcome-main p {
+        font-size: 9px;
+        line-height: 1.9;
+    }
+
+    .welcome-label {
+        font-size: 8px;
+    }
+
+    .welcome-status {
+        font-size: 8px;
+
+        padding: 6px 10px;
+    }
+
+    .welcome-summary-item,
+    .welcome-stat {
+        padding: 10px;
+    }
+
+    .welcome-summary-icon,
+    .welcome-stat-icon {
+        width: 32px;
+        height: 32px;
+
+        flex-basis: 32px;
+    }
+
+    .welcome-summary-item span,
+    .welcome-stat-info span {
+        font-size: 7px;
+    }
+
+    .welcome-summary-item strong {
+        font-size: 9px;
+    }
+
+    .welcome-stat-info strong {
+        font-size: 12px;
+    }
+
+    .welcome-subscription-btn {
+        padding: 9px 10px;
+
+        gap: 8px;
+    }
+
+    .welcome-subscription-icon {
+        width: 30px;
+        height: 30px;
+
+        flex-basis: 30px;
+
+        margin-left: 5px;
+    }
+
+    .welcome-subscription-text strong {
+        font-size: 9px;
+    }
+
+    .welcome-subscription-text span {
+        font-size: 7px;
+        line-height: 1.7;
+    }
+
+    .welcome-subscription-arrow {
+        width: 25px;
+        height: 25px;
+
+        flex-basis: 25px;
+
+        font-size: 12px;
+    }
+
+    .welcome-subscription-hint {
+        gap: 9px;
+        padding: 12px;
+    }
+
+    .welcome-hint-icon {
+        flex-basis: 36px;
+
+        width: 36px;
+        height: 36px;
+
+        font-size: 16px;
+    }
+
+    .welcome-hint-content strong {
+        font-size: 11px;
+    }
+
+    .welcome-hint-content span {
+        font-size: 10px;
+        line-height: 1.8;
+    }
+
+    .welcome-not-subscribed .welcome-subscribe-btn {
+        font-size: 12px;
+
+        padding: 12px 16px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE — 350px
+========================================================= */
+
+@media (max-width: 350px) {
+
+    .welcome-main {
+        padding: 17px 12px;
+
+        border-radius: 19px;
+    }
+
+    .welcome-main h1 {
+        font-size: 19px;
+    }
+
+    .welcome-main p {
+        font-size: 8px;
+    }
+
+    .welcome-label {
+        font-size: 7px;
+    }
+
+    .welcome-status {
+        font-size: 7px;
+    }
+
+    .welcome-summary-item,
+    .welcome-stat {
+        gap: 7px;
+
+        padding: 9px;
+    }
+
+    .welcome-summary-icon,
+    .welcome-stat-icon {
+        width: 29px;
+        height: 29px;
+
+        flex-basis: 29px;
+
+        font-size: 11px;
+    }
+
+    .welcome-summary-item span,
+    .welcome-stat-info span {
+        font-size: 6px;
+    }
+
+    .welcome-summary-item strong {
+        font-size: 8px;
+    }
+
+    .welcome-stat-info strong {
+        font-size: 11px;
+    }
+
+    .welcome-subscription-hint {
+        gap: 7px;
+        padding: 10px;
+    }
+
+    .welcome-hint-icon {
+        flex-basis: 32px;
+
+        width: 32px;
+        height: 32px;
+
+        font-size: 14px;
+    }
+
+    .welcome-hint-content strong {
+        font-size: 9px;
+    }
+
+    .welcome-hint-content span {
+        font-size: 8px;
+    }
+
+    .welcome-subscription-text strong {
+        font-size: 8px;
+    }
+
+    .welcome-subscription-text span {
+        font-size: 6px;
+    }
+
+    .welcome-subscription-arrow {
+        width: 23px;
+        height: 23px;
+
+        flex-basis: 23px;
+    }
+
+    .welcome-not-subscribed .welcome-subscribe-btn {
+        padding: 10px 13px;
+
+        font-size: 10px;
+    }
+
+}

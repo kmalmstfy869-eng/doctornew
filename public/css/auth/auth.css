@@ -1,0 +1,4259 @@
+/* =========================================================
+   DOCTOR REGISTRATION
+========================================================= */
+
+.doctor-register-page {
+
+    --dr-primary: #147d78;
+    --dr-primary-dark: #0d625e;
+    --dr-primary-light: #e9f7f5;
+
+    --dr-text: #172b2b;
+    --dr-muted: #7f9090;
+
+    --dr-border: #e1eae8;
+
+    --dr-background: #f5f9f8;
+
+    min-height: 100vh;
+    position: relative;
+    overflow: clip;
+
+    color: var(--dr-text);
+
+    background:
+        radial-gradient(
+            circle at 5% 5%,
+            rgba(20,125,120,.10),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(20,125,120,.08),
+            transparent 25%
+        ),
+        var(--dr-background);
+
+    direction: rtl;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.doctor-register-bg-circle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.doctor-register-circle-one {
+    width: 500px;
+    height: 500px;
+    right: -300px;
+    top: -270px;
+    border: 1px solid rgba(20,125,120,.12);
+}
+
+.doctor-register-circle-two {
+    width: 550px;
+    height: 550px;
+    left: -350px;
+    bottom: -350px;
+    border: 1px solid rgba(20,125,120,.09);
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.doctor-register-main {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 45px 20px 70px;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.doctor-register-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.doctor-register-heading-content {
+    max-width: 650px;
+}
+
+.doctor-register-heading-badge {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-radius: 100px;
+    background: var(--dr-primary-light);
+    color: var(--dr-primary);
+    font-size: 9px;
+    font-weight: 800;
+    margin-bottom: 13px;
+}
+
+.doctor-register-heading-badge > span {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: var(--dr-primary);
+}
+
+.doctor-register-heading h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: -.8px;
+}
+
+.doctor-register-heading h1 span {
+    color: var(--dr-primary);
+}
+
+.doctor-register-heading p {
+    margin-top: 8px;
+    color: var(--dr-muted);
+    font-size: 11px;
+    line-height: 2;
+}
+
+.doctor-register-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    background: #fff;
+    border: 1px solid var(--dr-border);
+    border-radius: 13px;
+    color: #708080;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.doctor-register-note svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    color: var(--dr-primary);
+}
+
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.doctor-register-layout {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 350px minmax(0,1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+.doctor-register-preview {
+    width: 100%;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 105px;
+    align-self: start;
+    height: fit-content;
+    overflow: hidden;
+    border-radius: 26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b6561,
+            #178880
+        );
+
+    color: #fff;
+    padding: 27px;
+
+    box-shadow:
+        0 25px 60px rgba(20,90,86,.16);
+
+    isolation: isolate;
+    z-index: 10;
+}
+
+.doctor-register-preview::before {
+    content: "";
+    position: absolute;
+    width: 310px;
+    height: 310px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.10);
+    top: -195px;
+    right: -170px;
+    pointer-events: none;
+}
+
+.doctor-register-preview::after {
+    content: "";
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.08);
+    bottom: -150px;
+    left: -130px;
+    pointer-events: none;
+}
+
+.doctor-register-preview-content {
+    position: relative;
+    z-index: 2;
+}
+
+.doctor-register-preview-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.doctor-register-preview-label {
+    font-size: 9px;
+    color: rgba(255,255,255,.65);
+}
+
+.doctor-register-preview-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 50px;
+    background: rgba(255,255,255,.10);
+    font-size: 7px;
+    white-space: nowrap;
+}
+
+.doctor-register-preview-status > span {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: #8ce0c9;
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.doctor-register-avatar {
+    width: 95px;
+    height: 95px;
+    margin: 0 auto 17px;
+    border-radius: 29px;
+    background: rgba(255,255,255,.13);
+    border: 1px solid rgba(255,255,255,.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 18px 30px rgba(0,0,0,.10);
+}
+
+.doctor-register-avatar svg {
+    width: 49px;
+    height: 49px;
+    display: block;
+    color: #fff;
+}
+
+.doctor-register-preview-name {
+    min-height: 28px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.6;
+}
+
+.doctor-register-preview-specialty {
+    margin-top: 4px;
+    text-align: center;
+    color: rgba(255,255,255,.68);
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   PREVIEW DETAILS
+========================================================= */
+
+.doctor-register-preview-details {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,.11);
+}
+
+.doctor-register-preview-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: rgba(255,255,255,.72);
+    font-size: 8px;
+    line-height: 1.6;
+}
+
+.doctor-register-preview-item:last-child {
+    margin-bottom: 0;
+}
+
+.doctor-register-preview-item-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 10px;
+    background: rgba(255,255,255,.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-register-preview-item-icon svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.doctor-register-preview-item strong {
+    display: block;
+    color: #fff;
+    font-size: 9px;
+    margin-bottom: 1px;
+}
+
+.doctor-register-preview-message {
+    margin-top: 27px;
+    padding: 13px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.09);
+    color: rgba(255,255,255,.67);
+    font-size: 8px;
+    line-height: 1.9;
+}
+
+.doctor-register-preview-message strong {
+    display: block;
+    color: #fff;
+    font-size: 9px;
+    margin-bottom: 3px;
+}
+
+
+/* =========================================================
+   FORM CARD
+========================================================= */
+
+.doctor-register-form-card {
+    width: 100%;
+    min-width: 0;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid var(--dr-border);
+    border-radius: 26px;
+    box-shadow: 0 20px 60px rgba(20,60,58,.06);
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.doctor-register-section {
+    width: 100%;
+    padding-bottom: 29px;
+    margin-bottom: 29px;
+    border-bottom: 1px solid #edf2f1;
+}
+
+.doctor-register-section:last-of-type {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.doctor-register-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 21px;
+}
+
+.doctor-register-section-number {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border-radius: 10px;
+    background: var(--dr-primary-light);
+    color: var(--dr-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.doctor-register-section-title h2 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.doctor-register-section-title p {
+    margin: 1px 0 0;
+    color: var(--dr-muted);
+    font-size: 8px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FIELDS
+========================================================= */
+
+.doctor-register-fields-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 17px;
+}
+
+.doctor-register-field {
+    width: 100%;
+    min-width: 0;
+}
+
+.doctor-register-field-full {
+    grid-column: 1 / -1;
+}
+
+.doctor-register-field > label {
+    display: block;
+    margin-bottom: 7px;
+    color: #405454;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.doctor-register-required {
+    color: #dc6e6e;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.doctor-register-input-wrap {
+    position: relative;
+    width: 100%;
+    direction: rtl;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.doctor-register-input-wrap > input,
+.doctor-register-input-wrap > select,
+.doctor-register-input-wrap > textarea {
+    width: 100%;
+    margin: 0;
+    border: 1px solid var(--dr-border);
+    outline: none;
+    background: #fbfdfd;
+    color: var(--dr-text);
+    border-radius: 13px;
+    font-family: "Cairo", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    direction: rtl;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.doctor-register-input-wrap > input,
+.doctor-register-input-wrap > select {
+    height: 52px;
+    padding: 0 43px 0 42px;
+    text-align: right;
+}
+
+.doctor-register-input-wrap > textarea {
+    min-height: 125px;
+    padding: 14px 14px 28px;
+    resize: vertical;
+    line-height: 2;
+    text-align: right;
+    display: block;
+}
+
+.doctor-register-input-wrap > input::placeholder,
+.doctor-register-input-wrap > textarea::placeholder {
+    color: #aab6b6;
+    opacity: 1;
+}
+
+.doctor-register-input-wrap > input:focus,
+.doctor-register-input-wrap > select:focus,
+.doctor-register-input-wrap > textarea:focus {
+    background: #fff;
+    border-color: rgba(20,125,120,.55);
+    box-shadow: 0 0 0 4px rgba(20,125,120,.06);
+}
+
+
+/* =========================================================
+   FIELD ICON
+========================================================= */
+
+.doctor-register-field-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #93a3a3;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.doctor-register-field-icon svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+.doctor-register-input-wrap > select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    padding-left: 42px;
+}
+
+.doctor-register-select-arrow {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #91a1a1;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.doctor-register-select-arrow svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.doctor-register-password-input {
+    padding-left: 52px !important;
+    padding-right: 43px !important;
+}
+
+.doctor-register-password-toggle {
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: #91a1a1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+
+    transition:
+        color .2s ease,
+        background .2s ease;
+}
+
+.doctor-register-password-toggle:hover {
+    color: var(--dr-primary);
+    background: var(--dr-primary-light);
+}
+
+.doctor-register-password-toggle svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+}
+
+
+/* =========================================================
+   PASSWORD STRENGTH
+========================================================= */
+
+.doctor-register-password-strength {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 7px;
+}
+
+.doctor-register-strength-bars {
+    display: flex;
+    gap: 3px;
+    flex: 1;
+}
+
+.doctor-register-strength-bar {
+    height: 3px;
+    flex: 1;
+    border-radius: 20px;
+    background: #e7eeee;
+    transition: background .2s ease;
+}
+
+.doctor-register-strength-text {
+    color: #a0adad;
+    font-size: 7px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.doctor-register-price-input {
+    padding-left: 58px !important;
+    padding-right: 14px !important;
+}
+
+.doctor-register-price-currency {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dr-primary);
+    font-size: 9px;
+    font-weight: 800;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HINT
+========================================================= */
+
+.doctor-register-hint {
+    margin-top: 5px;
+    color: #98a5a5;
+    font-size: 7px;
+}
+
+
+/* =========================================================
+   CHARACTER COUNTER
+========================================================= */
+
+.doctor-register-char-count {
+    position: absolute;
+    bottom: 9px;
+    left: 12px;
+    color: #a5b1b1;
+    font-size: 7px;
+    direction: ltr;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.doctor-register-terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin-top: 20px;
+    color: #8c9999;
+    font-size: 8px;
+    line-height: 1.8;
+    cursor: pointer;
+}
+
+.doctor-register-terms input {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    margin-top: 1px;
+    accent-color: var(--dr-primary);
+    cursor: pointer;
+}
+
+.doctor-register-terms span {
+    flex: 1;
+}
+
+.doctor-register-terms a {
+    color: var(--dr-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   FORM FOOTER
+========================================================= */
+
+.doctor-register-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding-top: 7px;
+}
+
+.doctor-register-privacy {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8c9999;
+    font-size: 8px;
+    line-height: 1.7;
+}
+
+.doctor-register-privacy-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    border-radius: 9px;
+    background: var(--dr-primary-light);
+    color: var(--dr-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-register-privacy-icon svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.doctor-register-submit {
+    min-width: 215px;
+    height: 56px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168680,
+            #0d716c
+        );
+
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+
+    box-shadow:
+        0 13px 28px rgba(20,125,120,.18);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.doctor-register-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 35px rgba(20,125,120,.25);
+}
+
+.doctor-register-submit svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    transition: transform .2s ease;
+}
+
+.doctor-register-submit:hover svg {
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.doctor-register-auth-error {
+    margin-top: 6px;
+    color: #d85c5c;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.doctor-login-page {
+
+    --dl-primary: #147d78;
+    --dl-primary-dark: #0b625e;
+    --dl-primary-light: #e8f6f4;
+
+    --dl-text: #172b2b;
+    --dl-muted: #7c8b8b;
+
+    --dl-border: #e1eae8;
+
+    --dl-background: #f5f9f8;
+
+    min-height: 100vh;
+    position: relative;
+    color: var(--dl-text);
+    direction: rtl;
+
+    background:
+        radial-gradient(
+            circle at 5% 10%,
+            rgba(20,125,120,.10),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 95% 90%,
+            rgba(20,125,120,.08),
+            transparent 27%
+        ),
+        var(--dl-background);
+}
+
+
+/* =========================================================
+   LOGIN BACKGROUND
+========================================================= */
+
+.doctor-login-bg-circle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.doctor-login-circle-one {
+    width: 400px;
+    height: 400px;
+    right: -220px;
+    top: -220px;
+    border: 1px solid rgba(20,125,120,.12);
+}
+
+.doctor-login-circle-two {
+    width: 500px;
+    height: 500px;
+    left: -300px;
+    bottom: -300px;
+    border: 1px solid rgba(20,125,120,.10);
+}
+
+.doctor-login-circle-three {
+    width: 160px;
+    height: 160px;
+    left: 8%;
+    top: 17%;
+    background: rgba(20,125,120,.035);
+}
+
+
+/* =========================================================
+   LOGIN HEADER
+========================================================= */
+
+.doctor-login-header {
+    width: 100%;
+    height: 82px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(255,255,255,.72);
+    border-bottom: 1px solid rgba(20,80,78,.07);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    position: relative;
+    z-index: 5;
+}
+
+.doctor-login-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--dl-primary);
+    text-decoration: none;
+}
+
+.doctor-login-brand-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: var(--dl-primary-light);
+}
+
+.doctor-login-brand-icon svg {
+    width: 27px;
+    height: 27px;
+    display: block;
+}
+
+.doctor-login-brand-name {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.5;
+}
+
+.doctor-login-brand-name span {
+    color: #506161;
+    font-weight: 500;
+}
+
+.doctor-login-register-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dl-muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.doctor-login-register-link a {
+    color: var(--dl-primary);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   LOGIN MAIN
+========================================================= */
+
+.doctor-login-main {
+    min-height: calc(100vh - 82px - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   LOGIN WRAPPER
+========================================================= */
+
+.doctor-login-wrapper {
+    width: 100%;
+    max-width: 980px;
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 44% 56%;
+    overflow: hidden;
+    border-radius: 30px;
+    background: #fff;
+    border: 1px solid var(--dl-border);
+    box-shadow: 0 30px 80px rgba(22,65,62,.09);
+}
+
+
+/* =========================================================
+   LOGIN HERO
+========================================================= */
+
+.doctor-login-hero {
+    position: relative;
+    padding: 45px 40px;
+    overflow: hidden;
+    color: #fff;
+
+    background:
+        radial-gradient(
+            circle at 80% 10%,
+            rgba(255,255,255,.13),
+            transparent 28%
+        ),
+        linear-gradient(
+            145deg,
+            #0b625e,
+            #178780
+        );
+}
+
+.doctor-login-hero::before {
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.12);
+    top: -260px;
+    right: -220px;
+}
+
+.doctor-login-hero::after {
+    content: "";
+    position: absolute;
+    width: 330px;
+    height: 330px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.09);
+    bottom: -220px;
+    left: -190px;
+}
+
+.doctor-login-hero-content {
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   LOGIN BADGE
+========================================================= */
+
+.doctor-login-online-badge {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.12);
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.doctor-login-online-dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #8ce1ca;
+    box-shadow: 0 0 0 5px rgba(140,225,202,.10);
+}
+
+
+/* =========================================================
+   LOGIN HERO TITLE
+========================================================= */
+
+.doctor-login-hero-title {
+    margin-top: 65px;
+}
+
+.doctor-login-hero-title h1 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.55;
+    font-weight: 800;
+    letter-spacing: -.8px;
+}
+
+.doctor-login-hero-title h1 span {
+    color: #a4ead9;
+}
+
+.doctor-login-hero-title p {
+    max-width: 350px;
+    margin-top: 13px;
+    color: rgba(255,255,255,.70);
+    font-size: 11px;
+    line-height: 2.1;
+}
+
+
+/* =========================================================
+   LOGIN VISUAL
+========================================================= */
+
+.doctor-login-medical-visual {
+    position: relative;
+    height: 245px;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-login-visual-ring {
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+}
+
+.doctor-login-visual-ring-two {
+    position: absolute;
+    width: 135px;
+    height: 135px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,255,255,.17);
+}
+
+.doctor-login-medical-card {
+    position: relative;
+    width: 180px;
+    height: 130px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.17);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 25px 40px rgba(0,0,0,.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-login-medical-cross {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: #fff;
+    color: var(--dl-primary);
+    box-shadow: 0 12px 30px rgba(0,0,0,.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-login-medical-cross svg {
+    width: 32px;
+    height: 32px;
+    max-width: 32px;
+    max-height: 32px;
+}
+
+.doctor-login-floating-icon {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(255,255,255,.11);
+    border: 1px solid rgba(255,255,255,.13);
+    backdrop-filter: blur(8px);
+}
+
+.doctor-login-floating-icon svg {
+    width: 19px;
+    height: 19px;
+    max-width: 19px;
+    max-height: 19px;
+}
+
+.doctor-login-floating-one {
+    top: 28px;
+    right: 70px;
+}
+
+.doctor-login-floating-two {
+    bottom: 25px;
+    left: 45px;
+}
+
+.doctor-login-floating-three {
+    top: 50px;
+    left: 38px;
+}
+
+
+/* =========================================================
+   LOGIN STATS
+========================================================= */
+
+.doctor-login-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+}
+
+.doctor-login-stat {
+    padding: 10px 7px;
+    text-align: center;
+    border-radius: 12px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.doctor-login-stat strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.doctor-login-stat span {
+    color: rgba(255,255,255,.60);
+    font-size: 7px;
+}
+
+
+/* =========================================================
+   LOGIN FORM
+========================================================= */
+
+.doctor-login-form-panel {
+    padding: 65px 70px;
+    display: flex;
+    align-items: center;
+}
+
+.doctor-login-form-container {
+    width: 100%;
+    max-width: 410px;
+    margin: auto;
+}
+
+.doctor-login-welcome {
+    margin-bottom: 28px;
+}
+
+.doctor-login-welcome-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    background: var(--dl-primary-light);
+    color: var(--dl-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 19px;
+}
+
+.doctor-login-welcome-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.doctor-login-welcome h2 {
+    margin: 0;
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: -.7px;
+}
+
+.doctor-login-welcome p {
+    margin-top: 7px;
+    color: var(--dl-muted);
+    font-size: 11px;
+    line-height: 2;
+}
+
+
+/* =========================================================
+   LOGIN FIELDS
+========================================================= */
+
+.doctor-login-field {
+    margin-bottom: 17px;
+}
+
+.doctor-login-field > label {
+    display: block;
+    margin-bottom: 8px;
+    color: #405454;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.doctor-login-input {
+    position: relative;
+    width: 100%;
+}
+
+.doctor-login-input > input {
+    width: 100%;
+    height: 56px;
+    border: 1px solid var(--dl-border);
+    border-radius: 14px;
+    outline: none;
+    background: #fbfdfd;
+    color: var(--dl-text);
+    padding: 0 47px 0 48px;
+    font-family: "Cairo", sans-serif;
+    font-size: 11px;
+    direction: rtl;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.doctor-login-input > input::placeholder {
+    color: #a7b4b4;
+    opacity: 1;
+}
+
+.doctor-login-input > input:focus {
+    background: #fff;
+    border-color: rgba(20,125,120,.55);
+    box-shadow: 0 0 0 4px rgba(20,125,120,.07);
+}
+
+.doctor-login-input-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #92a2a2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-login-input-icon svg {
+    width: 19px;
+    height: 19px;
+}
+
+
+/* =========================================================
+   LOGIN PASSWORD
+========================================================= */
+
+.doctor-login-password-toggle {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #8c9c9c;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        color .2s ease,
+        background .2s ease;
+}
+
+.doctor-login-password-toggle:hover {
+    color: var(--dl-primary);
+    background: var(--dl-primary-light);
+}
+
+.doctor-login-password-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =========================================================
+   LOGIN OPTIONS
+========================================================= */
+
+.doctor-login-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2px 0 20px;
+}
+
+.doctor-login-remember {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    color: #7d8b8b;
+    font-size: 9px;
+}
+
+.doctor-login-remember input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.doctor-login-check {
+    width: 18px;
+    height: 18px;
+    border: 1px solid #d3dfdd;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s ease;
+}
+
+.doctor-login-check svg {
+    width: 12px;
+    height: 12px;
+    color: #fff;
+    opacity: 0;
+}
+
+.doctor-login-remember input:checked + .doctor-login-check {
+    background: var(--dl-primary);
+    border-color: var(--dl-primary);
+}
+
+.doctor-login-remember input:checked + .doctor-login-check svg {
+    opacity: 1;
+}
+
+.doctor-login-forgot {
+    color: var(--dl-primary);
+    font-size: 9px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.doctor-login-button {
+    width: 100%;
+    height: 57px;
+    border: none;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168680,
+            #0d716c
+        );
+
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 13px 28px rgba(20,125,120,.18);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.doctor-login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 35px rgba(20,125,120,.25);
+}
+
+.doctor-login-button svg {
+    width: 19px;
+    height: 19px;
+    transition: transform .2s ease;
+}
+
+.doctor-login-button:hover svg {
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   LOGIN DIVIDER
+========================================================= */
+
+.doctor-login-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 23px 0;
+    color: #a7b3b3;
+    font-size: 8px;
+    text-align: center;
+}
+
+.doctor-login-divider::before,
+.doctor-login-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: #edf1f0;
+}
+
+
+/* =========================================================
+   CREATE ACCOUNT
+========================================================= */
+
+.doctor-login-create-account {
+    text-align: center;
+    font-size: 10px;
+    color: var(--dl-muted);
+}
+
+.doctor-login-create-account a {
+    color: var(--dl-primary);
+    font-weight: 800;
+    margin-right: 3px;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   LOGIN SECURITY
+========================================================= */
+
+.doctor-login-secure-note {
+    margin-top: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: #a0adad;
+    font-size: 8px;
+}
+
+.doctor-login-secure-note svg {
+    width: 14px;
+    height: 14px;
+    color: var(--dl-primary);
+}
+
+
+/* =========================================================
+   LOGIN FOOTER
+========================================================= */
+
+.doctor-login-footer {
+    position: relative;
+    z-index: 2;
+    padding: 0 20px 27px;
+    text-align: center;
+    color: #a1aeae;
+    font-size: 8px;
+}
+
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+.doctor-forgot-page {
+
+    --df-primary: #147d78;
+    --df-primary-dark: #0c625e;
+    --df-primary-light: #e8f6f4;
+
+    --df-text: #172b2b;
+    --df-muted: #7b8b8b;
+
+    --df-border: #e2eaea;
+
+    --df-background: #f5f9f8;
+
+    min-height: 100vh;
+    position: relative;
+    color: var(--df-text);
+    direction: rtl;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(20,125,120,.09),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(20,125,120,.08),
+            transparent 25%
+        ),
+        var(--df-background);
+}
+
+
+/* =========================================================
+   FORGOT BACKGROUND
+========================================================= */
+
+.doctor-forgot-bg-circle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.doctor-forgot-circle-one {
+    width: 330px;
+    height: 330px;
+    top: -180px;
+    right: -100px;
+    border: 1px solid rgba(20,125,120,.12);
+}
+
+.doctor-forgot-circle-two {
+    width: 430px;
+    height: 430px;
+    bottom: -250px;
+    left: -180px;
+    border: 1px solid rgba(20,125,120,.09);
+}
+
+.doctor-forgot-circle-three {
+    width: 180px;
+    height: 180px;
+    top: 35%;
+    left: 7%;
+    background: rgba(20,125,120,.035);
+}
+
+
+/* =========================================================
+   FORGOT HEADER
+========================================================= */
+
+.doctor-forgot-header {
+    width: 100%;
+    height: 82px;
+    padding: 0 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid rgba(20,80,78,.07);
+    background: rgba(255,255,255,.72);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    position: relative;
+    z-index: 5;
+}
+
+.doctor-forgot-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: var(--df-primary);
+    text-decoration: none;
+}
+
+.doctor-forgot-brand-icon {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 13px;
+    background: var(--df-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-forgot-brand-icon svg {
+    width: 27px;
+    height: 27px;
+    display: block;
+}
+
+.doctor-forgot-brand-name {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.doctor-forgot-brand-name span {
+    color: #506161;
+    font-weight: 500;
+}
+
+.doctor-forgot-login-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--df-muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.doctor-forgot-login-link a {
+    color: var(--df-primary);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   FORGOT MAIN
+========================================================= */
+
+.doctor-forgot-main {
+    min-height: calc(100vh - 82px - 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 55px 20px;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   FORGOT WRAPPER
+========================================================= */
+
+.doctor-forgot-wrapper {
+    width: 100%;
+    max-width: 920px;
+    display: grid;
+    grid-template-columns: 42% 58%;
+    background: #fff;
+    border: 1px solid var(--df-border);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(20,60,58,.08);
+}
+
+
+/* =========================================================
+   FORGOT CREATIVE
+========================================================= */
+
+.doctor-forgot-creative {
+    position: relative;
+    min-height: 560px;
+    padding: 45px 38px;
+    color: #fff;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0c6662,
+            #16847e
+        );
+}
+
+.doctor-forgot-creative::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    top: -180px;
+    right: -170px;
+}
+
+.doctor-forgot-creative::after {
+    content: "";
+    position: absolute;
+    width: 270px;
+    height: 270px;
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 50%;
+    bottom: -140px;
+    left: -120px;
+}
+
+.doctor-forgot-creative-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   SECURITY BADGE
+========================================================= */
+
+.doctor-forgot-security-badge {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 100px;
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.12);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.doctor-forgot-security-badge > span {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #8be2ca;
+    box-shadow: 0 0 0 5px rgba(139,226,202,.10);
+}
+
+
+/* =========================================================
+   CREATIVE TITLE
+========================================================= */
+
+.doctor-forgot-creative-title {
+    margin-top: 80px;
+}
+
+.doctor-forgot-creative-title h2 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.55;
+    font-weight: 800;
+    letter-spacing: -.7px;
+}
+
+.doctor-forgot-creative-title h2 span {
+    color: #9ce5d4;
+}
+
+.doctor-forgot-creative-title p {
+    margin-top: 15px;
+    color: rgba(255,255,255,.70);
+    font-size: 12px;
+    line-height: 2;
+}
+
+
+/* =========================================================
+   LOCK
+========================================================= */
+
+.doctor-forgot-lock-area {
+    position: relative;
+    margin-top: auto;
+    height: 185px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-forgot-lock-glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    box-shadow: 0 0 80px rgba(255,255,255,.08);
+}
+
+.doctor-forgot-lock {
+    position: relative;
+    width: 90px;
+    height: 78px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 20px 35px rgba(0,0,0,.13);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-forgot-lock::before {
+    content: "";
+    position: absolute;
+    width: 45px;
+    height: 48px;
+    border: 8px solid #fff;
+    border-bottom: none;
+    border-radius: 30px 30px 0 0;
+    top: -38px;
+}
+
+.doctor-forgot-lock svg {
+    width: 28px;
+    height: 28px;
+    color: var(--df-primary);
+}
+
+.doctor-forgot-floating-dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.35);
+}
+
+.doctor-forgot-dot-one {
+    top: 25px;
+    right: 45px;
+}
+
+.doctor-forgot-dot-two {
+    bottom: 40px;
+    left: 55px;
+}
+
+.doctor-forgot-dot-three {
+    top: 60px;
+    left: 35px;
+}
+
+
+/* =========================================================
+   FORGOT FORM
+========================================================= */
+
+.doctor-forgot-form-panel {
+    padding: 60px 65px;
+    display: flex;
+    align-items: center;
+}
+
+.doctor-forgot-form-container {
+    width: 100%;
+    max-width: 430px;
+    margin: auto;
+}
+
+.doctor-forgot-form-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 17px;
+    background: var(--df-primary-light);
+    color: var(--df-primary);
+    margin-bottom: 20px;
+}
+
+.doctor-forgot-form-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.doctor-forgot-form-header h1 {
+    margin: 0;
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: -.6px;
+}
+
+.doctor-forgot-form-header p {
+    margin-top: 9px;
+    color: var(--df-muted);
+    font-size: 12px;
+    line-height: 2;
+    max-width: 390px;
+}
+
+
+/* =========================================================
+   FORGOT EMAIL
+========================================================= */
+
+.doctor-forgot-email-group {
+    margin-top: 32px;
+}
+
+.doctor-forgot-email-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #405454;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.doctor-forgot-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.doctor-forgot-input-wrapper input {
+    width: 100%;
+    height: 57px;
+    border: 1px solid var(--df-border);
+    border-radius: 14px;
+    outline: none;
+    background: #fbfdfd;
+    color: var(--df-text);
+    padding: 0 48px 0 15px;
+    font-family: "Cairo", sans-serif;
+    font-size: 12px;
+    direction: rtl;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.doctor-forgot-input-wrapper input::placeholder {
+    color: #a8b5b5;
+    opacity: 1;
+}
+
+.doctor-forgot-input-wrapper input:focus {
+    background: #fff;
+    border-color: rgba(20,125,120,.55);
+    box-shadow: 0 0 0 4px rgba(20,125,120,.07);
+}
+
+.doctor-forgot-email-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #91a2a2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.doctor-forgot-email-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+
+/* =========================================================
+   FORGOT BUTTON
+========================================================= */
+
+.doctor-forgot-send-button {
+    width: 100%;
+    height: 57px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168680,
+            #0d716c
+        );
+
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 12px 27px rgba(20,125,120,.17);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.doctor-forgot-send-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 17px 32px rgba(20,125,120,.23);
+}
+
+.doctor-forgot-send-button svg {
+    width: 19px;
+    height: 19px;
+    transition: transform .2s ease;
+}
+
+.doctor-forgot-send-button:hover svg {
+    transform: translateX(-3px);
+}
+
+
+/* =========================================================
+   FORGOT BACK LINK
+========================================================= */
+
+.doctor-forgot-back-link {
+    margin-top: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--df-muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.doctor-forgot-back-link a {
+    color: var(--df-primary);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   FORGOT SECURITY
+========================================================= */
+
+.doctor-forgot-security-note {
+    margin-top: 35px;
+    padding: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    border-radius: 13px;
+    background: #f7faf9;
+    border: 1px solid #edf2f1;
+}
+
+.doctor-forgot-security-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--df-primary-light);
+    color: var(--df-primary);
+}
+
+.doctor-forgot-security-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+.doctor-forgot-security-note p {
+    margin: 0;
+    color: #7c8b8b;
+    font-size: 9px;
+    line-height: 1.9;
+}
+
+.doctor-forgot-security-note strong {
+    display: block;
+    color: #536464;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+
+/* =========================================================
+   FORGOT FOOTER
+========================================================= */
+
+.doctor-forgot-footer {
+    position: relative;
+    z-index: 2;
+    padding: 0 20px 28px;
+    text-align: center;
+    color: #a1adad;
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+/* ---------- Registration ---------- */
+
+body.dark .doctor-register-page {
+
+    --dr-primary: #45c8bd;
+    --dr-primary-dark: #2ca59c;
+    --dr-primary-light: #123b39;
+
+    --dr-text: #edf7f6;
+    --dr-muted: #9db1b0;
+
+    --dr-border: #29413f;
+    --dr-background: #071316;
+}
+
+body.dark .doctor-register-note {
+    background: #101f2b;
+    color: #a9bab9;
+    border-color: var(--dr-border);
+}
+
+body.dark .doctor-register-form-card {
+    background: #101f2b;
+    border-color: var(--dr-border);
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+
+body.dark .doctor-register-section {
+    border-color: #263b4d;
+}
+
+body.dark .doctor-register-section-title h2 {
+    color: var(--dr-text);
+}
+
+body.dark .doctor-register-field > label {
+    color: #c5d2d1;
+}
+
+body.dark .doctor-register-input-wrap > input,
+body.dark .doctor-register-input-wrap > select,
+body.dark .doctor-register-input-wrap > textarea {
+    background: #172735;
+    color: #edf5fc;
+    border-color: var(--dr-border);
+}
+
+body.dark .doctor-register-input-wrap > input::placeholder,
+body.dark .doctor-register-input-wrap > textarea::placeholder {
+    color: #718496;
+}
+
+body.dark .doctor-register-input-wrap > input:focus,
+body.dark .doctor-register-input-wrap > select:focus,
+body.dark .doctor-register-input-wrap > textarea:focus {
+    background: #172735;
+}
+
+body.dark .doctor-register-field-icon,
+body.dark .doctor-register-select-arrow,
+body.dark .doctor-register-password-toggle {
+    color: #829694;
+}
+
+body.dark .doctor-register-password-toggle:hover {
+    color: var(--dr-primary);
+    background: var(--dr-primary-light);
+}
+
+body.dark .doctor-register-strength-bar {
+    background: #2b3b4a;
+}
+
+body.dark .doctor-register-terms,
+body.dark .doctor-register-privacy {
+    color: #9eb0c1;
+}
+
+body.dark .doctor-register-auth-error {
+    color: #ff8585;
+}
+
+
+/* ---------- Login ---------- */
+
+body.dark .doctor-login-page {
+
+    --dl-primary: #45c8bd;
+    --dl-primary-dark: #2ca59c;
+    --dl-primary-light: #123b39;
+
+    --dl-text: #edf7f6;
+    --dl-muted: #9db1b0;
+
+    --dl-border: #29413f;
+    --dl-background: #071316;
+}
+
+body.dark .doctor-login-header {
+    background: rgba(16,31,43,.94);
+    border-color: #263b4d;
+}
+
+body.dark .doctor-login-wrapper {
+    background: #101f2b;
+    border-color: #29413f;
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+}
+
+body.dark .doctor-login-welcome h2,
+body.dark .doctor-login-field > label {
+    color: #edf5fc;
+}
+
+body.dark .doctor-login-input > input {
+    background: #172735;
+    color: #edf5fc;
+    border-color: #29413f;
+}
+
+body.dark .doctor-login-input > input::placeholder {
+    color: #718496;
+}
+
+body.dark .doctor-login-input > input:focus {
+    background: #172735;
+}
+
+body.dark .doctor-login-input-icon {
+    color: #81939a;
+}
+
+body.dark .doctor-login-remember {
+    color: #9eb0c1;
+}
+
+body.dark .doctor-login-check {
+    border-color: #3a5064;
+}
+
+body.dark .doctor-login-divider::before,
+body.dark .doctor-login-divider::after {
+    background: #29413f;
+}
+
+body.dark .doctor-login-secure-note {
+    color: #81919f;
+}
+
+
+/* ---------- Forgot Password ---------- */
+
+body.dark .doctor-forgot-page {
+
+    --df-primary: #45c8bd;
+    --df-primary-dark: #2ca59c;
+    --df-primary-light: #123b39;
+
+    --df-text: #edf7f6;
+    --df-muted: #9db1b0;
+
+    --df-border: #29413f;
+    --df-background: #071316;
+}
+
+body.dark .doctor-forgot-header {
+    background: rgba(16,31,43,.94);
+    border-color: #263b4d;
+}
+
+body.dark .doctor-forgot-wrapper {
+    background: #101f2b;
+    border-color: #29413f;
+    box-shadow: 0 25px 70px rgba(0,0,0,.35);
+}
+
+body.dark .doctor-forgot-form-header h1,
+body.dark .doctor-forgot-email-group label {
+    color: #edf5fc;
+}
+
+body.dark .doctor-forgot-input-wrapper input {
+    background: #172735;
+    color: #edf5fc;
+    border-color: #29413f;
+}
+
+body.dark .doctor-forgot-input-wrapper input::placeholder {
+    color: #718496;
+}
+
+body.dark .doctor-forgot-input-wrapper input:focus {
+    background: #172735;
+}
+
+body.dark .doctor-forgot-email-icon {
+    color: #81939a;
+}
+
+body.dark .doctor-forgot-security-note {
+    background: #0d1824;
+    border-color: #29413f;
+}
+
+body.dark .doctor-forgot-security-note p {
+    color: #9eb0c1;
+}
+
+body.dark .doctor-forgot-security-note strong {
+    color: #edf5fc;
+}
+
+
+/* =========================================================
+   TABLET - REGISTRATION
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .doctor-register-main {
+        max-width: 900px;
+    }
+
+    .doctor-register-layout {
+        grid-template-columns: 300px minmax(0,1fr);
+        gap: 18px;
+    }
+
+    .doctor-register-preview {
+        position: sticky;
+        position: -webkit-sticky;
+        top: 95px;
+    }
+
+    .doctor-register-preview-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .doctor-register-preview-item {
+        margin-bottom: 0;
+    }
+
+    .doctor-register-preview-message {
+        display: block;
+    }
+}
+
+
+/* =========================================================
+   MOBILE - REGISTRATION
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .doctor-register-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-register-preview {
+        position: relative;
+        top: auto;
+        align-self: start;
+    }
+
+    .doctor-register-preview-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+    }
+
+    .doctor-register-preview-item {
+        margin-bottom: 0;
+    }
+
+    .doctor-register-preview-message {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   MOBILE - REGISTER / LOGIN / FORGOT
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .doctor-register-header {
+        padding: 0 18px;
+    }
+
+    .doctor-register-brand-name {
+        font-size: 17px;
+    }
+
+    .doctor-register-brand-icon {
+        width: 39px;
+        height: 39px;
+        flex-basis: 39px;
+    }
+
+    .doctor-register-brand-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .doctor-register-login {
+        font-size: 8px;
+    }
+
+    .doctor-register-main {
+        padding: 28px 13px 50px;
+    }
+
+    .doctor-register-heading {
+        display: block;
+        margin-bottom: 22px;
+    }
+
+    .doctor-register-heading h1 {
+        font-size: 25px;
+        line-height: 1.5;
+    }
+
+    .doctor-register-heading p {
+        font-size: 10px;
+    }
+
+    .doctor-register-note {
+        margin-top: 16px;
+        width: fit-content;
+        white-space: normal;
+    }
+
+    .doctor-register-preview {
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .doctor-register-preview-details {
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-register-form-card {
+        padding: 23px 18px;
+        border-radius: 20px;
+    }
+
+    .doctor-register-fields-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .doctor-register-field-full {
+        grid-column: auto;
+    }
+
+    .doctor-register-form-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .doctor-register-submit {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .doctor-register-privacy {
+        justify-content: center;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .doctor-login-main {
+        padding: 35px 20px;
+    }
+
+    .doctor-login-wrapper {
+        max-width: 700px;
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-login-hero {
+        min-height: 330px;
+    }
+
+    .doctor-login-hero-title {
+        margin-top: 35px;
+    }
+
+    .doctor-login-hero-title h1 {
+        font-size: 28px;
+    }
+
+    .doctor-login-medical-visual {
+        display: none;
+    }
+
+    .doctor-login-hero-stats {
+        margin-top: 35px;
+    }
+
+    .doctor-login-form-panel {
+        padding: 45px;
+    }
+}
+
+
+@media (max-width: 850px) {
+
+    .doctor-forgot-header {
+        padding: 0 25px;
+    }
+
+    .doctor-forgot-wrapper {
+        max-width: 600px;
+        grid-template-columns: 1fr;
+    }
+
+    .doctor-forgot-creative {
+        min-height: 270px;
+        padding: 30px;
+    }
+
+    .doctor-forgot-creative-title {
+        margin-top: 30px;
+    }
+
+    .doctor-forgot-creative-title h2 {
+        font-size: 25px;
+    }
+
+    .doctor-forgot-creative-title p {
+        max-width: 500px;
+    }
+
+    .doctor-forgot-lock-area {
+        display: none;
+    }
+
+    .doctor-forgot-form-panel {
+        padding: 45px 40px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .doctor-login-header,
+    .doctor-forgot-header {
+        height: 70px;
+        padding: 0 18px;
+    }
+
+    .doctor-login-brand-name,
+    .doctor-forgot-brand-name {
+        font-size: 17px;
+    }
+
+    .doctor-login-brand-icon,
+    .doctor-forgot-brand-icon {
+        width: 38px;
+        height: 38px;
+        flex-basis: 38px;
+    }
+
+    .doctor-login-brand-icon svg,
+    .doctor-forgot-brand-icon svg {
+        width: 23px;
+        height: 23px;
+    }
+
+    .doctor-login-register-link > span,
+    .doctor-forgot-login-link > span {
+        display: none;
+    }
+
+    .doctor-login-main {
+        min-height: auto;
+        padding: 20px 12px;
+    }
+
+    .doctor-login-wrapper,
+    .doctor-forgot-wrapper {
+        border-radius: 22px;
+    }
+
+    .doctor-login-hero {
+        min-height: 260px;
+        padding: 25px 22px;
+    }
+
+    .doctor-login-online-badge {
+        font-size: 8px;
+    }
+
+    .doctor-login-hero-title {
+        margin-top: 25px;
+    }
+
+    .doctor-login-hero-title h1 {
+        font-size: 24px;
+    }
+
+    .doctor-login-hero-title p {
+        font-size: 9px;
+    }
+
+    .doctor-login-hero-stats {
+        margin-top: 25px;
+    }
+
+    .doctor-login-stat {
+        padding: 8px 4px;
+    }
+
+    .doctor-login-stat strong {
+        font-size: 12px;
+    }
+
+    .doctor-login-stat span {
+        font-size: 6px;
+    }
+
+    .doctor-login-form-panel {
+        padding: 35px 22px 30px;
+    }
+
+    .doctor-login-welcome h2 {
+        font-size: 26px;
+    }
+
+    .doctor-login-welcome p {
+        font-size: 10px;
+    }
+
+    .doctor-login-input > input {
+        height: 54px;
+    }
+
+    .doctor-login-button {
+        height: 55px;
+    }
+
+    .doctor-forgot-main {
+        min-height: auto;
+        padding: 25px 13px;
+    }
+
+    .doctor-forgot-creative {
+        min-height: 225px;
+        padding: 25px 22px;
+    }
+
+    .doctor-forgot-security-badge {
+        font-size: 9px;
+    }
+
+    .doctor-forgot-creative-title {
+        margin-top: 25px;
+    }
+
+    .doctor-forgot-creative-title h2 {
+        font-size: 23px;
+    }
+
+    .doctor-forgot-creative-title p {
+        font-size: 10px;
+        margin-top: 8px;
+    }
+
+    .doctor-forgot-form-panel {
+        padding: 35px 22px 30px;
+    }
+
+    .doctor-forgot-form-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .doctor-forgot-form-icon svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .doctor-forgot-form-header h1 {
+        font-size: 26px;
+    }
+
+    .doctor-forgot-form-header p {
+        font-size: 11px;
+    }
+
+    .doctor-forgot-email-group {
+        margin-top: 25px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .doctor-register-form-card {
+        padding: 20px 14px;
+    }
+
+    .doctor-register-section-title {
+        gap: 9px;
+    }
+
+    .doctor-register-section-number {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+    }
+
+    .doctor-register-form-footer {
+        gap: 15px;
+    }
+
+    .doctor-register-privacy {
+        font-size: 7px;
+    }
+
+    .doctor-register-submit {
+        height: 52px;
+    }
+}
+
+
+
+
+
+/* =========================================================
+   HEADER AUTH
+========================================================= */
+
+.header-register-button {
+
+    height: 45px;
+
+    padding: 0 17px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--card);
+
+    color: var(--primary);
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    transition: .2s ease;
+}
+
+.header-register-button:hover {
+
+    background: var(--primary-light);
+
+    border-color: var(--primary);
+
+}
+
+
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.logout-form {
+
+    margin: 0;
+
+    padding: 0;
+}
+
+
+.header-logout-button {
+
+    height: 45px;
+
+    padding: 0 15px;
+
+    border: 1px solid rgba(220, 92, 92, .22);
+
+    border-radius: 12px;
+
+    background: rgba(220, 92, 92, .07);
+
+    color: #d85c5c;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    cursor: pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.header-logout-button:hover {
+
+    background: #d85c5c;
+
+    border-color: #d85c5c;
+
+    color: white;
+
+    transform: translateY(-2px);
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark .header-user-info {
+
+    background: var(--card);
+
+    border-color: var(--border);
+}
+
+
+body.dark .header-user-info strong {
+
+    color: var(--text);
+}
+
+
+body.dark .header-user-info small {
+
+    color: var(--text-light);
+}
+
+
+body.dark .header-register-button {
+
+    background: var(--card);
+
+    border-color: var(--border);
+
+    color: var(--primary);
+}
+
+
+body.dark .header-register-button:hover {
+
+    background: var(--primary-light);
+
+}
+
+
+body.dark .header-logout-button {
+
+    background: rgba(255, 107, 107, .08);
+
+    border-color: rgba(255, 107, 107, .20);
+
+    color: #ff7b7b;
+}
+
+
+body.dark .header-logout-button:hover {
+
+    background: #ff6b6b;
+
+    color: #07111a;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .header-user-info {
+
+        padding: 4px;
+
+        border: 0;
+
+        background: transparent;
+    }
+
+    .header-user-info > div {
+
+        display: none;
+    }
+
+    .header-user-icon {
+
+        width: 38px;
+
+        height: 38px;
+    }
+
+    .header-logout-button {
+
+        width: 40px;
+
+        height: 40px;
+
+        padding: 0;
+
+        font-size: 14px;
+    }
+
+    .header-logout-button {
+
+        font-size: 0;
+    }
+
+    .header-logout-button i {
+
+        font-size: 14px;
+    }
+
+    .header-register-button {
+
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .header-user {
+
+        gap: 5px;
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   EMAIL VERIFICATION
+========================================================= */
+
+.doctor-verify-page {
+
+    --dv-primary: #147d78;
+    --dv-primary-dark: #0d625e;
+    --dv-primary-light: #e8f6f4;
+
+    --dv-text: #172b2b;
+    --dv-muted: #7c8b8b;
+    --dv-border: #e1eae8;
+    --dv-background: #f5f9f8;
+
+    min-height: calc(100vh - 124px);
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px 20px;
+
+    direction: rtl;
+
+    background:
+        radial-gradient(
+            circle at 8% 10%,
+            rgba(20,125,120,.10),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 92% 90%,
+            rgba(20,125,120,.08),
+            transparent 27%
+        ),
+        var(--dv-background);
+
+    overflow: hidden;
+}
+
+
+.doctor-verify-bg-circle {
+
+    position: fixed;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+.doctor-verify-circle-one {
+
+    width: 420px;
+    height: 420px;
+
+    top: -250px;
+    right: -220px;
+
+    border:
+        1px solid
+        rgba(20,125,120,.12);
+}
+
+
+.doctor-verify-circle-two {
+
+    width: 500px;
+    height: 500px;
+
+    left: -300px;
+    bottom: -300px;
+
+    border:
+        1px solid
+        rgba(20,125,120,.09);
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.doctor-verify-card {
+
+    width: 100%;
+
+    max-width: 620px;
+
+    padding: 45px 45px 40px;
+
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border:
+        1px solid
+        var(--dv-border);
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(20,60,58,.08);
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.doctor-verify-icon {
+
+    width: 72px;
+    height: 72px;
+
+    margin: 0 auto 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 21px;
+
+    color:
+        var(--dv-primary);
+
+    background:
+        var(--dv-primary-light);
+}
+
+
+.doctor-verify-icon svg {
+
+    width: 34px;
+    height: 34px;
+
+    max-width: 34px;
+    max-height: 34px;
+}
+
+
+/* =========================================================
+   TEXT
+========================================================= */
+
+.doctor-verify-card h1 {
+
+    margin: 0;
+
+    color:
+        var(--dv-text);
+
+    font-size: 30px;
+
+    font-weight: 900;
+
+    line-height: 1.4;
+}
+
+
+.doctor-verify-description {
+
+    max-width: 500px;
+
+    margin: 12px auto 0;
+
+    color:
+        var(--dv-muted);
+
+    font-size: 12px;
+
+    line-height: 2.1;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.doctor-verify-success {
+
+    margin-top: 22px;
+
+    padding: 13px 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    color: #16845b;
+
+    background: #eefaf5;
+
+    border:
+        1px solid #d7efe5;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+.doctor-verify-success i {
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.doctor-verify-form {
+
+    margin-top: 24px;
+}
+
+
+.doctor-verify-button {
+
+    width: 100%;
+
+    height: 52px;
+
+    padding: 0 20px;
+
+    border: 0;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 9px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168680,
+            #0d716c
+        );
+
+    font-family:
+        "Cairo",
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 27px
+        rgba(20,125,120,.17);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.doctor-verify-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 17px 32px
+        rgba(20,125,120,.23);
+}
+
+
+.doctor-verify-button i {
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.doctor-verify-note {
+
+    margin-top: 18px;
+
+    padding: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    text-align: right;
+
+    background: #f7faf9;
+
+    border:
+        1px solid #edf2f1;
+
+    border-radius: 13px;
+}
+
+
+.doctor-verify-note-icon {
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    color:
+        var(--dv-primary);
+
+    background:
+        var(--dv-primary-light);
+}
+
+
+.doctor-verify-note-icon i {
+
+    font-size: 14px;
+}
+
+
+.doctor-verify-note p {
+
+    margin: 0;
+
+    color: #7c8b8b;
+
+    font-size: 9px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.doctor-verify-logout-form {
+
+    margin-top: 20px;
+}
+
+
+.doctor-verify-logout {
+
+    border: 0;
+
+    background: transparent;
+
+    color: #8a9797;
+
+    font-family:
+        "Cairo",
+        sans-serif;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    transition: .2s ease;
+}
+
+
+.doctor-verify-logout:hover {
+
+    color:
+        #d85c5c;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+body.dark .doctor-verify-page {
+
+    --dv-text: #edf5fc;
+    --dv-muted: #9eb0c1;
+    --dv-border: #263b4d;
+    --dv-background: #07111a;
+
+    background:
+        radial-gradient(
+            circle at 8% 10%,
+            rgba(64,208,146,.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 92% 90%,
+            rgba(64,208,146,.05),
+            transparent 27%
+        ),
+        var(--dv-background);
+}
+
+
+body.dark .doctor-verify-card {
+
+    background: #101f2b;
+
+    border-color:
+        #263b4d;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.35);
+}
+
+
+body.dark .doctor-verify-card h1 {
+
+    color:
+        #edf5fc;
+}
+
+
+body.dark .doctor-verify-description {
+
+    color:
+        #9eb0c1;
+}
+
+
+body.dark .doctor-verify-note {
+
+    background: #172735;
+
+    border-color: #263b4d;
+}
+
+
+body.dark .doctor-verify-note p {
+
+    color:
+        #9eb0c1;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .doctor-verify-page {
+
+        min-height:
+            calc(100vh - 111px);
+
+        padding:
+            30px 13px;
+    }
+
+
+    .doctor-verify-card {
+
+        padding:
+            30px 20px;
+
+        border-radius: 20px;
+    }
+
+
+    .doctor-verify-icon {
+
+        width: 62px;
+        height: 62px;
+
+        border-radius: 18px;
+    }
+
+
+    .doctor-verify-icon svg {
+
+        width: 29px;
+        height: 29px;
+
+        max-width: 29px;
+        max-height: 29px;
+    }
+
+
+    .doctor-verify-card h1 {
+
+        font-size: 25px;
+    }
+
+
+    .doctor-verify-description {
+
+        font-size: 10px;
+    }
+
+
+    .doctor-verify-button {
+
+        height: 50px;
+    }
+
+}
+
+
+
+
+
+/* =========================================================
+   CONFIRM PASSWORD
+========================================================= */
+
+.doctor-confirm-page {
+
+    --dc-primary: #147d78;
+    --dc-primary-dark: #0d625e;
+    --dc-primary-light: #e8f6f4;
+
+    --dc-text: #172b2b;
+    --dc-muted: #7c8b8b;
+    --dc-border: #e1eae8;
+    --dc-background: #f5f9f8;
+
+    min-height: calc(100vh - 124px);
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 55px 20px;
+
+    direction: rtl;
+
+    background:
+        radial-gradient(
+            circle at 8% 10%,
+            rgba(20,125,120,.10),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 92% 90%,
+            rgba(20,125,120,.08),
+            transparent 27%
+        ),
+        var(--dc-background);
+
+    overflow: hidden;
+}
+
+.doctor-confirm-bg-circle {
+
+    position: fixed;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.doctor-confirm-circle-one {
+
+    width: 420px;
+    height: 420px;
+
+    top: -240px;
+    right: -220px;
+
+    border:
+        1px solid
+        rgba(20,125,120,.12);
+}
+
+.doctor-confirm-circle-two {
+
+    width: 500px;
+    height: 500px;
+
+    left: -300px;
+    bottom: -300px;
+
+    border:
+        1px solid
+        rgba(20,125,120,.09);
+}
+
+
+/* CARD */
+
+.doctor-confirm-main {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    z-index: 2;
+}
+
+.doctor-confirm-card {
+
+    width: 100%;
+    max-width: 540px;
+
+    padding: 42px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border:
+        1px solid
+        var(--dc-border);
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 25px 70px
+        rgba(20,60,58,.08);
+}
+
+
+/* ICON */
+
+.doctor-confirm-icon {
+
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background:
+        var(--dc-primary-light);
+
+    color:
+        var(--dc-primary);
+}
+
+.doctor-confirm-icon svg {
+
+    width: 34px;
+    height: 34px;
+}
+
+
+/* TEXT */
+
+.doctor-confirm-card h1 {
+
+    margin: 0;
+
+    color:
+        var(--dc-text);
+
+    font-size: 29px;
+
+    font-weight: 900;
+}
+
+.doctor-confirm-description {
+
+    max-width: 450px;
+
+    margin: 10px auto 0;
+
+    color:
+        var(--dc-muted);
+
+    font-size: 11px;
+
+    line-height: 2;
+}
+
+
+/* FIELD */
+
+.doctor-confirm-form {
+
+    margin-top: 28px;
+
+    text-align: right;
+}
+
+.doctor-confirm-field {
+
+    margin-bottom: 18px;
+}
+
+.doctor-confirm-field label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #405454;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.doctor-confirm-input {
+
+    position: relative;
+
+    width: 100%;
+}
+
+.doctor-confirm-input > input {
+
+    width: 100%;
+
+    height: 56px;
+
+    padding:
+        0 47px 0 48px;
+
+    border:
+        1px solid
+        var(--dc-border);
+
+    border-radius: 14px;
+
+    outline: none;
+
+    background: #fbfdfd;
+
+    color:
+        var(--dc-text);
+
+    font-family:
+        "Cairo",
+        sans-serif;
+
+    font-size: 11px;
+
+    direction: rtl;
+
+    transition: .2s ease;
+}
+
+.doctor-confirm-input > input::placeholder {
+
+    color: #a7b4b4;
+}
+
+.doctor-confirm-input > input:focus {
+
+    background: #ffffff;
+
+    border-color:
+        rgba(20,125,120,.55);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(20,125,120,.07);
+}
+
+.doctor-confirm-input-icon {
+
+    position: absolute;
+
+    right: 15px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #92a2a2;
+
+    pointer-events: none;
+}
+
+.doctor-confirm-input-icon svg {
+
+    width: 19px;
+    height: 19px;
+}
+
+
+/* PASSWORD TOGGLE */
+
+.doctor-confirm-password-toggle {
+
+    position: absolute;
+
+    left: 11px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: #8c9c9c;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.doctor-confirm-password-toggle:hover {
+
+    color:
+        var(--dc-primary);
+
+    background:
+        var(--dc-primary-light);
+}
+
+.doctor-confirm-password-toggle svg {
+
+    width: 18px;
+    height: 18px;
+}
+
+
+/* BUTTON */
+
+.doctor-confirm-button {
+
+    width: 100%;
+
+    height: 56px;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #168680,
+            #0d716c
+        );
+
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    font-family:
+        "Cairo",
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 13px 28px
+        rgba(20,125,120,.18);
+
+    transition: .2s ease;
+}
+
+.doctor-confirm-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 18px 35px
+        rgba(20,125,120,.25);
+}
+
+.doctor-confirm-button svg {
+
+    width: 18px;
+    height: 18px;
+}
+
+
+/* SECURITY */
+
+.doctor-confirm-security {
+
+    margin-top: 22px;
+
+    padding: 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    text-align: right;
+
+    border:
+        1px solid #edf2f1;
+
+    border-radius: 13px;
+
+    background: #f7faf9;
+}
+
+.doctor-confirm-security-icon {
+
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    color:
+        var(--dc-primary);
+
+    background:
+        var(--dc-primary-light);
+}
+
+.doctor-confirm-security-icon svg {
+
+    width: 16px;
+    height: 16px;
+}
+
+.doctor-confirm-security p {
+
+    margin: 0;
+
+    color: #7c8b8b;
+
+    font-size: 9px;
+
+    line-height: 1.8;
+}
+
+
+/* DARK MODE */
+
+body.dark .doctor-confirm-page {
+
+    --dc-text: #edf5fc;
+    --dc-muted: #9eb0c1;
+    --dc-border: #263b4d;
+    --dc-background: #07111a;
+
+    background:
+        radial-gradient(
+            circle at 8% 10%,
+            rgba(64,208,146,.08),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 92% 90%,
+            rgba(64,208,146,.05),
+            transparent 27%
+        ),
+        var(--dc-background);
+}
+
+body.dark .doctor-confirm-card {
+
+    background: #101f2b;
+
+    border-color:
+        #263b4d;
+
+    box-shadow:
+        0 25px 70px
+        rgba(0,0,0,.35);
+}
+
+body.dark .doctor-confirm-card h1 {
+
+    color:
+        #edf5fc;
+}
+
+body.dark .doctor-confirm-input > input {
+
+    background: #172735;
+
+    color: #edf5fc;
+
+    border-color: #263b4d;
+}
+
+body.dark .doctor-confirm-input > input:focus {
+
+    background: #172735;
+}
+
+body.dark .doctor-confirm-security {
+
+    background: #172735;
+
+    border-color: #263b4d;
+}
+
+body.dark .doctor-confirm-security p {
+
+    color: #9eb0c1;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+
+    .doctor-confirm-page {
+
+        min-height:
+            calc(100vh - 111px);
+
+        padding:
+            30px 13px;
+    }
+
+    .doctor-confirm-card {
+
+        padding:
+            28px 20px;
+
+        border-radius: 20px;
+    }
+
+    .doctor-confirm-icon {
+
+        width: 62px;
+        height: 62px;
+
+        border-radius: 18px;
+    }
+
+    .doctor-confirm-icon svg {
+
+        width: 29px;
+        height: 29px;
+    }
+
+    .doctor-confirm-card h1 {
+
+        font-size: 25px;
+    }
+
+    .doctor-confirm-description {
+
+        font-size: 10px;
+    }
+
+    .doctor-confirm-button {
+
+        height: 52px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+/* Readability layer for doctor dashboard: topbar.
+   Generated from topbar.css: every rule that set text below 12px
+   is repeated here with a readable size (same selector, same media query),
+   so it wins by load order. Presentational only; colours untouched. */
+
+.welcome-label { font-size: 13px; }
+.welcome-status { font-size: 12.5px; }
+.welcome-summary-item span { font-size: 12px; }
+.welcome-summary-item strong { font-size: 13px; }
+.welcome-stat-info span { font-size: 12px; }
+.welcome-subscription-note { font-size: 13px; }
+.welcome-subscription-text strong { font-size: 13px; }
+.welcome-subscription-text span { font-size: 12px; }
+@media (max-width: 600px) {
+    .welcome-main p { font-size: 13px; }
+}
+@media (max-width: 450px) {
+    .welcome-main p { font-size: 12.5px; }
+    .welcome-label { font-size: 12px; }
+    .welcome-status { font-size: 12px; }
+    .welcome-summary-item span, .welcome-stat-info span { font-size: 12px; }
+    .welcome-summary-item strong { font-size: 12.5px; }
+    .welcome-subscription-text strong { font-size: 12.5px; }
+    .welcome-subscription-text span { font-size: 12px; }
+    .welcome-hint-content strong { font-size: 13.5px; }
+    .welcome-hint-content span { font-size: 13px; }
+}
+@media (max-width: 350px) {
+    .welcome-main p { font-size: 12px; }
+    .welcome-label { font-size: 12px; }
+    .welcome-status { font-size: 12px; }
+    .welcome-summary-icon, .welcome-stat-icon { font-size: 13.5px; }
+    .welcome-summary-item span, .welcome-stat-info span { font-size: 12px; }
+    .welcome-summary-item strong { font-size: 12px; }
+    .welcome-stat-info strong { font-size: 13.5px; }
+    .welcome-hint-content strong { font-size: 12.5px; }
+    .welcome-hint-content span { font-size: 12px; }
+    .welcome-subscription-text strong { font-size: 12px; }
+    .welcome-subscription-text span { font-size: 12px; }
+    .welcome-not-subscribed .welcome-subscribe-btn { font-size: 13px; }
+}

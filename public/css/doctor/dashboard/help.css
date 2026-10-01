@@ -1,0 +1,476 @@
+/* ===================================================================
+   Doctor Dashboard — Help Center Page Styles
+   Scoped to .doc-help-* only to avoid any Dashboard CSS conflicts.
+   RTL, Responsive, Light + Dark Mode compatible.
+   =================================================================== */
+
+/* ── Container ────────────────────────────────────────────────────── */
+.doc-help-container {
+    width: 100%;
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: 4px clamp(16px, 3vw, 32px) 40px;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow-x: hidden;
+    direction: rtl;
+}
+
+/* ── 1. Header Banner ─────────────────────────────────────────────── */
+.doc-help-header {
+    background: linear-gradient(135deg, #0b1c33 0%, #102a4e 55%, #1264c8 100%);
+    border-radius: 18px;
+    padding: 32px 28px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.doc-help-header::before {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    top: -100px;
+    left: -60px;
+    pointer-events: none;
+}
+
+.doc-help-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.15);
+    position: relative;
+    z-index: 1;
+}
+
+.doc-help-header h1 {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 800;
+    margin: 0 0 8px;
+    line-height: 1.35;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+}
+
+.doc-help-header p {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── 2. Section Title ─────────────────────────────────────────────── */
+.doc-help-section-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text, #111827);
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.doc-help-section-title i {
+    color: var(--primary, #1264c8);
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* ── 3. Category Tabs Grid ────────────────────────────────────────── */
+/* flex + center: أي صف ناقص بيتوسّط بدل ما يلزق في ناحية */
+.doc-help-category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    box-sizing: border-box;
+}
+
+.doc-help-category-card {
+    flex: 0 0 calc(25% - 9px);   /* 4 في الصف */
+    max-width: calc(25% - 9px);
+    background: var(--card, #ffffff);
+    border: 1.5px solid var(--line, rgba(17,24,39,0.08));
+    border-radius: 14px;
+    padding: 16px 10px;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    box-sizing: border-box;
+    transition: all 0.22s ease;
+    outline: none;
+    font-family: inherit;
+    box-shadow: var(--shadow-small, 0 4px 12px rgba(31,41,55,0.05));
+}
+
+.doc-help-category-card:hover {
+    border-color: var(--primary, #1264c8);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(18,100,200,0.1);
+}
+
+.doc-help-category-card.active {
+    background: linear-gradient(135deg, #0b2a5e, var(--primary, #1264c8));
+    border-color: var(--primary, #1264c8);
+    box-shadow: 0 6px 20px rgba(18,100,200,0.22);
+    transform: translateY(-1px);
+}
+
+.doc-help-cat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(18,100,200,0.09);
+    color: var(--primary, #1264c8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+    transition: all 0.22s ease;
+}
+
+.doc-help-category-card.active .doc-help-cat-icon {
+    background: rgba(255,255,255,0.18);
+    color: #ffffff;
+}
+
+.doc-help-category-card h4 {
+    font-size: 12.5px;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text, #111827);
+    line-height: 1.35;
+    transition: color 0.22s ease;
+}
+
+.doc-help-category-card p {
+    font-size: 10.5px;
+    color: var(--muted, #7c8799);
+    margin: 0;
+    line-height: 1.45;
+    transition: color 0.22s ease;
+}
+
+.doc-help-category-card.active h4,
+.doc-help-category-card.active p {
+    color: #ffffff !important;
+}
+
+/* ── 4. Category Groups & FAQ Accordion ──────────────────────────── */
+.doc-help-questions-wrap {
+    margin-bottom: 30px;
+}
+
+.doc-help-category-group {
+    display: none;
+    margin-bottom: 20px;
+    animation: helpGroupIn 0.22s ease;
+}
+
+@keyframes helpGroupIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.doc-help-category-group.show {
+    display: block;
+}
+
+.doc-help-group-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line, rgba(17,24,39,0.08));
+}
+
+.doc-help-group-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(18,100,200,0.09);
+    color: var(--primary, #1264c8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+}
+
+.doc-help-group-info h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text, #111827);
+    margin: 0;
+}
+
+.doc-help-group-info p {
+    font-size: 11.5px;
+    color: var(--muted, #7c8799);
+    margin: 2px 0 0;
+}
+
+.doc-help-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* FAQ Card */
+.doc-help-faq-item {
+    background: var(--card, #ffffff);
+    border: 1.5px solid var(--line, rgba(17,24,39,0.07));
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.22s ease, box-shadow 0.22s ease;
+    box-sizing: border-box;
+    box-shadow: var(--shadow-small, 0 4px 12px rgba(31,41,55,0.05));
+}
+
+.doc-help-faq-item:hover {
+    border-color: rgba(18,100,200,0.3);
+}
+
+.doc-help-faq-item.active {
+    border-color: var(--primary, #1264c8);
+    box-shadow: 0 5px 18px rgba(18,100,200,0.1);
+}
+
+/* Question Button */
+.doc-help-faq-question {
+    width: 100%;
+    min-height: 56px;
+    padding: 14px 16px;
+    background: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: right;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--text, #111827);
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+.doc-help-q-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.doc-help-q-num {
+    min-width: 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: rgba(18,100,200,0.09);
+    color: var(--primary, #1264c8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+    transition: all 0.22s ease;
+}
+
+.doc-help-faq-item.active .doc-help-q-num {
+    background: var(--primary, #1264c8);
+    color: #ffffff;
+}
+
+.doc-help-q-text {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+}
+
+.doc-help-q-arrow {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    background: rgba(18,100,200,0.07);
+    color: var(--primary, #1264c8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    transition: transform 0.28s ease, background 0.22s ease, color 0.22s ease;
+}
+
+.doc-help-faq-item.active .doc-help-q-arrow {
+    transform: rotate(180deg);
+    background: var(--primary, #1264c8);
+    color: #ffffff;
+}
+
+/* Answer — closed: strictly 0 height */
+.doc-help-faq-answer {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 56px !important;
+    box-sizing: border-box;
+    transition: max-height 0.32s cubic-bezier(0.4,0,0.2,1), padding 0.28s ease;
+}
+
+/* Answer — open */
+.doc-help-faq-item.active .doc-help-faq-answer {
+    max-height: 600px !important;
+    padding-top: 0 !important;
+    padding-bottom: 18px !important;
+    padding-left: 16px !important;
+    padding-right: 56px !important;
+}
+
+.doc-help-faq-answer-inner {
+    border-top: 1px solid var(--line, rgba(17,24,39,0.06));
+    padding-top: 12px;
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--muted, #7c8799);
+}
+
+.doc-help-faq-answer-inner strong {
+    color: var(--primary, #1264c8);
+    font-weight: 800;
+}
+
+/* ── 5. Support Card ─────────────────────────────────────────────── */
+.doc-help-support-card {
+    background: var(--card, #ffffff);
+    border: 1.5px solid var(--line, rgba(17,24,39,0.07));
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: var(--shadow-small, 0 4px 12px rgba(31,41,55,0.05));
+    box-sizing: border-box;
+}
+
+.doc-help-support-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(37,211,102,0.12);
+    color: #25d366;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.doc-help-support-card h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text, #111827);
+    margin: 0 0 7px;
+}
+
+.doc-help-support-card p {
+    font-size: 13px;
+    color: var(--muted, #7c8799);
+    margin: 0 auto 18px;
+    line-height: 1.7;
+    max-width: 480px;
+}
+
+.doc-help-whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #25d366;
+    color: #ffffff !important;
+    padding: 11px 26px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 5px 16px rgba(37,211,102,0.28);
+    transition: all 0.22s ease;
+}
+
+.doc-help-whatsapp-btn:hover {
+    background: #1fb958;
+    transform: translateY(-2px);
+}
+
+/* ── 6. Responsive ───────────────────────────────────────────────── */
+/* شاشات متوسطة: 3 في الصف */
+@media (max-width: 1100px) {
+    .doc-help-category-card {
+        flex-basis: calc(33.333% - 8px);
+        max-width: calc(33.333% - 8px);
+    }
+}
+
+@media (max-width: 768px) {
+    .doc-help-container {
+        padding: 4px 0 28px;
+    }
+    .doc-help-header {
+        padding: 22px 18px;
+        border-radius: 14px;
+    }
+    .doc-help-header h1 { font-size: 19px; }
+    .doc-help-header p  { font-size: 12.5px; }
+    .doc-help-category-grid {
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+    /* موبايل: 2 في الصف (زي ما كان) */
+    .doc-help-category-card {
+        flex-basis: calc(50% - 5px);
+        max-width: calc(50% - 5px);
+    }
+    .doc-help-faq-answer,
+    .doc-help-faq-item.active .doc-help-faq-answer {
+        padding-right: 16px !important;
+    }
+    .doc-help-faq-question { font-size: 13px; padding: 12px 14px; }
+    .doc-help-support-card { padding: 22px 14px; border-radius: 14px; }
+    .doc-help-whatsapp-btn { width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .doc-help-header { padding: 18px 14px; }
+    .doc-help-category-card { padding: 14px 8px; }
+    .doc-help-category-card h4 { font-size: 11.5px; }
+    .doc-help-category-card p  { font-size: 10px; }
+    .doc-help-cat-icon { width: 38px; height: 38px; font-size: 17px; }
+    .doc-help-faq-question { font-size: 12.5px; min-height: 50px; }
+}
