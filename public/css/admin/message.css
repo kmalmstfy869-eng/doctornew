@@ -12,6 +12,23 @@
 .cm-item .review-date    { grid-area: date !important; }
 .cm-item .review-actions { grid-area: actions !important; }
 
+/* الاسم + الهاتف تحت بعض */
+.cm-item .review-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 0;
+}
+
+.cm-item .review-user-info small {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-size: 13px;
+    color: #64748b;
+}
+
 .cm-item .comment-box {
     width: 100%;
     max-width: none;

@@ -10,21 +10,40 @@ use App\Http\Requests\StoreJobRequest;
 
 class JobsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $page_job = true;
 
+        $q = trim((string) $request->query('q'));
+
         $jobs = Job::with('user')
             ->active()
+            ->when($q !== '', function ($query) use ($q) {
+                $like = '%' . addcslashes($q, '%_\\') . '%';
+                $query->where(function ($w) use ($like) {
+                    $w->where('title', 'like', $like)
+                    ->orWhere('company_name', 'like', $like)
+                    ->orWhere('category', 'like', $like)
+                    ->orWhere('location', 'like', $like);
+                });
+            })
             ->latest()
-            ->paginate(9);
+            ->paginate(9)
+            ->withQueryString();
 
-        $totaljobs=Job:: active()->count();
+        if ($request->ajax()) {
+            return response()
+                ->json([
+                    'html'  => view('home.jobs._grid', compact('jobs'))->render(),
+                    'count' => $jobs->total(),
+                ])
+                ->header('Vary', 'X-Requested-With')
+                ->header('Cache-Control', 'no-store');
+        }
 
-        return view(
-            "home.jobs.jobs",
-            compact("jobs", "page_job","totaljobs")
-        );
+        $totaljobs = $jobs->total();
+
+        return view('home.jobs.jobs', compact('jobs', 'page_job', 'totaljobs'));
     }
 
     public function create(){

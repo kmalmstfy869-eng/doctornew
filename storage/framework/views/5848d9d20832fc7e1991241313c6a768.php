@@ -8,7 +8,9 @@
     <meta name="theme-color" content="#0b1020">
 
     <title><?php echo $__env->yieldContent('title'); ?></title>
-
+    <link rel="icon" type="image/png" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="apple-touch-icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/app.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/sidebar.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/base/tokens.css')); ?>">

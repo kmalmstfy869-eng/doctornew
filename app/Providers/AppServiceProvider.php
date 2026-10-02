@@ -14,23 +14,52 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
-
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Auth\Notifications\ResetPassword;
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    public function register(): void
-    {
-        //
-    }
+
+
+
 
     /**
      * Bootstrap any application services.
      */
     public function boot(): void
     {
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new MailMessage)
+                ->subject('تأكيد البريد الإلكتروني')
+                ->greeting('مرحباً ' . $notifiable->name . '،')
+                ->line('يرجى الضغط على الزر أدناه لتأكيد بريدك الإلكتروني.')
+                ->action('تأكيد البريد الإلكتروني', $url)
+                ->line('إذا لم تقم بإنشاء حساب، فلا يلزم اتخاذ أي إجراء.')
+                ->salutation('مع تحياتنا، فريق ' . config('app.name'));
+        });
 
+
+    ResetPassword::toMailUsing(function ($notifiable, $token) {
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $notifiable->getEmailForPasswordReset(),
+        ], false));
+
+        $minutes = config('auth.passwords.' . config('auth.defaults.passwords') . '.expire');
+
+        return (new MailMessage)
+            ->subject('استعادة كلمة المرور')
+            ->greeting('مرحباً ' . $notifiable->name . '،')
+            ->line('وصلتك هذه الرسالة لأننا تلقينا طلباً لاستعادة كلمة المرور الخاصة بحسابك.')
+            ->action('استعادة كلمة المرور', $url)
+            ->line("هذا الرابط صالح لمدة {$minutes} دقيقة.")
+            ->line('إذا لم تطلب استعادة كلمة المرور، فلا يلزم اتخاذ أي إجراء.')
+            ->salutation('مع تحياتنا، فريق ' . config('app.name'));
+
+});
         Rating::observe(RatingObserver::class);
 
         View::composer('home.doctors.doctors', function ($view) {
@@ -50,6 +79,7 @@ class AppServiceProvider extends ServiceProvider
                 'areas' => $areas,
             ]);
         });
+
 
         /*
         |--------------------------------------------------------------------------
@@ -72,7 +102,7 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinutes(
                 15,
-                4
+                6
             )->by(
                 $request->user()->id ?? $request->ip()
             );
@@ -83,7 +113,7 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinutes(
                 30,
-                6
+               10
             )->by(
                 $request->user()->id ?? $request->ip()
             );

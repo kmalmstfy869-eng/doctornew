@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="icon" type="image/png" href="{{ asset('logo/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('logo/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo/favicon.png') }}">
     <title>
         @yield('title', 'لوحة الإدارة | دليل الأطباء')
     </title>
@@ -274,24 +276,6 @@
                     <ul class="doctors-submenu">
 
 
-                        {{-- =================================================
-                         DOCTORS SUBSCRIPTIONS
-                    ================================================== --}}
-
-                        <li>
-
-                            <a {{-- href="{{ route('admin.subscriptions.index') }}" --}}
-                                class="{{ request()->routeIs('admin.subscriptions.*') ? 'submenu-active' : '' }}">
-
-                                <i class="fa-solid fa-user-doctor"></i>
-
-                                <span>
-                                    اشتراكات الأطباء
-                                </span>
-
-                            </a>
-
-                        </li>
 
 
                         {{-- =================================================

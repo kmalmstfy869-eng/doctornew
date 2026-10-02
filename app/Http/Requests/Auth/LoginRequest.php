@@ -114,14 +114,10 @@ class LoginRequest extends FormRequest
             new Lockout($this)
         );
 
-        $seconds = RateLimiter::availableIn(
-            $this->throttleKey()
-        );
+
 
         throw ValidationException::withMessages([
-
-            'email' => "لقد تجاوزت عدد محاولات تسجيل الدخول المسموح بها. يرجى المحاولة مرة أخرى بعد {$seconds} ثانية.",
-
+            'email' => 'لقد تجاوزت عدد محاولات تسجيل الدخول المسموح بها. يرجى المحاولة مرة أخرى بعد قليل.',
         ]);
     }
 

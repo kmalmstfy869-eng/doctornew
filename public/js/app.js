@@ -1,11 +1,11 @@
 /* =========================================================
-   APP.JS
-   دليل الأطباء
+  APP.JS
+  دليل الأطباء
 ========================================================= */
 
 
 /* =========================================================
-   DARK MODE
+  DARK MODE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   HOME SEARCH
+  HOME SEARCH
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   FAQ
+  FAQ
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   DOCTOR PROFILE
+  DOCTOR PROFILE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -764,7 +764,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   DOCTOR REGISTRATION PAGE
+  DOCTOR REGISTRATION PAGE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -783,41 +783,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const doctorName =
         document.getElementById("doctor_name");
 
+
     const clinicName =
         document.getElementById("clinic_name");
+
 
     const specialty =
         document.getElementById("specialty");
 
+
     const area =
         document.getElementById("area");
+
 
     const price =
         document.getElementById("price");
 
+
     const bio =
         document.getElementById("bio");
-
-    const password =
-        document.getElementById("password");
-
-    const passwordConfirmation =
-        document.getElementById(
-            "password_confirmation"
-        );
 
 
     const previewName =
         document.getElementById("previewName");
 
+
     const previewClinic =
         document.getElementById("previewClinic");
+
 
     const previewSpecialty =
         document.getElementById("previewSpecialty");
 
+
     const previewArea =
         document.getElementById("previewArea");
+
 
     const previewPrice =
         document.getElementById("previewPrice");
@@ -992,231 +993,15 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
 
-    const strengthBars = [
-
-        document.getElementById(
-            "doctorRegisterBar1"
-        ),
-
-        document.getElementById(
-            "doctorRegisterBar2"
-        ),
-
-        document.getElementById(
-            "doctorRegisterBar3"
-        ),
-
-        document.getElementById(
-            "doctorRegisterBar4"
-        )
-
-    ];
-
-
-    const strengthText =
-        document.getElementById(
-            "doctorRegisterStrengthText"
-        );
-
-
-    function resetPasswordStrength() {
-
-        strengthBars.forEach(function (bar) {
-
-            if (bar) {
-
-                bar.style.background =
-                    "#e7eeee";
-
-            }
-
-        });
-
-
-        if (strengthText) {
-
-            strengthText.textContent =
-                "قوة كلمة المرور";
-
-        }
-
-    }
-
-
-    function updatePasswordStrength() {
-
-        if (!password) {
-            return;
-        }
-
-
-        const value =
-            password.value;
-
-
-        resetPasswordStrength();
-
-
-        if (!value) {
-            return;
-        }
-
-
-        let strength = 0;
-
-
-        if (value.length >= 6) {
-            strength++;
-        }
-
-
-        if (/[A-Z]/.test(value)) {
-            strength++;
-        }
-
-
-        if (/[0-9]/.test(value)) {
-            strength++;
-        }
-
-
-        if (/[^A-Za-z0-9]/.test(value)) {
-            strength++;
-        }
-
-
-        const colors = {
-
-            1: "#e58c8c",
-            2: "#e4b36e",
-            3: "#9dc87b",
-            4: "#62b9a4"
-
-        };
-
-
-        const labels = {
-
-            1: "ضعيفة",
-            2: "متوسطة",
-            3: "جيدة",
-            4: "قوية جدًا"
-
-        };
-
-
-        for (
-            let i = 0;
-            i < strength;
-            i++
-        ) {
-
-            if (strengthBars[i]) {
-
-                strengthBars[i].style.background =
-                    colors[strength];
-
-            }
-
-        }
-
-
-        if (strengthText) {
-
-            strengthText.textContent =
-                labels[strength] ||
-                "قوة كلمة المرور";
-
-        }
-
-    }
-
-
-    if (password) {
-
-        password.addEventListener(
-            "input",
-            updatePasswordStrength
-        );
-
-    }
-
-
-    function checkPasswordMatch() {
-
-        if (!passwordConfirmation) {
-            return true;
-        }
-
-
-        if (!passwordConfirmation.value) {
-
-            passwordConfirmation.style.borderColor =
-                "";
-
-            return true;
-
-        }
-
-
-        const matched =
-            passwordConfirmation.value ===
-            password.value;
-
-
-        passwordConfirmation.style.borderColor =
-            matched
-                ? "#9dc8b8"
-                : "#dc8a8a";
-
-
-        return matched;
-
-    }
-
-
-    if (passwordConfirmation) {
-
-        passwordConfirmation.addEventListener(
-            "input",
-            checkPasswordMatch
-        );
-
-    }
-
-
-    if (password) {
-
-        password.addEventListener(
-            "input",
-            function () {
-
-                if (
-                    passwordConfirmation &&
-                    passwordConfirmation.value
-                ) {
-
-                    checkPasswordMatch();
-
-                }
-
-            }
-        );
-
-    }
-
-
     updateDoctorPreview();
 
     updateBioCounter();
-
-    updatePasswordStrength();
 
 });
 
 
 /* =========================================================
-   PASSWORD TOGGLE
+  PASSWORD TOGGLE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1296,7 +1081,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   LOGIN PAGE
+  LOGIN PAGE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1359,7 +1144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   FORGOT PASSWORD
+  FORGOT PASSWORD
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1378,7 +1163,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   CONFIRM PASSWORD
+  CONFIRM PASSWORD
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1428,12 +1213,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /* =========================================================
-   END APP.JS
+  END APP.JS
 ========================================================= */
 
 
 /* =========================================================
-   FLASH MESSAGE
+  FLASH MESSAGE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function () {

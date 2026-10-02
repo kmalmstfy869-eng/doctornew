@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use App\Http\Middleware\admin;
+use App\Http\Middleware\DoctorAssistant;
 use App\Http\Middleware\DoctorBookingOrAssistant;
 use App\Http\Middleware\DoctorClinicSystemOrAssistant;
 use App\Http\Middleware\DoctorMiddleware;
@@ -15,7 +16,7 @@ use App\Http\Middleware\RedirectAdmin;
 use App\Http\Middleware\RedirectDoctor;
 use App\Http\Middleware\RequireVerifiedEmail;
 use App\Http\Middleware\SubscriptionMiddleware;
-use App\Models\DoctorAssistant;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(

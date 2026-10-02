@@ -8,8 +8,10 @@
     <meta name="description" content="ملخص يومي لحالة العيادة: الحجوزات، الطابور، المواعيد والإيرادات.">
     <meta property="og:title" content="لوحة التحكم">
     <meta property="og:description" content="ملخص يومي لحالة العيادة: الحجوزات، الطابور، المواعيد والإيرادات.">
-    <link rel="icon" href="assets/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="apple-touch-icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/clinic/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/base/tokens.css')); ?>">

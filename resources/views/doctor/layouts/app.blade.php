@@ -8,7 +8,9 @@
     <meta name="theme-color" content="#0b1020">
 
     <title>@yield('title')</title>
-
+    <link rel="icon" type="image/png" href="{{ asset('logo/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('logo/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/tokens.css') }}">

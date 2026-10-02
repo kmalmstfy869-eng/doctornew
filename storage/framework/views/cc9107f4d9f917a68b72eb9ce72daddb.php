@@ -7,14 +7,14 @@
     <main>
         <?php if (isset($component)) { $__componentOriginald36d3951f1394463954edb61ffc76839 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald36d3951f1394463954edb61ffc76839 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.hero.firsthero','data' => ['nav' => ' دليل طبي موثوق ومراجع','title' => 'اعثر على طبيبك','titleContinue' => ' بسهولة وثقة','note1' => ' ملفات طبية موثوقة','anser1' => 'بيانات يراجعها الموقع','note2' => ' تقييمات المستخدمين','anser2' => 'تجارب تساعدك على الاختيار','home' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.hero.firsthero','data' => ['nav' => ' دليل طبي موثوق ومراجع','title' => 'اعثر على طبيبك','titleContinue' => ' بسهولة وثقة','note1' => ' ملفات طبية موثوقة','anser1' => 'بيانات يراجعها الموقع','note2' => ' تقييمات المستخدمين','anser2' => 'تجارب تساعدك على الاختيار','home' => true,'areas' => $areas]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('home.hero.firsthero'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['nav' => ' دليل طبي موثوق ومراجع','title' => 'اعثر على طبيبك','title_continue' => ' بسهولة وثقة','note1' => ' ملفات طبية موثوقة','anser1' => 'بيانات يراجعها الموقع','note2' => ' تقييمات المستخدمين','anser2' => 'تجارب تساعدك على الاختيار','home' => true]); ?>
+<?php $component->withAttributes(['nav' => ' دليل طبي موثوق ومراجع','title' => 'اعثر على طبيبك','title_continue' => ' بسهولة وثقة','note1' => ' ملفات طبية موثوقة','anser1' => 'بيانات يراجعها الموقع','note2' => ' تقييمات المستخدمين','anser2' => 'تجارب تساعدك على الاختيار','home' => true,'areas' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($areas)]); ?>
 
             ابحث باسم الطبيب أو التخصص أو المحافظة،
             واطّلع على بيانات العيادة والخدمات المتاحة

@@ -29,6 +29,7 @@ class DoctorJoinController extends Controller
 
         public function store(DoctorJoinRequest $request)
     {
+
         try {
             DB::beginTransaction();
 

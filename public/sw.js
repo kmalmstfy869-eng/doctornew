@@ -11,12 +11,11 @@ self.addEventListener('push', function (event) {
     const options = {
         body: data.body || 'لديك إشعار جديد من دليل الأطباء.',
 
-        icon: '/storage/logo/logo.png',
+        icon: '/logo/favicon.png',
 
-        badge: '/storage/logo/logo.png',
+        badge: '/logo/favicon.png',
 
         dir: 'rtl',
-
         lang: 'ar',
 
         data: {

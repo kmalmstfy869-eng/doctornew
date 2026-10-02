@@ -15,7 +15,9 @@
 
 
     
-
+    <link rel="icon" type="image/png" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="apple-touch-icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

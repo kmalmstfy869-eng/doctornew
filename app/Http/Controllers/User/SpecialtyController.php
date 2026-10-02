@@ -3,53 +3,44 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Area;
 use App\Models\Specialties;
-use App\Models\Doctor;
+use Illuminate\Http\Request;
 
 class SpecialtyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $Specialties = Specialties::orderBy('sort_order')->paginate(12);
+        $q = trim((string) $request->query('q'));
 
-        return view(
-            "home.specialty.specialty",
-            compact("Specialties")
-        );
+        $Specialties = Specialties::orderBy('sort_order')
+            ->when($q !== '', function ($query) use ($q) {
+                $like = '%' . addcslashes($q, '%_\\') . '%';
+                $query->where(function ($w) use ($like) {
+                    $w->where('name', 'like', $like)
+                      ->orWhere('title', 'like', $like);
+                });
+            })
+            ->paginate(12)
+            ->withQueryString();
+
+    if ($request->ajax()) {
+        return response()
+            ->json([
+                'html'  => view('home.specialty._grid', compact('Specialties'))->render(),
+                'count' => $Specialties->total(),
+            ])
+            ->header('Vary', 'X-Requested-With')
+            ->header('Cache-Control', 'no-store');
     }
 
+        return view('home.specialty.specialty', compact('Specialties'));
+    }
 
-    /**
-     * Display the specified resource.
-     */
-        public function show(string $slug)
-        {
-            $specialty = Specialties::where('slug', $slug)->firstOrFail();
+    public function show(string $slug)
+    {
+        $specialty = Specialties::where('slug', $slug)->firstOrFail();
 
-            $doctors = $specialty->doctors()
-                ->with([
-                    'user',
-                    'area',
-                    'specialty',
-                    'rating',
-                ])
-                ->active()
-                ->doctors()
-                ->orderByPlan()
-                ->paginate(9);
-
-            $name = $specialty->name;
-
-            return view(
-                'home.doctors.doctors',
-                compact('doctors', 'name')
-            );
-        }
-
-
-
+        return redirect()->route('doctors.index', ['specialty' => $specialty->id]);
+    }
 }

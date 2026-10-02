@@ -10,6 +10,7 @@ $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'note2',
     'anser2',
     'home' => false,
+    'areas' => null,
 ]));
 
 foreach ($attributes->all() as $__key => $__value) {
@@ -34,6 +35,7 @@ foreach (array_filter(([
     'note2',
     'anser2',
     'home' => false,
+    'areas' => null,
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
@@ -97,69 +99,41 @@ unset($__defined_vars, $__key, $__value); ?>
 
 
                 
-                <form
-                    class="home-search-form"
-                    id="homeSearchForm"
-                >
+                <form class="home-search-form" id="homeSearchForm" method="GET" action="<?php echo e(route('doctors.index')); ?>">
 
                     <div class="home-search-field">
 
                         <i class="fa-solid fa-magnifying-glass"></i>
 
-                        <input
-                            type="text"
-                            id="doctorSearchInput"
-                            placeholder="ابحث باسم الطبيب أو التخصص"
-                        >
+                        <input type="text" id="doctorSearchInput" name="q" placeholder="ابحث باسم الطبيب أو التخصص">
 
                     </div>
-
 
                     <div class="home-search-field">
 
                         <i class="fa-solid fa-location-dot"></i>
 
-                        <select id="governorateSelect">
+                        <select id="governorateSelect" name="area">
+                            <?php if($areas?->isNotEmpty()): ?>
+                                <option value="all">
+                                    كل المناطق
+                                </option>
+                                <?php $__currentLoopData = $areas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($area?->id); ?>">
+                                        <?php echo e($area?->name); ?>
 
-                            <option value="">
-
-                                اختر المحافظة
-
-                            </option>
-
-                            <option value="beheira">
-
-                                البحيرة
-
-                            </option>
-
-                            <option value="cairo">
-
-                                القاهرة
-
-                            </option>
-
-                            <option value="alexandria">
-
-                                الإسكندرية
-
-                            </option>
-
-                            <option value="giza">
-
-                                الجيزة
-
-                            </option>
-
+                                    </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php else: ?>
+                                <option value="" disabled selected>
+                                    لا توجد مناطق الآن
+                                </option>
+                            <?php endif; ?>
                         </select>
 
                     </div>
 
-
-                    <button
-                        type="submit"
-                        class="home-search-button"
-                    >
+                    <button type="submit" class="home-search-button">
 
                         <i class="fa-solid fa-search"></i>
 

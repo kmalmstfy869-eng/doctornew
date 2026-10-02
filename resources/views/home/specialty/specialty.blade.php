@@ -16,7 +16,8 @@
 
                 <i class="fa-solid fa-magnifying-glass"></i>
 
-                <input type="text" id="specialties-searchInput" placeholder="ابحث عن تخصص...">
+                <input type="text" id="specialties-searchInput" value="{{ request('q') }}"
+                    placeholder="ابحث عن تخصص...">
 
             </div>
 
@@ -32,10 +33,6 @@
         </form>
 
     </div>
-
-
-
-
 
 
     <section class="specialties-section">
@@ -76,11 +73,7 @@
 
                     تم العثور على
 
-                    <strong id="resultNumber">
-
-                        12
-
-                    </strong>
+                    <strong id="resultNumber">{{ $Specialties->total() }}</strong>
 
                     تخصص
 
@@ -89,82 +82,23 @@
             </div>
 
 
-            <!-- الفلاتر -->
-
-            <div class="filters">
-
-                <button class="filter-button active" data-filter="all">
-
-                    الكل
-
-                </button>
-
-
-                <button class="filter-button" data-filter="general">
-
-                    تخصصات عامة
-
-                </button>
-
-
-                <button class="filter-button" data-filter="surgery">
-
-                    تخصصات جراحية
-
-                </button>
-
-
-                <button class="filter-button" data-filter="children">
-
-                    الأطفال
-
-                </button>
-
-
-                <button class="filter-button" data-filter="women">
-
-                    النساء
-
-                </button>
-
-
-                <button class="filter-button" data-filter="mental">
-
-                    الصحة النفسية
-
-                </button>
-
+            <div id="specialtiesResults" data-url="{{ route('specialties.index') }}">
+                @include('home.specialty._grid')
             </div>
 
-            @if ($Specialties->isNotEmpty())
-                <div class="specialties-grid" id="specialtiesGrid">
 
-                    @foreach ($Specialties as $specialty)
-                        <x-home.specialties.card_specialties :link="route('specialties.show', $specialty->slug)" :number="str_pad(
-                            ($Specialties->currentPage() - 1) * $Specialties->perPage() + $loop->iteration,
-                            2,
-                            '0',
-                            STR_PAD_LEFT,
-                        )" :name="$specialty->name"
-                            :title="$specialty->title" :logo="$specialty->logo" />
-                    @endforeach
+            <x-home.banner.firstbanner nav="هل أنت طبيب؟" title="أضف تخصصك وعرّف المرضى بخدماتك" link="انضم كطبيب"
+                :route="route('doctor_join')">
 
-                </div>
+                أنشئ حسابك وابدأ في بناء ملفك الطبي.
 
-                {{ $Specialties->links('vendor.pagination.custom') }}
-            @else
-                <x-home.banner.no_results logo="fa-solid fa-stethoscope" title="لا توجد تخصصات مطابقة"
-                    content="جرب البحث باسم تخصص آخر أو غيّر معايير البحث. " />
-            @endif
+            </x-home.banner.firstbanner>
+        </div>
 
+    </section>
 
-        <x-home.banner.firstbanner nav="هل أنت طبيب؟" title="أضف تخصصك وعرّف المرضى بخدماتك" link="انضم كطبيب" :route="route('doctor_join')">
-
-            أنشئ حسابك وابدأ في بناء ملفك الطبي.
-
-        </x-home.banner.firstbanner>
-    </div>
-
-</section>
+    @push('scripts')
+        <script src="{{ asset('js/search_specialties.js') }}"></script>
+    @endpush
 
 @endsection

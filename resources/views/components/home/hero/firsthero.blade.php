@@ -7,6 +7,7 @@
     'note2',
     'anser2',
     'home' => false,
+    'areas' => null,
 ])
 
 
@@ -56,69 +57,40 @@
 
 
                 {{-- Search Form --}}
-                <form
-                    class="home-search-form"
-                    id="homeSearchForm"
-                >
+                <form class="home-search-form" id="homeSearchForm" method="GET" action="{{ route('doctors.index') }}">
 
                     <div class="home-search-field">
 
                         <i class="fa-solid fa-magnifying-glass"></i>
 
-                        <input
-                            type="text"
-                            id="doctorSearchInput"
-                            placeholder="ابحث باسم الطبيب أو التخصص"
-                        >
+                        <input type="text" id="doctorSearchInput" name="q" placeholder="ابحث باسم الطبيب أو التخصص">
 
                     </div>
-
 
                     <div class="home-search-field">
 
                         <i class="fa-solid fa-location-dot"></i>
 
-                        <select id="governorateSelect">
-
-                            <option value="">
-
-                                اختر المحافظة
-
-                            </option>
-
-                            <option value="beheira">
-
-                                البحيرة
-
-                            </option>
-
-                            <option value="cairo">
-
-                                القاهرة
-
-                            </option>
-
-                            <option value="alexandria">
-
-                                الإسكندرية
-
-                            </option>
-
-                            <option value="giza">
-
-                                الجيزة
-
-                            </option>
-
+                        <select id="governorateSelect" name="area">
+                            @if ($areas?->isNotEmpty())
+                                <option value="all">
+                                    كل المناطق
+                                </option>
+                                @foreach ($areas as $area)
+                                    <option value="{{ $area?->id }}">
+                                        {{ $area?->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="" disabled selected>
+                                    لا توجد مناطق الآن
+                                </option>
+                            @endif
                         </select>
 
                     </div>
 
-
-                    <button
-                        type="submit"
-                        class="home-search-button"
-                    >
+                    <button type="submit" class="home-search-button">
 
                         <i class="fa-solid fa-search"></i>
 

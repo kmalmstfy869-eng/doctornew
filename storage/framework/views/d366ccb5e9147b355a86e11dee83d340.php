@@ -309,18 +309,14 @@
 
                 </div>
 
+<a
+    href="<?php echo e(route('contact.index')); ?>"
+    class="company-button"
+>
+    عندك فكرة؟ خلينا ننفذها
 
-                <span
-                    class="company-button"
-                    role="button"
-                    tabindex="0"
-                >
-
-                    عندك فكرة؟ خلينا ننفذها
-
-                    <i class="fa-solid fa-arrow-left"></i>
-
-                </span>
+    <i class="fa-solid fa-arrow-left"></i>
+</a>
 
 
             </div>

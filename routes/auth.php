@@ -26,7 +26,7 @@ Route::middleware([
 
     Route::post('/join_as_doctor', [DoctorJoinController::class, 'store'])
         ->name('doctor_join.store')
-        ->middleware('throttle:book');
+        ->middleware('throttle:jobs');
 
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');

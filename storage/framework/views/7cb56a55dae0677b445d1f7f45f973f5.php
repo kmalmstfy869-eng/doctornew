@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-
+    <link rel="icon" type="image/png" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
+    <link rel="apple-touch-icon" href="<?php echo e(asset('logo/favicon.png')); ?>">
     <title>
         <?php echo $__env->yieldContent('title', 'لوحة الإدارة | دليل الأطباء'); ?>
     </title>
@@ -255,22 +257,6 @@
                     <ul class="doctors-submenu">
 
 
-                        
-
-                        <li>
-
-                            <a 
-                                class="<?php echo e(request()->routeIs('admin.subscriptions.*') ? 'submenu-active' : ''); ?>">
-
-                                <i class="fa-solid fa-user-doctor"></i>
-
-                                <span>
-                                    اشتراكات الأطباء
-                                </span>
-
-                            </a>
-
-                        </li>
 
 
                         

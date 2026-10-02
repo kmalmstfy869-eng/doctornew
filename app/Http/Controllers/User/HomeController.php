@@ -1,18 +1,25 @@
 <?php
 
 namespace App\Http\Controllers\User;
-use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Doctor;
+use App\Models\SiteVisitStat;
 use App\Models\Specialties;
+use App\Services\SiteVisitTracker;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request, SiteVisitTracker $tracker)
     {
+        $tracker->record(SiteVisitStat::HOME, $request);
+
         $specialties = Specialties::orderBy('sort_order')->take(8)->get();
+
+        $areas = Area::select('id', 'name')->get();
 
         $doctors = Doctor::with([
             'user',
@@ -29,13 +36,12 @@ class HomeController extends Controller
 
         return view(
             'home.index',
-            compact('specialties', 'doctors')
+            compact('specialties', 'doctors', 'areas')
         );
     }
+
     public function profileuser(Request $request): View
     {
-
-
         $user = $request->user();
 
         $jobs = $user->jobs()
@@ -45,8 +51,8 @@ class HomeController extends Controller
         return view('home.profile.profile', [
             'user' => $user,
             'jobs' => $jobs,
-            "link"=>"home",
-"favorites"=>null
+            'link' => 'home',
+            'favorites' => null,
         ]);
     }
 }

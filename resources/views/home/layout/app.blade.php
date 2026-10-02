@@ -17,7 +17,9 @@
     {{-- =====================================================
          Google Font - Cairo
     ====================================================== --}}
-
+    <link rel="icon" type="image/png" href="{{ asset('logo/favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('logo/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo/favicon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

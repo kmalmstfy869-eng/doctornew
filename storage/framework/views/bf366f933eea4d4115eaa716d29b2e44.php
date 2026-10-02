@@ -28,15 +28,17 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 <tr>
-<td class="header">
+<td align="center">
+<table class="header-table" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
+<tr>
+<td class="header" align="center">
 <a href="<?php echo new \Illuminate\Support\EncodedHtmlString($url); ?>" style="display: inline-block;">
-<?php if(trim($slot) === 'Laravel'): ?>
-<img src="https://laravel.com/img/notification-logo-v2.1.png" class="logo" alt="Laravel Logo">
-<?php else: ?>
 <?php echo $slot; ?>
 
-<?php endif; ?>
 </a>
+</td>
+</tr>
+</table>
 </td>
 </tr>
 <?php /**PATH C:\Users\DELL\Desktop\doctors-ai\resources\views/vendor/mail/html/header.blade.php ENDPATH**/ ?>
