@@ -41,7 +41,6 @@ class SiteVisitTracker
             ->where('doctor_id', $doctorId)
             ->where('stat_date', $today);
 
-        // أول زيارة في اليوم: ننشئ الصف مرة واحدة ثم نعيد المحاولة
         if ($query()->update($updates) === 0) {
             DB::table('site_visit_stats')->insertOrIgnore([
                 'page_type' => $pageType,

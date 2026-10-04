@@ -24,11 +24,7 @@ class VisitGate
         return hash_hmac('sha256', $request->ip() . '|' . $request->userAgent(), config('app.key'));
     }
 
-    /**
-     * كل مفتاح يتفحص مستقلًا (Cache::add ذري).
-     *
-     * @return array{view: bool, unique: bool}
-     */
+
     public function claim(string $viewKeyBase, string $uniqueKeyBase, string $fingerprint): array
     {
         return [
