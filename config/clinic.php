@@ -14,8 +14,14 @@ return [
     'patient_files_disk' => 'medical_files',
     'patient_files_backup_disk' => 'medical_files_backup',
         // سعر وحجم الزيادة الإضافية للمساحة (بيظهروا في إعلان الزيادة).
-    'extra_storage_gb' => 25,
-    'extra_storage_price' => 100,
+    'extra_storage' => [
+    'unit_gb'   => (int) env('CLINIC_EXTRA_STORAGE_UNIT_GB', 25),
+    'max_units' => 20,
+    'plans' => [
+        'monthly' => ['label' => 'شهري', 'days' => 30,  'price' => (float) env('CLINIC_EXTRA_STORAGE_MONTHLY', 100)],
+        'yearly'  => ['label' => 'سنوي', 'days' => 365, 'price' => (float) env('CLINIC_EXTRA_STORAGE_YEARLY', 1000)],
+    ],
+],
     // نسبة الاستهلاك اللي بعدها الطبيب يتحسب "قرب من الحد" في لوحة الأدمن.
     'patient_files_near_limit_percent' => 90,
 ];

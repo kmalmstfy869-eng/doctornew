@@ -33,11 +33,13 @@ unset($__defined_vars, $__key, $__value); ?>
     $show = $stats['remaining_bytes'] <= 1024 ** 3;
     $isFull = $stats['remaining_bytes'] <= 0;
 
-    $extraGb = (int) config('clinic.extra_storage_gb', 25);
-    $extraPrice = (int) config('clinic.extra_storage_price', 200);
+    $ex = config('clinic.extra_storage');
+    $extraGb = (int) $ex['unit_gb'];
+    $monthlyPrice = (int) $ex['plans']['monthly']['price'];
+    $yearlyPrice = (int) $ex['plans']['yearly']['price'];
 
     // رسالة الواتساب الجاهزة، فيها مساحة الدكتور الحالية عشان الدعم يرد بسرعة.
-    $waText = "مرحبًا، أرغب في زيادة مساحة ملفات المرضى (+{$extraGb} GB بسعر {$extraPrice} ج.م شهريًا).\n"
+    $waText = "مرحبًا، أرغب في زيادة مساحة ملفات المرضى (+{$extraGb} GB: {$monthlyPrice} ج.م شهريًا أو {$yearlyPrice} ج.م سنويًا).\n"
         . "المساحة الحالية: {$stats['limit_label']}\n"
         . "المستخدم: {$stats['used_label']}\n"
         . "المتبقي: {$stats['remaining_label']}";
@@ -71,8 +73,8 @@ unset($__defined_vars, $__key, $__value); ?>
 
                 <div class="pf-upsell__chips">
                     <span class="pf-upsell__chip">كل <?php echo e($extraGb); ?> جيجا إضافية</span>
-                    <span class="pf-upsell__chip"><?php echo e($extraPrice); ?> ج.م شهريًا</span>
-                    <span class="pf-upsell__chip">1000 ج.م سنويا</span>
+                    <span class="pf-upsell__chip"><?php echo e($monthlyPrice); ?> ج.م شهريًا</span>
+                    <span class="pf-upsell__chip"><?php echo e($yearlyPrice); ?> ج.م سنويًا</span>
                 </div>
 
             </div>

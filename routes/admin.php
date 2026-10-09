@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDoctorCreateController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\ExtraStorageController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\JobsController;
 use App\Http\Controllers\Admin\NotificationController;
@@ -12,22 +13,22 @@ use App\Http\Controllers\Admin\PatientStorageController;
 use App\Http\Controllers\Admin\PendingDoctorController;
 use App\Http\Controllers\Admin\RatingsController;
 use App\Http\Controllers\Admin\RejectedDoctorsController;
+use App\Http\Controllers\Admin\SiteStatsController;
 use App\Http\Controllers\Admin\SpecialtyController;
 use App\Http\Controllers\Admin\subscribedDoctorController;
+use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\UnsubscribedDoctorController;
 use App\Http\Controllers\Admin\userController;
 use App\Http\Controllers\User\ContactMessageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\SiteStatsController;
-use App\Http\Controllers\Admin\SubscriptionController;
 
 Route::middleware(['auth', 'verified', 'is_admin', 'redirect_doctor', 'redirect_assistant'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-
         Route::get('stats', [SiteStatsController::class, 'index'])->name('stats');
+
         /*
         |--------------------------------------------------------------------------
         | 1) الرئيسية والإعدادات
@@ -63,10 +64,17 @@ Route::middleware(['auth', 'verified', 'is_admin', 'redirect_doctor', 'redirect_
 
         /*
         |--------------------------------------------------------------------------
-        | 3) المالية (داخل وخارج)
-        |    الباقات وإدارة الاشتراكات هتتضاف هنا بعدين.
+        | 3) الاشتراكات والمالية
         |--------------------------------------------------------------------------
         */
+        Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
+            Route::get('/', [SubscriptionController::class, 'index'])->name('index');
+            Route::get('/doctors', [SubscriptionController::class, 'searchDoctors'])->name('doctors');
+            Route::post('/', [SubscriptionController::class, 'store'])->name('store');
+            Route::post('/{subscription}/change', [SubscriptionController::class, 'change'])->whereNumber('subscription')->name('change');
+            Route::post('/{subscription}/renew', [SubscriptionController::class, 'renew'])->whereNumber('subscription')->name('renew');
+        });
+
         Route::prefix('finance')->name('finance.')->group(function () {
             Route::get('/', [FinanceController::class, 'index'])->name('index');
             Route::post('/', [FinanceController::class, 'store'])->name('store');
@@ -85,8 +93,17 @@ Route::middleware(['auth', 'verified', 'is_admin', 'redirect_doctor', 'redirect_
             Route::get('/runs', [PatientStorageController::class, 'runs'])->name('runs');
             Route::post('/runs', [PatientStorageController::class, 'runNow'])->middleware('throttle:3,1')->name('runs.run');
 
+            // مساحات الأطباء: عرض ومتابعة فقط (التعديل بقى من اشتراكات المساحة)
             Route::get('/quotas', [PatientStorageController::class, 'quotas'])->name('quotas');
-            Route::patch('/quotas/{doctor}', [PatientStorageController::class, 'updateQuota'])->whereNumber('doctor')->name('quotas.update');
+
+            // اشتراكات المساحة الإضافية
+            Route::prefix('extra')->name('extra.')->group(function () {
+                Route::get('/', [ExtraStorageController::class, 'index'])->name('index');
+                Route::get('/doctors', [ExtraStorageController::class, 'searchDoctors'])->name('doctors');
+                Route::post('/', [ExtraStorageController::class, 'store'])->name('store');
+                Route::post('/{extra}/change', [ExtraStorageController::class, 'change'])->whereNumber('extra')->name('change');
+                Route::post('/{extra}/renew', [ExtraStorageController::class, 'renew'])->whereNumber('extra')->name('renew');
+            });
 
             Route::get('/restore', [PatientRestoreController::class, 'index'])->name('restore');
             Route::post('/restore/preview', [PatientRestoreController::class, 'preview'])->middleware('throttle:6,1')->name('restore.preview');
@@ -123,19 +140,7 @@ Route::middleware(['auth', 'verified', 'is_admin', 'redirect_doctor', 'redirect_
 
         Route::resource('ratings', RatingsController::class)
             ->only(['index', 'edit', 'update', 'destroy']);
-
-
-
-
-        Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
-            Route::get('/', [SubscriptionController::class, 'index'])->name('index');
-            Route::get('/doctors', [SubscriptionController::class, 'searchDoctors'])->name('doctors');
-            Route::post('/', [SubscriptionController::class, 'store'])->name('store');
-            Route::post('/{subscription}/change', [SubscriptionController::class, 'change'])->name('change');
-            Route::post('/{subscription}/renew', [SubscriptionController::class, 'renew'])->name('renew');
-        });
     });
-
 
 // برا الجروبات
 Route::get('/ratings', fn () => redirect()->route('admin.ratings.index'));

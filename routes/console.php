@@ -57,3 +57,6 @@ Schedule::command('patient-files:backup')
     ->withoutOverlapping();
 // مزامنة يومية لعمود المساحة المتبقية.
 Schedule::command('patient-files:sync-storage')->dailyAt('03:30')->timezone('Africa/Cairo')->name('sync-patient-files-storage');
+
+
+Schedule::command('storage:expire-extra')->hourly();

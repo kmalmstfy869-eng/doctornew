@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Concerns\ParsesDates;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
-use App\Models\FinanceEntry;
 use App\Models\PatientFile;
 use App\Models\PatientFileBackup;
 use App\Models\PatientFileBackupRun;
@@ -220,69 +219,10 @@ class PatientStorageController extends Controller
             'search' => $search,
             'limit' => $limit,
             'sort' => $sort,
-            'extraGb' => (int) config('clinic.extra_storage_gb', 25),
-            'extraPrice' => (int) config('clinic.extra_storage_price', 200),
             'defaultGb' => (float) config('clinic.patient_files_storage_gb', 25),
         ]);
     }
 
-    // تحديد مساحة الدكتور. الاستهلاك بيفضل محسوب من الملفات الفعلية، والتحقق في PatientFileService بيقرأ نفس العمود.
-    public function updateQuota(Request $request, Doctor $doctor, PatientFileService $service): RedirectResponse
-    {
-        abort_unless(Doctor::doctors()->whereKey($doctor->id)->exists(), 404);
-
-        $data = $request->validate([
-            'quota_gb' => ['required', 'numeric', 'min:1', 'max:100000'],
-            'record_income' => ['nullable', 'boolean'],
-            'income_amount' => ['nullable', 'required_if:record_income,1', 'numeric', 'min:0.01', 'max:10000000'],
-        ], [
-            'quota_gb.required' => 'اكتب المساحة الجديدة.',
-            'quota_gb.numeric' => 'المساحة لازم تكون رقم.',
-            'quota_gb.min' => 'أقل مساحة مسموحة 1 GB.',
-            'quota_gb.max' => 'المساحة كبيرة زيادة عن المسموح.',
-            'income_amount.required_if' => 'اكتب المبلغ اللي هيتسجل كإيراد.',
-            'income_amount.numeric' => 'المبلغ لازم يكون رقم.',
-            'income_amount.min' => 'المبلغ لازم يكون أكبر من صفر.',
-        ]);
-
-        $old = (float) ($doctor->patient_files_quota_gb ?? config('clinic.patient_files_storage_gb', 25));
-        $new = round((float) $data['quota_gb'], 3);
-        $name = $doctor->user?->name ?? "doctor#{$doctor->id}";
-
-        DB::transaction(function () use ($doctor, $service, $data, $old, $new, $name) {
-            Doctor::query()->whereKey($doctor->id)->toBase()->update(['patient_files_quota_gb' => $new]);
-
-            // تحديث عمود المتبقي بعد تغيير المساحة.
-            $service->syncRemaining($doctor->id);
-
-            $income = null;
-
-            if (! empty($data['record_income'])) {
-                $income = (float) $data['income_amount'];
-
-                FinanceEntry::create([
-                    'type' => 'income',
-                    'category' => 'extra_storage',
-                    'title' => "مساحة إضافية - د. {$name}",
-                    'amount' => $income,
-                    'entry_date' => now('Africa/Cairo')->toDateString(),
-                    'note' => "من {$old} GB إلى {$new} GB",
-                    'created_by' => auth()->id(),
-                ]);
-            }
-
-
-        });
-
-        $used = $service->usedBytes($doctor->id);
-        $msg = "تم تحديث مساحة د. {$name} إلى {$new} GB.";
-
-        if ($used > $new * 1024 ** 3) {
-            $msg .= ' الاستهلاك الحالي أكبر من المساحة الجديدة: الرفع الجديد متوقف، والملفات الموجودة تفضل (عرض وتحميل وحذف).';
-        }
-
-        return back()->with('success', $msg);
-    }
 
     /* ------------------------------------------------------------------ */
     /* مساعدات                                                             */

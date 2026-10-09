@@ -246,4 +246,8 @@ public function hasFeature(string $feature): bool
     {
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
     }
+    public function storageSubscription()
+    {
+        return $this->hasOne(StorageSubscription::class);
+    }
 }

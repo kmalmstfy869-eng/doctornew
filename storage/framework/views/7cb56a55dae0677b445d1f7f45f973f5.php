@@ -137,6 +137,12 @@
                                 <i class="fa-solid fa-ticket"></i><span>إدارة الاشتراكات</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="<?php echo e(route('admin.storage.extra.index')); ?>"
+                                class="<?php echo e(request()->routeIs('admin.storage.extra.*') ? 'submenu-active' : ''); ?>">
+                                <i class="fa-solid fa-cubes-stacked"></i><span>اشتراكات المساحة</span>
+                            </a>
+                        </li>
                     </ul>
                 </details>
             </li>
