@@ -8,6 +8,30 @@
 
 @section('content')
 
+    @php
+        /*
+         * وقت الحجز:
+         * - الحجز الأونلاين: start_time (الموعد المحجوز)
+         * - حجز العيادة (start_time = NULL): وقت الوصول arrived_at
+         * - لو الاتنين فاضيين: display_time القديم أو "—"
+         */
+        $formatBookingTime = function ($booking) {
+            $raw = data_get($booking, 'start_time') ?: data_get($booking, 'arrived_at');
+
+            if (!$raw) {
+                return data_get($booking, 'display_time') ?: '—';
+            }
+
+            try {
+                $time = \Carbon\Carbon::parse($raw);
+
+                return $time->format('h:i') . ' ' . ($time->hour < 12 ? 'ص' : 'م');
+            } catch (\Throwable $e) {
+                return data_get($booking, 'display_time') ?: '—';
+            }
+        };
+    @endphp
+
     <main class="mx-auto w-full max-w-[1400px] px-3 py-5 sm:px-5 sm:py-6">
 
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -66,50 +90,29 @@
 
                 <div class="relative flex-1">
 
-                    @if (request('search') || request('source', 'all') !== 'all')
-                        <a href="{{ route('clinic.history', ['booking_filter' => $filter]) }}"
-                            class="btn btn-destructive btn-sm absolute left-2 z-10 flex items-center justify-center gap-1"
-                            title="إلغاء البحث">
-
-                            <span class="text-xs font-bold leading-none">
-                                ✕
-                            </span>
-
-                        </a>
-                    @endif
-
-                    <input type="text" name="search" value="{{ request('search') }}"
+                    <input type="text" name="search" value="{{ $search }}"
                         placeholder="ابحث باسم المريض أو الهاتف" autocomplete="off" data-live-search
                         data-live-search-url="{{ route('clinic.history') }}" data-live-search-target="#history-results"
                         data-live-search-pagination="#history-pagination"
-                        data-live-search-preserve="#history-booking-filter,#history-source" class="field-input pe-9">
+                        data-live-search-preserve="#history-booking-filter,#history-source" class="field-input">
 
                 </div>
 
                 <select name="source" id="history-source" class="field-select sm:w-44">
 
-                    <option value="all" {{ request('source', 'all') === 'all' ? 'selected' : '' }}>
+                    <option value="all" {{ $source === 'all' ? 'selected' : '' }}>
                         كل المصادر
                     </option>
 
-                    <option value="online" {{ request('source') === 'online' ? 'selected' : '' }}>
+                    <option value="online" {{ $source === 'online' ? 'selected' : '' }}>
                         أونلاين
                     </option>
 
-                    <option value="clinic" {{ request('source') === 'clinic' ? 'selected' : '' }}>
+                    <option value="clinic" {{ $source === 'clinic' ? 'selected' : '' }}>
                         من العيادة
                     </option>
 
                 </select>
-
-                <button type="submit" class="btn btn-default">
-
-                    <i data-lucide="search" class="size-4">
-                    </i>
-
-                    بحث
-
-                </button>
 
             </form>
 
@@ -207,7 +210,7 @@
                                                 </p>
 
                                                 <p class="text-xs text-muted-foreground">
-                                                    {{ $booking->display_time }}
+                                                    {{ $formatBookingTime($booking) }}
                                                 </p>
 
                                             </td>
@@ -389,7 +392,7 @@
                                         </p>
 
                                         <p class="mt-1 text-sm font-medium tabular-nums">
-                                            {{ $booking->display_time }}
+                                            {{ $formatBookingTime($booking) }}
                                         </p>
 
                                     </div>
@@ -527,6 +530,19 @@
 @push('extra_java')
     {{-- Live Search --}}
     <script src="{{ asset('js/clinic/live_search.js') }}"></script>
+
+    {{-- المصدر يشغّل اللايف سيرش --}}
+    <script>
+        document.getElementById('history-source')?.addEventListener('change', function() {
+            const input = document.querySelector('[data-live-search]');
+
+            if (input) {
+                input.dispatchEvent(new Event('input', {
+                    bubbles: true
+                }));
+            }
+        });
+    </script>
 
     {{-- Booking Page Config --}}
     <script>

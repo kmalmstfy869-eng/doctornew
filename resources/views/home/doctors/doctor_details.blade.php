@@ -1,7 +1,9 @@
 @extends('home.layout.app')
 
 @section('title', 'تفاصيل الدكتور | دليل الأطباء')
-
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/home/doctor_details.css') }}">
+@endpush
 @section('content')
 
     <main class="med-profile-page">
@@ -401,16 +403,13 @@
 
 
                             <div class="med-gallery">
-
-                                @foreach ($existingClinicImages as $image)
+                                @foreach ($doctor?->clinic_images as $image)
                                     <div class="med-gallery-image" data-image="{{ asset('storage/' . $image) }}">
 
                                         <img src="{{ asset('storage/' . $image) }}" alt="صورة العيادة">
 
                                         <div class="med-image-overlay">
-
                                             <i class="fa-solid fa-expand"></i>
-
                                         </div>
 
                                     </div>
@@ -1109,7 +1108,7 @@
 
 
             @if ($similar_doctors?->isNotEmpty())
-                <x-home.doctors.doctors_grid :doctors="$similar_doctors" />
+                <x-home.doctors.doctors_grid :doctors="$similar_doctors" :favorite-ids="$favoriteIds" />
             @else
                 <x-home.banner.no_results logo="fa-solid fa-user-doctor" title="لا يوجد أطباء مطابقون"
                     content="جرب البحث باسم آخر أو غيّر التخصص والمنطقة." />
@@ -1294,12 +1293,16 @@
         @push('scripts')
             <script>
                 window.medBookingData = {
-                    hasOldBookingData: @json(old('patient_name') !== null || old('patient_phone') !== null || old('appointment_date') !== null || old('start_time') !== null),
+                    hasOldBookingData: @json(old('patient_name') !== null ||
+                            old('patient_phone') !== null ||
+                            old('appointment_date') !== null ||
+                            old('start_time') !== null),
                     hasBookingValidationErrors: @json($errors->has('patient_name') || $errors->has('patient_phone')),
                     appointmentDate: @json(old('appointment_date', '')),
                     startTime: @json(old('start_time', ''))
                 };
             </script>
+
 
             <script src="{{ asset('js/clinic/booking_user.js') }}"></script>
         @endpush

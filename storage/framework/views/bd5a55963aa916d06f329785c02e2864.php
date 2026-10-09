@@ -120,14 +120,14 @@
 
                     <i class="fa-solid fa-magnifying-glass"></i>
 
-                    <input type="search" id="searchInput" placeholder="ابحث باسم الطبيب أو رقم الهاتف...">
+                    <input type="search" data-live-search value="<?php echo e(request('search')); ?>"
+    placeholder="ابحث بالاسم أو الهاتف أو التخصص أو المنطقة أو الـ ID..." autocomplete="off">
 
                 </div>
 
             </div>
 
-
-            
+<div id="live-results">
             <?php if($doctors->isNotEmpty()): ?>
 
                 <div class="doctor-pending-table-wrapper">
@@ -152,7 +152,7 @@
                                 </th>
 
                                 <th>
-                                    المافظة
+                                    المنطقة
                                 </th>
 
                                 <th>
@@ -160,7 +160,7 @@
                                 </th>
 
                                 <th>
-                                    الحالة
+                                   نوع الاشتراك
                                 </th>
 
                                 <th>
@@ -247,7 +247,7 @@
                                     </td>
 
 
-                                    
+
                                     <td>
 
                                         <?php echo e($doctor->area->name ?? '—'); ?>
@@ -364,8 +364,9 @@
 <?php endif; ?>
 
             <?php endif; ?>
-
         </div>
+        </div>
+
 
     </div>
 
@@ -393,5 +394,8 @@
 <?php endif; ?>
 
 <?php $__env->stopSection(); ?>
+<?php $__env->startPush('extra_java'); ?>
+    <script src="<?php echo e(asset('js/admin/live-search.js')); ?>?v=<?php echo e(@filemtime(public_path('js/admin/live-search.js')) ?: time()); ?>"></script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('admin.layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\DELL\Desktop\doctors-ai\resources\views/admin/doctors/subscribed_doctors.blade.php ENDPATH**/ ?>

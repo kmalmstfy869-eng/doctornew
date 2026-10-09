@@ -1,4 +1,4 @@
-<section class="welcome">
+<section class="welcome {{ $isSubscribed ? '' : 'welcome-guest' }}">
 
     @if ($isSubscribed)
         {{-- =========================
@@ -107,79 +107,41 @@
                 </div>
 
 
+
                 {{-- Profile Statistics --}}
                 <div class="welcome-statistics">
 
-                    {{-- Views --}}
                     <div class="welcome-stat">
-
-                        <div class="welcome-stat-icon">
-                            ◉
-                        </div>
-
+                        <div class="welcome-stat-icon">◉</div>
                         <div class="welcome-stat-info">
-
-                            <span>
-                                مشاهدات الملف
-                            </span>
-
-                            <strong>
-                                0
-                            </strong>
-
+                            <span>مشاهدات الملف</span>
+                            <strong>{{ number_format($profileViews) }}</strong>
+                            <small>من {{ number_format($uniqueVisitors) }} زائر مختلف</small>
                         </div>
-
                     </div>
 
-
-                    {{-- Rating --}}
                     <div class="welcome-stat">
-
-                        <div class="welcome-stat-icon">
-                            ★
-                        </div>
-
+                        <div class="welcome-stat-icon">★</div>
                         <div class="welcome-stat-info">
-
-                            <span>
-                                تقييم المرضى
-                            </span>
-
-                            <strong>
-                                {{ $rating }}
-                            </strong>
-
+                            <span>تقييم المرضى</span>
+                            <strong>{{ $rating }}</strong>
                         </div>
-
                     </div>
 
-
-                    {{-- Favorites --}}
                     <div class="welcome-stat">
-
-                        <div class="welcome-stat-icon">
-                            ♥
-                        </div>
-
+                        <div class="welcome-stat-icon">♥</div>
                         <div class="welcome-stat-info">
-
-                            <span>
-                                مرات الحفظ
-                            </span>
-
-                            <strong>
-                                0
-                            </strong>
-
+                            <span>مرات الحفظ</span>
+                            <strong>{{ number_format($favoritesCount) }}</strong>
                         </div>
-
                     </div>
 
                 </div>
 
-
                 {{-- Subscription Action --}}
-                <a href="PUT_YOUR_ROUTE_HERE" class="welcome-subscription-note welcome-subscription-btn">
+                {{-- Subscription Action --}}
+                <a href="{{ route('doctor.subscription') }}"
+                    class="welcome-subscription-note welcome-subscription-btn">
 
                     <div class="welcome-subscription-icon">
                         ♛
@@ -396,144 +358,90 @@
 
         </div>
     @else
-        {{-- =========================
-            NOT SUBSCRIBED DOCTOR
-        ========================== --}}
+        {{-- NOT SUBSCRIBED: كارت واحد (ترحيب + إحصائيات | عرض الاشتراك) --}}
 
-        <div class="welcome-main welcome-not-subscribed">
+        <div class="gx">
+            <div class="gx-glow"></div>
+            <div class="gx-dots"></div>
 
-            <div class="welcome-content">
+            {{-- يمين: الترحيب والإحصائيات --}}
+            <div class="gx-main">
 
-                <div class="welcome-label welcome-label-warning">
-                    ✦ طوّر ظهورك الطبي
-                </div>
+                <span class="gx-label">✦ طوّر ظهورك الطبي</span>
 
+                <h1>أهلاً بك، د. {{ $doctorName }}</h1>
 
-                <h1>
-                    أهلاً بك، د. {{ $doctorName }}
-                </h1>
+                <p>ملفك ظاهر للمرضى الآن. هذه نظرة سريعة على اهتمامهم بملفك.</p>
 
-
-                <p>
-                    ملفك الطبي موجود على دليل الأطباء،
-                    ويمكنك تطويره للحصول على ظهور أفضل
-                    ومميزات أكثر أمام المرضى.
-                </p>
-
-
-                {{-- Subscription Hint --}}
-                <div class="welcome-subscription-hint">
-
-                    <div class="welcome-hint-icon">
-                        ♛
+                <div class="gx-stats">
+                    <div class="gx-stat">
+                        <span class="gx-stat-ico">◉</span>
+                        <div>
+                            <small>مشاهدات الملف</small>
+                            <strong>{{ number_format($profileViews) }}</strong>
+                            <em>من {{ number_format($uniqueVisitors) }} زائر مختلف</em>
+                        </div>
                     </div>
 
-
-                    <div class="welcome-hint-content">
-
-                        <strong>
-                            جاهز تخلي حسابك أقوى؟
-                        </strong>
-
-                        <span>
-                            بالاشتراك تحصل على ظهور أفضل،
-                            استقبال الحجوزات أونلاين،
-                            ومع الباقات الأعلى يمكنك الحصول على
-                            <b>نظام عيادة كامل</b>
-                            لإدارة الحجوزات والمرضى والدخل من مكان واحد.
-                        </span>
-
+                    <div class="gx-stat">
+                        <span class="gx-stat-ico">♥</span>
+                        <div>
+                            <small>مرات الحفظ</small>
+                            <strong>{{ number_format($favoritesCount) }}</strong>
+                            <em>أضافوك إلى المفضلة</em>
+                        </div>
                     </div>
-
                 </div>
 
+                <div class="gx-tip">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span>الأطباء المشتركون يظهرون أولاً في نتائج البحث ويحصلون على مشاهدات وحجوزات أكثر.</span>
+                </div>
 
-                {{-- Subscribe Button --}}
-                <a href="" class="welcome-subscribe-btn">
+            </div>
 
-                    <span>
-                        ابدأ الاشتراك الآن
-                    </span>
+            {{-- شمال: عرض الاشتراك --}}
+            <aside class="gx-offer">
 
-                    <span class="welcome-subscribe-arrow">
-                        ←
-                    </span>
+                <div class="gx-offer-head">
+                    <span class="gx-crown">♛</span>
+                    <div>
+                        <b>اجعل ملفك الأقوى</b>
+                        <small>حسابك غير مشترك حالياً</small>
+                    </div>
+                </div>
 
+                <ul class="gx-list">
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>ظهور أفضل وشارة <b>طبيب موثوق</b></span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>صورتك وتقييماتك وموقعك على الخريطة</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>حجز المواعيد أونلاين من ملفك</span>
+                    </li>
+                    <li class="is-top">
+                        <i class="fa-solid fa-crown"></i>
+                        <span>نظام عيادة كامل: حجوزات ومرضى ودخل</span>
+                    </li>
+                </ul>
+
+                <a href="{{ route('doctor.subscription') }}" class="gx-btn">
+                    <span>عرض الباقات والاشتراك</span>
+                    <i class="fa-solid fa-arrow-left"></i>
                 </a>
 
-            </div>
+                <small class="gx-note">
+                    <i class="fa-solid fa-shield-halved"></i> يمكنك الترقية في أي وقت
+                </small>
+
+            </aside>
 
         </div>
-
-
-        {{-- =========================
-            SUBSCRIPTION CTA CARD
-        ========================== --}}
-
-        <div class="today-card today-card-not-subscribed">
-
-            <div class="today-top">
-
-                <div class="today-title">
-
-                    <strong>
-                        حسابك غير مشترك
-                    </strong>
-
-                    <span>
-                        اشترك الآن واستفد من المميزات
-                    </span>
-
-                </div>
-
-
-                <div class="subscription-status">
-
-                    <i></i>
-
-                    غير مشترك
-
-                </div>
-
-            </div>
-
-
-            <div class="not-subscribed-content">
-
-                <div class="not-subscribed-icon">
-                    ♛
-                </div>
-
-                <div class="not-subscribed-text">
-
-                    <strong>
-                        اجعل ملفك الطبي أقوى
-                    </strong>
-
-                    <span>
-                        الاشتراك يساعدك على تحسين ظهور ملفك
-                        والاستفادة من المميزات المتاحة حسب الباقة.
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <a href="" class="welcome-subscribe-btn">
-
-                <span>
-                    عرض الباقات والاشتراك
-                </span>
-
-                <span>
-                    ←
-                </span>
-
-            </a>
-
-        </div>
-
     @endif
 
 </section>

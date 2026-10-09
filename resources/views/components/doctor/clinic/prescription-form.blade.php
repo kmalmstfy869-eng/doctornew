@@ -49,14 +49,23 @@
             ? auth()->user()?->doctor?->patients()->find($selectedPatientId)
             : null;
 
+    $oldMode = $hasErrors ? old('_patient_mode') : null;
+
     $initialMode = $isPatientLocked
         ? 'registered'
-        : (
-            $bag->has('patient_name') ||
-            $bag->has('patient_phone')
-                ? 'external'
-                : 'registered'
-        );
+        : (in_array($oldMode, ['registered', 'external'], true)
+            ? $oldMode
+            : 'registered');
+
+    // المريض المختار (بحث) بعد فشل الفورم
+    $initialPatient =
+        $hasErrors && $initialMode === 'registered' && $searchPatient
+            ? [
+                'id' => $searchPatient->id,
+                'name' => $searchPatient->name,
+                'phone' => $searchPatient->phone,
+            ]
+            : null;
 
     $initialFields = [
         'next_visit_date' =>
@@ -115,6 +124,12 @@
 @endphp
 
 @once
+    @once('modal-variants-css')
+        @push('extra_style')
+            <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+        @endpush
+    @endonce
+
     <style>
         /* ===== Prescription modal ===== */
 
@@ -292,6 +307,8 @@
 
         rxMode: @js($initialMode),
 
+        rxInitialPatient: @js($initialPatient),
+
         rxSeq: 0,
 
         rxF: @js($initialFields),
@@ -307,7 +324,13 @@
                 );
 
             if (this.rxOpen) {
-                this.$nextTick(() => this.rxGrowAll());
+                this.$nextTick(() => {
+                    this.rxGrowAll();
+
+                    if (this.rxInitialPatient) {
+                        this.rxSetPatient(this.rxInitialPatient);
+                    }
+                });
             }
         },
 
@@ -607,15 +630,21 @@
             x-transition
             @click.stop
             class="modal-panel bq-rx-modal"
+            :class="rxEdit ? 'modal-panel--edit' : 'modal-panel--create'"
         >
 
             {{-- Header --}}
-            <div class="bq-modal-header">
+            <div class="modal-head">
 
-                <div>
+                <span class="modal-head__icon">
+                    <span x-show="!rxEdit"><i data-lucide="file-plus" class="size-5"></i></span>
+                    <span x-show="rxEdit"><i data-lucide="pencil" class="size-5"></i></span>
+                </span>
+
+                <div class="min-w-0 flex-1">
 
                     <h3
-                        class="text-lg font-bold text-foreground"
+                        class="modal-head__title"
                         x-text="
                             rxEdit
                                 ? 'تعديل الروشتة'
@@ -627,7 +656,7 @@
                             : 'روشتة جديدة' }}
                     </h3>
 
-                    <p class="mt-1 text-sm text-muted-foreground">
+                    <p class="modal-head__sub">
                         اكتب بيانات المريض والأدوية، ويمكن طباعتها بعد الحفظ.
                     </p>
 
@@ -1328,7 +1357,7 @@
 
                     <button
                         type="submit"
-                        class="btn btn-default"
+                        class="btn btn-default btn-submit"
                         :disabled="rxBusy"
                     >
 

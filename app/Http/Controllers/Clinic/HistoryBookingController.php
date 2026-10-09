@@ -9,23 +9,72 @@ use Illuminate\Support\Facades\Auth;
 
 class HistoryBookingController extends Controller
 {
+    private const FILTERS = ['today', 'upcoming', 'past', 'cancelled', 'all'];
+
+    private const SOURCES = ['online', 'clinic'];
+
+    private const HISTORY_STATUSES = ['completed', 'cancelled', 'no_show'];
+
+    private const UPCOMING_STATUSES = ['pending', 'confirmed'];
+
+    private const SEARCH_MAX_LENGTH = 100;
+
+    private const TIMEZONE = 'Africa/Cairo';
+
     public function index(Request $request)
     {
-        $today = Carbon::today('Africa/Cairo')->toDateString();
+        $today = Carbon::today(self::TIMEZONE)->toDateString();
 
-               $user = Auth::user();
-        $doctor =$user->clinicDoctor();
+        /*
+        |--------------------------------------------------------------------------
+        | المستخدم والطبيب
+        |--------------------------------------------------------------------------
+        */
 
-        $isClinicSystem = $doctor->hasFeature('clinic_system');
-       $isAssistant =(bool) $user?->doctorAssistant;
-        $filter = $request->input('booking_filter', 'today');
+        $user = Auth::user();
 
-        $query = $doctor->bookings()
-            ->whereIn('status', [
-                'completed',
-                'cancelled',
-                'no_show',
-            ]);
+        abort_unless($user, 403);
+
+        $doctor = $user->clinicDoctor();
+
+        abort_unless($doctor, 403);
+
+        $isClinicSystem = (bool) $doctor->hasFeature('clinic_system');
+        $isAssistant = (bool) $user->doctorAssistant;
+
+        /*
+        |--------------------------------------------------------------------------
+        | تنظيف المدخلات (أي قيمة غير نصية يتم تجاهلها)
+        |--------------------------------------------------------------------------
+        */
+
+        $filter = $request->input('booking_filter');
+
+        $filter = is_string($filter) && in_array($filter, self::FILTERS, true)
+            ? $filter
+            : 'today';
+
+        $search = $request->input('search');
+
+        $search = is_string($search)
+            ? trim(mb_substr($search, 0, self::SEARCH_MAX_LENGTH))
+            : '';
+
+        $sourceInput = $request->input('source');
+
+        $sourceFilter = is_string($sourceInput) && in_array($sourceInput, self::SOURCES, true)
+            ? $sourceInput
+            : null;
+
+        $source = $sourceFilter ?? 'all';
+
+        /*
+        |--------------------------------------------------------------------------
+        | الاستعلام (محصور على حجوزات الطبيب فقط)
+        |--------------------------------------------------------------------------
+        */
+
+        $query = $doctor->bookings();
 
         /*
         |--------------------------------------------------------------------------
@@ -33,12 +82,12 @@ class HistoryBookingController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if ($request->filled('search')) {
-            $search = trim($request->input('search'));
+        if ($search !== '') {
+            $escaped = addcslashes($search, '%_\\');
 
-            $query->where(function ($q) use ($search) {
-                $q->where('patient_name', 'like', "%{$search}%")
-                    ->orWhere('patient_phone', 'like', "%{$search}%");
+            $query->where(function ($q) use ($escaped) {
+                $q->where('patient_name', 'like', "%{$escaped}%")
+                    ->orWhere('patient_phone', 'like', "%{$escaped}%");
             });
         }
 
@@ -48,11 +97,8 @@ class HistoryBookingController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if (
-            $request->filled('source') &&
-            in_array($request->source, ['online', 'clinic'], true)
-        ) {
-            $query->where('booking_type', $request->source);
+        if ($sourceFilter !== null) {
+            $query->where('booking_type', $sourceFilter);
         }
 
         /*
@@ -68,35 +114,36 @@ class HistoryBookingController extends Controller
                 break;
 
             case 'upcoming':
-                $query->whereDate('appointment_date', '>', $today);
+                // القادمة: حجوزات أونلاين (pending) أو من العيادة (confirmed) بتاريخ مستقبلي
+                $query->whereIn('status', self::UPCOMING_STATUSES)
+                    ->whereDate('appointment_date', '>', $today);
                 break;
 
             case 'past':
-                $query->whereDate('appointment_date', '<', $today);
-                break;
-
-            case 'today':
-                $query->whereDate('appointment_date', $today);
+                $query->whereIn('status', self::HISTORY_STATUSES)
+                    ->whereDate('appointment_date', '<', $today);
                 break;
 
             case 'all':
+                $query->whereIn('status', self::HISTORY_STATUSES);
                 break;
 
+            case 'today':
             default:
-                $filter = 'today';
-
-                $query->whereDate('appointment_date', $today);
+                $query->whereIn('status', self::HISTORY_STATUSES)
+                    ->whereDate('appointment_date', $today);
                 break;
         }
 
         /*
         |--------------------------------------------------------------------------
-        | جلب الحجوزات
+        | جلب الحجوزات (ترتيب ثابت لمنع تكرار/اختفاء النتائج بين الصفحات)
         |--------------------------------------------------------------------------
         */
 
         $bookings = $query
             ->orderByDesc('appointment_date')
+            ->orderByDesc('id')
             ->paginate(20)
             ->withQueryString();
 
@@ -107,6 +154,16 @@ class HistoryBookingController extends Controller
         */
 
         $statuses = [
+            'pending' => [
+                'label' => 'بانتظار التأكيد',
+                'class' => 'badge-warning',
+            ],
+
+            'confirmed' => [
+                'label' => 'مؤكد',
+                'class' => 'badge-primary',
+            ],
+
             'completed' => [
                 'label' => 'تم الكشف',
                 'class' => 'badge-success',
@@ -130,10 +187,7 @@ class HistoryBookingController extends Controller
         */
 
         $bookings->getCollection()->transform(
-            function ($booking, $index) use (
-                $bookings,
-                $statuses,
-            ) {
+            function ($booking, $index) use ($bookings, $statuses) {
 
                 /*
                 | رقم الحجز
@@ -164,22 +218,15 @@ class HistoryBookingController extends Controller
                 | التاريخ
                 */
 
-                $booking->display_date = $booking->appointment_date
-                    ? $booking->appointment_date
-                        ->locale('ar')
-                        ->translatedFormat('d F Y')
-                    : '-';
+                $booking->display_date = $this->formatDate($booking->appointment_date);
 
                 /*
-                | الوقت
+                | الوقت (الموعد، وإلا وقت الوصول)
                 */
 
-                $booking->display_time = $booking->start_time
-                    ? Carbon::parse(
-                        $booking->start_time,
-                        'Africa/Cairo'
-                    )->format('g:i A')
-                    : '-';
+                $booking->display_time = $this->formatTime(
+                    $booking->start_time ?: $booking->arrived_at
+                );
 
                 /*
                 | المصدر
@@ -265,8 +312,40 @@ class HistoryBookingController extends Controller
                 'bookings',
                 'isClinicSystem',
                 'filter',
-                'isAssistant'
+                'isAssistant',
+                'search',
+                'source'
             )
         );
+    }
+
+    private function formatDate($value): string
+    {
+        if (! $value) {
+            return '-';
+        }
+
+        try {
+            return Carbon::parse($value)
+                ->locale('ar')
+                ->translatedFormat('d F Y');
+        } catch (\Throwable $e) {
+            return '-';
+        }
+    }
+
+    private function formatTime($value): string
+    {
+        if (! $value) {
+            return '-';
+        }
+
+        try {
+            $time = Carbon::parse($value, self::TIMEZONE);
+
+            return $time->format('h:i') . ' ' . ($time->hour < 12 ? 'ص' : 'م');
+        } catch (\Throwable $e) {
+            return '-';
+        }
     }
 }

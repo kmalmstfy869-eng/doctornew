@@ -4,13 +4,25 @@
 
 @push('extra_style')
     <link rel="stylesheet" href="{{ asset('css/home/pagination.css') }}">
+    @if ($isClinicSystem)
+        <link rel="stylesheet" href="{{ asset('css/doctor/clinic/clinic-live-messages.css') }}">
+    @endif
 @endpush
-
+    @once('modal-variants-css')
+        @push('extra_style')
+            <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+        @endpush
+    @endonce
 @section('content')
 
     <div class="w-full min-w-0 px-4 py-6 sm:px-6 lg:px-8">
 
         <div class="mx-auto w-full max-w-[1360px]">
+
+            {{-- مركز الرسائل المباشرة (طبيب <-> مساعد) — بيتملى بالـ JS --}}
+            @if ($isClinicSystem)
+                <div id="clinic-live-messages" class="clinic-live-messages" hidden></div>
+            @endif
 
             <div class="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
 
@@ -367,11 +379,18 @@
                                             <div class="bq-queue-info">
 
                                                 <div class="bq-queue-title">
+                                                    @if ($isClinicSystem && $booking->patient_id)
+                                                        <a href="{{ route('clinic.patients.show', $booking->patient_id) }}"
+                                                            class="text-xl font-semibold text-primary hover:underline">
 
-                                                    <h3 class="truncate font-bold text-foreground">
-                                                        {{ $booking->patient_name }}
-                                                    </h3>
+                                                            {{ $booking->patient_name }}
 
+                                                        </a>
+                                                    @else
+                                                        <p class="text-xl font-semibold">
+                                                            {{ $booking->patient_name }}
+                                                        </p>
+                                                    @endif
                                                     <span
                                                         class="badge {{ $booking->booking_type === 'online' ? 'badge-primary' : 'badge-purple' }}">
                                                         {{ $booking->booking_type === 'online' ? 'أونلاين' : 'من العيادة' }}
@@ -460,13 +479,12 @@
 
                                             </form>
 
-                                            <button type="button" class="btn btn-destructive btn-sm"
+                                            <button type="button" class="btn btn-destructive" aria-label="حذف الحجز"
                                                 data-cancel-booking="{{ $booking->id }}"
                                                 data-cancel-name="{{ $booking->patient_name }}">
 
-                                                <i data-lucide="x" class="h-4 w-4"></i>
-
-                                                إلغاء
+                                                <i data-lucide="trash-2" class="size-4">
+                                                </i>
 
                                             </button>
 
@@ -639,7 +657,10 @@
 
 
                         <tbody id="bookings-tbody">
-                            @include('doctor.clinic.booking.partials.table-body', ['bookings' => $bookings, 'isClinicSystem' => $isClinicSystem])
+                            @include('doctor.clinic.booking.partials.table-body', [
+                                'bookings' => $bookings,
+                                'isClinicSystem' => $isClinicSystem,
+                            ])
                         </tbody>
 
                     </table>
@@ -648,7 +669,10 @@
 
 
                 <div id="bookings-mobile-list" class="grid gap-3 p-4 lg:hidden">
-                    @include('doctor.clinic.booking.partials.mobile-cards', ['bookings' => $bookings, 'isClinicSystem' => $isClinicSystem])
+                    @include('doctor.clinic.booking.partials.mobile-cards', [
+                        'bookings' => $bookings,
+                        'isClinicSystem' => $isClinicSystem,
+                    ])
                 </div>
 
 
@@ -663,21 +687,25 @@
     </div>
 
 
-    {{-- حجز جديد --}}
+    {{-- حجز جديد (create variant) --}}
 
     <div id="new-booking-modal" class="modal-overlay">
 
-        <div class="modal-panel modal-lg">
+        <div class="modal-panel modal-lg modal-panel--create">
 
-            <div class="bq-modal-header">
+            <div class="modal-head">
 
-                <div>
+                <span class="modal-head__icon">
+                    <i data-lucide="calendar-plus" class="h-5 w-5"></i>
+                </span>
 
-                    <h3 class="text-lg font-bold text-foreground">
+                <div class="min-w-0 flex-1">
+
+                    <h3 class="modal-head__title">
                         حجز جديد
                     </h3>
 
-                    <p class="mt-1 text-sm text-muted-foreground">
+                    <p class="modal-head__sub">
                         أضف حجزًا جديدًا للمريض.
                     </p>
 
@@ -1012,8 +1040,8 @@
                         </label>
 
                         <input name="paid" id="booking-paid" type="number" min="0" step="0.01"
-                            class="field-input mt-2 @error('paid') border-red-500 @enderror"
-                            value="{{ old('paid', 0) }}" required>
+                            class="field-input mt-2 @error('paid') border-red-500 @enderror" value="{{ old('paid', 0) }}"
+                            required>
 
                         @error('paid')
                             <p class="bq-field-error">
@@ -1081,11 +1109,11 @@
 
                 <div class="bq-modal-footer">
 
-                    <button type="button" class="dropdown-item danger" data-modal-close>
+                    <button type="button" class="btn btn-ghost" data-modal-close>
                         إلغاء
                     </button>
 
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-default btn-submit">
 
                         <i data-lucide="calendar-plus" class="h-4 w-4"></i>
 
@@ -1102,21 +1130,25 @@
     </div>
 
 
-    {{-- تعديل الخدمة --}}
+    {{-- تعديل الخدمة (edit variant) --}}
 
     <div id="edit-service-modal" class="modal-overlay">
 
-        <div class="modal-panel max-w-lg">
+        <div class="modal-panel max-w-lg modal-panel--edit">
 
-            <div class="bq-modal-header">
+            <div class="modal-head">
 
-                <div>
+                <span class="modal-head__icon">
+                    <i data-lucide="clipboard-list" class="h-5 w-5"></i>
+                </span>
 
-                    <h3 class="text-lg font-bold text-foreground">
+                <div class="min-w-0 flex-1">
+
+                    <h3 class="modal-head__title">
                         تحديد الخدمة
                     </h3>
 
-                    <p id="edit-service-patient" class="mt-1 text-sm text-muted-foreground"></p>
+                    <p id="edit-service-patient" class="modal-head__sub"></p>
 
                 </div>
 
@@ -1198,7 +1230,7 @@
                     </button>
 
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary btn-submit">
 
                         <i data-lucide="save" class="h-4 w-4"></i>
 
@@ -1308,6 +1340,24 @@
 
 
     @push('extra_java')
+        @php
+            // الرسائل المباشرة: لدكتور Clinic System ومساعديه الفعّالين بس
+            $liveRole = $isClinicSystem
+                ? \App\Models\ClinicMessage::roleFor(auth()->user(), auth()->user()->clinicDoctor())
+                : null;
+
+            $liveMessagesConfig = $liveRole
+                ? [
+                    'role' => $liveRole,
+                    'indexUrl' => route('clinic.messages.index'),
+                    'callUrlTemplate' => route('clinic.messages.call', ['booking' => '__BOOKING_ID__']),
+                    'missingUrlTemplate' => route('clinic.messages.missing', ['booking' => '__BOOKING_ID__']),
+                    'resolveUrlTemplate' => route('clinic.messages.resolve', ['message' => '__MESSAGE_ID__']),
+                    'deleteUrlTemplate' => route('clinic.messages.destroy', ['message' => '__MESSAGE_ID__']),
+                ]
+                : null;
+        @endphp
+
         <script>
             window.BookingPageConfig = {
                 csrfToken: @json(csrf_token()),
@@ -1323,11 +1373,16 @@
                 hasNewBookingErrors: @json($errors->any() && !$errors->payment->any() && !$errors->service->any()),
                 hasPaymentErrors: @json($errors->payment->any()),
                 hasServiceErrors: @json($errors->service->any()),
+                liveMessages: @json($liveMessagesConfig),
             };
         </script>
 
 
         <script src="{{ asset('js/clinic/booking-index.js') }}"></script>
+
+        @if ($liveMessagesConfig)
+            <script src="{{ asset('js/clinic/live-messages.js') }}"></script>
+        @endif
     @endpush
 
 @endsection

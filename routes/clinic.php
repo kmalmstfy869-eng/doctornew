@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Clinic\BookingController;
 use App\Http\Controllers\Clinic\ClinicDashboardController;
+use App\Http\Controllers\Clinic\ClinicMessageController;
 use App\Http\Controllers\Clinic\ClinicScheduleController;
 use App\Http\Controllers\Clinic\ClinicSlotsController;
 use App\Http\Controllers\Clinic\DoctorAssistantController;
@@ -12,11 +13,11 @@ use App\Http\Controllers\Clinic\PrescriptionController;
 use App\Http\Controllers\Clinic\ReportController;
 use App\Http\Controllers\Clinic\VisitController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Clinic\PatientFileController;
 
 
 
-
-Route::middleware(['auth', 'verified', 'doctorbookingorassistant','redirect_admin','assistant_isactive'])
+Route::middleware(['auth', 'verified', 'doctorbookingorassistant','redirect_admin','assistant_isactive','doctor_approved'])
     ->prefix('clinic')
     ->name('clinic.')
     ->group(function () {
@@ -113,11 +114,34 @@ Route::middleware(['auth', 'verified', 'doctorbookingorassistant','redirect_admi
         Route::middleware(["doctorclinicsystemorassistant"])
             ->group(function (){
 
+                /*
+                |--------------------------------------------------------------------------
+                | CLINIC LIVE MESSAGES (طبيب <-> مساعد)
+                |--------------------------------------------------------------------------
+                | الأسماء: clinic.messages.index | call | missing | resolve | destroy
+                */
+                Route::get('/messages', [ClinicMessageController::class, 'index'])
+                    ->middleware('throttle:150,1')
+                    ->name('messages.index');
 
-            // doctor.print-settings
+                Route::post('/bookings/{booking}/live-call', [ClinicMessageController::class, 'callPatient'])
+                    ->middleware('throttle:40,1')
+                    ->name('messages.call');
 
-                    // Route::get('/bookings/patients/search', [BookingController::class, 'searchPatients'])
-                    // ->name('bookings.patients.search');
+                Route::post('/bookings/{booking}/patient-missing', [ClinicMessageController::class, 'patientMissing'])
+                    ->middleware('throttle:40,1')
+                    ->name('messages.missing');
+
+                Route::patch('/messages/{message}/resolve', [ClinicMessageController::class, 'resolve'])
+                    ->middleware('throttle:60,1')
+                    ->name('messages.resolve');
+
+                Route::delete('/messages/{message}', [ClinicMessageController::class, 'destroy'])
+                    ->middleware('throttle:60,1')
+                    ->name('messages.destroy');
+
+
+
 
                     Route::get('/bookings/patients/search', [BookingController::class, 'searchPatients'])
                     ->name('bookings.patients.search');
@@ -144,6 +168,18 @@ Route::middleware(['auth', 'verified', 'doctorbookingorassistant','redirect_admi
                                 ->only(['index', 'store', 'update', 'destroy']);
 
 
+                            Route::get('/files', [PatientFileController::class, 'index'])->name('files.index');
+                            Route::post('/files', [PatientFileController::class, 'store'])->name('files.store');
+                            Route::post('/patients/{patient}/files', [PatientFileController::class, 'store'])->name('patients.files.store');
+                            Route::get('/files/{patientFile}/view', [PatientFileController::class, 'show'])
+                                ->middleware('throttle:120,1')->name('files.view');
+                            Route::get('/files/{patientFile}/download', [PatientFileController::class, 'download'])
+                                ->middleware('throttle:120,1')->name('files.download');
+                            Route::delete('/files/{patientFile}', [PatientFileController::class, 'destroy'])->name('files.destroy');
+
+                                    Route::get('/print-settings', function () {
+                                        return view('doctor.clinic.setting_print.index');
+                                    })->name('print-settings');
 
                     /*
                     |--------------------------------------------------------------------------
@@ -181,10 +217,10 @@ Route::middleware(['auth', 'verified', 'doctorbookingorassistant','redirect_admi
                     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 
                     Route::resource("assistants",DoctorAssistantController::class)
-                       ->except(['show','create','edit']);;
+                        ->except(['show','create','edit']);;
                     Route::patch('assistants/{assistant}/toggle-status', [DoctorAssistantController::class, 'toggleStatus'])
                         ->name('assistants.toggle-status');
 
     });
     });
-      });
+    });

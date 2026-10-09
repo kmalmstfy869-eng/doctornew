@@ -12,29 +12,32 @@
 
     <div class="flex h-full flex-col">
 
-        <div class="flex items-center gap-3 border-b border-sidebar-border px-4 py-4">
+        <a href="<?php echo e(route('clinic.dashboard')); ?>" class="block">
+            <div class="flex items-center gap-3 border-b border-sidebar-border px-4 py-4">
 
-            <span
-                class="grid size-10 shrink-0 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
-                <i data-lucide="stethoscope" class="size-5"></i>
-            </span>
+                <span
+                    class="grid size-10 shrink-0 place-items-center rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
+                    <i data-lucide="stethoscope" class="size-5"></i>
+                </span>
 
-            <div class="min-w-0">
+                <div class="min-w-0">
 
-                <p class="truncate text-sm font-bold text-sidebar-foreground">
-                    دليل الأطباء
-                </p>
+                    <p class="truncate text-sm font-bold text-sidebar-foreground">
+                        دليل الأطباء
+                    </p>
 
-                <p class="truncate text-xs text-muted-foreground">
-                    نظام إدارة العيادة
-                </p>
+                    <p class="truncate text-xs text-muted-foreground">
+                        نظام إدارة العيادة
+                    </p>
+
+                </div>
 
             </div>
-
-        </div>
+        </a>
 
         <nav class="clinic-scroll-y flex-1 px-2.5 py-3">
 
+            
             <div class="mb-3">
 
                 <p class="px-2.5 pb-1.5 text-[11px] font-bold tracking-wide text-muted-foreground">
@@ -51,6 +54,19 @@
                         </a>
                     </li>
 
+                </ul>
+
+            </div>
+
+            
+            <div class="mb-3">
+
+                <p class="px-2.5 pb-1.5 text-[11px] font-bold tracking-wide text-muted-foreground">
+                    الحجوزات
+                </p>
+
+                <ul class="space-y-0.5">
+
                     <li>
                         <a href="<?php echo e(route('clinic.bookings.index')); ?>"
                             class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.bookings.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
@@ -62,8 +78,49 @@
                     <li>
                         <a href="<?php echo e(route('clinic.history')); ?>"
                             class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.history') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
-                            <i data-lucide="activity" class="size-4 shrink-0"></i>
+                            <i data-lucide="history" class="size-4 shrink-0"></i>
                             <span class="truncate">سجل كل الحجوزات</span>
+                        </a>
+                    </li>
+
+                    
+                    <?php if(Auth::user()?->doctor?->hasFeature('clinic_system') && !$isAssistant): ?>
+                        <li>
+                            <a href="<?php echo e(route('clinic.reports.index')); ?>"
+                                class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.reports.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
+
+                                <i data-lucide="bar-chart-3" class="size-4 shrink-0"></i>
+                                <span class="truncate">تقارير الحجوزات</span>
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+
+            </div>
+
+            
+            <div class="mb-3">
+
+                <p class="px-2.5 pb-1.5 text-[11px] font-bold tracking-wide text-muted-foreground">
+                    مواعيد الأونلاين
+                </p>
+
+                <ul class="space-y-0.5">
+
+                    <li>
+                        <a href="<?php echo e(route('clinic.schedules.index')); ?>"
+                            class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.schedules.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
+                            <i data-lucide="calendar-days" class="size-4 shrink-0"></i>
+                            <span class="truncate">مواعيد العيادة الاونلاين</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="<?php echo e(route('clinic.slots.index')); ?>"
+                            class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.slots.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
+                            <i data-lucide="calendar-clock" class="size-4 shrink-0"></i>
+                            <span class="truncate">اداره مواعيد الاونلاين لكل يوم</span>
                         </a>
                     </li>
 
@@ -71,6 +128,7 @@
 
             </div>
 
+            
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('use-clinic-system')): ?>
                 <div class="mb-3">
 
@@ -83,7 +141,6 @@
                         <li>
                             <a href="<?php echo e(route('clinic.patients')); ?>"
                                 class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.patients.*') || request()->routeIs('clinic.patients') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
-                                <i data-lucide="activity" class="size-4 shrink-0"></i>
                                 <i data-lucide="users" class="size-4 shrink-0"></i>
                                 <span class="truncate">كل المرضى</span>
                             </a>
@@ -110,8 +167,9 @@
                             </li>
 
                             <li>
-                                <a href="documents.html"
-                                    class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent/60">
+                                <a href="<?php echo e(route('clinic.files.index')); ?>"
+                                    class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.files.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
+
                                     <i data-lucide="folder" class="size-4 shrink-0"></i>
                                     <span class="truncate">الملفات الطبية</span>
                                 </a>
@@ -122,34 +180,6 @@
 
                 </div>
             <?php endif; ?>
-
-            <div class="mb-3">
-
-                <p class="px-2.5 pb-1.5 text-[11px] font-bold tracking-wide text-muted-foreground">
-                    الجدول
-                </p>
-
-                <ul class="space-y-0.5">
-
-                    <li>
-                        <a href="<?php echo e(route('clinic.schedules.index')); ?>"
-                            class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.schedules.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
-                            <i data-lucide="calendar-days" class="size-4 shrink-0"></i>
-                            <span class="truncate">مواعيد العيادة الاونلاين</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="<?php echo e(route('clinic.slots.index')); ?>"
-                            class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.slots.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
-                            <i data-lucide="calendar-clock" class="size-4 shrink-0"></i>
-                            <span class="truncate">اداره مواعيد الاونلاين لكل يوم</span>
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
 
             
             <?php if(Auth::user()?->doctor?->hasFeature('clinic_system') && !$isAssistant): ?>
@@ -170,20 +200,12 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="<?php echo e(route('clinic.reports.index')); ?>"
-                                class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.reports.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
-
-                                <i data-lucide="wallet" class="size-4 shrink-0"></i>
-                                <span class="truncate">التقارير</span>
-                            </a>
-                        </li>
-
                     </ul>
 
                 </div>
             <?php endif; ?>
 
+            
             <?php if(Auth::user()?->doctor?->hasFeature('clinic_system')): ?>
                 <div class="mb-3">
 
@@ -194,8 +216,8 @@
                     <ul class="space-y-0.5">
 
                         <li>
-                            <a href="settings.html"
-                                class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent/60">
+                            <a href="<?php echo e(route('clinic.print-settings')); ?>"
+                                class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.print-settings') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
                                 <i data-lucide="settings" class="size-4 shrink-0"></i>
                                 <span class="truncate">اعدادات الطباعه</span>
                             </a>
@@ -204,7 +226,7 @@
                         
                         <li>
                             <a href="<?php echo e(route('clinic.assistants.index')); ?>"
-                                class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent/60">
+                                class="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors <?php echo e(request()->routeIs('clinic.assistants.*') ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/60'); ?>">
                                 <i data-lucide="user-round-cog" class="size-4 shrink-0"></i>
                                 <span class="truncate">فريق العيادة</span>
                             </a>
@@ -243,7 +265,7 @@
 
             </div>
 
-            <?php if(Auth::user()?->doctor?->hasFeature('clinic_system')): ?>
+            <?php if (! ($isAssistant)): ?>
                 <a href="<?php echo e(route('doctor.dashboard', Auth::user()->doctor)); ?>"
                     class="group mt-2 flex w-full items-center justify-between rounded-xl border border-sidebar-border
                     bg-sidebar-accent/30 px-3 py-2.5 text-sidebar-foreground

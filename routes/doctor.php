@@ -6,7 +6,8 @@ use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorProfileController;
 use App\Http\Controllers\Doctor\DoctorReviewsController;
 use App\Http\Controllers\Doctor\NotificationController;
-
+use App\Http\Controllers\Doctor\SubscriptionController;
+use App\Http\Controllers\Doctor\DoctorStatsController;
 
 Route::middleware(['auth', 'verified', 'doctor', 'load_doctor','redirect_admin','redirect_assistant'])
     ->prefix('doctor')
@@ -44,7 +45,7 @@ Route::middleware(['auth', 'verified', 'doctor', 'load_doctor','redirect_admin',
 
 
         Route::get('/reviews', [DoctorReviewsController::class, 'index'])
-            ->middleware(['subscription:subscription'])
+            ->middleware(['subscription:subscription','doctor_approved'])
             ->name('reviews');
 
 
@@ -72,4 +73,12 @@ Route::middleware(['auth', 'verified', 'doctor', 'load_doctor','redirect_admin',
         Route::get('/clinic/help', function () {
             return view('doctor.dashboard.help.index');
         })->name('help');
+
+        Route::get('/subscription', [SubscriptionController::class, 'index'])
+                ->middleware('doctor_approved')
+                ->name('subscription');
+
+        Route::get('/stats', [DoctorStatsController::class, 'index'])
+            ->middleware('doctor_approved')
+            ->name('stats');
     });

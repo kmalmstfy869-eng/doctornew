@@ -1,8 +1,7 @@
-
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['doctor']));
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['doctor', 'favoriteIds' => []]));
 
 foreach ($attributes->all() as $__key => $__value) {
     if (in_array($__key, $__propNames)) {
@@ -17,7 +16,7 @@ $attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
 unset($__propNames);
 unset($__newAttributes);
 
-foreach (array_filter((['doctor']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+foreach (array_filter((['doctor', 'favoriteIds' => []]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
 
@@ -34,7 +33,6 @@ unset($__defined_vars, $__key, $__value); ?>
     <div class="doctor-cover">
 
         <?php if($doctor->hasFeature('booking')): ?>
-
             <span class="subscription-badge premium">
 
                 <i class="fa-solid fa-crown"></i>
@@ -42,41 +40,38 @@ unset($__defined_vars, $__key, $__value); ?>
                 طبيب مميز
 
             </span>
-
         <?php endif; ?>
 
     </div>
 
 
-    <!-- المفضلة -->
+    <?php
+        $isFav = in_array($doctor->id, $favoriteIds);
+    ?>
 
-    <button type="button"
-        class="doctor-favorite"
-        aria-label="إضافة الطبيب للمفضلة">
+    <form method="POST" action="<?php echo e(route('favorites.toggle', $doctor->id)); ?>">
+        <?php echo csrf_field(); ?>
 
-        <i class="fa-regular fa-heart"></i>
+        <button type="submit" class="doctor-favorite <?php echo e($isFav ? 'is-active' : ''); ?>" aria-label="المفضلة">
 
-    </button>
+            <i class="<?php echo e($isFav ? 'fa-solid' : 'fa-regular'); ?> fa-heart"></i>
 
+        </button>
+    </form>
 
     <!-- صورة الطبيب -->
 
     <?php if(
-        $doctor->doctor_image
-        && $doctor->hasFeature('subscription')
-        && \Illuminate\Support\Facades\Storage::disk('public')->exists($doctor->doctor_image)
-    ): ?>
-
+        $doctor->doctor_image &&
+            $doctor->hasFeature('subscription') &&
+            \Illuminate\Support\Facades\Storage::disk('public')->exists($doctor->doctor_image)): ?>
         <div class="doctor-image">
 
-            <img src="<?php echo e(asset('storage/' . $doctor->doctor_image)); ?>"
-                alt="د.<?php echo e($doctor->user->name); ?>"
+            <img src="<?php echo e(asset('storage/' . $doctor->doctor_image)); ?>" alt="د.<?php echo e($doctor->user->name); ?>"
                 class="med-doctor-image">
 
         </div>
-
     <?php else: ?>
-
         <div class="doctor-image">
 
             <div class="image-unavailable">
@@ -90,7 +85,6 @@ unset($__defined_vars, $__key, $__value); ?>
             </div>
 
         </div>
-
     <?php endif; ?>
 
 
@@ -112,9 +106,7 @@ unset($__defined_vars, $__key, $__value); ?>
 
 
                     <?php if($doctor->hasFeature('subscription')): ?>
-
                         <i class="fa-solid fa-circle-check verified-badge"></i>
-
                     <?php endif; ?>
 
                 </h3>
@@ -137,10 +129,7 @@ unset($__defined_vars, $__key, $__value); ?>
         ?>
 
 
-        <?php if(
-            $ratings->isNotEmpty()
-            && $doctor->hasFeature('subscription')
-        ): ?>
+        <?php if($ratings->isNotEmpty() && $doctor->hasFeature('subscription')): ?>
 
             <?php
 
@@ -148,8 +137,7 @@ unset($__defined_vars, $__key, $__value); ?>
 
                 $fullStars = floor($averageRating);
 
-                $hasHalfStar =
-                    $averageRating - $fullStars >= 0.5;
+                $hasHalfStar = $averageRating - $fullStars >= 0.5;
 
             ?>
 
@@ -159,27 +147,17 @@ unset($__defined_vars, $__key, $__value); ?>
                 <div class="stars">
 
                     <?php for($i = 1; $i <= $fullStars; $i++): ?>
-
                         <i class="fa-solid fa-star"></i>
-
                     <?php endfor; ?>
 
 
                     <?php if($hasHalfStar): ?>
-
                         <i class="fa-solid fa-star-half-stroke"></i>
-
                     <?php endif; ?>
 
 
-                    <?php for(
-                        $i = $fullStars + ($hasHalfStar ? 1 : 0);
-                        $i < 5;
-                        $i++
-                    ): ?>
-
+                    <?php for($i = $fullStars + ($hasHalfStar ? 1 : 0); $i < 5; $i++): ?>
                         <i class="fa-regular fa-star"></i>
-
                     <?php endfor; ?>
 
                 </div>
@@ -198,9 +176,7 @@ unset($__defined_vars, $__key, $__value); ?>
                 </span>
 
             </div>
-
         <?php else: ?>
-
             <div class="limited-info">
 
                 <i class="fa-solid fa-lock"></i>
@@ -261,17 +237,12 @@ unset($__defined_vars, $__key, $__value); ?>
 
         <!-- زر الملف -->
 
-        <a href="<?php echo e(route('doctors.show', $doctor->id)); ?>"
-            class="doctor-button-card">
+        <a href="<?php echo e(route('doctors.show', $doctor->id)); ?>" class="doctor-button-card">
 
             <?php if($doctor->hasFeature('booking')): ?>
-
                 عرض الملف الطبي و احجز الان
-
             <?php else: ?>
-
                 عرض الملف الطبي
-
             <?php endif; ?>
 
         </a>
@@ -279,6 +250,4 @@ unset($__defined_vars, $__key, $__value); ?>
     </div>
 
 </article>
-
-
 <?php /**PATH C:\Users\DELL\Desktop\doctors-ai\resources\views/components/home/doctors/card_doctor_clinic_system_component.blade.php ENDPATH**/ ?>

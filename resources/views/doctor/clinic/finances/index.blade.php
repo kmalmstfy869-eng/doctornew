@@ -10,7 +10,7 @@
 @section('content')
 
     @php
-        $fmt = fn ($n) => rtrim(rtrim(number_format((float) $n, 2, '.', ','), '0'), '.');
+        $fmt = fn ($n) => \App\Support\Money::fmt($n);
         $hasFilters = $q !== '' || $type;
 
         $todayNet = (float) $today['income'] - (float) $today['expense'];
@@ -161,7 +161,7 @@
                             مصروفات الفترة
                         </p>
 
-                        <p class="mt-2 text-2xl font-bold tabular-nums">
+                        <p class="mt-2 text-2xl font-bold tabular-nums text-destructive">
                             {{ $fmt($period['expense']) }} ج.م
                         </p>
 

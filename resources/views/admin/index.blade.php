@@ -100,15 +100,8 @@
                 </div>
 
                 <div class="stat-info">
-
-                    <p>
-                        زيارات الموقع
-                    </p>
-
-                    <h3>
-                        48,920
-                    </h3>
-
+                    <p>زيارات الموقع</p>
+                    <h3>{{ number_format($totalVisits) }}</h3>
                 </div>
 
             </div>
@@ -509,7 +502,7 @@
 
                     </div>
 
-                    <a href="{{ route('ratings.index') }}" class="reviews-card-link">
+                    <a href="{{ route('admin.ratings.index') }}" class="reviews-card-link">
 
                         <span>
                             عرض الكل
@@ -545,7 +538,7 @@
                                     </strong>
 
                                     <span>
-                                        {{ $rating->created_at?->diffForHumans() ?? 'ليس له وقت انشاء'}}
+                                        {{ $rating->created_at?->diffForHumans() ?? 'ليس له وقت انشاء' }}
                                     </span>
 
                                 </div>
@@ -615,7 +608,7 @@
                             {{-- الإجراءات --}}
                             <div class="doctor-review-actions">
 
-                                <a href="{{ route('ratings.edit', $rating->id) }}" class="doctor-review-edit-btn"
+                                <a href="{{ route('admin.ratings.edit', $rating->id) }}" class="doctor-review-edit-btn"
                                     title="تعديل التقييم">
 
                                     <i class="fa-regular fa-pen-to-square"></i>
@@ -627,7 +620,7 @@
                                 </a>
 
 
-                                <form action="{{ route('ratings.destroy', $rating->id) }}" method="POST"
+                                <form action="{{ route('admin.ratings.destroy', $rating->id) }}" method="POST"
                                     class="doctor-review-delete-form"
                                     onsubmit="return confirm('هل أنت متأكد من حذف هذا التقييم؟')">
 

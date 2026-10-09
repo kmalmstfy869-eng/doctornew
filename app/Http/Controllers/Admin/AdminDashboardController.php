@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\Rating;
 use Illuminate\View\View;
+use App\Models\SiteVisitStat;
 class AdminDashboardController extends Controller
 {
     /**
@@ -14,6 +15,9 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
+
+        $totalVisits = (int) SiteVisitStat::query()->sum('views');
+
         $totalDoctors = Doctor::doctors()
             ->active()
             ->count();
@@ -30,7 +34,7 @@ class AdminDashboardController extends Controller
         ])
             ->doctors()
             ->notactive()
-            ->limit(4)
+            ->limit(3)
             ->get();
 
         $totalDoctorpending = Doctor::doctors()
@@ -82,7 +86,7 @@ class AdminDashboardController extends Controller
             ->groupBy('specialty_id')
             ->with('specialty:id,name')
             ->orderByDesc('total')
-            ->take(4)
+            ->take(3)
             ->get();
 
         $otherDoctors=max( 0, $totalDoctors -  ($specialties->sum("total")  ) );
@@ -99,11 +103,12 @@ class AdminDashboardController extends Controller
                 'expiringDoctors',
                 'specialties',
                 'otherDoctors',
+                'totalVisits',
             )
         );
     }
 
-      public function profileadmin(Request $request): View
+    public function profileadmin(Request $request): View
     {
 
 

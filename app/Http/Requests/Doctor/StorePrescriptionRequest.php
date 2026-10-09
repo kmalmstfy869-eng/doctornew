@@ -200,6 +200,12 @@ class StorePrescriptionRequest extends FormRequest
                 'regex:/^01[0125][0-9]{8}$/',
             ],
 
+
+            'next_visit_date'=>[
+                'nullable',
+                'date',
+                'after_or_equal:today',
+            ],
             /*
             |--------------------------------------------------------------------------
             | الأدوية
@@ -347,6 +353,8 @@ class StorePrescriptionRequest extends FormRequest
             'notes' =>
                 $data['notes'] ?? null,
 
+            'next_visit_date'=> $data['next_visit_date'] ?? null,
+
             'medications' =>
                 collect($data['medications'])
                     ->map(
@@ -461,6 +469,11 @@ class StorePrescriptionRequest extends FormRequest
             'patient_name.max' =>
                 'اسم المريض لا يمكن أن يتجاوز 150 حرفًا.',
 
+            'next_visit_date.date' =>
+                'تاريخ موعد الاعادة غير صحيح.',
+
+            'next_visit_date.after_or_equal' =>
+                'موعد الاعادة يجب أن يكون اليوم أو تاريخًا مستقبليًا.',
             /*
             |--------------------------------------------------------------------------
             | رقم الهاتف المصري

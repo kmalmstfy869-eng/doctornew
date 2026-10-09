@@ -7,7 +7,7 @@ use App\Models\BlockedSlot;
 use App\Services\Clinic\AppointmentSlotService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class ClinicSlotsController extends Controller
 {
     protected string $timezone = 'Africa/Cairo';
@@ -18,7 +18,8 @@ class ClinicSlotsController extends Controller
 
     public function index(Request $request)
     {
-        $doctor = $request->user()->doctor;
+        $user = Auth::user();
+        $doctor = $user->clinicDoctor();
 
         $requestedDate = $request->query('date');
 
@@ -70,7 +71,8 @@ class ClinicSlotsController extends Controller
             'reason' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $doctor = $request->user()->doctor;
+            $user = Auth::user();
+        $doctor = $user->clinicDoctor();
 
         foreach ($validated['times'] as $time) {
             BlockedSlot::updateOrCreate(
@@ -88,8 +90,8 @@ class ClinicSlotsController extends Controller
         return back()->with('success', 'تم إغلاق المواعيد المحددة بنجاح.');
     }
     public function open(Request $request, BlockedSlot $blockedSlot)
-    {
-        $doctor = $request->user()->doctor;
+    {      $user = Auth::user();
+        $doctor = $user->clinicDoctor();
 
         abort_if($blockedSlot->doctor_id !== $doctor->id, 403);
 

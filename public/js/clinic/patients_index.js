@@ -1,30 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const modalId = window.PatientsPageConfig?.openModal;
 
-    const config =
-        window.PatientsPageConfig;
-
-    if (!config) {
+    if (!modalId) {
         return;
     }
 
-    if (
-        config.hasValidationErrors &&
-        !config.isUpdateRequest
-    ) {
-
-        const newPatientModal =
-            document.getElementById(
-                'modal-new-patient'
-            );
-
-        if (newPatientModal) {
-
-            newPatientModal.classList.add(
-                'open'
-            );
-
-        }
-
-    }
-
+    document.getElementById(modalId)?.classList.add('open');
 });

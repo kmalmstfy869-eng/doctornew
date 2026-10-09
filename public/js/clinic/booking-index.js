@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             clearTimeout(timeout);
 
-            timeout = setTimeout(function() {
+            timeout = setTimeout(() => {
                 fn.apply(this, args);
             }, wait);
 
@@ -74,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function buildActionUrl(template, id) {
+
+        if (!template) {
+            return '#';
+        }
 
         return template.replace(
             '__BOOKING_ID__',
@@ -679,6 +683,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | البحث عن المرضى (مع تجاهل الردود القديمة)
+    |--------------------------------------------------------------------------
+    */
+
+    let patientSearchSeq = 0;
+    let patientSearchController = null;
+
     const searchPatients =
         debounce(
             async function(query) {
@@ -690,6 +703,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const trimmed =
                     (query || '').trim();
+
+                const seq =
+                    ++patientSearchSeq;
+
+                if (patientSearchController) {
+                    patientSearchController.abort();
+                }
 
                 if (trimmed.length < 2) {
 
@@ -711,12 +731,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
 
+                patientSearchController =
+                    new AbortController();
+
                 try {
 
                     const response =
                         await fetch(
                             `${patientSearchUrl}?search=${encodeURIComponent(trimmed)}`,
                             {
+                                credentials:
+                                    'same-origin',
+
+                                signal:
+                                    patientSearchController.signal,
+
                                 headers: {
                                     'Accept':
                                         'application/json',
@@ -727,12 +756,20 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         );
 
+                    if (seq !== patientSearchSeq) {
+                        return;
+                    }
+
                     if (!response.ok) {
                         return;
                     }
 
                     const data =
                         await response.json();
+
+                    if (seq !== patientSearchSeq) {
+                        return;
+                    }
 
                     renderPatientResults(
                         Array.isArray(data.patients)
@@ -825,7 +862,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="flex min-w-0 items-center gap-3">
 
                         <div class="bq-queue-num">
-                            ${position}
+                            ${escapeHtml(position)}
                         </div>
 
                         <div class="min-w-0">
@@ -860,10 +897,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="bq-queue-actions">
 
                         <form method="POST"
-                            action="${buildActionUrl(
+                            action="${escapeHtml(buildActionUrl(
                                 callUrlTemplate,
                                 booking.id
-                            )}">
+                            ))}">
 
                             <input type="hidden"
                                 name="_token"
@@ -885,10 +922,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
                         <form method="POST"
-                            action="${buildActionUrl(
+                            action="${escapeHtml(buildActionUrl(
                                 startUrlTemplate,
                                 booking.id
-                            )}">
+                            ))}">
 
                             <input type="hidden"
                                 name="_token"
@@ -914,7 +951,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
                         <button type="button"
-                            class="btn btn-destructive btn-sm"
+                            class="btn btn-destructive"
+                            aria-label="حذف الحجز"
                             data-cancel-booking="${escapeHtml(
                                 booking.id
                             )}"
@@ -922,10 +960,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                 booking.patient_name
                             )}">
 
-                            <i data-lucide="x"
-                                class="h-4 w-4"></i>
-
-                            إلغاء
+                            <i data-lucide="trash-2"
+                                class="size-4"></i>
 
                         </button>
 
@@ -1012,10 +1048,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="flex flex-wrap gap-2">
 
                         <form method="POST"
-                            action="${buildActionUrl(
+                            action="${escapeHtml(buildActionUrl(
                                 finishUrlTemplate,
                                 exam.id
-                            )}">
+                            ))}">
 
                             <input type="hidden"
                                 name="_token"
@@ -1146,7 +1182,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | الطابور موجود في الصفحة؟
+    | (الملف مستخدم في صفحات تانية زي سجل الحجوزات، فمفيش داعي لطلبات بلا فايدة)
+    |--------------------------------------------------------------------------
+    */
+
+    function hasQueueUi() {
+
+        return !!(
+            document.getElementById('queue-list') ||
+            document.getElementById('current-exam-list')
+        );
+
+    }
+
+
+    let isRefreshingQueue = false;
+
     async function refreshQueueData() {
+
+        if (
+            !queueDataUrl ||
+            !hasQueueUi() ||
+            isRefreshingQueue
+        ) {
+            return;
+        }
+
+        isRefreshingQueue = true;
 
         try {
 
@@ -1154,6 +1219,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 await fetch(
                     queueDataUrl,
                     {
+                        credentials:
+                            'same-origin',
+
                         headers: {
                             'Accept':
                                 'application/json',
@@ -1246,6 +1314,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
             return;
 
+        } finally {
+
+            isRefreshingQueue = false;
+
         }
 
     }
@@ -1333,27 +1405,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 'edit-payment-form'
             );
 
-        if (!form) {
+        if (!form || !id) {
             return;
         }
 
         form.action =
-            `${bookingsBaseUrl}/${id}/payment`;
+            `${bookingsBaseUrl}/${encodeURIComponent(id)}/payment`;
 
-        document.getElementById(
-            'edit-payment-patient'
-        ).textContent =
-            `تعديل الدفع للمريض ${name}`;
+        const patientLabel =
+            document.getElementById(
+                'edit-payment-patient'
+            );
 
-        document.getElementById(
-            'edit-payment-price'
-        ).value =
-            price;
+        const priceInput =
+            document.getElementById(
+                'edit-payment-price'
+            );
 
-        document.getElementById(
-            'edit-payment-paid'
-        ).value =
-            paid;
+        const paidInput =
+            document.getElementById(
+                'edit-payment-paid'
+            );
+
+        if (patientLabel) {
+
+            patientLabel.textContent =
+                `تعديل الدفع للمريض ${name}`;
+
+        }
+
+        if (priceInput) {
+            priceInput.value = price;
+        }
+
+        if (paidInput) {
+            paidInput.value = paid;
+        }
 
         updateEditPaymentPreview();
 
@@ -1377,17 +1464,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 'cancel-booking-form'
             );
 
-        if (!form) {
+        if (!form || !id) {
             return;
         }
 
         form.action =
-            `${bookingsBaseUrl}/${id}/cancel`;
+            `${bookingsBaseUrl}/${encodeURIComponent(id)}/cancel`;
 
-        document.getElementById(
-            'cancel-booking-text'
-        ).textContent =
-            `سيتم إلغاء حجز ${name} رقم ${id}.`;
+        const text =
+            document.getElementById(
+                'cancel-booking-text'
+            );
+
+        if (text) {
+
+            text.textContent =
+                `سيتم إلغاء حجز ${name} .`;
+
+        }
 
         openModal(
             'cancel-booking-modal'
@@ -1823,6 +1917,91 @@ document.addEventListener('DOMContentLoaded', function() {
     );
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | منع الإرسال المزدوج (في نطاق عناصر هذا الملف فقط)
+    |--------------------------------------------------------------------------
+    */
+
+    const GUARDED_FORMS_SCOPE =
+        '#queue-list, #current-exam-list, .modal-overlay, #history-results, #bookings-tbody, #bookings-mobile-list';
+
+    document.addEventListener(
+        'submit',
+        function(event) {
+
+            const form =
+                event.target;
+
+            if (!(form instanceof HTMLFormElement)) {
+                return;
+            }
+
+            if (event.defaultPrevented) {
+                return;
+            }
+
+            if (
+                (form.getAttribute('method') || '')
+                    .toLowerCase() !== 'post'
+            ) {
+                return;
+            }
+
+            if (!form.closest(GUARDED_FORMS_SCOPE)) {
+                return;
+            }
+
+            if (form.dataset.submitting === '1') {
+
+                event.preventDefault();
+
+                return;
+
+            }
+
+            form.dataset.submitting = '1';
+
+            form.querySelectorAll(
+                'button[type="submit"]'
+            ).forEach(function(button) {
+
+                button.disabled = true;
+
+            });
+
+        }
+    );
+
+
+    window.addEventListener(
+        'pageshow',
+        function(event) {
+
+            if (!event.persisted) {
+                return;
+            }
+
+            document.querySelectorAll(
+                'form[data-submitting="1"]'
+            ).forEach(function(form) {
+
+                delete form.dataset.submitting;
+
+                form.querySelectorAll(
+                    'button[type="submit"]'
+                ).forEach(function(button) {
+
+                    button.disabled = false;
+
+                });
+
+            });
+
+        }
+    );
+
+
     document.getElementById(
         'booking-history-btn'
     )?.addEventListener(
@@ -1879,7 +2058,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startQueuePolling() {
 
-        if (queueTimer) {
+        if (
+            queueTimer ||
+            !queueDataUrl ||
+            !hasQueueUi()
+        ) {
             return;
         }
 

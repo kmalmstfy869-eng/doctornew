@@ -39,8 +39,7 @@
 
         $sourceLabel = $booking->booking_type === 'online' ? 'أونلاين' : 'من العيادة';
 
-        $sourceClass =
-            $booking->booking_type === 'online' ? 'badge-primary' : 'badge-purple';
+        $sourceClass = $booking->booking_type === 'online' ? 'badge-primary' : 'badge-purple';
 
     @endphp
 
@@ -51,8 +50,7 @@
 
             <div class="flex min-w-[190px] items-center gap-3">
 
-                <div
-                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
 
                     <i data-lucide="user-round" class="h-5 w-5"></i>
 
@@ -61,9 +59,19 @@
 
                 <div class="min-w-0">
 
-                    <div class="truncate font-semibold text-foreground">
-                        {{ $booking->patient_name }}
-                    </div>
+                    @if ($isClinicSystem && $booking->patient_id)
+                        <a href="{{ route('clinic.patients.show', $booking->patient_id) }}"
+                            class="font-medium text-primary hover:underline">
+
+                            {{ $booking->patient_name }}
+
+                        </a>
+                    @else
+                        <p class="font-medium">
+                            {{ $booking->patient_name }}
+                        </p>
+                    @endif
+
 
                     <div class="mt-0.5 text-xs text-muted-foreground">
 
@@ -171,8 +179,7 @@
 
                 <div class="dropdown relative">
 
-                    <button type="button" class="btn btn-icon-sm" data-dropdown-trigger
-                        aria-label="إجراءات الحجز">
+                    <button type="button" class="btn btn-icon-sm" data-dropdown-trigger aria-label="إجراءات الحجز">
 
                         <i data-lucide="more-horizontal"></i>
 
@@ -182,8 +189,7 @@
                     <div class="dropdown-menu min-w-[220px]">
 
                         @if ($booking->patient_id && $isClinicSystem)
-                            <a href="{{ route('clinic.patients.show', $booking->patient_id) }}"
-                                class="dropdown-item">
+                            <a href="{{ route('clinic.patients.show', $booking->patient_id) }}" class="dropdown-item">
 
                                 <i data-lucide="folder-open"></i>
 
@@ -193,10 +199,8 @@
                         @endif
 
 
-                        <button type="button" class="dropdown-item" data-edit-service
-                            data-id="{{ $booking->id }}"
-                            data-name="{{ $booking->patient_name }}"
-                            data-service="{{ $booking->service ?? '' }}">
+                        <button type="button" class="dropdown-item" data-edit-service data-id="{{ $booking->id }}"
+                            data-name="{{ $booking->patient_name }}" data-service="{{ $booking->service ?? '' }}">
 
                             <i data-lucide="clipboard-pen"></i>
 
@@ -205,10 +209,8 @@
                         </button>
 
 
-                        <button type="button" class="dropdown-item" data-edit-payment
-                            data-id="{{ $booking->id }}"
-                            data-name="{{ $booking->patient_name }}"
-                            data-price="{{ $price }}"
+                        <button type="button" class="dropdown-item" data-edit-payment data-id="{{ $booking->id }}"
+                            data-name="{{ $booking->patient_name }}" data-price="{{ $price }}"
                             data-paid="{{ $paid }}">
 
                             <i data-lucide="wallet"></i>
@@ -219,8 +221,7 @@
 
 
                         @if ($booking->status === 'pending' && !$booking->arrived_at)
-                            <form method="POST"
-                                action="{{ route('clinic.bookings.arrive', $booking) }}">
+                            <form method="POST" action="{{ route('clinic.bookings.arrive', $booking) }}">
 
                                 @csrf
                                 @method('PATCH')
@@ -237,24 +238,7 @@
 
 
                         @if ($booking->arrived_at && $booking->status === 'confirmed')
-                            <form method="POST"
-                                action="{{ route('clinic.bookings.call', $booking) }}">
-
-                                @csrf
-
-                                <button type="submit" class="dropdown-item">
-
-                                    <i data-lucide="megaphone"></i>
-
-                                    استدعاء المريض
-
-                                </button>
-
-                            </form>
-
-
-                            <form method="POST"
-                                action="{{ route('clinic.bookings.start', $booking) }}">
+                            <form method="POST" action="{{ route('clinic.bookings.start', $booking) }}">
 
                                 @csrf
                                 @method('PATCH')
@@ -272,8 +256,7 @@
 
 
                         @if ($booking->status === 'pending' && !$booking->arrived_at)
-                            <form method="POST"
-                                action="{{ route('clinic.bookings.no-show', $booking) }}">
+                            <form method="POST" action="{{ route('clinic.bookings.no-show', $booking) }}">
 
                                 @csrf
                                 @method('PATCH')
@@ -318,8 +301,7 @@
 
         <td colspan="9" class="p-4">
 
-            <x-home.banner.no_results logo="fa-solid fa-magnifying-glass"
-                title="لا توجد حجوزات"
+            <x-home.banner.no_results logo="fa-solid fa-magnifying-glass" title="لا توجد حجوزات"
                 content="لم يتم العثور على حجوزات مطابقة للبحث أو الفلاتر المحددة." />
 
         </td>

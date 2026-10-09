@@ -26,26 +26,15 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/home/doctor_details.css') }}">
+
 
     {{-- =====================================================
-         Font Awesome
+        Font Awesome
     ====================================================== --}}
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-
-
-
     <link rel="stylesheet" href="{{ asset('css/home/test.css') }}">
-
-
-
-
-
     <link rel="stylesheet" href="{{ asset('css/auth/auth.css') }}">
-
-    {{-- <link rel="stylesheet" href="{{ asset('css/home/profile.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/home/settings.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/tokens.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layouts/public-nav.css') }}">
@@ -61,6 +50,7 @@
     <link rel="stylesheet" href="{{ asset('css/public/job-form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/public/contact.css') }}">
     <link rel="stylesheet" href="{{ asset('css/public/ui-enhancements.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/public/search-ui.css') }}">
 
     @stack('styles')
 

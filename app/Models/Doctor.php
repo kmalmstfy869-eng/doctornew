@@ -164,7 +164,28 @@ public function hasFeature(string $feature): bool
                 });
         });
     }
+        public function scopeSearch($query, ?string $term)
+        {
+            $term = trim((string) $term);
+            if ($term === '') {
+                return $query;
+            }
 
+            $like = '%' . addcslashes($term, '%_\\') . '%';
+            $id   = ltrim($term, '#');
+
+            return $query->where(function ($q) use ($like, $id) {
+                $q->where('phone', 'like', $like)
+                ->orwhere('whatsapp', 'like', $like)
+                ->orWhereHas('user', fn ($u) => $u->where('name', 'like', $like))
+                ->orWhereHas('specialty', fn ($s) => $s->where('name', 'like', $like))
+                ->orWhereHas('area', fn ($a) => $a->where('name', 'like', $like));
+
+                if (ctype_digit($id)) {
+                    $q->orWhere('id', (int) $id);
+                }
+            });
+        }
     /*
     |--------------------------------------------------------------------------
     | Relationships
@@ -217,5 +238,12 @@ public function hasFeature(string $feature): bool
     public function assistants(): HasMany
     {
         return $this->hasMany(DoctorAssistant::class);
+    }    public function patientFiles(): HasMany
+    {
+        return $this->hasMany(PatientFile::class);
+    }
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
     }
 }

@@ -5,21 +5,19 @@ namespace App\Http\Controllers\Clinic;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Doctor;
-use App\Models\Payment;
 use App\Services\Clinic\AppointmentSlotService;
+use App\Services\Clinic\ClinicFinanceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ClinicDashboardController extends Controller
 {
-    private const BOOKING_DONE = 'completed';
-
     protected string $timezone = 'Africa/Cairo';
 
     public function __construct(
-        protected AppointmentSlotService $slotService
+        protected AppointmentSlotService $slotService,
+        protected ClinicFinanceService $finance
     ) {}
 
     public function index()
@@ -28,47 +26,29 @@ class ClinicDashboardController extends Controller
         $doctor = $user->clinicDoctor();
 
         $isClinicSystem = $doctor->hasFeature('clinic_system');
-        $isAssistant = (bool) Auth::user()?->doctorAssistant;
+        $isAssistant = (bool) $user->doctorAssistant;
 
         $stats = $this->computeStats($doctor);
 
-        $today = Carbon::today($this->timezone)->format('Y-m-d');
-
-        /*
-        |--------------------------------------------------------------------------
-        | جدول اليوم — من نفس السيرفس المستخدم في صفحة المواعيد المتاحة
-        |--------------------------------------------------------------------------
-        */
-
-        $todaySlots = $this->slotService->getDoctorSlots($doctor, $today);
-
-        $slotsStats = [
-            'available' => collect($todaySlots)->where('status', 'available')->count(),
-            'blocked' => collect($todaySlots)->where('status', 'blocked')->count(),
-        ];
-
-        $scheduleSlots = collect($todaySlots)->take(12)->values();
-
-        /*
-        |--------------------------------------------------------------------------
-        | طابور الانتظار — نفس منطق صفحة الحجوزات (داخل الكشف أولاً ثم المنتظرون)
-        |--------------------------------------------------------------------------
-        */
+        $slots = $this->slotsData($doctor);
+        $slotsStats = $slots['stats'];
+        $scheduleSlots = $slots['slots'];
 
         $dashboardQueue = $this->buildDashboardQueue($doctor);
 
-        /*
-        |--------------------------------------------------------------------------
-        | آخر الحجوزات
-        |--------------------------------------------------------------------------
-        */
+        $recentBookings = $doctor->bookings()->latest()->take(6)->get();
 
-        $recentBookings = $doctor->bookings()
-            ->latest()
-            ->take(6)
-            ->get();
+        $income = ['today' => 0, 'month' => 0];
+        $revenueChart = [];
+        $bookingsChart = $this->finance->bookingsSplitLastSevenDays($doctor->id);
 
-        $income = $this->incomeSummary($doctor->id);
+        if ($isClinicSystem && ! $isAssistant) {
+            $income = [
+                'today' => $this->finance->today($doctor->id)['income'],
+                'month' => $this->finance->month($doctor->id)['income'],
+            ];
+            $revenueChart = $this->finance->revenueLastSevenDays($doctor->id);
+        }
 
         return view(
             'doctor.clinic.index',
@@ -76,6 +56,8 @@ class ClinicDashboardController extends Controller
                 compact(
                     'doctor',
                     'income',
+                    'revenueChart',
+                    'bookingsChart',
                     'isClinicSystem',
                     'isAssistant',
                     'scheduleSlots',
@@ -88,117 +70,59 @@ class ClinicDashboardController extends Controller
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | تحديث AJAX — نفس فكرة queueData في صفحة الحجوزات
-    |--------------------------------------------------------------------------
-    */
-
     public function queueData(Request $request)
     {
-        $user = Auth::user();
-        $doctor = $user->clinicDoctor();
+        $doctor = Auth::user()->clinicDoctor();
 
         $stats = $this->computeStats($doctor);
+        $slots = $this->slotsData($doctor);
 
-        $today = Carbon::today($this->timezone)->format('Y-m-d');
-
-        $todaySlots = $this->slotService->getDoctorSlots($doctor, $today);
-
-        $slotsStats = [
-            'available' => collect($todaySlots)->where('status', 'available')->count(),
-            'blocked' => collect($todaySlots)->where('status', 'blocked')->count(),
-        ];
-
-        $scheduleSlots = collect($todaySlots)->take(12)->values();
-
+        $scheduleSlots = $slots['slots'];
         $dashboardQueue = $this->buildDashboardQueue($doctor);
+        $recentBookings = $doctor->bookings()->latest()->take(6)->get();
 
-        $recentBookings = $doctor->bookings()
-            ->latest()
-            ->take(6)
-            ->get();
-
-        $scheduleHtml = view(
-            'doctor.clinic.dashboard.partials.schedule-list',
-            compact('scheduleSlots')
-        )->render();
-
-        $queueHtml = view(
-            'doctor.clinic.dashboard.partials.queue-list',
-            compact('dashboardQueue')
-        )->render();
-
-        $recentBookingsHtml = view(
-            'doctor.clinic.dashboard.partials.recent-bookings',
-            compact('recentBookings')
-        )->render();
-
-        return response()->json(array_merge(
-            $stats,
-            [
-                'slotsAvailable' => $slotsStats['available'],
-                'slotsBlocked' => $slotsStats['blocked'],
-                'scheduleHtml' => $scheduleHtml,
-                'queueHtml' => $queueHtml,
-                'recentBookingsHtml' => $recentBookingsHtml,
-            ]
-        ));
+        return response()->json(array_merge($stats, [
+            'slotsAvailable' => $slots['stats']['available'],
+            'slotsBlocked' => $slots['stats']['blocked'],
+            'scheduleHtml' => view('doctor.clinic.dashboard.partials.schedule-list', compact('scheduleSlots'))->render(),
+            'queueHtml' => view('doctor.clinic.dashboard.partials.queue-list', compact('dashboardQueue'))->render(),
+            'recentBookingsHtml' => view('doctor.clinic.dashboard.partials.recent-bookings', compact('recentBookings'))->render(),
+        ]));
     }
 
     /* ===================================================================== */
 
-    private function computeStats(Doctor $doctor): array
+    private function slotsData(Doctor $doctor): array
     {
-        $totalBooking = $doctor->bookings()
-            ->whereDate('created_at', today())
-            ->count();
-
-        $totalBookingOnline = $doctor->bookings()
-            ->whereDate('created_at', today())
-            ->where('booking_type', 'online')
-            ->count();
-
-        $totalBookingClinic = $doctor->bookings()
-            ->whereDate('created_at', today())
-            ->where('booking_type', 'clinic')
-            ->count();
-
-        $waitingPatients = $doctor->bookings()
-            ->whereDate('created_at', today())
-            ->where(function ($query) {
-                $query->where('status', 'pending')
-                    ->orWhere('status', 'confirmed');
-            })
-            ->count();
-
-        $completedPatients = $doctor->bookings()
-            ->whereDate('created_at', today())
-            ->where('status', 'completed')
-            ->count();
-
-        $cancelledPatients = $doctor->bookings()
-            ->whereDate('created_at', today())
-            ->where(function ($query) {
-                $query->where('status', 'cancelled')
-                    ->orWhere('status', 'no_show');
-            })
-            ->count();
+        $today = Carbon::today($this->timezone)->format('Y-m-d');
+        $todaySlots = collect($this->slotService->getDoctorSlots($doctor, $today));
 
         return [
-            'TotalBooking' => $totalBooking,
-            'TotalBookingOnline' => $totalBookingOnline,
-            'TotalBookingClinic' => $totalBookingClinic,
-            'waitingPatients' => $waitingPatients,
-            'completedPatients' => $completedPatients,
-            'cancelledPatients' => $cancelledPatients,
+            'stats' => [
+                'available' => $todaySlots->where('status', 'available')->count(),
+                'blocked' => $todaySlots->where('status', 'blocked')->count(),
+            ],
+            'slots' => $todaySlots->take(12)->values(),
         ];
     }
 
-    /**
-     * نفس منطق sortQueue/getOnlineArrivalStatus في BookingController،
-     * منسوخة هنا كي لا تتأثر صفحة الحجوزات الأصلية بأي تعديل.
-     */
+    private function computeStats(Doctor $doctor): array
+    {
+        $base = fn () => $doctor->bookings()
+            ->whereDate('appointment_date', Carbon::today($this->timezone)->toDateString());
+
+        return [
+            'TotalBooking' => $base()->count(),
+            'TotalBookingOnline' => $base()->where('booking_type', 'online')->count(),
+            'TotalBookingClinic' => $base()
+                ->where(fn ($q) => $q->where('booking_type', '!=', 'online')->orWhereNull('booking_type'))
+                ->count(),
+            'waitingPatients' => $base()->whereIn('status', ['pending', 'confirmed'])->count(),
+            'completedPatients' => $base()->where('status', 'completed')->count(),
+            'cancelledPatients' => $base()->whereIn('status', ['cancelled', 'no_show'])->count(),
+        ];
+    }
+
     private function buildDashboardQueue(Doctor $doctor)
     {
         $today = Carbon::today($this->timezone)->toDateString();
@@ -207,11 +131,7 @@ class ClinicDashboardController extends Controller
             ->whereDate('appointment_date', $today)
             ->where('status', 'in_progress')
             ->get()
-            ->sortBy(function (Booking $booking) {
-                return $booking->started_at
-                    ? $booking->started_at->timestamp
-                    : PHP_INT_MAX;
-            })
+            ->sortBy(fn (Booking $b) => $b->started_at ? $b->started_at->timestamp : PHP_INT_MAX)
             ->values();
 
         $queuePatients = $this->sortQueue(
@@ -222,38 +142,23 @@ class ClinicDashboardController extends Controller
                 ->get()
         )->values();
 
-        return $currentExam
-            ->concat($queuePatients)
-            ->take(6)
-            ->values();
+        return $currentExam->concat($queuePatients)->take(6)->values();
     }
 
     private function sortQueue($bookings)
     {
         return $bookings
-            ->groupBy(function (Booking $booking) {
-                return Carbon::parse(
-                    $booking->appointment_date
-                )->toDateString();
-            })
+            ->groupBy(fn (Booking $b) => Carbon::parse($b->appointment_date)->toDateString())
             ->sortKeys()
             ->flatMap(function ($dayBookings) {
                 $priorityOnline = $dayBookings
-                    ->filter(function (Booking $booking) {
-                        return $this->isOnlinePriority($booking);
-                    })
+                    ->filter(fn (Booking $b) => $this->isOnlinePriority($b))
                     ->sort(function (Booking $a, Booking $b) {
-                        $aTime = $a->start_time
-                            ? (string) $a->start_time
-                            : '99:99:99';
-
-                        $bTime = $b->start_time
-                            ? (string) $b->start_time
-                            : '99:99:99';
+                        $aTime = $a->start_time ? (string) $a->start_time : '99:99:99';
+                        $bTime = $b->start_time ? (string) $b->start_time : '99:99:99';
 
                         if ($aTime === $bTime) {
-                            return $a->arrived_at->timestamp
-                                <=> $b->arrived_at->timestamp;
+                            return $a->arrived_at->timestamp <=> $b->arrived_at->timestamp;
                         }
 
                         return strcmp($aTime, $bTime);
@@ -261,13 +166,8 @@ class ClinicDashboardController extends Controller
                     ->values();
 
                 $normalQueue = $dayBookings
-                    ->reject(function (Booking $booking) {
-                        return $this->isOnlinePriority($booking);
-                    })
-                    ->sort(function (Booking $a, Booking $b) {
-                        return $a->arrived_at->timestamp
-                            <=> $b->arrived_at->timestamp;
-                    })
+                    ->reject(fn (Booking $b) => $this->isOnlinePriority($b))
+                    ->sort(fn (Booking $a, Booking $b) => $a->arrived_at->timestamp <=> $b->arrived_at->timestamp)
                     ->values();
 
                 return $priorityOnline->concat($normalQueue);
@@ -277,70 +177,22 @@ class ClinicDashboardController extends Controller
 
     private function isOnlinePriority(Booking $booking): bool
     {
-        if (
-            $booking->booking_type !== 'online' ||
-            !$booking->start_time ||
-            !$booking->arrived_at
-        ) {
+        if ($booking->booking_type !== 'online' || ! $booking->start_time || ! $booking->arrived_at) {
             return false;
         }
 
         $appointmentTime = Carbon::parse(
-            Carbon::parse($booking->appointment_date)->toDateString()
-            . ' '
-            . $booking->start_time
+            Carbon::parse($booking->appointment_date)->toDateString() . ' ' . $booking->start_time
         );
 
         $arrivalTime = Carbon::parse($booking->arrived_at);
-
-        $now = now();
-
         $earlyLimit = $appointmentTime->copy()->subMinutes(30);
         $lateLimit = $appointmentTime->copy()->addMinutes(30);
 
         if ($arrivalTime->lt($earlyLimit)) {
-            return $now->greaterThanOrEqualTo($earlyLimit);
+            return now()->greaterThanOrEqualTo($earlyLimit);
         }
 
         return $arrivalTime->between($earlyLimit, $lateLimit);
-    }
-
-    private function incomeSummary(int $doctorId): array
-    {
-        $today = Carbon::today('Africa/Cairo');
-
-        $monthStart = $today->copy()->startOfMonth();
-        $monthEnd = $today->copy()->endOfMonth();
-
-        $todayBookingIncome = (float) DB::table('bookings')
-            ->where('doctor_id', $doctorId)
-            ->where('status', self::BOOKING_DONE)
-            ->whereDate('appointment_date', $today->toDateString())
-            ->sum('paid');
-
-        $monthBookingIncome = (float) DB::table('bookings')
-            ->where('doctor_id', $doctorId)
-            ->where('status', self::BOOKING_DONE)
-            ->whereDate('appointment_date', '>=', $monthStart->toDateString())
-            ->whereDate('appointment_date', '<=', $monthEnd->toDateString())
-            ->sum('paid');
-
-        $todayPaymentIncome = (float) DB::table('payments')
-            ->where('doctor_id', $doctorId)
-            ->where('type', Payment::INCOME)
-            ->whereDate('paid_at', $today->toDateString())
-            ->sum('amount');
-
-        $monthPaymentIncome = (float) DB::table('payments')
-            ->where('doctor_id', $doctorId)
-            ->where('type', Payment::INCOME)
-            ->whereDate('paid_at', '>=', $monthStart->toDateString())
-            ->whereDate('paid_at', '<=', $monthEnd->toDateString())
-            ->sum('amount');
-
-        return [
-            'today' => $todayBookingIncome + $todayPaymentIncome,
-            'month' => $monthBookingIncome + $monthPaymentIncome,
-        ];
     }
 }

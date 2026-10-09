@@ -16,7 +16,7 @@
         }
 
         $statusLabels = [
-            'pending' => 'في الانتظار',
+            'pending' => 'في انتظار حضوره',
             'confirmed' => 'حضر للعيادة',
             'in_progress' => 'داخل الكشف',
             'completed' => 'تم الكشف',
@@ -30,7 +30,7 @@
             'in_progress' => 'badge-purple',
             'completed' => 'badge-success',
             'cancelled' => 'badge-danger',
-            'no_show' => 'badge-warning',
+            'no_show' => 'badge-danger',
         ];
 
         $statusLabel = $statusLabels[$booking->status] ?? $booking->status;
@@ -60,9 +60,18 @@
 
                 <div class="min-w-0">
 
-                    <h3 class="truncate font-bold text-foreground">
-                        {{ $booking->patient_name }}
-                    </h3>
+                    @if ($isClinicSystem && $booking->patient_id)
+                        <a href="{{ route('clinic.patients.show', $booking->patient_id) }}"
+                            class="block truncate font-bold text-primary hover:underline">
+
+                            {{ $booking->patient_name }}
+
+                        </a>
+                    @else
+                        <h3 class="truncate font-bold text-foreground">
+                            {{ $booking->patient_name }}
+                        </h3>
+                    @endif
 
                     <p class="mt-1 text-xs text-muted-foreground">
                         🧡{{ str_pad(($bookings->currentPage() - 1) * $bookings->perPage() + $loop->iteration, 2, '0', STR_PAD_LEFT) }}
@@ -98,7 +107,8 @@
 
 
                     <button type="button" class="dropdown-item" data-edit-service
-                        data-id="{{ $booking->id }}" data-service="{{ $booking->service ?? '' }}">
+                        data-id="{{ $booking->id }}" data-name="{{ $booking->patient_name }}"
+                        data-service="{{ $booking->service ?? '' }}">
 
                         <i data-lucide="clipboard-pen"></i>
 
@@ -138,21 +148,6 @@
 
 
                     @if ($booking->arrived_at && $booking->status === 'confirmed')
-                        <form method="POST" action="{{ route('clinic.bookings.call', $booking) }}">
-
-                            @csrf
-
-                            <button type="submit" class="dropdown-item">
-
-                                <i data-lucide="megaphone"></i>
-
-                                استدعاء المريض
-
-                            </button>
-
-                        </form>
-
-
                         <form method="POST" action="{{ route('clinic.bookings.start', $booking) }}">
 
                             @csrf

@@ -11,7 +11,7 @@ class subscribedDoctorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $doctors = Doctor::with([
             'user',
@@ -27,7 +27,8 @@ class subscribedDoctorController extends Controller
             ->orderBy('subscriptions.end_date', 'asc')
             ->select('doctors.*')
             ->selectRaw('ROUND(GREATEST(TIMESTAMPDIFF(HOUR, NOW(), subscriptions.end_date), 0) / 24, 1) as remaining_days')
-            ->paginate(10);
+            ->search($request->input('search'))
+            ->paginate(10)->withQueryString();
 
 
         $expiringSubscriptions = Doctor::Subscribed()

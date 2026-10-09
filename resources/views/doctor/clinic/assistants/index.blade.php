@@ -4,6 +4,7 @@
 
 @push('extra_style')
     <link rel="stylesheet" href="{{ asset('css/doctor/clinic/clinic-assistants.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
 @endpush
 
 @section('content')
@@ -28,7 +29,6 @@
                 </div>
 
                 @if ($assistants->count() < 5)
-
                     <div class="flex flex-wrap items-center gap-2">
 
                         <button type="button" class="btn btn-default" data-modal-open="add-assistant-modal">
@@ -40,7 +40,6 @@
                         </button>
 
                     </div>
-
                 @endif
 
             </div>
@@ -51,31 +50,27 @@
             ========================================================== --}}
 
             <div id="assistant-edit-panel"
-                class="clinic-surface-card mb-6 p-4 sm:p-6 {{ old('_form') === 'edit' ? '' : 'hidden' }}">
+                class="clinic-surface-card modal-panel--edit mb-6 p-4 sm:p-6 {{ old('_form') === 'edit' ? '' : 'hidden' }}">
 
-                <div class="mb-5 flex items-center justify-between gap-3">
+                <div class="modal-head">
 
-                    <div class="flex items-center gap-3">
+                    <span class="modal-head__icon">
+                        <i data-lucide="pencil" class="h-5 w-5"></i>
+                    </span>
 
-                        <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary">
-                            <i data-lucide="pencil" class="h-5 w-5"></i>
-                        </div>
+                    <div class="min-w-0">
 
-                        <div>
+                        <h2 class="modal-head__title">
+                            تعديل بيانات المساعد
+                        </h2>
 
-                            <h2 class="text-lg font-bold text-foreground">
-                                تعديل بيانات المساعد
-                            </h2>
-
-                            <p id="assistant-edit-subtitle" class="mt-0.5 text-sm text-muted-foreground">
-                                {{ old('_form') === 'edit' ? old('name') : '' }}
-                            </p>
-
-                        </div>
+                        <p id="assistant-edit-subtitle" class="modal-head__sub">
+                            {{ old('_form') === 'edit' ? old('name') : '' }}
+                        </p>
 
                     </div>
 
-                    <button type="button" class="btn btn-icon" id="assistant-edit-close" title="إغلاق"
+                    <button type="button" class="btn btn-icon ms-auto" id="assistant-edit-close" title="إغلاق"
                         aria-label="إغلاق">
                         <i data-lucide="x" class="h-5 w-5"></i>
                     </button>
@@ -181,13 +176,11 @@
                             <select name="status" id="assistant-edit-status"
                                 class="field-select mt-2 {{ old('_form') === 'edit' && $errors->has('status') ? 'border-red-500' : '' }}">
 
-                                <option value="active"
-                                    @selected(old('_form') === 'edit' && old('status') === 'active')>
+                                <option value="active" @selected(old('_form') === 'edit' && old('status') === 'active')>
                                     نشط
                                 </option>
 
-                                <option value="inactive"
-                                    @selected(old('_form') === 'edit' && old('status') === 'inactive')>
+                                <option value="inactive" @selected(old('_form') === 'edit' && old('status') === 'inactive')>
                                     معطل
                                 </option>
 
@@ -238,14 +231,12 @@
 
                                 <div class="relative mt-2">
 
-                                    <input type="password" name="password"
-                                        id="assistant-edit-password"
+                                    <input type="password" name="password" id="assistant-edit-password"
                                         class="field-input pr-10 {{ old('_form') === 'edit' && $errors->has('password') ? 'border-red-500' : '' }}"
                                         placeholder="••••••••">
 
                                     <button type="button" class="password-eye"
-                                        data-password-toggle="assistant-edit-password"
-                                        aria-label="إظهار كلمة المرور">
+                                        data-password-toggle="assistant-edit-password" aria-label="إظهار كلمة المرور">
                                         <i data-lucide="eye" class="h-4 w-4"></i>
                                     </button>
 
@@ -289,11 +280,11 @@
 
                     <div class="bq-modal-footer">
 
-                        <button type="button" class="btn btn-ghost" id="assistant-edit-cancel">
+                        <button type="button" class="btn btn-outline" id="assistant-edit-cancel">
                             إلغاء
                         </button>
 
-                        <button type="submit" class="btn btn-default">
+                        <button type="submit" class="btn btn-default btn-submit">
 
                             <i data-lucide="save" class="h-4 w-4"></i>
 
@@ -463,7 +454,6 @@
                             <tbody>
 
                                 @foreach ($assistants as $assistant)
-
                                     <tr>
 
                                         <td>
@@ -501,7 +491,6 @@
                                             </span>
 
                                             @if ($assistant->user?->hasValidPendingEmail())
-
                                                 <div class="max-w-[290px]">
 
                                                     <div class="assistant-pending-email">
@@ -536,7 +525,6 @@
                                                     </div>
 
                                                 </div>
-
                                             @endif
 
                                         </td>
@@ -563,17 +551,13 @@
                                         <td>
 
                                             @if ($assistant->is_active)
-
                                                 <span class="badge badge-success">
                                                     نشط
                                                 </span>
-
                                             @else
-
                                                 <span class="badge badge-danger">
                                                     معطل
                                                 </span>
-
                                             @endif
 
                                         </td>
@@ -584,8 +568,7 @@
                                             <div class="flex items-center justify-center gap-1.5">
 
                                                 <button type="button" class="btn btn-icon-sm" title="تعديل"
-                                                    data-edit-assistant
-                                                    data-id="{{ $assistant->id }}"
+                                                    data-edit-assistant data-id="{{ $assistant->id }}"
                                                     data-name="{{ $assistant->user?->name }}"
                                                     data-email="{{ $assistant->user?->email }}"
                                                     data-phone="{{ $assistant->phone }}"
@@ -615,9 +598,7 @@
 
 
                                                 <button type="button" class="btn btn-icon-sm text-destructive"
-                                                    title="حذف"
-                                                    data-delete-assistant
-                                                    data-id="{{ $assistant->id }}"
+                                                    title="حذف" data-delete-assistant data-id="{{ $assistant->id }}"
                                                     data-name="{{ $assistant->user?->name }}">
 
                                                     <i data-lucide="trash-2" class="h-4 w-4"></i>
@@ -629,7 +610,6 @@
                                         </td>
 
                                     </tr>
-
                                 @endforeach
 
                             </tbody>
@@ -643,7 +623,6 @@
                     <div class="grid gap-3 p-4 lg:hidden">
 
                         @foreach ($assistants as $assistant)
-
                             <div class="clinic-surface-card border border-border p-4">
 
                                 <div class="flex items-start justify-between gap-3">
@@ -673,17 +652,13 @@
 
 
                                     @if ($assistant->is_active)
-
                                         <span class="badge badge-success shrink-0">
                                             نشط
                                         </span>
-
                                     @else
-
                                         <span class="badge badge-danger shrink-0">
                                             معطل
                                         </span>
-
                                     @endif
 
                                 </div>
@@ -702,11 +677,9 @@
                                         </p>
 
                                         @if ($assistant->user?->hasValidPendingEmail())
-
                                             <div class="assistant-pending-email">
 
-                                                <i data-lucide="mail-check"
-                                                    class="assistant-pending-icon h-4 w-4"></i>
+                                                <i data-lucide="mail-check" class="assistant-pending-icon h-4 w-4"></i>
 
                                                 <div class="min-w-0">
 
@@ -733,7 +706,6 @@
                                                 </div>
 
                                             </div>
-
                                         @endif
 
                                     </div>
@@ -773,12 +745,9 @@
 
                                 <div class="mt-3 flex items-center gap-2 border-t border-border pt-3">
 
-                                    <button type="button" class="btn btn-outline btn-sm w-full"
-                                        data-edit-assistant
-                                        data-id="{{ $assistant->id }}"
-                                        data-name="{{ $assistant->user?->name }}"
-                                        data-email="{{ $assistant->user?->email }}"
-                                        data-phone="{{ $assistant->phone }}"
+                                    <button type="button" class="btn btn-outline btn-sm w-full" data-edit-assistant
+                                        data-id="{{ $assistant->id }}" data-name="{{ $assistant->user?->name }}"
+                                        data-email="{{ $assistant->user?->email }}" data-phone="{{ $assistant->phone }}"
                                         data-status="{{ $assistant->is_active ? 'active' : 'inactive' }}">
 
                                         <i data-lucide="pencil" class="h-4 w-4"></i>
@@ -807,10 +776,8 @@
                                     </form>
 
 
-                                    <button type="button" class="btn btn-destructive btn-sm w-full"
-                                        data-delete-assistant
-                                        data-id="{{ $assistant->id }}"
-                                        data-name="{{ $assistant->user?->name }}">
+                                    <button type="button" class="btn btn-destructive btn-sm w-full" data-delete-assistant
+                                        data-id="{{ $assistant->id }}" data-name="{{ $assistant->user?->name }}">
 
                                         <i data-lucide="trash-2" class="h-4 w-4"></i>
 
@@ -821,23 +788,18 @@
                                 </div>
 
                             </div>
-
                         @endforeach
 
                     </div>
 
                 </div>
-
             @else
-
                 {{-- لا يوجد مساعدين --}}
                 <div class="clinic-surface-card overflow-hidden">
 
                     <div class="p-4 sm:p-5">
 
-                        <x-home.banner.no_results
-                            logo="fa-solid fa-user-nurse"
-                            title="لا يوجد مساعدين حتى الآن"
+                        <x-home.banner.no_results logo="fa-solid fa-user-nurse" title="لا يوجد مساعدين حتى الآن"
                             content="لم تقم بإضافة أي مساعدين لعيادتك حتى الآن." />
 
                         <div class="mt-4 flex justify-center">
@@ -864,205 +826,188 @@
 
 
 
-{{-- =========================================================
+    {{-- =========================================================
      إضافة مساعد
 ========================================================== --}}
-<div id="add-assistant-modal" class="modal-overlay {{ $errors->assistantAdd->any() ? 'active' : '' }}">
+<div id="add-assistant-modal" class="modal-overlay {{ $errors->assistantAdd->any() ? 'open active' : '' }}">
 
-    <div class="modal-panel modal-lg">
+        <div class="modal-panel modal-lg modal-panel--create">
 
-        <div class="bq-modal-header">
+            <div class="modal-head">
 
-            <div>
+                <span class="modal-head__icon">
+                    <i data-lucide="user-plus" class="h-5 w-5"></i>
+                </span>
 
-                <h3 class="text-lg font-bold text-foreground">
-                    إضافة مساعد جديد
-                </h3>
+                <div class="min-w-0">
 
-                <p class="mt-1 text-sm text-muted-foreground">
-                    أنشئ حسابًا جديدًا لمساعد الطبيب للوصول إلى نظام العيادة.
-                </p>
+                    <h3 class="modal-head__title">
+                        إضافة مساعد جديد
+                    </h3>
 
-            </div>
-
-            <button type="button" class="btn btn-icon" data-modal-close>
-                <i data-lucide="x" class="h-5 w-5"></i>
-            </button>
-
-        </div>
-
-
-        <form method="POST"
-            action="{{ route('clinic.assistants.store') }}"
-            id="add-assistant-form">
-
-            @csrf
-
-            <input type="hidden" name="_form" value="add">
-
-
-            <div>
-
-                <label class="field-label">
-                    الاسم الكامل
-                </label>
-
-                <div class="relative mt-2">
-
-                    <input type="text"
-                        name="name"
-                        class="field-input pr-10 {{ $errors->assistantAdd->has('name') ? 'border-red-500' : '' }}"
-                        placeholder="اكتب الاسم الكامل"
-                        value="{{ old('_form') === 'add' ? old('name') : '' }}">
+                    <p class="modal-head__sub">
+                        أنشئ حسابًا جديدًا لمساعد الطبيب للوصول إلى نظام العيادة.
+                    </p>
 
                 </div>
 
-                @if ($errors->assistantAdd->has('name'))
-                    <p class="mt-1.5 text-xs text-red-500">
-                        {{ $errors->assistantAdd->first('name') }}
-                    </p>
-                @endif
+                <button type="button" class="btn btn-icon ms-auto" data-modal-close>
+                    <i data-lucide="x" class="h-5 w-5"></i>
+                </button>
 
             </div>
 
 
-            <div class="mt-4">
+            <form method="POST" action="{{ route('clinic.assistants.store') }}" id="add-assistant-form">
 
-                <label class="field-label">
-                    البريد الإلكتروني
-                </label>
+                @csrf
 
-                <div class="relative mt-2">
+                <input type="hidden" name="_form" value="add">
 
-                    <input type="email"
-                        name="email"
-                        dir="ltr"
-                        class="field-input pr-10 {{ $errors->assistantAdd->has('email') ? 'border-red-500' : '' }}"
-                        placeholder="example@mail.com"
-                        value="{{ old('_form') === 'add' ? old('email') : '' }}">
-
-                </div>
-
-                @if ($errors->assistantAdd->has('email'))
-                    <p class="mt-1.5 text-xs text-red-500">
-                        {{ $errors->assistantAdd->first('email') }}
-                    </p>
-                @endif
-
-            </div>
-
-
-            <div class="mt-4">
-
-                <label class="field-label">
-                    رقم الهاتف
-                </label>
-
-                <div class="relative mt-2">
-
-                    <input type="text"
-                        name="phone"
-                        inputmode="tel"
-                        dir="ltr"
-                        maxlength="11"
-                        class="field-input pr-10 {{ $errors->assistantAdd->has('phone') ? 'border-red-500' : '' }}"
-                        placeholder="01xxxxxxxxx"
-                        value="{{ old('_form') === 'add' ? old('phone') : '' }}">
-
-                </div>
-
-                @if ($errors->assistantAdd->has('phone'))
-                    <p class="mt-1.5 text-xs text-red-500">
-                        {{ $errors->assistantAdd->first('phone') }}
-                    </p>
-                @endif
-
-            </div>
-
-
-            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                 <div>
 
                     <label class="field-label">
-                        كلمة المرور
+                        الاسم الكامل
                     </label>
 
                     <div class="relative mt-2">
 
-                        <input type="password"
-                            name="password"
-                            id="assistant-add-password"
-                            class="field-input pr-10 {{ $errors->assistantAdd->has('password') ? 'border-red-500' : '' }}"
-                            placeholder="••••••••">
-
-                        <button type="button" class="password-eye"
-                            data-password-toggle="assistant-add-password"
-                            aria-label="إظهار كلمة المرور">
-                            <i data-lucide="eye" class="h-4 w-4"></i>
-                        </button>
+                        <input type="text" name="name"
+                            class="field-input pr-10 {{ $errors->assistantAdd->has('name') ? 'border-red-500' : '' }}"
+                            placeholder="اكتب الاسم الكامل" value="{{ old('_form') === 'add' ? old('name') : '' }}">
 
                     </div>
 
-                    @if ($errors->assistantAdd->has('password'))
+                    @if ($errors->assistantAdd->has('name'))
                         <p class="mt-1.5 text-xs text-red-500">
-                            {{ $errors->assistantAdd->first('password') }}
+                            {{ $errors->assistantAdd->first('name') }}
                         </p>
                     @endif
 
                 </div>
 
 
-                <div>
+                <div class="mt-4">
 
                     <label class="field-label">
-                        تأكيد كلمة المرور
+                        البريد الإلكتروني
                     </label>
 
                     <div class="relative mt-2">
 
-                        <input type="password"
-                            name="password_confirmation"
-                            id="assistant-add-password-confirmation"
-                            class="field-input pr-10"
-                            placeholder="••••••••">
+                        <input type="email" name="email" dir="ltr"
+                            class="field-input pr-10 {{ $errors->assistantAdd->has('email') ? 'border-red-500' : '' }}"
+                            placeholder="example@mail.com" value="{{ old('_form') === 'add' ? old('email') : '' }}">
 
-                        <button type="button" class="password-eye"
-                            data-password-toggle="assistant-add-password-confirmation"
-                            aria-label="إظهار كلمة المرور">
-                            <i data-lucide="eye" class="h-4 w-4"></i>
-                        </button>
+                    </div>
+
+                    @if ($errors->assistantAdd->has('email'))
+                        <p class="mt-1.5 text-xs text-red-500">
+                            {{ $errors->assistantAdd->first('email') }}
+                        </p>
+                    @endif
+
+                </div>
+
+
+                <div class="mt-4">
+
+                    <label class="field-label">
+                        رقم الهاتف
+                    </label>
+
+                    <div class="relative mt-2">
+
+                        <input type="text" name="phone" inputmode="tel" dir="ltr" maxlength="11"
+                            class="field-input pr-10 {{ $errors->assistantAdd->has('phone') ? 'border-red-500' : '' }}"
+                            placeholder="01xxxxxxxxx" value="{{ old('_form') === 'add' ? old('phone') : '' }}">
+
+                    </div>
+
+                    @if ($errors->assistantAdd->has('phone'))
+                        <p class="mt-1.5 text-xs text-red-500">
+                            {{ $errors->assistantAdd->first('phone') }}
+                        </p>
+                    @endif
+
+                </div>
+
+
+                <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                    <div>
+
+                        <label class="field-label">
+                            كلمة المرور
+                        </label>
+
+                        <div class="relative mt-2">
+
+                            <input type="password" name="password" id="assistant-add-password"
+                                class="field-input pr-10 {{ $errors->assistantAdd->has('password') ? 'border-red-500' : '' }}"
+                                placeholder="••••••••">
+
+                            <button type="button" class="password-eye" data-password-toggle="assistant-add-password"
+                                aria-label="إظهار كلمة المرور">
+                                <i data-lucide="eye" class="h-4 w-4"></i>
+                            </button>
+
+                        </div>
+
+                        @if ($errors->assistantAdd->has('password'))
+                            <p class="mt-1.5 text-xs text-red-500">
+                                {{ $errors->assistantAdd->first('password') }}
+                            </p>
+                        @endif
+
+                    </div>
+
+
+                    <div>
+
+                        <label class="field-label">
+                            تأكيد كلمة المرور
+                        </label>
+
+                        <div class="relative mt-2">
+
+                            <input type="password" name="password_confirmation" id="assistant-add-password-confirmation"
+                                class="field-input pr-10" placeholder="••••••••">
+
+                            <button type="button" class="password-eye"
+                                data-password-toggle="assistant-add-password-confirmation" aria-label="إظهار كلمة المرور">
+                                <i data-lucide="eye" class="h-4 w-4"></i>
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
 
+                <div class="bq-modal-footer">
 
-            <div class="bq-modal-footer">
+                    <button type="button" class="btn btn-outline" data-modal-close>
+                        إلغاء
+                    </button>
 
-                <button type="button"
-                    class="btn btn-ghost"
-                    data-modal-close>
-                    إلغاء
-                </button>
+                    <button type="submit" class="btn btn-default btn-submit">
 
-                <button type="submit" class="btn btn-default">
+                        <i data-lucide="user-plus" class="h-4 w-4"></i>
 
-                    <i data-lucide="user-plus" class="h-4 w-4"></i>
+                        إضافة المساعد
 
-                    إضافة المساعد
+                    </button>
 
-                </button>
+                </div>
 
-            </div>
+            </form>
 
-        </form>
+        </div>
 
     </div>
-
-</div>
 
     {{-- حذف المساعد --}}
     <div id="delete-assistant-modal" class="modal-overlay">
@@ -1147,18 +1092,16 @@
 
 
     @push('extra_java')
-
-<script>
-    window.AssistantsPageConfig = {
-        updateUrlTemplate: @json(route('clinic.assistants.update', ['assistant' => '__ASSISTANT_ID__'])),
-        destroyUrlTemplate: @json(route('clinic.assistants.destroy', ['assistant' => '__ASSISTANT_ID__'])),
-        reopenEdit: @json(old('_form') === 'edit'),
-        reopenAdd: @json($errors->assistantAdd->any()),
-    };
-</script>
+        <script>
+            window.AssistantsPageConfig = {
+                updateUrlTemplate: @json(route('clinic.assistants.update', ['assistant' => '__ASSISTANT_ID__'])),
+                destroyUrlTemplate: @json(route('clinic.assistants.destroy', ['assistant' => '__ASSISTANT_ID__'])),
+                reopenEdit: @json(old('_form') === 'edit'),
+                reopenAdd: @json($errors->assistantAdd->any()),
+            };
+        </script>
 
         <script src="{{ asset('js/clinic/assistants.js') }}"></script>
-
     @endpush
 
 @endsection

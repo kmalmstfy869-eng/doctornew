@@ -37,7 +37,7 @@
 
             </div>
 
-            <a href="{{ route('ratings.index') }}" class="edit-back-button">
+            <a href="{{ route('admin.ratings.index') }}" class="edit-back-button">
 
                 <i class="fa-solid fa-arrow-right"></i>
 
@@ -55,7 +55,7 @@
         <div class="doctor-review-edit-card">
 
             <form
-                action="{{ route('ratings.update', $review->id) }}"
+                action="{{ route('admin.ratings.update', $review->id) }}"
                 method="POST"
             >
 
@@ -416,7 +416,7 @@
                 <div class="edit-form-actions">
 
                     <a
-                        href="{{ route('ratings.index') }}"
+                        href="{{ route('admin.ratings.index') }}"
                         class="edit-cancel-button"
                     >
 

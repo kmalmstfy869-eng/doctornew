@@ -85,7 +85,7 @@ class UpdateProfileRequest extends FormRequest
             */
 
             'services' => [
-                'required',
+                'nullable',
                 'json',
             ],
 
@@ -212,7 +212,7 @@ class UpdateProfileRequest extends FormRequest
             |--------------------------------------------------------------------------
             */
 
-            'services.required' => 'الخدمات مطلوبة.',
+
             'services.json' => 'بيانات الخدمات غير صحيحة.',
 
             /*

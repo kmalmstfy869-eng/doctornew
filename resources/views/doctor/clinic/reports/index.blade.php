@@ -84,10 +84,7 @@
 
                     <span class="grid size-10 shrink-0 place-items-center rounded-xl badge-primary">
 
-                        <i
-                            data-lucide="calendar-days"
-                            class="size-5"
-                        ></i>
+                        <i data-lucide="calendar-days" class="size-5"></i>
 
                     </span>
 
@@ -130,10 +127,7 @@
 
                     <span class="grid size-10 shrink-0 place-items-center rounded-xl badge-success">
 
-                        <i
-                            data-lucide="circle-check-big"
-                            class="size-5"
-                        ></i>
+                        <i data-lucide="circle-check-big" class="size-5"></i>
 
                     </span>
 
@@ -150,9 +144,9 @@
 
                     <div class="min-w-0">
 
-             <p class="truncate text-xs font-medium text-muted-foreground sm:text-sm">
-    الملغاة / لم يحضر
-</p>
+                        <p class="truncate text-xs font-medium text-muted-foreground sm:text-sm">
+                            الملغاة / لم يحضر
+                        </p>
                         <p class="mt-2 text-2xl font-bold tabular-nums">
                             {{ $cancelledBookings }}
                         </p>
@@ -175,10 +169,7 @@
 
                     <span class="grid size-10 shrink-0 place-items-center rounded-xl badge-danger">
 
-                        <i
-                            data-lucide="calendar-x"
-                            class="size-5"
-                        ></i>
+                        <i data-lucide="calendar-x" class="size-5"></i>
 
                     </span>
 
@@ -212,10 +203,7 @@
 
                     <span class="grid size-10 shrink-0 place-items-center rounded-xl badge-info">
 
-                        <i
-                            data-lucide="calendar-range"
-                            class="size-5"
-                        ></i>
+                        <i data-lucide="calendar-range" class="size-5"></i>
 
                     </span>
 
@@ -262,10 +250,7 @@
 
                             <span class="grid size-11 shrink-0 place-items-center rounded-xl badge-primary">
 
-                                <i
-                                    data-lucide="users"
-                                    class="size-5"
-                                ></i>
+                                <i data-lucide="users" class="size-5"></i>
 
                             </span>
 
@@ -300,10 +285,7 @@
 
                             <span class="grid size-11 shrink-0 place-items-center rounded-xl badge-success">
 
-                                <i
-                                    data-lucide="user-plus"
-                                    class="size-5"
-                                ></i>
+                                <i data-lucide="user-plus" class="size-5"></i>
 
                             </span>
 
@@ -383,11 +365,9 @@
                     <div class="mini-chart">
 
                         @foreach ($monthlyChart as $month)
-
                             <div class="bar-col">
 
-                                <div
-                                    style="
+                                <div style="
                                         display:flex;
                                         gap:3px;
                                         align-items:flex-end;
@@ -395,26 +375,23 @@
                                         width:100%;
                                         justify-content:center;
                                     "
-                                    title="{{ $month['label'] }}: أونلاين {{ $month['online'] }} / عيادة {{ $month['clinic'] }}"
-                                >
+                                    title="{{ $month['label'] }}: أونلاين {{ $month['online'] }} / عيادة {{ $month['clinic'] }}">
 
-                                    <div
-                                        class="bar"
+                                    <div class="bar"
                                         style="
                                             height:{{ $month['onlineHeight'] }}%;
                                             background-color:var(--chart-1);
                                             max-width:.7rem;
-                                        "
-                                    ></div>
+                                        ">
+                                    </div>
 
-                                    <div
-                                        class="bar"
+                                    <div class="bar"
                                         style="
                                             height:{{ $month['clinicHeight'] }}%;
                                             background-color:var(--chart-4);
                                             max-width:.7rem;
-                                        "
-                                    ></div>
+                                        ">
+                                    </div>
 
                                 </div>
 
@@ -423,7 +400,6 @@
                                 </span>
 
                             </div>
-
                         @endforeach
 
                     </div>
@@ -458,19 +434,14 @@
 
 
                 @if ($topDay && $topDay['count'] > 0)
-
                     <span class="badge badge-primary">
 
-                        <i
-                            data-lucide="flame"
-                            class="size-3.5"
-                        ></i>
+                        <i data-lucide="flame" class="size-3.5"></i>
 
                         الأكثر ازدحامًا:
                         {{ $topDay['day'] }}
 
                     </span>
-
                 @endif
 
             </div>
@@ -481,11 +452,8 @@
                 <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
 
                     @foreach ($busyDays as $day)
-
                         @php
-                            $percentage = $maxBusyDay > 0
-                                ? ($day['count'] / $maxBusyDay) * 100
-                                : 0;
+                            $percentage = $maxBusyDay > 0 ? ($day['count'] / $maxBusyDay) * 100 : 0;
 
                             $isTopDay = $maxBusyDay > 0 && $day['count'] === $maxBusyDay;
                         @endphp
@@ -494,12 +462,8 @@
                         <div
                             class="
                                 rounded-xl border p-3
-                                {{ $isTopDay
-                                    ? 'border-primary/40 bg-primary/5'
-                                    : 'border-border bg-background'
-                                }}
-                            "
-                        >
+                                {{ $isTopDay ? 'border-primary/40 bg-primary/5' : 'border-border bg-background' }}
+                            ">
 
                             <div class="mb-3 flex items-center justify-between gap-2">
 
@@ -509,19 +473,12 @@
 
 
                                 @if ($isTopDay)
+                                    <span class="grid size-7 place-items-center rounded-lg badge-primary"
+                                        title="أكثر الأيام ازدحامًا">
 
-                                    <span
-                                        class="grid size-7 place-items-center rounded-lg badge-primary"
-                                        title="أكثر الأيام ازدحامًا"
-                                    >
-
-                                        <i
-                                            data-lucide="flame"
-                                            class="size-3.5"
-                                        ></i>
+                                        <i data-lucide="flame" class="size-3.5"></i>
 
                                     </span>
-
                                 @endif
 
                             </div>
@@ -540,18 +497,16 @@
 
                             <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-muted">
 
-                                <div
-                                    class="h-full rounded-full"
+                                <div class="h-full rounded-full"
                                     style="
                                         width: {{ $percentage }}%;
                                         background-color: var(--primary);
-                                    "
-                                ></div>
+                                    ">
+                                </div>
 
                             </div>
 
                         </div>
-
                     @endforeach
 
                 </div>
@@ -615,19 +570,16 @@
                         <tbody id="rep-src">
 
                             @foreach ($bookingSources as $source)
-
                                 <tr>
 
                                     <td>
 
                                         <div class="flex items-center gap-2">
 
-                                            <span class="grid size-8 place-items-center rounded-lg {{ $source['badge'] }}">
+                                            <span
+                                                class="grid size-8 place-items-center rounded-lg {{ $source['badge'] }}">
 
-                                                <i
-                                                    data-lucide="{{ $source['icon'] }}"
-                                                    class="size-4"
-                                                ></i>
+                                                <i data-lucide="{{ $source['icon'] }}" class="size-4"></i>
 
                                             </span>
 
@@ -658,7 +610,6 @@
                                     </td>
 
                                 </tr>
-
                             @endforeach
 
                         </tbody>

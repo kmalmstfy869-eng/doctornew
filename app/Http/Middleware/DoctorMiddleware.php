@@ -12,7 +12,7 @@ class DoctorMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect()->route('login');
         }
 
@@ -22,12 +22,15 @@ class DoctorMiddleware
             abort(403);
         }
 
-        if (!Doctor::active()->where('id', $user->doctor->id)->exists()) {
+        $status = $user->doctor->status;
+
+        if (! in_array($status, ['approved', 'pending'], true)) {
             Auth::logout();
 
             return redirect()->route('login')
-                ->with('error', 'لم يتم قبول حسابك بعد.');
+                ->with('error', $status === 'rejected' ? 'تم رفض حسابك.' : 'حالة حسابك غير معروفة.');
         }
+
 
         return $next($request);
     }

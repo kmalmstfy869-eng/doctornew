@@ -10,6 +10,7 @@ use App\Http\Middleware\DoctorBookingOrAssistant;
 use App\Http\Middleware\DoctorClinicSystemOrAssistant;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\EnsureAssistantIsActive;
+use App\Http\Middleware\EnsureDoctorApproved;
 use App\Http\Middleware\LoadDoctor;
 use App\Http\Middleware\Redirect_Assistant;
 use App\Http\Middleware\RedirectAdmin;
@@ -41,6 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'doctorclinicsystemorassistant'=>DoctorClinicSystemOrAssistant::class,
             'assistant_isactive'=>EnsureAssistantIsActive::class,
             'loginverified'=>RequireVerifiedEmail::class,
+            'doctor_approved' => EnsureDoctorApproved::class,
 
         ]);
 

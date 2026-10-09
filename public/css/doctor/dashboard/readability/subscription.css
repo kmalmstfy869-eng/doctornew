@@ -30,3 +30,22 @@
     .expire-label { font-size: 12px; }
     .upgrade-btn { font-size: 12.5px; }
 }
+      .doctor-dash-wrap {
+            width: 100%;
+            min-width: 0;
+            max-width: 1400px;
+            margin-inline: auto;
+            padding: 1.5rem 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .doctor-dash-wrap {
+                padding-inline: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .doctor-dash-wrap {
+                padding-inline: 2rem;
+            }
+        }

@@ -1364,3 +1364,26 @@ body.dark .count-text {
 
 
 
+.doctor-profile-card .profile-image-wrapper {
+    overflow: visible;
+}
+
+.doctor-profile-card #doctorImagePreview {
+    width: 125px !important;
+    height: 125px !important;
+    border-radius: 50% !important;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.doctor-profile-card #doctorImagePreview[style*="display: block"],
+.doctor-profile-card #doctorImagePreview[style*="display:block"] {
+    display: block !important;
+}
+
+@media (max-width: 430px) {
+    .doctor-profile-card #doctorImagePreview {
+        width: 110px !important;
+        height: 110px !important;
+    }
+}

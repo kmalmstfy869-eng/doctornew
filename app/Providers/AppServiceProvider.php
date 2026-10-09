@@ -223,6 +223,7 @@ class AppServiceProvider extends ServiceProvider
                 && $doctor->status === 'approved'
                 && $doctor->hasFeature('booking')
                 && (! $user->doctorAssistant || $user->doctorAssistant->is_active);
+
         });
 
         Gate::define('use-clinic-system', function ($user) {

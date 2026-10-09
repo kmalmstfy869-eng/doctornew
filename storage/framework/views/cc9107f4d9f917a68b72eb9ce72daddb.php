@@ -172,14 +172,14 @@
                 <?php if($doctors->isNotEmpty()): ?>
                     <?php if (isset($component)) { $__componentOriginal180de1d4172bcfb057394935755eb005 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal180de1d4172bcfb057394935755eb005 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.doctors.doctors_grid','data' => ['doctors' => $doctors]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.doctors.doctors_grid','data' => ['doctors' => $doctors,'favoriteIds' => $favoriteIds]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('home.doctors.doctors_grid'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['doctors' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($doctors)]); ?>
+<?php $component->withAttributes(['doctors' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($doctors),'favorite-ids' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($favoriteIds)]); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal180de1d4172bcfb057394935755eb005)): ?>

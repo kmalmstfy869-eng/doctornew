@@ -36,12 +36,6 @@ class DoctorReviewsController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-            // $doctor->rating()
-            //     ->where('is_read', false)
-            //     ->update([
-            //         'is_read' => true
-            //     ]);
-
         return view(
             'doctor.dashboard.ratings.index',
             compact(

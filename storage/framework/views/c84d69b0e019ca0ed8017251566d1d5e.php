@@ -1474,20 +1474,11 @@ unset($__errorArgs, $__bag); ?>
     </div>
 
 
-    
 
-    <div class="med-image-modal" id="medImageModal">
-
-        <button type="button" class="med-close-modal" id="medCloseModal">
-
-            <i class="fa-solid fa-xmark"></i>
-
-        </button>
-
-        <img src="" alt="صورة العيادة" id="medModalImage">
-
-    </div>
 
 <?php $__env->stopSection(); ?>
+<?php $__env->startPush('extra_java'); ?>
+    <script src="<?php echo e(asset('js/admin/image-lightbox.js')); ?>?v=<?php echo e(@filemtime(public_path('js/admin/image-lightbox.js')) ?: time()); ?>"></script>
+<?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('admin.layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\DELL\Desktop\doctors-ai\resources\views/admin/doctors/edit_doctor.blade.php ENDPATH**/ ?>

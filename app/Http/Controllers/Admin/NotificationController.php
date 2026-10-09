@@ -34,7 +34,7 @@ class NotificationController extends Controller
                 route('doctor.reviews'),
 
             'subscription' =>
-                route('doctor.reviews'),
+                route('doctor.subscription'),
 
             'profile' =>
                 route('doctor.profile.edit'),

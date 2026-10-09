@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class UnsubscribedDoctorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $doctors = Doctor::with([
             'user',
@@ -22,7 +22,8 @@ class UnsubscribedDoctorController extends Controller
             ->active()
             ->doctors()
             ->notSubscribed()
-            ->paginate(10);
+            ->search($request->input('search'))
+            ->paginate(10)->withQueryString();
 
             $expiredDoctors = Doctor::doctors()
                 ->active()

@@ -30,7 +30,7 @@ class VerifyEmailController extends Controller
     private function redirectAfter(User $user): RedirectResponse
     {
         $route = match ($user->role) {
-            'doctor' => 'doctor.profile_doctor',
+            'doctor' => 'doctor.dashboard',
             'assistant' => 'clinic.dashboard',
             'admin' => 'admin.profile_admin',
             default => 'home',

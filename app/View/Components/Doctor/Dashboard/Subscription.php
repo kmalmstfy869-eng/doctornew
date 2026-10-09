@@ -40,51 +40,33 @@ class Subscription extends Component
         $this->calculateSubscription();
     }
 
-    protected function calculateSubscription(): void
-    {
-        if (
-            ! $this->doctor->hasFeature('subscription') ||
-            ! $this->subscription ||
-            ! $this->subscription->start_date ||
-            ! $this->subscription->end_date
-        ) {
-            return;
-        }
-
-        $startDate = $this->subscription->start_date;
-
-        $endDate = $this->subscription->end_date;
-
-
-        $this->totalDays = max(
-            1,
-            $startDate->diffInDays($endDate)
-        );
-
-
-        $this->remainingDays = max(
-            0,
-            now()->diffInHours($endDate, false) / 24
-        );
-
-
-        $passedDays = max(
-            0,
-            $this->totalDays - $this->remainingDays
-        );
-
-
-        $this->progress = min(
-            100,
-            max(
-                0,
-                ($passedDays / $this->totalDays) * 100
-            )
-        );
-
-
-        $this->renewalDate = $endDate->translatedFormat('d F Y');
+protected function calculateSubscription(): void
+{
+    if (
+        ! $this->doctor->hasFeature('subscription') ||
+        ! $this->subscription ||
+        ! $this->subscription->start_date ||
+        ! $this->subscription->end_date
+    ) {
+        return;
     }
+
+    $startDate = $this->subscription->start_date;
+    $endDate = $this->subscription->end_date;
+
+    $this->totalDays = max(1, (int) ceil($startDate->diffInDays($endDate, true)));
+
+    $this->remainingDays = min(
+        $this->totalDays,
+        max(0, (int) ceil(now()->diffInSeconds($endDate, false) / 86400))
+    );
+
+    $passedDays = $this->totalDays - $this->remainingDays;
+
+    $this->progress = min(100, max(0, ($passedDays / $this->totalDays) * 100));
+
+    $this->renewalDate = $endDate->translatedFormat('d F Y');
+}
 
     public function render(): View|Closure|string
     {

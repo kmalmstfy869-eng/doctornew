@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['doctor_id', 'patient_id']);
+            $table->unique(['doctor_id', 'phone'], 'patients_doctor_phone_unique');
         });
     }
 

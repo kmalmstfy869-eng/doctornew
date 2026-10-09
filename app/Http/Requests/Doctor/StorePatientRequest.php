@@ -4,12 +4,12 @@ namespace App\Http\Requests\Doctor;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StorePatientRequest extends FormRequest
 {
-    /**
-     * هل المستخدم مخول لإجراء هذا الطلب؟
-     */
+    protected $errorBag = 'createPatient';
+
     public function authorize(): bool
     {
         return Auth::check();
@@ -20,6 +20,8 @@ class StorePatientRequest extends FormRequest
      */
     public function rules(): array
     {
+        $doctorId = $this->user()->clinicDoctor()->id;
+
         return [
             'name' => [
                 'required',
@@ -30,7 +32,8 @@ class StorePatientRequest extends FormRequest
                 'required',
                 'string',
                 'regex:/^01[0125][0-9]{8}$/',
-                'unique:patients,phone',
+                Rule::unique('patients', 'phone')
+                    ->where('doctor_id', $doctorId),
             ],
             'birth_date' => [
                 'nullable',
@@ -46,11 +49,6 @@ class StorePatientRequest extends FormRequest
                 'string',
                 'max:1000',
             ],
-            'notes' => [
-                'nullable',
-                'string',
-                'max:2000',
-            ],
         ];
     }
 
@@ -63,16 +61,14 @@ class StorePatientRequest extends FormRequest
             'name.required'              => 'يرجى إدخال اسم المريض.',
             'name.string'                => 'اسم المريض يجب أن يكون نصًا صحيحًا.',
             'name.max'                   => 'اسم المريض يجب ألا يتجاوز 255 حرفًا.',
-            'phone.required'                => 'برجاء ادخال رقم الهاتف',
+            'phone.required'             => 'برجاء ادخال رقم الهاتف',
             'phone.regex'                => 'رقم الهاتف يجب أن يكون رقمًا مصريًا صحيحًا مكونًا من 11 رقمًا.',
             'phone.unique'               => 'رقم الهاتف هذا مسجل بالفعل.',
             'birth_date.date'            => 'تاريخ الميلاد غير صحيح.',
             'birth_date.before_or_equal' => 'تاريخ الميلاد لا يمكن أن يكون في المستقبل.',
-            'gender.in'                   => 'القيم المتاحة للجنس هي ذكر أو أنثى فقط.',
+            'gender.in'                  => 'القيم المتاحة للجنس هي ذكر أو أنثى فقط.',
             'address.string'             => 'العنوان يجب أن يكون نصًا صحيحًا.',
             'address.max'                => 'العنوان يجب ألا يتجاوز 1000 حرف.',
-            'notes.string'               => 'الملاحظات يجب أن تكون نصًا صحيحًا.',
-            'notes.max'                  => 'الملاحظات يجب ألا تتجاوز 2000 حرف.',
         ];
     }
 
@@ -87,8 +83,6 @@ class StorePatientRequest extends FormRequest
             'birth_date' => 'تاريخ الميلاد',
             'gender'     => 'الجنس',
             'address'    => 'العنوان',
-            'notes'      => 'الملاحظات',
         ];
     }
 }
-

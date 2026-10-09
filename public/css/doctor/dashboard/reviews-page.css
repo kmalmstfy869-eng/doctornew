@@ -1,0 +1,846 @@
+/* =========================================================
+   DOCTOR REVIEWS PAGE (scoped) - RTL / Responsive / Dark
+   لازم يتحمل بعد ratings.css و readability/ratings.css
+========================================================= */
+
+.doctor-reviews-page,
+.doctor-reviews-page *,
+.doctor-reviews-page *::before,
+.doctor-reviews-page *::after {
+    box-sizing: border-box;
+}
+
+/* ---------- Tokens ---------- */
+.doctor-reviews-page {
+    --rv-card: #ffffff;
+    --rv-soft: #f8fafc;
+    --rv-inner: #ffffff;
+    --rv-border: #e6eaf3;
+    --rv-border-hover: #c7d7f5;
+    --rv-text: #172033;
+    --rv-text-2: #273449;
+    --rv-muted: #64748b;
+    --rv-faint: #94a3b8;
+    --rv-primary: #2563eb;
+    --rv-primary-soft: #eff6ff;
+    --rv-amber-soft: #fff7ed;
+    --rv-star-off: #d7dee8;
+    --rv-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+
+    width: 100%;
+    min-width: 0;
+    max-width: 1280px;
+    margin-inline: auto;
+
+    padding: clamp(14px, 2.4vw, 28px) clamp(14px, 3vw, 36px) clamp(28px, 4vw, 48px);
+
+    display: flex;
+    flex-direction: column;
+    gap: clamp(14px, 2vw, 22px);
+
+    direction: rtl;
+    overflow-x: clip;
+}
+
+.doctor-reviews-page > * {
+    min-width: 0;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.doctor-reviews-page > .doctor-reviews-header {
+    position: relative;
+    overflow: hidden;
+
+    margin: 0;
+    padding: clamp(16px, 2.2vw, 24px);
+
+    display: flex;
+    flex-direction: row;          /* يمنع column القادمة من ratings.css */
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+
+    height: auto;
+    min-height: 0;
+
+    background: var(--rv-card);
+    border: 1px solid var(--rv-border);
+    border-radius: 20px;
+    box-shadow: var(--rv-shadow);
+}
+
+.doctor-reviews-page > .doctor-reviews-header::before {
+    content: "";
+    position: absolute;
+    inset-block-start: -80px;
+    inset-inline-end: -80px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 158, 11, .15), transparent 70%);
+    pointer-events: none;
+}
+
+.doctor-reviews-page > .doctor-reviews-header > * {
+    position: relative;
+    z-index: 1;
+}
+
+.doctor-reviews-page .doctor-reviews-title {
+    min-width: 0;
+    flex: 1 1 260px;
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 1.6vw, 16px);
+}
+
+.doctor-reviews-page .reviews-title-icon {
+    flex: 0 0 auto;
+    width: clamp(46px, 5vw, 58px);
+    height: clamp(46px, 5vw, 58px);
+    min-width: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #fff;
+    font-size: clamp(18px, 2vw, 23px);
+    box-shadow: 0 8px 20px rgba(245, 158, 11, .35);
+}
+
+.doctor-reviews-page .reviews-title-content {
+    min-width: 0;
+}
+
+.doctor-reviews-page .reviews-title-small {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--rv-faint);
+    font-size: 12.5px;
+    font-weight: 700;
+}
+
+.doctor-reviews-page .reviews-title-content h1 {
+    margin: 0;
+    color: var(--rv-text);
+    font-size: clamp(19px, 2.4vw, 26px);
+    font-weight: 900;
+    line-height: 1.4;
+}
+
+.doctor-reviews-page .reviews-title-content p {
+    margin: 3px 0 0;
+    color: var(--rv-muted);
+    font-size: 13.5px;
+}
+
+/* ---------- Stats ---------- */
+.doctor-reviews-page .reviews-header-stats {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.doctor-reviews-page .reviews-stat-item {
+    min-width: 170px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+
+    background: var(--rv-soft);
+    border: 1px solid var(--rv-border);
+    border-radius: 14px;
+}
+
+.doctor-reviews-page .reviews-stat-icon {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    min-width: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 15px;
+}
+
+.doctor-reviews-page .reviews-stat-icon.rating {
+    background: var(--rv-amber-soft);
+    color: #f59e0b;
+}
+
+.doctor-reviews-page .reviews-stat-info {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-reviews-page .reviews-stat-info span {
+    color: var(--rv-muted);
+    font-size: 12.5px;
+    white-space: nowrap;
+}
+
+.doctor-reviews-page .reviews-stat-info strong {
+    margin-top: 2px;
+    color: var(--rv-text-2);
+    font-size: 16px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+}
+
+.doctor-reviews-page .reviews-count-badge {
+    min-height: 62px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 18px;
+
+    background: var(--rv-primary-soft);
+    color: var(--rv-primary);
+    border-radius: 14px;
+    font-size: 13.5px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   REVIEWS CARD
+========================================================= */
+.doctor-reviews-page > .reviews-card {
+    padding: clamp(14px, 2vw, 24px);
+
+    background: var(--rv-card);
+    border: 1px solid var(--rv-border);
+    border-radius: 20px;
+    box-shadow: var(--rv-shadow);
+    overflow: hidden;
+}
+
+.doctor-reviews-page .reviews-card-header {
+    display: flex;
+    flex-direction: row;          /* يمنع column القادمة من ratings.css */
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+
+    height: auto;
+    min-height: 0;
+
+    margin-bottom: clamp(14px, 2vw, 20px);
+    padding-bottom: clamp(14px, 2vw, 18px);
+    border-bottom: 1px solid var(--rv-border);
+}
+
+.doctor-reviews-page .reviews-card-header > div:first-child {
+    min-width: 0;
+    flex: 1 1 260px;
+}
+
+.doctor-reviews-page .reviews-card-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--rv-text);
+    font-size: clamp(15px, 1.6vw, 18px);
+    font-weight: 900;
+}
+
+.doctor-reviews-page .reviews-card-header h2 i {
+    color: #f59e0b;
+    font-size: 15px;
+}
+
+.doctor-reviews-page .reviews-card-header p {
+    margin: 6px 0 0;
+    color: var(--rv-muted);
+    font-size: 13px;
+    line-height: 1.9;
+}
+
+/* ---------- Search ---------- */
+.doctor-reviews-page .reviews-search-form {
+    min-width: 0;
+    flex: 0 1 440px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.doctor-reviews-page .reviews-search-box {
+    position: relative;
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+}
+
+.doctor-reviews-page .reviews-search-box > i {
+    position: absolute;
+    right: 14px;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--rv-faint);
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.doctor-reviews-page .reviews-search-box input {
+    width: 100%;
+    height: 44px;
+    padding-block: 0;
+    padding-inline: 40px 38px;
+
+    background: var(--rv-soft);
+    color: var(--rv-text-2);
+    border: 1px solid var(--rv-border);
+    border-radius: 12px;
+    outline: none;
+
+    font-family: inherit;
+    font-size: 13.5px;
+    transition: border-color .2s, box-shadow .2s, background .2s;
+}
+
+.doctor-reviews-page .reviews-search-box input::placeholder {
+    color: var(--rv-faint);
+}
+
+.doctor-reviews-page .reviews-search-box input:focus {
+    border-color: #93b4ef;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .09);
+}
+
+.doctor-reviews-page .reviews-search-clear {
+    position: absolute;
+    left: 8px;
+    right: auto;
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    transform: translateY(-50%);
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    color: var(--rv-faint);
+    text-decoration: none;
+}
+
+.doctor-reviews-page .reviews-search-clear:hover {
+    background: rgba(148, 163, 184, .18);
+    color: #dc2626;
+}
+
+.doctor-reviews-page .reviews-search-button {
+    flex: 0 0 auto;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 20px;
+
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: #fff;
+    border: 0;
+    border-radius: 12px;
+    box-shadow: 0 6px 14px rgba(37, 99, 235, .28);
+
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.doctor-reviews-page .reviews-search-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, .34);
+}
+
+/* =========================================================
+   REVIEWS LIST
+========================================================= */
+.doctor-reviews-page .reviews-list {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.doctor-reviews-page .review-item.doctor-review-item {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    display: grid;
+    grid-template-columns:
+        minmax(170px, 1fr)
+        minmax(120px, .7fr)
+        minmax(0, 2.4fr)
+        minmax(125px, .7fr);
+    align-items: center;
+    gap: clamp(12px, 1.6vw, 22px);
+
+    padding: clamp(12px, 1.6vw, 18px);
+
+    background: var(--rv-soft);
+    border: 1px solid var(--rv-border);
+    border-radius: 16px;
+    overflow: hidden;
+
+    transition: border-color .2s, box-shadow .2s, background .2s, transform .2s;
+}
+
+.doctor-reviews-page .review-item.doctor-review-item::before {
+    content: "";
+    position: absolute;
+    inset-block: 14px;
+    inset-inline-start: 0;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(180deg, #fbbf24, #f59e0b);
+    opacity: .7;
+}
+
+.doctor-reviews-page .review-item.doctor-review-item:hover {
+    background: var(--rv-card);
+    border-color: var(--rv-border-hover);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, .07);
+    transform: translateY(-1px);
+}
+
+/* ---------- User ---------- */
+.doctor-reviews-page .review-user {
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    overflow: hidden;
+}
+
+.doctor-reviews-page .review-user-avatar {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    min-width: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: var(--rv-primary-soft);
+    color: var(--rv-primary);
+    font-size: 15px;
+}
+
+.doctor-reviews-page .review-user-info {
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.doctor-reviews-page .review-label {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--rv-faint);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.doctor-reviews-page .review-user-info strong {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--rv-text-2);
+    font-size: 14px;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- Rating ---------- */
+.doctor-reviews-page .review-rating {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.doctor-reviews-page .stars {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    direction: ltr;
+    white-space: nowrap;
+}
+
+.doctor-reviews-page .stars i {
+    color: var(--rv-star-off);
+    font-size: 14px;
+}
+
+.doctor-reviews-page .stars i.active {
+    color: #f59e0b;
+}
+
+.doctor-reviews-page .review-rating > strong {
+    margin-top: 4px;
+    color: var(--rv-text-2);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+/* ---------- Comment ---------- */
+.doctor-reviews-page .review-comment {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.doctor-reviews-page .comment-box {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 11px 13px;
+
+    background: var(--rv-inner);
+    border: 1px solid var(--rv-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.doctor-reviews-page .comment-box > i {
+    flex: 0 0 auto;
+    margin-top: 4px;
+    color: var(--rv-star-off);
+    font-size: 13px;
+}
+
+.doctor-reviews-page .comment-box p {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+
+    color: var(--rv-muted);
+    font-size: 13.5px;
+    line-height: 1.85;
+
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+}
+
+/* ---------- Date ---------- */
+.doctor-reviews-page .review-date {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.doctor-reviews-page .review-date > i {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: rgba(148, 163, 184, .16);
+    color: var(--rv-muted);
+    font-size: 14px;
+}
+
+.doctor-reviews-page .review-date > div {
+    min-width: 0;
+}
+
+.doctor-reviews-page .review-date strong {
+    display: block;
+    color: var(--rv-text-2);
+    font-size: 13px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+.doctor-reviews-page .reviews-empty {
+    width: 100%;
+    padding: clamp(32px, 6vw, 56px) 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.doctor-reviews-page .reviews-empty-icon {
+    width: 68px;
+    height: 68px;
+    margin-bottom: 14px;
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    background: var(--rv-amber-soft);
+    color: #f59e0b;
+    font-size: 26px;
+}
+
+.doctor-reviews-page .reviews-empty h3 {
+    margin: 0 0 6px;
+    color: var(--rv-text);
+    font-size: clamp(16px, 2vw, 19px);
+    font-weight: 900;
+}
+
+.doctor-reviews-page .reviews-empty p {
+    max-width: 380px;
+    margin: 0;
+    color: var(--rv-muted);
+    font-size: 13.5px;
+    line-height: 1.9;
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+.doctor-reviews-page .reviews-pagination {
+    width: 100%;
+    min-width: 0;
+    margin-top: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-x: auto;
+}
+
+/* =========================================================
+   TABLET  (<= 1000px)
+========================================================= */
+@media (max-width: 1000px) {
+
+    .doctor-reviews-page > .doctor-reviews-header,
+    .doctor-reviews-page .reviews-card-header {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .doctor-reviews-page .reviews-header-stats {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .doctor-reviews-page .reviews-search-form {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .doctor-reviews-page .review-item.doctor-review-item .review-user    { grid-column: auto; }
+    .doctor-reviews-page .review-item.doctor-review-item .review-rating  { grid-column: auto; }
+    .doctor-reviews-page .review-item.doctor-review-item .review-comment { grid-column: 1 / -1; }
+    .doctor-reviews-page .review-item.doctor-review-item .review-date    { grid-column: 1 / -1; }
+}
+
+/* =========================================================
+   SMALL TABLET  (<= 760px)
+========================================================= */
+@media (max-width: 760px) {
+
+    .doctor-reviews-page .reviews-header-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .doctor-reviews-page .reviews-stat-item {
+        min-width: 0;
+    }
+
+    .doctor-reviews-page .reviews-count-badge {
+        min-height: 62px;
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   MOBILE  (<= 560px)
+========================================================= */
+@media (max-width: 560px) {
+
+    .doctor-reviews-page > .doctor-reviews-header,
+    .doctor-reviews-page > .reviews-card {
+        border-radius: 16px;
+    }
+
+    .doctor-reviews-page > .doctor-reviews-header {
+        gap: 14px;
+    }
+
+    .doctor-reviews-page .doctor-reviews-title {
+        flex: 1 1 100%;
+        align-items: center;
+    }
+
+    .doctor-reviews-page .reviews-header-stats {
+        width: 100%;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .doctor-reviews-page .reviews-stat-item {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .doctor-reviews-page .reviews-stat-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+    }
+
+    .doctor-reviews-page .reviews-stat-info strong {
+        font-size: 14px;
+    }
+
+    .doctor-reviews-page .reviews-count-badge {
+        min-height: 0;
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .doctor-reviews-page .reviews-card-header > div:first-child {
+        flex: 1 1 100%;
+    }
+
+    .doctor-reviews-page .reviews-search-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .doctor-reviews-page .reviews-search-button {
+        width: 100%;
+    }
+
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .doctor-reviews-page .review-item.doctor-review-item .review-user    { grid-column: 1 / -1; order: 1; }
+    .doctor-reviews-page .review-item.doctor-review-item .review-rating  { grid-column: auto;   order: 2; }
+    .doctor-reviews-page .review-item.doctor-review-item .review-date    { grid-column: auto;   order: 3; }
+    .doctor-reviews-page .review-item.doctor-review-item .review-comment { grid-column: 1 / -1; order: 4; }
+
+    .doctor-reviews-page .review-date > i {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL  (<= 360px)
+========================================================= */
+@media (max-width: 360px) {
+
+    .doctor-reviews-page .reviews-header-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .doctor-reviews-page .review-item.doctor-review-item {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .doctor-reviews-page .review-item.doctor-review-item .review-rating,
+    .doctor-reviews-page .review-item.doctor-review-item .review-date {
+        grid-column: 1 / -1;
+    }
+
+    .doctor-reviews-page .comment-box {
+        padding: 10px;
+    }
+}
+
+/* =========================================================
+   DARK MODE  (body.dark / body.dark-mode)
+========================================================= */
+body:is(.dark, .dark-mode) .doctor-reviews-page {
+    --rv-card: #172333;
+    --rv-soft: #1a2a3d;
+    --rv-inner: #14202e;
+    --rv-border: #293b52;
+    --rv-border-hover: #36557c;
+    --rv-text: #f1f5f9;
+    --rv-text-2: #e2e8f0;
+    --rv-muted: #94a3b8;
+    --rv-faint: #7f8ea3;
+    --rv-primary: #60a5fa;
+    --rv-primary-soft: #1e3554;
+    --rv-amber-soft: #3a2f1a;
+    --rv-star-off: #475569;
+    --rv-shadow: none;
+}
+
+body:is(.dark, .dark-mode) .doctor-reviews-page .review-item.doctor-review-item {
+    background: var(--rv-soft);
+    border-color: var(--rv-border);
+}
+
+body:is(.dark, .dark-mode) .doctor-reviews-page .review-item.doctor-review-item:hover {
+    background: #1d3047;
+    border-color: var(--rv-border-hover);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .3);
+}
+
+body:is(.dark, .dark-mode) .doctor-reviews-page .comment-box {
+    background: var(--rv-inner) !important;
+    border-color: var(--rv-border) !important;
+}
+
+body:is(.dark, .dark-mode) .doctor-reviews-page .comment-box p {
+    color: #cbd5e1;
+}
+
+body:is(.dark, .dark-mode) .doctor-reviews-page .reviews-search-box input:focus {
+    border-color: #4f7fba;
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, .14);
+}
+
+body:is(.dark, .dark-mode) .doctor-reviews-page .reviews-count-badge {
+    background: var(--rv-primary-soft);
+    color: #93c5fd;
+}

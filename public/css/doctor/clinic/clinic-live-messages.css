@@ -1,0 +1,490 @@
+/*
+|--------------------------------------------------------------------------
+| Clinic Live Messages
+|--------------------------------------------------------------------------
+| كل الـ selectors تبدأ بـ .clinic-live-*  (مفيش selectors عامة)
+| الدارك مود: .dark / [data-theme="dark"] / [data-bs-theme="dark"]
+*/
+
+.clinic-live-messages {
+    --clm-card: #ffffff;
+    --clm-card-2: #f8fafc;
+    --clm-text: #0f172a;
+    --clm-muted: #64748b;
+    --clm-border: rgba(15, 23, 42, 0.1);
+    --clm-shadow: 0 14px 34px -16px rgba(15, 23, 42, 0.35);
+
+    --clm-call: #0891b2;
+    --clm-call-soft: rgba(8, 145, 178, 0.13);
+    --clm-warn: #d97706;
+    --clm-warn-soft: rgba(217, 119, 6, 0.15);
+    --clm-ok: #16a34a;
+
+    position: sticky;
+    top: 0.5rem;
+    z-index: 30;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem;
+    border: 1px solid var(--clm-border);
+    border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--clm-card) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--clm-shadow);
+    color: var(--clm-text);
+    animation: clm-shell-in 0.35s ease both;
+}
+
+.dark .clinic-live-messages,
+[data-theme="dark"] .clinic-live-messages,
+[data-bs-theme="dark"] .clinic-live-messages {
+    --clm-card: #111827;
+    --clm-card-2: #0b1220;
+    --clm-text: #f1f5f9;
+    --clm-muted: #94a3b8;
+    --clm-border: rgba(148, 163, 184, 0.2);
+    --clm-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
+
+    --clm-call: #22d3ee;
+    --clm-call-soft: rgba(34, 211, 238, 0.14);
+    --clm-warn: #fbbf24;
+    --clm-warn-soft: rgba(251, 191, 36, 0.15);
+    --clm-ok: #4ade80;
+}
+
+.clinic-live-messages[hidden] {
+    display: none;
+}
+
+/* ------------------------------ Head ------------------------------ */
+
+.clinic-live-messages__head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.25rem 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--clm-muted);
+}
+
+.clinic-live-messages__head-icon {
+    display: inline-flex;
+    width: 1.6rem;
+    height: 1.6rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.55rem;
+    background: var(--clm-call-soft);
+    color: var(--clm-call);
+}
+
+.clinic-live-messages__head-icon svg {
+    width: 0.95rem;
+    height: 0.95rem;
+}
+
+.clinic-live-messages__count {
+    min-width: 1.4rem;
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: var(--clm-call);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.dark .clinic-live-messages__count,
+[data-theme="dark"] .clinic-live-messages__count,
+[data-bs-theme="dark"] .clinic-live-messages__count {
+    color: #0b1220;
+}
+
+/* ------------------------------ List ------------------------------ */
+
+.clinic-live-messages__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-height: min(50vh, 30rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.15rem;
+}
+
+/* ------------------------------ Card ------------------------------ */
+
+.clinic-live-message {
+    --clm-accent: var(--clm-call);
+    --clm-accent-soft: var(--clm-call-soft);
+
+    position: relative;
+    display: flex;
+    flex: 1 1 320px;
+    max-width: 580px;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem 1.1rem 0.9rem;
+    padding-inline-start: 1.3rem;
+    overflow: hidden;
+    border: 1px solid var(--clm-border);
+    border-radius: 1rem;
+    background:
+        linear-gradient(135deg, var(--clm-accent-soft), transparent 55%),
+        var(--clm-card);
+    box-shadow: 0 6px 18px -12px rgba(15, 23, 42, 0.35);
+    animation: clm-in 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.15) both;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.clinic-live-message::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 4px;
+    background: var(--clm-accent);
+}
+
+.clinic-live-message--patient-missing {
+    --clm-accent: var(--clm-warn);
+    --clm-accent-soft: var(--clm-warn-soft);
+}
+
+.clinic-live-message.is-new {
+    border-color: var(--clm-accent);
+    animation:
+        clm-in 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.15) both,
+        clm-glow 1.4s ease-in-out 3;
+}
+
+.clinic-live-message.is-busy {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.clinic-live-message.is-leaving {
+    animation: clm-out 0.26s ease forwards;
+    pointer-events: none;
+}
+
+/* ------------------------------ Top ------------------------------ */
+
+.clinic-live-message__top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.clinic-live-message__icon {
+    position: relative;
+    display: inline-flex;
+    width: 2.6rem;
+    height: 2.6rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.85rem;
+    background: var(--clm-accent-soft);
+    color: var(--clm-accent);
+}
+
+.clinic-live-message__icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.clinic-live-message.is-new .clinic-live-message__icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid var(--clm-accent);
+    animation: clm-ring 1.4s ease-out 3;
+}
+
+.clinic-live-message__titles {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.clinic-live-message__kicker {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--clm-accent);
+}
+
+.clinic-live-message__headline {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.4;
+    color: var(--clm-text);
+}
+
+.clinic-live-message__close {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0.6rem;
+    background: transparent;
+    color: var(--clm-muted);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.clinic-live-message__close:hover {
+    background: var(--clm-card-2);
+    color: var(--clm-text);
+}
+
+.clinic-live-message__close svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* ------------------------------ Patient ------------------------------ */
+
+.clinic-live-message__patient {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--clm-border);
+    border-radius: 0.85rem;
+    background: var(--clm-card-2);
+}
+
+.clinic-live-message__avatar {
+    display: inline-flex;
+    width: 2.4rem;
+    height: 2.4rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--clm-accent);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.dark .clinic-live-message__avatar,
+[data-theme="dark"] .clinic-live-message__avatar,
+[data-bs-theme="dark"] .clinic-live-message__avatar {
+    color: #0b1220;
+}
+
+.clinic-live-message__patient-info {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.clinic-live-message__name {
+    overflow: hidden;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--clm-text);
+}
+
+.clinic-live-message__text {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--clm-muted);
+}
+
+/* ------------------------------ Footer ------------------------------ */
+
+.clinic-live-message__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+}
+
+.clinic-live-message__meta {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--clm-muted);
+}
+
+.clinic-live-message__meta svg {
+    width: 0.9rem;
+    height: 0.9rem;
+}
+
+.clinic-live-message__dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.6;
+}
+
+.clinic-live-message__done {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 0.7rem;
+    background: var(--clm-accent);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.dark .clinic-live-message__done,
+[data-theme="dark"] .clinic-live-message__done,
+[data-bs-theme="dark"] .clinic-live-message__done {
+    color: #0b1220;
+}
+
+.clinic-live-message__done:hover {
+    filter: brightness(1.08);
+}
+
+.clinic-live-message__done:active {
+    transform: scale(0.97);
+}
+
+.clinic-live-message__done svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* ------------------------------ Queue buttons ------------------------------ */
+
+.clinic-live-btn--doctor {
+    border-color: color-mix(in srgb, #0891b2 45%, transparent);
+    color: #0891b2;
+}
+
+.clinic-live-btn--assistant {
+    border-color: color-mix(in srgb, #d97706 50%, transparent);
+    color: #d97706;
+}
+
+.dark .clinic-live-btn--doctor,
+[data-theme="dark"] .clinic-live-btn--doctor,
+[data-bs-theme="dark"] .clinic-live-btn--doctor {
+    color: #22d3ee;
+}
+
+.dark .clinic-live-btn--assistant,
+[data-theme="dark"] .clinic-live-btn--assistant,
+[data-bs-theme="dark"] .clinic-live-btn--assistant {
+    color: #fbbf24;
+}
+
+.clinic-live-btn[data-state="loading"],
+.clinic-live-btn[data-state="done"] {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.clinic-live-btn[data-state="done"] {
+    border-color: color-mix(in srgb, #16a34a 50%, transparent);
+    color: #16a34a;
+}
+
+.clinic-live-btn[data-state="loading"] svg {
+    animation: clm-spin 0.9s linear infinite;
+}
+
+/* ------------------------------ Responsive ------------------------------ */
+
+@media (max-width: 640px) {
+    .clinic-live-messages {
+        top: 0.35rem;
+        padding: 0.55rem;
+        border-radius: 1rem;
+    }
+
+    .clinic-live-messages__list {
+        max-height: 40vh;
+    }
+
+    .clinic-live-message {
+        flex-basis: 100%;
+        max-width: 100%;
+        padding: 0.85rem 0.9rem 0.8rem;
+        padding-inline-start: 1.1rem;
+    }
+
+    .clinic-live-message__name {
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 440px) {
+    .clinic-live-message__footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .clinic-live-message__done {
+        width: 100%;
+        padding: 0.65rem 1rem;
+    }
+}
+
+/* ------------------------------ Animations ------------------------------ */
+
+@keyframes clm-shell-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes clm-in {
+    from { opacity: 0; transform: translateY(-14px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes clm-out {
+    to { opacity: 0; transform: scale(0.96) translateY(-6px); }
+}
+
+@keyframes clm-glow {
+    0%, 100% { box-shadow: 0 6px 18px -12px rgba(15, 23, 42, 0.35); }
+    50% { box-shadow: 0 0 0 4px var(--clm-accent-soft), 0 10px 26px -12px var(--clm-accent); }
+}
+
+@keyframes clm-ring {
+    from { opacity: 0.8; transform: scale(1); }
+    to   { opacity: 0; transform: scale(1.5); }
+}
+
+@keyframes clm-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .clinic-live-messages,
+    .clinic-live-message,
+    .clinic-live-message.is-new,
+    .clinic-live-message.is-new .clinic-live-message__icon::after,
+    .clinic-live-btn[data-state="loading"] svg {
+        animation: none;
+    }
+}

@@ -1,7 +1,7 @@
 <?php $attributes ??= new \Illuminate\View\ComponentAttributeBag;
 
 $__newAttributes = [];
-$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['doctor', 'doctorname' ,'notifications']));
+$__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames((['doctor', 'doctorname', 'notifications']));
 
 foreach ($attributes->all() as $__key => $__value) {
     if (in_array($__key, $__propNames)) {
@@ -16,7 +16,7 @@ $attributes = new \Illuminate\View\ComponentAttributeBag($__newAttributes);
 unset($__propNames);
 unset($__newAttributes);
 
-foreach (array_filter((['doctor', 'doctorname' ,'notifications']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
+foreach (array_filter((['doctor', 'doctorname', 'notifications']), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
 
@@ -80,7 +80,7 @@ unset($__defined_vars, $__key, $__value); ?>
             <i class="fa-regular fa-bell"></i>
 
             <?php if(isset($notifications) && $notifications > 0): ?>
-            <span class="notification"></span>
+                <span class="notification"></span>
             <?php endif; ?>
 
         </a>
@@ -89,48 +89,42 @@ unset($__defined_vars, $__key, $__value); ?>
         
 
 
-<div class="top-doctor">
+        <div class="top-doctor">
 
-    <div class="profile-avatar">
+            <div class="profile-avatar">
+                <?php if(
+                    $doctor->doctor_image &&
+                        \Illuminate\Support\Facades\Storage::disk('public')->exists($doctor->doctor_image)): ?>
+                    <img src="<?php echo e(asset('storage/' . $doctor->doctor_image)); ?>" alt="د. <?php echo e($doctorname); ?>"
+                        class="top-doctor-image">
+                <?php else: ?>
+                    <div class="med-doctor-image-placeholder">
 
-        <?php if($doctor->doctor_image): ?>
+                        <div class="med-placeholder-icon">
+                            <span><i class="fa-solid fa-user-doctor"></i></span>
+                        </div>
 
-            <img
-                src="<?php echo e(asset('storage/' . $doctor->doctor_image)); ?>"
-                alt="د. <?php echo e($doctorname); ?>"
-                class="top-doctor-image"
-            >
-
-        <?php else: ?>
-
-            <div class="med-doctor-image-placeholder">
-
-                <div class="med-placeholder-icon">
-                    <span><i class="fa-solid fa-user-doctor"></i></span>
-                </div>
+                    </div>
+                <?php endif; ?>
 
             </div>
 
-        <?php endif; ?>
 
-    </div>
+            <div class="top-doctor-info">
 
+                <strong>
+                    د. <?php echo e($doctorname); ?>
 
-    <div class="top-doctor-info">
+                </strong>
 
-        <strong>
-            د. <?php echo e($doctorname); ?>
+                <span>
+                    <?php echo e($doctor->specialty?->name ?? 'طبيب'); ?>
 
-        </strong>
+                </span>
 
-        <span>
-            <?php echo e($doctor->specialty?->name ?? 'طبيب'); ?>
+            </div>
 
-        </span>
-
-    </div>
-
-</div>
+        </div>
     </div>
 
 </header>

@@ -18,6 +18,9 @@ class DoctorController extends Controller
     public function index(Request $request)
     {
         $q = trim((string) $request->query('q'));
+        $favoriteIds = $request->user()
+            ? $request->user()->favoriteDoctors()->pluck('doctors.id')->all()
+            : [];
 
         $doctors = Doctor::with(['user', 'area', 'specialty', 'rating', 'subscription.plan'])
             ->orderByPlan()
@@ -26,21 +29,21 @@ class DoctorController extends Controller
             ->when($q !== '', function ($query) use ($q) {
                 $like = '%' . addcslashes($q, '%_\\') . '%';
                 $query->where(function ($w) use ($like) {
-                    $w->whereHas('user', fn ($u) => $u->where('name', 'like', $like))
-                      ->orWhereHas('specialty', fn ($s) => $s->where('name', 'like', $like));
+                    $w->whereHas('user', fn($u) => $u->where('name', 'like', $like))
+                        ->orWhereHas('specialty', fn($s) => $s->where('name', 'like', $like));
                 });
             })
             ->when(
                 is_numeric($request->query('area')),
-                fn ($query) => $query->where('doctors.area_id', $request->query('area'))
+                fn($query) => $query->where('doctors.area_id', $request->query('area'))
             )
             ->when(
                 is_numeric($request->query('specialty')),
-                fn ($query) => $query->where('doctors.specialty_id', $request->query('specialty'))
+                fn($query) => $query->where('doctors.specialty_id', $request->query('specialty'))
             )
             ->when(
                 $request->query('sort') === 'price',
-                fn ($query) => $query->reorder()->orderBy('doctors.consultation_price', 'asc')
+                fn($query) => $query->reorder()->orderBy('doctors.consultation_price', 'asc')
             )
             ->paginate(9)
             ->withQueryString();
@@ -48,7 +51,7 @@ class DoctorController extends Controller
         if ($request->ajax()) {
             return response()
                 ->json([
-                    'html'  => view('home.doctors._grid', compact('doctors'))->render(),
+                    'html'  => view('home.doctors._grid', compact('doctors', 'favoriteIds'))->render(),
                     'count' => $doctors->total(),
                 ])
                 ->header('Vary', 'X-Requested-With')
@@ -58,7 +61,7 @@ class DoctorController extends Controller
         $areas = Area::select('id', 'name')->get();
         $specialties = Specialties::orderBy('sort_order')->get();
 
-        return view('home.doctors.doctors', compact('doctors', 'areas', 'specialties'));
+        return view('home.doctors.doctors', compact('doctors', 'areas', 'specialties', 'favoriteIds'));
     }
 
     public function show(Request $request, Doctor $doctor, SiteVisitTracker $tracker)
@@ -78,6 +81,9 @@ class DoctorController extends Controller
             'subscription.plan',
         ]);
 
+        $favoriteIds = $request->user()
+            ? $request->user()->favoriteDoctors()->pluck('doctors.id')->all()
+            : [];
 
         $tracker->record(SiteVisitStat::DOCTOR_PROFILE, $request, $doctor->id);
 
@@ -94,7 +100,7 @@ class DoctorController extends Controller
             && Storage::disk('public')->exists($doctor->doctor_image);
 
         $existingClinicImages = collect($doctor->clinic_images ?? [])
-            ->filter(fn ($image) => filled($image) && Storage::disk('public')->exists($image))
+            ->filter(fn($image) => filled($image) && Storage::disk('public')->exists($image))
             ->values();
 
         $bookingDays = collect();
@@ -146,7 +152,7 @@ class DoctorController extends Controller
 
         return view(
             'home.doctors.doctor_details',
-            compact('doctor', 'similar_doctors', 'ratings', 'bookingDays', 'mapSrc', 'doctorImageExists', 'existingClinicImages')
+            compact('doctor', 'similar_doctors', 'ratings', 'bookingDays', 'mapSrc', 'doctorImageExists', 'existingClinicImages','favoriteIds')
         );
     }
 }

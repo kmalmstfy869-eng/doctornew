@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 class RejectedDoctorsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-     public function index()
+     public function index(Request $request)
     {
         $doctors = Doctor::with([
             'user',
@@ -22,7 +22,8 @@ class RejectedDoctorsController extends Controller
         ])
             ->Rejected()
             ->doctors()
-            ->paginate(10);
+            ->search($request->input('search'))
+            ->paginate(10)->withQueryString();
 
             $expiredDoctors = Doctor::doctors()
                 ->Rejected()

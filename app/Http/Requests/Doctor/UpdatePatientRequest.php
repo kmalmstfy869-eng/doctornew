@@ -9,9 +9,8 @@ use Illuminate\Validation\Rule;
 
 class UpdatePatientRequest extends FormRequest
 {
-    /**
-     * هل المستخدم مخول لإجراء هذا الطلب؟
-     */
+    protected $errorBag = 'editPatient';
+
     public function authorize(): bool
     {
         return Auth::check();
@@ -23,6 +22,7 @@ class UpdatePatientRequest extends FormRequest
     public function rules(): array
     {
         $patient = $this->route('patient');
+        $doctorId = $this->user()->clinicDoctor()->id;
 
         return [
             'name' => [
@@ -35,9 +35,9 @@ class UpdatePatientRequest extends FormRequest
                 'required',
                 'string',
                 'regex:/^01[0125][0-9]{8}$/',
-                Rule::unique('patients', 'phone')->ignore(
-                    $patient instanceof Patient ? $patient->id : null
-                ),
+                Rule::unique('patients', 'phone')
+                    ->where('doctor_id', $doctorId)
+                    ->ignore($patient instanceof Patient ? $patient->id : null),
             ],
 
             'birth_date' => [
@@ -75,7 +75,7 @@ class UpdatePatientRequest extends FormRequest
             'name.string'                => 'اسم المريض يجب أن يكون نصًا صحيحًا.',
             'name.max'                   => 'اسم المريض يجب ألا يتجاوز 255 حرفًا.',
 
-    'phone.required'                     => 'برجاء ادخال رقم الهاتف',
+            'phone.required'             => 'برجاء ادخال رقم الهاتف',
             'phone.regex'                => 'رقم الهاتف يجب أن يكون رقمًا مصريًا صحيحًا مكونًا من 11 رقمًا.',
             'phone.unique'               => 'رقم الهاتف هذا مسجل بالفعل.',
 
@@ -107,4 +107,3 @@ class UpdatePatientRequest extends FormRequest
         ];
     }
 }
-

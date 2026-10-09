@@ -15,7 +15,7 @@ class DoctorDashboardController extends Controller
 
 public function index()
 {
-    /** @var \App\Models\Doctor $doctor */
+
     $doctor = V::shared('doctor');
 
         if ($doctor) {

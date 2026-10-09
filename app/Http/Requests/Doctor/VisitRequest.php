@@ -8,6 +8,11 @@ use Illuminate\Validation\Validator;
 
 class VisitRequest extends FormRequest
 {
+    /**
+     * bag مخصص لفورم الزيارة عشان أخطاءه ما تتداخلش مع فورمات تانية في نفس الصفحة
+     */
+    protected $errorBag = 'visit';
+
     protected ?Patient $resolvedPatient = null;
 
     public function authorize(): bool
@@ -156,12 +161,11 @@ class VisitRequest extends FormRequest
             | موعد المتابعة
             |--------------------------------------------------------------------------
             */
-
-            'next_visit_date' => [
+            'next_visit_date'=>[
                 'nullable',
                 'date',
+                'after_or_equal:today',
             ],
-
             /*
             |--------------------------------------------------------------------------
             | تفاصيل الزيارة
@@ -398,7 +402,10 @@ class VisitRequest extends FormRequest
             */
 
             'next_visit_date.date' =>
-                'موعد المتابعة غير صحيح.',
+                'تاريخ موعد الاعادة غير صحيح.',
+
+            'next_visit_date.after_or_equal' =>
+                'موعد الاعادة يجب أن يكون اليوم أو تاريخًا مستقبليًا.',
 
             /*
             |--------------------------------------------------------------------------

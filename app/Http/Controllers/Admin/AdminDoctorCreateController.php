@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-
+use App\Models\FinanceEntry;
 class AdminDoctorCreateController extends Controller
 {
     public function index(Request $request)
@@ -50,7 +50,7 @@ class AdminDoctorCreateController extends Controller
 
             $validated = $request->validated();
 
-            /** @var \App\Models\User $user */
+
             $user = DB::transaction(function () use ($request, $validated) {
 
                 /*
@@ -343,7 +343,15 @@ class AdminDoctorCreateController extends Controller
                             'active',
 
                     ]);
-
+                        FinanceEntry::create([
+                            'type'       => 'income',
+                            'category'   => 'subscription',
+                            'title'      => 'اشتراك ' . $plan->name . ' - د. ' . $user->name,
+                            'amount'     => $validated['price'],
+                            'entry_date' => $startDate->toDateString(),
+                            'note'       => 'من ' . $startDate->toDateString() . ' إلى ' . $endDate->toDateString(),
+                            'created_by' => auth()->id(),
+                        ]);
                 } else {
 
                     /*
@@ -374,6 +382,7 @@ class AdminDoctorCreateController extends Controller
                             0,
 
                     ]);
+
                 }
 
                 return $user;

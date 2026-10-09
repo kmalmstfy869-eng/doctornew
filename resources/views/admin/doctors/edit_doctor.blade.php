@@ -1343,20 +1343,9 @@
     </div>
 
 
-    {{-- =========================================================
-    IMAGE MODAL
-    ========================================================== --}}
 
-    <div class="med-image-modal" id="medImageModal">
-
-        <button type="button" class="med-close-modal" id="medCloseModal">
-
-            <i class="fa-solid fa-xmark"></i>
-
-        </button>
-
-        <img src="" alt="صورة العيادة" id="medModalImage">
-
-    </div>
 
 @endsection
+@push('extra_java')
+    <script src="{{ asset('js/admin/image-lightbox.js') }}?v={{ @filemtime(public_path('js/admin/image-lightbox.js')) ?: time() }}"></script>
+@endpush

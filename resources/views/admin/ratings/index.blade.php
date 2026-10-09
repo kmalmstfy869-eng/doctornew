@@ -126,7 +126,7 @@
             SEARCH
             ================================================== --}}
 
-            <form action="{{ route('ratings.index') }}" method="GET" class="reviews-search-form">
+            <form action="{{ route('admin.ratings.index') }}" method="get" class="reviews-search-form">
 
                 <div class="reviews-search-box">
 
@@ -139,7 +139,7 @@
 
                     @if (request('search'))
 
-                        <a href="{{ route('ratings.index') }}"
+                        <a href="{{ route('admin.ratings.index') }}"
                             class="reviews-search-clear"
                             title="إلغاء البحث">
 
@@ -404,7 +404,7 @@
 
                             <div class="review-actions-buttons">
 
-                                <a href="{{ route('ratings.edit', $review->id) }}"
+                                <a href="{{ route('admin.ratings.edit', $review->id) }}"
                                     class="review-action-btn edit"
                                     title="تعديل">
 
@@ -413,7 +413,7 @@
                                 </a>
 
 
-                                <form action="{{ route('ratings.destroy', $review->id) }}"
+                                <form action="{{ route('admin.ratings.destroy', $review->id) }}"
                                     method="POST"
                                     onsubmit="return confirm('هل أنت متأكد من حذف هذا التقييم؟');">
 

@@ -7,19 +7,10 @@ use App\Models\Doctor;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
 
-class RatingsController extends Controller implements HasMiddleware
+class RatingsController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware(['auth', 'is_admin'], only: ['index','destroy','update','edit']),
-        ];
-    }
-
-
 
     public function index(Request $request)
     {
@@ -190,7 +181,7 @@ class RatingsController extends Controller implements HasMiddleware
             ]);
 
             return redirect()
-                ->route('ratings.index')
+                ->route('admin.ratings.index')
                 ->with('success', 'تم تعديل التقييم بنجاح ❤️');
 
     }
@@ -198,7 +189,7 @@ class RatingsController extends Controller implements HasMiddleware
         try{
             $rating->delete();
             return redirect()
-                ->route('ratings.index')
+                ->route('admin.ratings.index')
                 ->with('success', 'تم حذف التقييم بنجاح ❤️');
 
         } catch (\Exception $e) {

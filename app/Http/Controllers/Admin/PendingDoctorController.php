@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Services\NotificationService;
 class PendingDoctorController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $pendingDoctorsToday = Doctor::doctors()
             ->notactive()
@@ -22,7 +22,8 @@ class PendingDoctorController extends Controller
             ->latest()
             ->doctors()
             ->notactive()
-            ->paginate(4);
+            ->search($request->input('search'))
+            ->paginate(10)->withQueryString();
 
         return view(
             "admin.doctors.doctors_pending",

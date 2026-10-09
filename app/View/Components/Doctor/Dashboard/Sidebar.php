@@ -5,6 +5,7 @@ namespace App\View\Components\Doctor\Dashboard;
 use App\Models\Doctor;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Component;
 
 class Sidebar extends Component
@@ -37,7 +38,11 @@ class Sidebar extends Component
             $doctor->subscription?->plan?->slug ?? ''
         );
 
-        $this->doctorImage = $doctor->doctor_image;
+        $this->doctorImage =
+            $doctor->doctor_image &&
+            Storage::disk('public')->exists($doctor->doctor_image)
+                ? $doctor->doctor_image
+                : null;
 
         /*
         |--------------------------------------------------------------------------

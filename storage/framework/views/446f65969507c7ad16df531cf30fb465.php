@@ -21,15 +21,15 @@
             حسابي
         </strong>
 
-        <a href="#">
+        <a href="<?php echo e(route('doctor.profile.show')); ?>">
             الملف الشخصي
         </a>
 
-        <a href="#">
+        <a href="<?php echo e(route('doctor.profile_doctor')); ?>">
             الإعدادات
         </a>
 
-        <a href="#subscription">
+        <a href="<?php echo e(route('doctor.subscription')); ?>">
             الاشتراك
         </a>
 
@@ -43,15 +43,9 @@
         </strong>
 
 
-        <?php
-
-            $whatsapp = preg_replace('/\D/', '', config('services.whatsapp.support_number', ''));
-
-        ?>
 
 
-        <?php if($whatsapp): ?>
-            <a href="https://wa.me/<?php echo e($whatsapp); ?>" target="_blank" rel="noopener noreferrer" class="whatsapp-box">
+            <a href="<?php echo e(App\Support\Whatsapp::link(null)); ?>" target="_blank" rel="noopener noreferrer" class="whatsapp-box">
 
                 <span class="whatsapp-icon">
                     ☎
@@ -60,17 +54,8 @@
                 تواصل معنا عبر واتساب
 
             </a>
-        <?php else: ?>
-            <span class="whatsapp-box">
 
-                <span class="whatsapp-icon">
-                    ☎
-                </span>
 
-                تواصل معنا عبر واتساب
-
-            </span>
-        <?php endif; ?>
 
     </div>
 
@@ -79,7 +64,7 @@
 
         © <?php echo e(date('Y')); ?>
 
-        دليلك الطبي — جميع الحقوق محفوظة
+        دليل الاطباء — جميع الحقوق محفوظة
 
     </div>
 
@@ -90,7 +75,7 @@
     <script src="<?php echo e(asset('sw.js')); ?>"></script>
     <script src="<?php echo e(asset('js/push-notifications.js')); ?>"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+ <?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
 
 </html>

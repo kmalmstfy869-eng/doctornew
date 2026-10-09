@@ -198,3 +198,17 @@
         font-size: 16px;
     }
 }
+.doctor-card .doctor-image {
+    overflow: hidden;
+    padding: 0;
+    background: #fff;
+}
+
+.doctor-card .doctor-image .med-doctor-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top; /* يركّز على الوش بدل نص الصورة */
+    border-radius: inherit;
+}

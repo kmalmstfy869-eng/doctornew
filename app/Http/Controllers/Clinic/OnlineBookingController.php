@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Doctor;
 use App\Services\Clinic\AppointmentSlotService;
 use App\Services\Clinic\BookingService;
+use App\Support\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,13 +38,23 @@ class OnlineBookingController extends Controller
         */
 
         if (!$doctor->hasFeature('booking')) {
-                    return redirect()
-            ->back()
-            ->with(
-                'error',
-                'هذا الطبيب ليس له صلاحيه للحجوزات '
-            );
+            return redirect()
+                ->back()
+                ->with(
+                    'error',
+                    'هذا الطبيب ليس له صلاحيه للحجوزات '
+                );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | تنظيف رقم الهاتف قبل التحقق
+        |--------------------------------------------------------------------------
+        */
+
+        $request->merge([
+            'patient_phone' => PhoneNumber::normalize($request->input('patient_phone')),
+        ]);
 
         /*
         |--------------------------------------------------------------------------
@@ -248,28 +259,15 @@ class OnlineBookingController extends Controller
         /*
         |--------------------------------------------------------------------------
         | منع نفس رقم الهاتف من حجز أكثر من موعد في نفس اليوم
+        | (يشمل حجوزات العيادة والأونلاين)
         |--------------------------------------------------------------------------
         */
 
         $sameDayBooking = Booking::query()
             ->where('doctor_id', $doctor->id)
-            ->where(
-                'patient_phone',
-                $validated['patient_phone']
-            )
-            ->where(
-                'booking_type',
-                'online'
-            )
-            ->whereIn('status', [
-                'pending',
-                'confirmed',
-                'in_progress',
-            ])
-            ->whereDate(
-                'appointment_date',
-                $validated['appointment_date']
-            )
+            ->where('patient_phone', $validated['patient_phone'])
+            ->whereNotIn('status', ['cancelled', 'no_show'])
+            ->whereDate('appointment_date', $validated['appointment_date'])
             ->exists();
 
         if ($sameDayBooking) {
@@ -331,12 +329,21 @@ class OnlineBookingController extends Controller
         | إنشاء الحجز
         |--------------------------------------------------------------------------
         */
+        $patientId = null;
+
+        if ($doctor->hasFeature('clinic_system')) {
+            $patientId = $doctor->patients()
+                ->where('phone', $validated['patient_phone'])
+                ->value('id');
+        }
 
         try {
+
+
             $this->bookingService->createBooking(
                 $doctor,
                 [
-                    'patient_id' => null,
+                    'patient_id' => $patientId,
 
                     'patient_name' =>
                         $validated['patient_name'],
@@ -346,7 +353,6 @@ class OnlineBookingController extends Controller
 
                     'booking_type' =>
                         'online',
-
 
                     'appointment_date' =>
                         $validated['appointment_date'],

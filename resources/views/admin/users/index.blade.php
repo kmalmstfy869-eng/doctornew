@@ -1,4 +1,4 @@
-```blade
+
 @extends('admin.layout.app')
 
 @section('title', 'لوحة الإدارة | المستخدمون')

@@ -2,6 +2,12 @@
 @push('extra_style')
     <link rel="stylesheet" href="{{ asset('css/home/pagination.css') }}">
 @endpush
+
+@once('modal-variants-css')
+    @push('extra_style')
+        <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+    @endpush
+@endonce
 @section('title', 'المواعيد المتاحة للحجز الإلكتروني | دليل الأطباء')
 
 @section('content')
@@ -234,17 +240,28 @@
     {{-- مودال إغلاق المواعيد --}}
     <div id="closeReasonModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4"
         style="background: rgba(0,0,0,.5);">
-        <div class="clinic-surface-card w-full max-w-md bg-white p-4 sm:p-5" style="background:#fff;">
-            <h3 class="text-base font-bold">تأكيد إغلاق المواعيد</h3>
-            <p id="closeReasonCount" class="mt-1 text-sm text-muted-foreground"></p>
+        <div class="clinic-surface-card modal-panel--edit w-full max-w-md bg-white p-4 sm:p-5" style="background:#fff;">
 
-            <label for="closeReasonTextarea" class="mt-3 block text-sm font-medium">سبب الإغلاق (اختياري)</label>
+            <div class="modal-head">
+
+                <span class="modal-head__icon">
+                    <i data-lucide="lock" class="size-5"></i>
+                </span>
+
+                <div class="min-w-0 flex-1">
+                    <h3 class="modal-head__title">تأكيد إغلاق المواعيد</h3>
+                    <p id="closeReasonCount" class="modal-head__sub"></p>
+                </div>
+
+            </div>
+
+            <label for="closeReasonTextarea" class="field-label mt-3 block">سبب الإغلاق (اختياري)</label>
             <textarea id="closeReasonTextarea" rows="3" class="field-select mt-1 w-full resize-none"
                 placeholder="اكتب السبب هنا..."></textarea>
 
-            <div class="mt-4 flex justify-end gap-2">
+            <div class="modal-foot">
                 <button type="button" id="closeReasonCancel" class="btn btn-outline btn-sm">إلغاء</button>
-                <button type="button" id="closeReasonConfirm" class="btn btn-default btn-sm">
+                <button type="button" id="closeReasonConfirm" class="btn btn-default btn-sm btn-submit">
                     <i data-lucide="lock" class="size-3.5"></i> تأكيد الإغلاق
                 </button>
             </div>

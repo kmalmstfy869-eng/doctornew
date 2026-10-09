@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/sidebar.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/base/tokens.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/theme.css')); ?>">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/responsive.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/app.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/sidebar.css')); ?>">
@@ -26,7 +27,7 @@
 
 <body>
 
-<?php if (isset($component)) { $__componentOriginala8f550a34e28b6945cc8aaed05b19904 = $component; } ?>
+    <?php if (isset($component)) { $__componentOriginala8f550a34e28b6945cc8aaed05b19904 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginala8f550a34e28b6945cc8aaed05b19904 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.home.info.flash-message','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('home.info.flash-message'); ?>

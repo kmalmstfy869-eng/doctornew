@@ -5,6 +5,7 @@
 @push('extra_style')
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/ratings.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/ratings.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/reviews-page.css') }}">
 @endpush
 
 @section('content')

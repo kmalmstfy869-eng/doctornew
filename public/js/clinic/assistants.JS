@@ -4,23 +4,65 @@
 
     /*
     |--------------------------------------------------------------------------
-    | المودالات
+    | المودالات (open + active عشان يشتغلوا مع أي نسخة CSS)
     |--------------------------------------------------------------------------
     */
 
     function openModal(id) {
         const el = document.getElementById(id);
 
-        if (el) {
-            el.classList.add('active');
+        if (!el) {
+            return;
+        }
+
+        el.classList.add('open', 'active');
+
+        document.body.classList.add('overflow-hidden');
+
+        if (window.lucide) {
+            window.lucide.createIcons();
         }
     }
 
-    function closeModal(trigger) {
-        const overlay = trigger.closest('.modal-overlay');
+    function closeOverlay(overlay) {
+        if (!overlay) {
+            return;
+        }
 
-        if (overlay) {
-            overlay.classList.remove('active');
+        overlay.classList.remove('open', 'active');
+
+        if (!document.querySelector('.modal-overlay.open, .modal-overlay.active')) {
+            document.body.classList.remove('overflow-hidden');
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | إظهار / إخفاء كلمة المرور
+    |--------------------------------------------------------------------------
+    */
+
+    function togglePassword(button) {
+        const input = document.getElementById(button.dataset.passwordToggle);
+
+        if (!input) {
+            return;
+        }
+
+        const show = input.type === 'password';
+
+        input.type = show ? 'text' : 'password';
+
+        button.setAttribute(
+            'aria-label',
+            show ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'
+        );
+
+        button.innerHTML =
+            `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="h-4 w-4"></i>`;
+
+        if (window.lucide) {
+            window.lucide.createIcons();
         }
     }
 
@@ -33,34 +75,6 @@
     if (config.reopenAdd) {
         openModal('add-assistant-modal');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | فتح المودالات
-    |--------------------------------------------------------------------------
-    */
-
-    document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
-
-        btn.addEventListener('click', function () {
-            openModal(btn.dataset.modalOpen);
-        });
-
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | إغلاق المودالات
-    |--------------------------------------------------------------------------
-    */
-
-    document.querySelectorAll('[data-modal-close]').forEach(function (btn) {
-
-        btn.addEventListener('click', function () {
-            closeModal(btn);
-        });
-
-    });
 
     /*
     |--------------------------------------------------------------------------
@@ -139,25 +153,6 @@
         editPanel.classList.add('hidden');
     }
 
-    document.querySelectorAll('[data-edit-assistant]').forEach(function (btn) {
-
-        btn.addEventListener('click', function () {
-            openEditPanel(btn);
-        });
-
-    });
-
-    const editCloseBtn = document.getElementById('assistant-edit-close');
-    const editCancelBtn = document.getElementById('assistant-edit-cancel');
-
-    if (editCloseBtn) {
-        editCloseBtn.addEventListener('click', closeEditPanel);
-    }
-
-    if (editCancelBtn) {
-        editCancelBtn.addEventListener('click', closeEditPanel);
-    }
-
     /*
     |--------------------------------------------------------------------------
     | إعادة فتح فورم التعديل بعد Validation Error
@@ -208,29 +203,105 @@
     const deleteForm = document.getElementById('delete-assistant-form');
     const deleteNameEl = document.getElementById('delete-assistant-name');
 
-    document.querySelectorAll('[data-delete-assistant]').forEach(function (btn) {
+    /*
+    |--------------------------------------------------------------------------
+    | كل الضغطات — Event Delegation
+    |--------------------------------------------------------------------------
+    */
 
-        btn.addEventListener('click', function () {
+    document.addEventListener('click', function (event) {
 
-            const id = btn.dataset.id;
-            const name = btn.dataset.name || 'هذا المساعد';
+        // زر العين
+        const eyeButton = event.target.closest('[data-password-toggle]');
 
-            if (deleteNameEl) {
-                deleteNameEl.textContent = name;
-            }
+        if (eyeButton) {
+            event.preventDefault();
+            togglePassword(eyeButton);
+            return;
+        }
 
-            if (deleteForm) {
+        // فتح مودال
+        const openButton = event.target.closest('[data-modal-open]');
 
-                deleteForm.action = (config.destroyUrlTemplate || '').replace(
-                    '__ASSISTANT_ID__',
-                    encodeURIComponent(id)
-                );
+        if (openButton) {
+            openModal(openButton.dataset.modalOpen);
+            return;
+        }
 
-            }
+        // إغلاق مودال (زر X / إلغاء)
+        const closeButton = event.target.closest('[data-modal-close]');
 
-            openModal('delete-assistant-modal');
+        if (closeButton) {
+            closeOverlay(closeButton.closest('.modal-overlay'));
+            return;
+        }
 
-        });
+        // الضغط على الخلفية خارج المودال
+        if (event.target.classList && event.target.classList.contains('modal-overlay')) {
+            closeOverlay(event.target);
+            return;
+        }
+
+        // تعديل مساعد
+        const editButton = event.target.closest('[data-edit-assistant]');
+
+        if (editButton) {
+            openEditPanel(editButton);
+            return;
+        }
+
+        // إغلاق فورم التعديل
+        if (event.target.closest('#assistant-edit-close, #assistant-edit-cancel')) {
+            closeEditPanel();
+            return;
+        }
+
+        // حذف مساعد
+        const deleteButton = event.target.closest('[data-delete-assistant]');
+
+        if (!deleteButton) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const id = deleteButton.dataset.id;
+        const name = deleteButton.dataset.name || 'هذا المساعد';
+
+        if (!id) {
+            return;
+        }
+
+        if (deleteNameEl) {
+            deleteNameEl.textContent = name;
+        }
+
+        if (deleteForm) {
+            deleteForm.action = (config.destroyUrlTemplate || '').replace(
+                '__ASSISTANT_ID__',
+                encodeURIComponent(id)
+            );
+        }
+
+        openModal('delete-assistant-modal');
+
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Escape يقفل أي مودال مفتوح
+    |--------------------------------------------------------------------------
+    */
+
+    document.addEventListener('keydown', function (event) {
+
+        if (event.key !== 'Escape') {
+            return;
+        }
+
+        document
+            .querySelectorAll('.modal-overlay.open, .modal-overlay.active')
+            .forEach(closeOverlay);
 
     });
 

@@ -1143,3 +1143,15 @@ table.clinic-table tbody tr:hover { background-color: color-mix(in oklab, var(--
 .sidebar-logout-text {
     line-height: 1;
 }
+@media (max-width: 1023px) {
+
+    /* آخر كارت لوحده في الصف → عرض كامل */
+    main > .grid-cols-2 > .stat-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+
+    /* كارت لوحده قبل كارت الترقية → عرض كامل */
+    main > .grid-cols-2 > .stat-card:nth-child(odd):has(+ .stat-card.col-span-2) {
+        grid-column: 1 / -1;
+    }
+}

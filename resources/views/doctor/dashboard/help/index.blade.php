@@ -840,7 +840,7 @@
             </div>
             <h3>لم تجد إجابة لسؤالك؟</h3>
             <p>فريق الدعم الفني لدليل الأطباء جاهز لمساعدتك في أي وقت خلال ساعات العمل للرد على كافة استفساراتك.</p>
-            <a href="https://wa.me/201093796014" target="_blank" rel="noopener noreferrer"
+            <a href="{{App\Support\Whatsapp::link(null)}}" target="_blank" rel="noopener noreferrer"
                 class="doc-help-whatsapp-btn">
                 <i class="fa-brands fa-whatsapp"></i>
                 تواصل معنا عبر واتساب

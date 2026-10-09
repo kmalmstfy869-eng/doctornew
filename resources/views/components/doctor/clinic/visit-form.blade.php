@@ -12,7 +12,21 @@
     $isEdit = $visit !== null;
     $isPatientLocked = $patient !== null;
 
-    $selectedPatientId = $isPatientLocked ? $patient->id : old('patient_id', $visit?->patient_id);
+    /*
+    |--------------------------------------------------------------------------
+    | عزل الفورم: old() والأخطاء تخص فورم الزيارة بس
+    |--------------------------------------------------------------------------
+    */
+    $isMine = old('_form') === 'visit';
+    $old = fn($key, $default = null) => $isMine ? old($key, $default) : $default;
+
+    // لو التعديل فشل: نرجع المودال في وضع التعديل بنفس الزيارة
+    $failedVisitId = $isMine ? old('_visit_editing') : null;
+    $failedEdit = filled($failedVisitId);
+
+    $startEdit = $isEdit || $failedEdit;
+
+    $selectedPatientId = $isPatientLocked ? $patient->id : $old('patient_id', $visit?->patient_id);
 
     $searchPatient =
         !$isPatientLocked && $selectedPatientId ? auth()->user()?->doctor?->patients()->find($selectedPatientId) : null;
@@ -21,14 +35,14 @@
 
     $updateTemplate = $updateAction ?? route('clinic.visits.update', ['visit' => '__VISIT__']);
 
-    $initialVisitId = $visit?->id ?? '';
+    $initialVisitId = $visit?->id ?? ($failedEdit ? $failedVisitId : '');
 
-    $initialAction = $isEdit ? str_replace('__VISIT__', $initialVisitId, $updateTemplate) : $action;
+    $initialAction = $startEdit ? str_replace('__VISIT__', $initialVisitId, $updateTemplate) : $action;
 
     $createTitle = $title && !$isEdit ? $title : 'إنشاء زيارة جديدة';
     $editTitle = $title && $isEdit ? $title : 'تعديل الزيارة';
 
-    $oldPatientMode = old('_patient_mode');
+    $oldPatientMode = $isMine ? old('_patient_mode') : null;
 
     $initialPatientMode = $isPatientLocked
         ? 'registered'
@@ -37,19 +51,19 @@
             : 'registered');
 
     $initialFields = [
-        'complaint' => old('complaint', $toText($visit?->complaint)) ?? '',
-        'symptoms' => old('symptoms', $toText($visit?->symptoms)) ?? '',
-        'diagnosis' => old('diagnosis', $toText($visit?->diagnosis)) ?? '',
-        'required_tests' => old('required_tests', $toText($visit?->required_tests)) ?? '',
-        'required_radiology' => old('required_radiology', $toText($visit?->required_radiology)) ?? '',
-        'notes' => old('notes', $toText($visit?->notes)) ?? '',
+        'complaint' => $old('complaint', $toText($visit?->complaint)) ?? '',
+        'symptoms' => $old('symptoms', $toText($visit?->symptoms)) ?? '',
+        'diagnosis' => $old('diagnosis', $toText($visit?->diagnosis)) ?? '',
+        'required_tests' => $old('required_tests', $toText($visit?->required_tests)) ?? '',
+        'required_radiology' => $old('required_radiology', $toText($visit?->required_radiology)) ?? '',
+        'notes' => $old('notes', $toText($visit?->notes)) ?? '',
         'next_visit_date' =>
-            old(
+            $old(
                 'next_visit_date',
                 $visit?->next_visit_date ? \Carbon\Carbon::parse($visit->next_visit_date)->format('Y-m-d') : '',
             ) ?? '',
-        'patient_name' => old('patient_name', '') ?? '',
-        'patient_phone' => old('patient_phone', '') ?? '',
+        'patient_name' => $old('patient_name', '') ?? '',
+        'patient_phone' => $old('patient_phone', '') ?? '',
     ];
 
     $textFields = [
@@ -91,13 +105,30 @@
         ],
     ];
 
-    $visitErrorBag = $errors->getBag('default');
+    // bag مخصص للزيارة (VisitRequest::$errorBag = 'visit')
+    $visitErrorBag = $errors->getBag('visit');
     $visitHasErrors = $visitErrorBag->any();
 
     $visitErrorMap = collect($visitErrorBag->toArray())->map(fn($messages) => $messages[0] ?? '')->all();
+
+    // المريض المختار (بحث) بعد فشل الفورم
+    $initialPatient =
+        $visitHasErrors && !$isPatientLocked && $initialPatientMode === 'registered' && $searchPatient
+            ? [
+                'id' => $searchPatient->id,
+                'name' => $searchPatient->name,
+                'phone' => $searchPatient->phone,
+            ]
+            : null;
 @endphp
 
 @once
+    @once('modal-variants-css')
+        @push('extra_style')
+            <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+        @endpush
+    @endonce
+
     <style>
         /* ===== Visit modal ===== */
 
@@ -153,7 +184,7 @@
 
 <div x-data="{
     open: @js($visitHasErrors),
-    isEdit: @js($isEdit),
+    isEdit: @js($startEdit),
     visitId: @js($initialVisitId),
 
     action: @js($initialAction),
@@ -169,6 +200,8 @@
 
     showErrors: @js($visitHasErrors),
     errors: @js($visitErrorMap),
+
+    initialPatient: @js($initialPatient),
 
     f: @js($initialFields),
 
@@ -351,7 +384,13 @@
         });
     },
 }" x-init="if (@js($visitHasErrors)) {
-    $nextTick(() => growAll())
+    $nextTick(() => {
+        growAll();
+
+        if (initialPatient) {
+            setPatient(initialPatient);
+        }
+    })
 }">
 
     @if ($showTrigger)
@@ -366,19 +405,26 @@
     <div x-cloak x-show="open" x-transition.opacity :class="{ 'open': open }" class="modal-overlay"
         @click.self="open = false" @keydown.escape.window="open = false">
 
-        <div x-show="open" x-transition @click.stop class="modal-panel bq-visit-modal">
+        <div x-show="open" x-transition @click.stop class="modal-panel bq-visit-modal"
+            :class="isEdit ? 'modal-panel--edit' : 'modal-panel--create'">
 
             {{-- Header --}}
-            <div class="bq-modal-header">
+            <div class="modal-head">
 
-                <div>
+                <span class="modal-head__icon">
+                    <span x-show="!isEdit"><i data-lucide="stethoscope" class="size-5"></i></span>
+                    <span x-show="isEdit"><i data-lucide="pencil" class="size-5"></i></span>
+                </span>
 
-                    <h3 class="text-lg font-bold text-foreground" x-text="isEdit ? editTitle : createTitle">
-                        {{ $isEdit ? $editTitle : $createTitle }}
+                <div class="min-w-0 flex-1">
+
+                    <h3 class="modal-head__title" x-text="isEdit ? editTitle : createTitle">
+                        {{ $startEdit ? $editTitle : $createTitle }}
                     </h3>
 
-                    <p class="mt-1 text-sm text-muted-foreground">
-                        تسجيل بيانات الزيارة الطبية للمريض.
+                    <p class="modal-head__sub"
+                        x-text="isEdit ? 'تعديل بيانات الزيارة المسجلة.' : 'تسجيل بيانات الزيارة الطبية للمريض.'">
+                        {{ $startEdit ? 'تعديل بيانات الزيارة المسجلة.' : 'تسجيل بيانات الزيارة الطبية للمريض.' }}
                     </p>
 
                 </div>
@@ -394,13 +440,16 @@
 
                 @csrf
 
+                {{-- يحدد إن الفورم ده هو فورم الزيارة --}}
+                <input type="hidden" name="_form" value="visit">
+
                 {{-- PUT فقط في التعديل --}}
                 <input type="hidden" name="_method" value="PUT" :disabled="!isEdit"
-                    @if (!$isEdit) disabled @endif>
+                    @if (!$startEdit) disabled @endif>
 
                 {{-- ID الزيارة في حالة التعديل --}}
                 <input type="hidden" name="_visit_editing" :value="visitId" :disabled="!isEdit"
-                    value="{{ $initialVisitId }}" @if (!$isEdit) disabled @endif>
+                    value="{{ $initialVisitId }}" @if (!$startEdit) disabled @endif>
 
                 {{-- وضع المريض --}}
                 @if (!$isPatientLocked)
@@ -569,6 +618,10 @@
                                 placeholder="01xxxxxxxxx" x-model="f.patient_phone" :disabled="pMode !== 'external'"
                                 value="{{ $initialFields['patient_phone'] }}">
 
+                            <p class="bq-field-error mt-2" x-show="pMode === 'external' && err('patient_phone')">
+                                <span x-text="err('patient_phone')"></span>
+                            </p>
+
                         </div>
 
                     </div>
@@ -620,7 +673,7 @@
                         إلغاء
                     </button>
 
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-default btn-submit">
                         <i data-lucide="save" class="size-4"></i>
 
                         <span
@@ -629,7 +682,7 @@
                                     ? 'حفظ التعديلات'
                                     : 'حفظ الزيارة'
                             ">
-                            {{ $isEdit ? 'حفظ التعديلات' : 'حفظ الزيارة' }}
+                            {{ $startEdit ? 'حفظ التعديلات' : 'حفظ الزيارة' }}
                         </span>
 
                     </button>

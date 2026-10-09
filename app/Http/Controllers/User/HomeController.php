@@ -16,7 +16,9 @@ class HomeController extends Controller
     public function index(Request $request, SiteVisitTracker $tracker)
     {
         $tracker->record(SiteVisitStat::HOME, $request);
-
+        $favoriteIds = $request->user()
+            ? $request->user()->favoriteDoctors()->pluck('doctors.id')->all()
+            : [];
         $specialties = Specialties::orderBy('sort_order')->take(8)->get();
 
         $areas = Area::select('id', 'name')->get();
@@ -36,7 +38,7 @@ class HomeController extends Controller
 
         return view(
             'home.index',
-            compact('specialties', 'doctors', 'areas')
+            compact('specialties', 'doctors', 'areas','favoriteIds')
         );
     }
 
@@ -48,11 +50,19 @@ class HomeController extends Controller
             ->latest()
             ->get();
 
+        $favorites = $user->favoriteDoctors()
+            ->with(['user', 'area', 'specialty', 'rating', 'subscription.plan'])
+            ->active()
+            ->doctors()
+            ->latest('favorites.created_at')
+            ->get();
+
         return view('home.profile.profile', [
             'user' => $user,
             'jobs' => $jobs,
             'link' => 'home',
-            'favorites' => null,
+            'favorites' => $favorites,
+            'favoriteIds' => $favorites->pluck('id')->all(),
         ]);
     }
 }

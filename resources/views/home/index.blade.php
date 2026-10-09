@@ -119,7 +119,7 @@
                 </div>
 
                 @if ($doctors->isNotEmpty())
-                    <x-home.doctors.doctors_grid :doctors="$doctors" />
+                    <x-home.doctors.doctors_grid :doctors="$doctors"  :favorite-ids="$favoriteIds" />
                 @else
                     <x-home.banner.no_results logo="fa-solid fa-user-doctor" title="لا يوجد أطباء حاليًا"
                         content="لم يتم إضافة أطباء حتى الآن." />

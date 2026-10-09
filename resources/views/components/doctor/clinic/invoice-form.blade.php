@@ -4,6 +4,13 @@
     'serviceNames' => [],
 ])
 
+{{-- يتحمّل مرة واحدة بس مهما اتستدعى الـ component أو غيره --}}
+@once('modal-variants-css')
+    @push('extra_style')
+        <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+    @endpush
+@endonce
+
 @php
     $uid = 'inv-' . \Illuminate\Support\Str::random(6);
 
@@ -129,18 +136,25 @@
             x-show="open"
             x-transition
             @click.stop
-            class="modal-panel modal-lg"
+            class="modal-panel modal-lg modal-panel--create"
         >
 
-            <div class="bq-modal-header">
+            <div class="modal-head">
 
-                <div>
+                <span class="modal-head__icon">
+                    <i
+                        data-lucide="receipt"
+                        class="size-5"
+                    ></i>
+                </span>
 
-                    <h3 class="text-lg font-bold text-foreground">
+                <div class="min-w-0 flex-1">
+
+                    <h3 class="modal-head__title">
                         فاتورة جديدة
                     </h3>
 
-                    <p class="mt-1 text-sm text-muted-foreground">
+                    <p class="modal-head__sub">
 
                         @if ($isLocked)
 
@@ -510,7 +524,7 @@
 
                     <button
                         type="submit"
-                        class="btn btn-default"
+                        class="btn btn-default btn-submit"
                     >
                         <i
                             data-lucide="save"

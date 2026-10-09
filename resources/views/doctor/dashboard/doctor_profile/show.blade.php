@@ -23,7 +23,10 @@
                     {{-- Doctor Image --}}
                     <div class="med-doctor-image-wrap">
 
-                        @if ($doctor->hasFeature('subscription') && !empty($doctor?->doctor_image))
+                        @if (
+                            $doctor->hasFeature('subscription') &&
+                                !empty($doctor?->doctor_image) &&
+                                \Illuminate\Support\Facades\Storage::disk('public')->exists($doctor->doctor_image))
                             <img src="{{ asset('storage/' . $doctor->doctor_image) }}" alt="د.{{ $doctor_name }}"
                                 class="med-doctor-image">
 
@@ -85,20 +88,10 @@
                             {{-- Buttons --}}
                             <div class="med-doctor-buttons">
 
-                                <button type="button" class="med-share-button" id="medShareButton"
+                                <button type="button" class="med-share-button med-view-only-action"
                                     aria-label="مشاركة الصفحة" title="مشاركة الصفحة">
                                     <i class="fa-solid fa-share-nodes"></i>
                                 </button>
-
-
-                                @auth
-
-                                    <button type="button" class="med-favorite-button" id="medFavoriteButton"
-                                        aria-label="إضافة إلى المفضلة">
-                                        <i class="fa-regular fa-heart"></i>
-                                    </button>
-
-                                @endauth
 
                             </div>
 
@@ -758,8 +751,6 @@
                                 </div>
                             @endforelse
 
-
-
                         </section>
 
                     @endif
@@ -798,7 +789,7 @@
                         </div>
 
 
-                        <a href="tel:{{ $doctor?->phone }}" class="med-sidebar-contact phone">
+                        <a href="tel:{{ $doctor?->phone }}" class="med-sidebar-contact phone med-view-only-action">
 
                             <div>
                                 <i class="fa-solid fa-phone"></i>
@@ -821,7 +812,7 @@
                         </a>
 
 
-                        <button type="button" class="med-copy-number " id="medCopyNumber"
+                        <button type="button" class="med-copy-number med-view-only-action"
                             data-phone="{{ $doctor?->phone }}">
 
                             <i class="fa-regular fa-copy"></i>
@@ -832,7 +823,7 @@
 
 
                         <a href="https://wa.me/{{ $doctor?->whahtsapp }}" target="_blank" rel="noopener"
-                            class="med-sidebar-contact whatsapp">
+                            class="med-sidebar-contact whatsapp med-view-only-action">
 
                             <div>
                                 <i class="fa-brands fa-whatsapp"></i>
@@ -917,7 +908,7 @@
 
 
                             <a href="{{ $doctor?->google_maps_url }}" target="_blank" rel="noopener"
-                                class="med-map-button">
+                                class="med-map-button med-view-only-action">
 
                                 <i class="fa-solid fa-location-arrow"></i>
 
@@ -984,9 +975,5 @@
         <img src="" alt="صورة العيادة" id="medModalImage">
 
     </div>
-
-
-
-
 
 @endsection

@@ -223,93 +223,33 @@
 
                         </div>
                     @else
-                        <div class="subscribe-card">
-
-                            <div class="subscribe-card-icon">
-                                <i class="fa-solid fa-crown"></i>
+                        <section class="upg-card">
+                            <div class="upg-top">
+                                <span class="upg-crown"><i class="fa-solid fa-crown"></i></span>
+                                <span class="upg-plan-badge">
+                                    <i class="fa-solid fa-circle"></i>
+                                    اشتراكك الحالي: مجاني
+                                </span>
                             </div>
 
-                            <span class="subscribe-card-label">
-                                ✦ طوّر ظهورك
-                            </span>
-
-                            <h2>
-                                لسه مش مشترك؟
-
-                                <br>
-
-                                <strong>
-                                    فايتك كتير!
-                                </strong>
-                            </h2>
-
-                            <p class="subscribe-card-text">
-                                اشترك الآن وخلي ملفك الطبي يظهر بشكل أفضل،
-                                واستفيد من المميزات الإضافية اللي تساعدك
-                                توصل لعدد أكبر من المرضى.
+                            <span class="upg-kicker">✦ طوّر ظهورك</span>
+                            <h3 class="upg-title">لسه مش مشترك؟ <br> فايتك كتير!</h3>
+                            <p class="upg-desc">
+                                اشترك الآن وخلي ملفك الطبي يظهر بشكل أفضل، واستفيد من المميزات الإضافية اللي تساعدك توصل
+                                لعدد أكبر من المرضى.
                             </p>
 
-                            <div class="subscribe-benefits">
+                            <ul class="upg-list">
+                                <li><i class="fa-solid fa-check"></i> خلّي مرضى أكتر يلاقوك بسهولة</li>
+                                <li><i class="fa-solid fa-check"></i> زوّد فرص ظهورك وحجز المرضى</li>
+                                <li><i class="fa-solid fa-check"></i> استفيد من مميزات حصرية للأطباء</li>
+                            </ul>
 
-                                <div class="subscribe-benefit">
-
-                                    <span>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </span>
-
-                                    <p>
-                                        خلّي مرضى أكتر يلاقوك بسهولة
-                                    </p>
-
-                                </div>
-
-                                <div class="subscribe-benefit">
-
-                                    <span>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </span>
-
-                                    <p>
-                                        زوّد فرص ظهورك وحجز المرضى
-                                    </p>
-
-                                </div>
-
-                                <div class="subscribe-benefit">
-
-                                    <span>
-                                        <i class="fa-solid fa-circle-check"></i>
-                                    </span>
-
-                                    <p>
-                                        استفيد من مميزات حصرية للأطباء
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                            <a href="#" class="subscribe-card-btn">
-
-                                <span>
-                                    شوف الباقات
-                                </span>
-
+                            <a href="{{ route('doctor.subscription') }}" class="upg-btn">
+                                <span>شوف الباقات</span>
                                 <i class="fa-solid fa-arrow-left"></i>
-
                             </a>
-
-                            <div class="subscribe-card-note">
-
-                                <i class="fa-solid fa-sparkles"></i>
-
-                                <span>
-                                    ابدأ دلوقتي وطور حسابك
-                                </span>
-
-                            </div>
-
-                        </div>
+                        </section>
 
                     @endif
 
@@ -756,76 +696,76 @@
                     </div>
 
                     @if ($doctor->hasFeature('subscription'))
-                    <div class="edit-card">
+                        <div class="edit-card">
 
-                        <div class="card-title">
+                            <div class="card-title">
 
-                            <div class="card-title-icon">
-                                <i class="fa-solid fa-list-check"></i>
+                                <div class="card-title-icon">
+                                    <i class="fa-solid fa-list-check"></i>
+                                </div>
+
+                                <div>
+
+                                    <h2>
+                                        الخدمات الطبية
+                                    </h2>
+
+                                    <p>
+                                        أضف الخدمات التي تقدمها داخل العيادة
+                                    </p>
+
+                                </div>
+
                             </div>
+                            <div class="form-group full">
 
-                            <div>
+                                <label for="serviceInput">
+                                    إضافة خدمة جديدة
+                                </label>
 
-                                <h2>
-                                    الخدمات الطبية
-                                </h2>
-
-                                <p>
-                                    أضف الخدمات التي تقدمها داخل العيادة
-                                </p>
-
-                            </div>
-
-                        </div>
-                        <div class="form-group full">
-
-                            <label for="serviceInput">
-                                إضافة خدمة جديدة
-                            </label>
-
-                            <div class="input-wrapper">
-
-                                <i class="fa-solid fa-plus"></i>
-
-                                <input type="text" id="serviceInput" placeholder="مثال: الكشف الطبي">
-
-                                <button type="button" id="addServiceBtn" class="service-add-btn">
+                                <div class="input-wrapper">
 
                                     <i class="fa-solid fa-plus"></i>
 
-                                    <span>
-                                        إضافة
-                                    </span>
+                                    <input type="text" id="serviceInput" placeholder="مثال: الكشف الطبي">
 
-                                </button>
+                                    <button type="button" id="addServiceBtn" class="service-add-btn">
+
+                                        <i class="fa-solid fa-plus"></i>
+
+                                        <span>
+                                            إضافة
+                                        </span>
+
+                                    </button>
+
+                                </div>
 
                             </div>
 
-                        </div>
+                            <div id="servicesList" class="doctor-services-list"></div>
 
-                        <div id="servicesList" class="doctor-services-list"></div>
+                            <input type="hidden" id="services" name="services"
+                                value="{{ old('services', json_encode($doctor->services ?? [], JSON_UNESCAPED_UNICODE)) }}">
 
-                        <input type="hidden" id="services" name="services"
-                            value="{{ old('services', json_encode($doctor->services ?? [], JSON_UNESCAPED_UNICODE)) }}">
+                            <div class="input-hint">
 
-                        <div class="input-hint">
+                                <i class="fa-solid fa-circle-info"></i>
 
-                            <i class="fa-solid fa-circle-info"></i>
+                                <span>
+                                    يمكنك إضافة أكثر من خدمة، واضغط على × لحذف أي خدمة.
+                                </span>
 
-                            <span>
-                                يمكنك إضافة أكثر من خدمة، واضغط على × لحذف أي خدمة.
-                            </span>
-
-                        </div>
-
-                        @error('services')
-                            <div class="field-error">
-                                <i class="fa-solid fa-circle-exclamation"></i>
-                                <span>{{ $message }}</span>
                             </div>
-                        @enderror
 
-                    </div>
+                            @error('services')
+                                <div class="field-error">
+                                    <i class="fa-solid fa-circle-exclamation"></i>
+                                    <span>{{ $message }}</span>
+                                </div>
+                            @enderror
+
+                        </div>
 
                         <div class="edit-card">
 

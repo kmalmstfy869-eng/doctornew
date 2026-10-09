@@ -11,6 +11,7 @@ use App\Models\Prescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\PatientFileService;
 
 class PatientsController extends Controller
 {
@@ -196,7 +197,21 @@ class PatientsController extends Controller
             )
             ->withQueryString();
 
+        // ملفات المريض الطبية: بتتحمّل للطبيب بس والمساعد ممنوع منها. Pagination باسم مستقل عشان ما يتداخلش مع باقي التابات.
+        $patientFiles = null;
+        $fileStats = null;
 
+        if (! $isAssistant) {
+            $patientFiles = $patient->files()
+                ->where('doctor_id', $doctor->id)
+                ->select(['id', 'doctor_id', 'patient_id', 'original_name', 'mime_type', 'size', 'created_at'])
+                ->latest()
+                ->latest('id')
+                ->paginate(6, ['*'], 'files_page')
+                ->withQueryString();
+
+            $fileStats = app(PatientFileService::class)->stats($doctor->id);
+        }
 /*
 |--------------------------------------------------------------------------
 | مدفوعات المريض
@@ -290,6 +305,8 @@ $totalPaid = $bookingPaid + $manualPaid;
                 'patientAge',
                 'totalPaid',
                 'isAssistant',
+                'patientFiles',
+                'fileStats',
             )
         );
     }

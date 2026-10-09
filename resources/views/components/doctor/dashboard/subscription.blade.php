@@ -16,7 +16,7 @@
             <div class="sub-heading">
 
                 <h2>
-                    {{ $plan?->name ?? 'اشتراك نشط' }}
+                    {{ $plan?->name ? \Illuminate\Support\Str::headline($plan->name) : 'اشتراك نشط' }}
                 </h2>
 
                 <span class="sub-status">
@@ -29,17 +29,17 @@
             <p class="sub-description">
 
                 @if ($planSlug && str_starts_with($planSlug, 'prime-'))
-                    اشتراك Prime يمنحك ظهورًا أفضل
-                    ومعلومات أكثر عن الطبيب والعيادة.
+                    تفتح لك باقة Prime إحصائيات الملف التفصيلية والتقييمات،
+                    مع ظهور أفضل في نتائج البحث.
                 @elseif ($planSlug && str_starts_with($planSlug, 'professional-'))
-                    اشتراك Professional يتيح لك
-                    استقبال الحجوزات أونلاين وإدارتها.
+                    كل مزايا Prime، بالإضافة إلى الحجز أونلاين
+                    وإدارة الحجوزات من نظام الحجوزات.
                 @elseif ($planSlug && str_starts_with($planSlug, 'clinic-system-'))
-                    اشتراك Clinic System يمنحك
-                    نظامًا متكاملًا لإدارة العيادة.
+                    نظام العيادة: إدارة المرضى والحجوزات والدخل والتقارير
+                    من مكان واحد.
                 @else
-                    اشتراكك يمنحك مزايا إضافية
-                    لإدارة حضورك على المنصة.
+                    اشتراكك يفتح لك مزايا إضافية
+                    لإدارة ملفك وحضورك على المنصة.
                 @endif
 
             </p>
@@ -50,12 +50,12 @@
                 <div class="sub-progress-head">
 
                     <span>
-                        الفترة الحالية
+                        مدة الاشتراك
                     </span>
 
                     <span>
-                        من {{ number_format($totalDays, 1) }} يوم
-                        — متبقي {{ number_format($remainingDays, 1) }} يوم
+                        متبقي {{ number_format(ceil($remainingDays)) }} يوم
+                        من {{ number_format(round($totalDays)) }} يوم
                     </span>
 
                 </div>
@@ -95,7 +95,7 @@
             </div>
 
 
-            <a href="#" class="upgrade-btn">
+            <a href="{{ route('doctor.subscription') }}" class="upgrade-btn">
                 إدارة الاشتراك
             </a>
 
@@ -115,7 +115,7 @@
             <div class="sub-heading">
 
                 <h2>
-                    {{ 'free' }}
+                    مجاني
                 </h2>
 
                 <span class="sub-status free-status">
@@ -127,10 +127,9 @@
 
             <p class="sub-description">
 
-                أنت تستخدم الحساب المجاني حاليًا.
-                اشترك الآن للحصول على ظهور أفضل
-                ومزايا إضافية تساعدك في الوصول
-                إلى المزيد من المرضى.
+                حسابك المجاني يعرض بياناتك الأساسية في دليل الأطباء.
+                اشترك لتفتح إحصائيات الملف والتقييمات
+                وتظهر أفضل في نتائج البحث.
 
             </p>
 
@@ -142,17 +141,16 @@
                 </span>
 
                 <span class="sub-feature">
-                    ✓ ظهور الطبيب في دليل الأطباء
+                    ✓ ظهورك في دليل الأطباء
                 </span>
 
                 <span class="sub-feature">
-                    ✓ عرض بيانات التواصل ومواعيد العمل
+                    ✓ بيانات التواصل ومواعيد العمل
                 </span>
 
                 <span class="sub-feature">
-                    ✓ إمكانية الترقية إلى باقات متقدمة
+                    ✓ إجمالي مشاهدات ملفك
                 </span>
-
 
             </div>
 
@@ -167,11 +165,11 @@
 
 
             <div class="expire-date">
-                احصل على مزايا أكثر
+                إحصائيات وتقييمات وحجز أونلاين
             </div>
 
 
-            <a href="#" class="upgrade-btn">
+            <a href="{{ route('doctor.subscription') }}" class="upgrade-btn">
                 اشترك الآن
             </a>
 

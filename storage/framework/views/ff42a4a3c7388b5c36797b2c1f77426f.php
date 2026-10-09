@@ -28,8 +28,23 @@ foreach ($attributes->all() as $__key => $__value) {
 
 unset($__defined_vars, $__key, $__value); ?>
 <?php
-    $planSlug = strtolower($doctor->subscription?->plan?->slug ?? 'مجاني');
+    $planSlug = strtolower($doctor->subscription?->plan?->slug ?? '');
     $doctorImage = $doctor->doctor_image;
+
+    $planLabel = match (true) {
+        str_starts_with($planSlug, 'clinic-system-') => 'Clinic System',
+        str_starts_with($planSlug, 'professional-') => 'Professional',
+        str_starts_with($planSlug, 'prime-') => 'Prime',
+        default => 'مجاني',
+    };
+
+    $durationLabel = match (true) {
+        str_ends_with($planSlug, '-monthly') => 'شهري',
+        str_ends_with($planSlug, '-3-months') => '3 شهور',
+        str_ends_with($planSlug, '-yearly') => 'سنوي',
+        default => null,
+    };
+$isPending = $doctor->status === 'pending';
 ?>
 
 <div class="panel" id="account-summary">
@@ -87,14 +102,17 @@ unset($__defined_vars, $__key, $__value); ?>
                 </span>
 
 
-                <div class="account-status">
-
-                    <i></i>
-
-                    الحساب نشط
-
-                </div>
-
+            <?php if($isPending): ?>
+            <div class="account-status is-pending">
+                <i></i>
+                قيد المراجعة
+            </div>
+        <?php else: ?>
+            <div class="account-status">
+                <i></i>
+                الحساب نشط
+            </div>
+        <?php endif; ?>
             </div>
 
         </div>
@@ -163,9 +181,13 @@ unset($__defined_vars, $__key, $__value); ?>
                         <?php
                             $averageRating = $doctor->rating()->avg('rating');
                         ?>
+                        <?php if($doctor->hasFeature('subscription')): ?>
+                            <?php echo e($averageRating ? number_format($averageRating, 1) . ' / 5' : 'لا توجد تقييمات'); ?>
 
-                        <?php echo e($averageRating ? number_format($averageRating, 1) . ' / 5' : 'لا توجد تقييمات'); ?>
+                        <?php else: ?>
+                            <?php echo e('الميزة غير متوفرة'); ?>
 
+                        <?php endif; ?>
                     </strong>
 
                 </div>
@@ -173,7 +195,7 @@ unset($__defined_vars, $__key, $__value); ?>
             </div>
 
 
-            <div class="account-row">
+            <a href="<?php echo e(route('doctor.subscription')); ?>" class="account-row">
 
                 <div class="account-row-icon">
                     ♛
@@ -184,20 +206,19 @@ unset($__defined_vars, $__key, $__value); ?>
                     <span>
                         الاشتراك
                     </span>
-                    <?php if($doctor->hasFeature('subscription')): ?>
-                        <strong>
-                            <?php echo e($planSlug); ?>
 
-                        </strong>
-                    <?php else: ?>
-                        <strong>
-                            <?php echo e('مجاني'); ?>
+                    <strong>
+                        <?php if($doctor->hasFeature('subscription')): ?>
+                            <?php echo e($planLabel); ?><?php echo e($durationLabel ? ' · ' . $durationLabel : ''); ?>
 
-                        </strong>
-                    <?php endif; ?>
+                        <?php else: ?>
+                            مجاني
+                        <?php endif; ?>
+                    </strong>
+
                 </div>
 
-            </div>
+            </a>
 
         </div>
 

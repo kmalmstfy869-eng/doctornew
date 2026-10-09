@@ -1,0 +1,618 @@
+/* ===================================================================
+   Search UI Refinement — دليل الأطباء
+   ─────────────────────────────────────────────────────────────────
+   PURELY PRESENTATIONAL. No JS ids, form actions, input names, or
+   query parameters are altered. Mobile (≤ 767px) is intentionally
+   left identical to the current beautiful mobile layout.
+   Improvements target: Tablet (768–1023px), Desktop (1024–1439px),
+   Large Desktop (1440px+).
+   =================================================================== */
+
+
+/* ===================================================================
+   1. HOME HERO SEARCH (homepage .home-search-form)
+   Context: form inside hero gradient section, white glass-effect fields
+   =================================================================== */
+
+/* ── Base (mobile already perfect — keep as-is, small touch-ups only) ── */
+.home-search-form {
+    /* Slightly richer glass effect */
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.home-search-field {
+    /* Sharper white card feel */
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease;
+}
+
+.home-search-field:focus-within {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5), 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.home-search-field input,
+.home-search-field select {
+    font-size: 14px;
+    font-weight: 600;
+    color: #13283d;
+}
+
+.home-search-field input::placeholder {
+    color: #9aabb9;
+    font-weight: 500;
+}
+
+.home-search-field i {
+    font-size: 15px;
+    opacity: 0.85;
+}
+
+/* Search button — consistent height, premium look */
+.home-search-button {
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    height: 57px;
+    border-radius: 12px;
+    background: var(--secondary, #16a66a);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 16px rgba(22, 166, 106, 0.35);
+    white-space: nowrap;
+}
+
+.home-search-button:hover {
+    background: #12916a;
+    box-shadow: 0 6px 20px rgba(22, 166, 106, 0.45);
+    transform: translateY(-1px);
+}
+
+.home-search-button:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(22, 166, 106, 0.3);
+}
+
+.home-search-button i {
+    font-size: 14px;
+}
+
+/* ── Tablet: 768px – 1099px ── */
+@media (min-width: 768px) and (max-width: 1099px) {
+    /* On tablet the hero goes single-column; search should be horizontal */
+    .home-search-form {
+        grid-template-columns: 1.3fr 1fr 148px;
+        gap: 10px;
+        padding: 12px;
+        border-radius: 18px;
+        max-width: 680px;
+        margin-inline: auto;
+    }
+
+    .home-search-field {
+        height: 52px;
+        padding: 0 14px;
+        border-radius: 12px;
+    }
+
+    .home-search-field input,
+    .home-search-field select {
+        font-size: 14px;
+    }
+
+    .home-search-button {
+        height: 52px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+}
+
+/* ── Desktop: 1100px+ (original grid already good — polish only) ── */
+@media (min-width: 1100px) {
+    .home-search-form {
+        grid-template-columns: 1.35fr 1fr 158px;
+        gap: 10px;
+        padding: 11px;
+        border-radius: 20px;
+        max-width: 780px;
+    }
+
+    .home-search-field {
+        height: 57px;
+        border-radius: 12px;
+    }
+
+    .home-search-button {
+        height: 57px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+}
+
+/* ── Large Desktop: 1440px+ ── */
+@media (min-width: 1440px) {
+    .home-search-form {
+        max-width: 820px;
+    }
+}
+
+
+/* ===================================================================
+   2. DOCTORS PAGE SEARCH (.doctors-search-panel / .doctors-search-row)
+   Context: card below hero, white card on bg, 4 controls in a row
+   =================================================================== */
+
+/* ── Base fields visual polish (all breakpoints) ── */
+.doctors-search-row .field {
+    background: var(--input, #f8fafc);
+    border: 1.5px solid var(--border, #e2e9f0);
+    border-radius: 13px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doctors-search-row .field:focus-within {
+    border-color: var(--primary, #1264c8);
+    box-shadow: 0 0 0 3px rgba(18, 100, 200, 0.1);
+    background: var(--card, #ffffff);
+}
+
+.doctors-search-row .field i {
+    font-size: 14px;
+    color: var(--primary, #1264c8);
+    opacity: 0.8;
+    flex-shrink: 0;
+}
+
+.doctors-search-row .field input,
+.doctors-search-row .field select {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text, #13283d);
+    min-width: 0;
+}
+
+.doctors-search-row .field input::placeholder {
+    color: var(--text-light, #718197);
+    font-weight: 500;
+}
+
+/* Search button */
+.doctors-search-button {
+    border-radius: 13px;
+    background: var(--primary, #1264c8);
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 16px rgba(18, 100, 200, 0.28);
+    white-space: nowrap;
+    height: 57px;
+}
+
+.doctors-search-button:hover {
+    background: var(--primary-dark, #084b96);
+    box-shadow: 0 6px 20px rgba(18, 100, 200, 0.38);
+    transform: translateY(-1px);
+}
+
+.doctors-search-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(18, 100, 200, 0.25);
+}
+
+.doctors-search-button i {
+    font-size: 14px;
+}
+
+/* Clear / info bar */
+.doctors-search-info {
+    padding: 13px 6px 0;
+}
+
+.clear-button {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.clear-button:hover {
+    opacity: 0.75;
+}
+
+/* ── Mobile ≤ 767px: single-column (existing — DO NOT CHANGE) ── */
+/* No overrides here; responsive.css @max-width:1100px handles stacking */
+
+/* ── Tablet: 768px – 1023px ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .doctors-search-panel {
+        width: min(94%, 720px);
+        padding: 14px;
+        border-radius: 20px;
+    }
+
+    .doctors-search-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    /* Search button spans full width on its own row for clarity */
+    .doctors-search-button {
+        grid-column: 1 / -1;
+        height: 50px;
+        font-size: 15px;
+        border-radius: 13px;
+    }
+
+    .doctors-search-row .field {
+        height: 52px;
+        border-radius: 12px;
+    }
+
+    .doctors-search-row .field input,
+    .doctors-search-row .field select {
+        font-size: 14px;
+    }
+}
+
+/* ── Desktop: 1024px – 1439px ── */
+@media (min-width: 1024px) {
+    .doctors-search-panel {
+        width: min(1060px, 94%);
+        padding: 14px;
+        border-radius: 22px;
+    }
+
+    .doctors-search-row {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr 1fr 152px;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .doctors-search-row .field {
+        height: 56px;
+    }
+
+    .doctors-search-button {
+        height: 56px;
+    }
+}
+
+/* ── Large Desktop: 1440px+ ── */
+@media (min-width: 1440px) {
+    .doctors-search-panel {
+        width: min(1100px, 90%);
+        padding: 15px;
+    }
+
+    .doctors-search-row {
+        grid-template-columns: 1.7fr 1fr 1fr 160px;
+        gap: 11px;
+    }
+
+    .doctors-search-row .field {
+        height: 58px;
+    }
+
+    .doctors-search-button {
+        height: 58px;
+        font-size: 15px;
+    }
+}
+
+/* ── Very large (1600px+) — prevent extreme stretching ── */
+@media (min-width: 1600px) {
+    .doctors-search-panel {
+        width: min(1140px, 86%);
+    }
+}
+
+
+/* ===================================================================
+   3. SPECIALTIES & JOBS SEARCH (.specialties-search-box)
+   Context: simple input + button, centered below hero
+   =================================================================== */
+
+/* ── Base polish ── */
+.specialties-search-box {
+    border-radius: 20px;
+    padding: 11px;
+    gap: 10px;
+}
+
+.specialties-search-input {
+    border-radius: 13px;
+    border: 1.5px solid var(--border, #e2e9f0);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.specialties-search-input:focus-within {
+    border-color: var(--primary, #1264c8);
+    box-shadow: 0 0 0 3px rgba(18, 100, 200, 0.1);
+}
+
+.specialties-search-input i {
+    font-size: 14px;
+    opacity: 0.75;
+}
+
+.specialties-search-input input {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text, #13283d);
+}
+
+.specialties-search-input input::placeholder {
+    color: var(--text-light, #718197);
+    font-weight: 500;
+}
+
+.specialties-search-button {
+    border-radius: 13px;
+    background: var(--primary, #1264c8);
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(18, 100, 200, 0.28);
+    white-space: nowrap;
+    height: 57px;
+    min-width: 110px;
+}
+
+.specialties-search-button:hover {
+    background: var(--primary-dark, #084b96);
+    box-shadow: 0 6px 20px rgba(18, 100, 200, 0.38);
+    transform: translateY(-1px);
+}
+
+.specialties-search-button:active {
+    transform: translateY(0);
+}
+
+.specialties-search-button i {
+    font-size: 14px;
+}
+
+/* ── Tablet: 768px – 1023px ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .specialties-search-wrapper {
+        margin-top: -36px;
+    }
+
+    .specialties-search-box {
+        width: min(90%, 660px);
+        padding: 10px;
+        gap: 10px;
+        grid-template-columns: 1fr 130px;
+        border-radius: 18px;
+    }
+
+    .specialties-search-input {
+        height: 52px;
+        border-radius: 12px;
+    }
+
+    .specialties-search-button {
+        height: 52px;
+        border-radius: 12px;
+        font-size: 14px;
+        min-width: 110px;
+    }
+}
+
+/* ── Desktop: 1024px+ ── */
+@media (min-width: 1024px) {
+    .specialties-search-box {
+        width: min(880px, 88%);
+        padding: 12px;
+        gap: 10px;
+        grid-template-columns: 1fr 145px;
+        border-radius: 20px;
+    }
+
+    .specialties-search-input {
+        height: 57px;
+        border-radius: 13px;
+    }
+
+    .specialties-search-button {
+        height: 57px;
+        border-radius: 13px;
+        font-size: 15px;
+        min-width: 130px;
+    }
+}
+
+/* ── Large Desktop: 1440px+ ── */
+@media (min-width: 1440px) {
+    .specialties-search-box {
+        width: min(920px, 84%);
+    }
+}
+
+/* ── Very large: 1600px+ ── */
+@media (min-width: 1600px) {
+    .specialties-search-box {
+        width: min(960px, 80%);
+    }
+}
+
+
+/* ===================================================================
+   4. DARK MODE SUPPORT
+   All search elements respect the existing dark mode tokens.
+   =================================================================== */
+
+body.dark .doctors-search-row .field {
+    background: var(--input, #172735);
+    border-color: var(--border, #263b4d);
+}
+
+body.dark .doctors-search-row .field:focus-within {
+    border-color: var(--primary, #63adf4);
+    box-shadow: 0 0 0 3px rgba(99, 173, 244, 0.12);
+    background: var(--card, #101f2b);
+}
+
+body.dark .doctors-search-row .field input,
+body.dark .doctors-search-row .field select,
+body.dark .specialties-search-input input,
+body.dark .home-search-field input,
+body.dark .home-search-field select {
+    color: var(--text, #edf5fc);
+}
+
+body.dark .specialties-search-input {
+    background: var(--input, #172735);
+    border-color: var(--border, #263b4d);
+}
+
+body.dark .specialties-search-input:focus-within {
+    border-color: var(--primary, #63adf4);
+    box-shadow: 0 0 0 3px rgba(99, 173, 244, 0.12);
+}
+
+body.dark .home-search-field {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.14);
+}
+
+body.dark .home-search-field input,
+body.dark .home-search-field select {
+    color: #edf5fc;
+}
+
+body.dark .home-search-field input::placeholder,
+body.dark .specialties-search-input input::placeholder,
+body.dark .doctors-search-row .field input::placeholder {
+    color: rgba(158, 176, 193, 0.75);
+}
+
+
+/* ===================================================================
+   5. SHARED VISUAL CONSISTENCY — all search inputs/selects/buttons
+   =================================================================== */
+
+/* Common font-family enforcement for all search inputs */
+.home-search-field input,
+.home-search-field select,
+.doctors-search-row .field input,
+.doctors-search-row .field select,
+.specialties-search-input input {
+    font-family: inherit;
+}
+
+/* Consistent button icon + text spacing */
+.home-search-button,
+.doctors-search-button,
+.specialties-search-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Panel container max-width constraint on very wide screens */
+@media (min-width: 1440px) {
+    .doctors-search-area {
+        max-width: 1400px;
+        margin-inline: auto;
+    }
+}
+
+
+/* ===================================================================
+   6. SORT BOX (.sort-box) — visual consistency with search controls
+   =================================================================== */
+
+.sort-box {
+    border: 1.5px solid var(--border, #e2e9f0);
+    border-radius: 12px;
+    background: var(--input, #f8fafc);
+    height: 48px;
+    padding: 0 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.sort-box:focus-within {
+    border-color: var(--primary, #1264c8);
+    box-shadow: 0 0 0 3px rgba(18, 100, 200, 0.1);
+}
+
+.sort-box i {
+    font-size: 14px;
+    color: var(--primary, #1264c8);
+    flex-shrink: 0;
+}
+
+.sort-box select {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text, #13283d);
+    font-family: inherit;
+    cursor: pointer;
+}
+
+body.dark .sort-box {
+    background: var(--input, #172735);
+    border-color: var(--border, #263b4d);
+}
+
+body.dark .sort-box:focus-within {
+    border-color: var(--primary, #63adf4);
+    box-shadow: 0 0 0 3px rgba(99, 173, 244, 0.12);
+}
+
+body.dark .sort-box select {
+    color: var(--text, #edf5fc);
+}
+
+
+/* ===================================================================
+   7. TABLET-SPECIFIC: Home Hero Search override
+   When hero is single-column on tablets, don't stretch search too wide
+   =================================================================== */
+@media (min-width: 768px) and (max-width: 1099px) {
+    .home-hero-content .home-search-form {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+
+/* ===================================================================
+   8. SAFETY NET — ensure no overflow from search containers
+   =================================================================== */
+.home-search-form,
+.doctors-search-panel,
+.specialties-search-box {
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.home-search-field,
+.doctors-search-row .field,
+.specialties-search-input {
+    min-width: 0;
+    overflow: hidden;
+}
+
+.home-search-field input,
+.home-search-field select,
+.doctors-search-row .field input,
+.doctors-search-row .field select,
+.specialties-search-input input {
+    min-width: 0;
+    max-width: 100%;
+}

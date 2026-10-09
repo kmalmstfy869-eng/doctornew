@@ -1,4 +1,4 @@
-@props(['doctor', 'doctorname' ,'notifications'])
+@props(['doctor', 'doctorname', 'notifications'])
 <header class="topbar" id="dashboard-header">
 
 
@@ -52,7 +52,7 @@
             <i class="fa-regular fa-bell"></i>
 
             @if (isset($notifications) && $notifications > 0)
-            <span class="notification"></span>
+                <span class="notification"></span>
             @endif
 
         </a>
@@ -61,46 +61,40 @@
         {{-- DOCTOR --}}
 
 
-<div class="top-doctor">
+        <div class="top-doctor">
 
-    <div class="profile-avatar">
+            <div class="profile-avatar">
+                @if (
+                    $doctor->doctor_image &&
+                        \Illuminate\Support\Facades\Storage::disk('public')->exists($doctor->doctor_image))
+                    <img src="{{ asset('storage/' . $doctor->doctor_image) }}" alt="د. {{ $doctorname }}"
+                        class="top-doctor-image">
+                @else
+                    <div class="med-doctor-image-placeholder">
 
-        @if ($doctor->doctor_image)
+                        <div class="med-placeholder-icon">
+                            <span><i class="fa-solid fa-user-doctor"></i></span>
+                        </div>
 
-            <img
-                src="{{ asset('storage/' . $doctor->doctor_image) }}"
-                alt="د. {{ $doctorname }}"
-                class="top-doctor-image"
-            >
-
-        @else
-
-            <div class="med-doctor-image-placeholder">
-
-                <div class="med-placeholder-icon">
-                    <span><i class="fa-solid fa-user-doctor"></i></span>
-                </div>
+                    </div>
+                @endif
 
             </div>
 
-        @endif
 
-    </div>
+            <div class="top-doctor-info">
 
+                <strong>
+                    د. {{ $doctorname }}
+                </strong>
 
-    <div class="top-doctor-info">
+                <span>
+                    {{ $doctor->specialty?->name ?? 'طبيب' }}
+                </span>
 
-        <strong>
-            د. {{ $doctorname }}
-        </strong>
+            </div>
 
-        <span>
-            {{ $doctor->specialty?->name ?? 'طبيب' }}
-        </span>
-
-    </div>
-
-</div>
+        </div>
     </div>
 
 </header>

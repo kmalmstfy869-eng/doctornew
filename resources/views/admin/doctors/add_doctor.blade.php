@@ -99,10 +99,11 @@
                             <i class="fa-solid fa-user-doctor"></i>
 
                         </div>
-
+{{--
                         <img id="doctorImagePreview" src="" alt="صورة الطبيب" class="profile-image"
-                            style="display:none;">
-
+                            style="display:none;"> --}}
+<img id="doctorImagePreview" src="" alt="صورة الطبيب" class="doctor-profile-image"
+    style="display:none;">
                         <div class="profile-image-actions">
 
                             <label for="doctorImageInput" class="change-profile-btn" title="اختيار صورة جديدة">
@@ -494,7 +495,7 @@
 
                                 <div class="input-wrapper">
 
-                                    <i class="fa-solid fa-user-clock"></i>
+
 
                                     <input id="experience" type="number" name="experience"
                                         value="{{ old('experience') }}" placeholder="عدد سنوات الخبرة" min="0">
@@ -550,7 +551,7 @@
 
                                 <div class="input-wrapper">
 
-                                    <i class="fa-solid fa-money-bill-wave"></i>
+
 
                                     <input id="consultationPrice" type="number" name="consultation_price"
                                         value="{{ old('consultation_price') }}" placeholder="مثال: 300" min="0">

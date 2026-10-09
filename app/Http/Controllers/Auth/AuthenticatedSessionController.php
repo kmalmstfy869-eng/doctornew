@@ -47,59 +47,34 @@ class AuthenticatedSessionController extends Controller
                 ->with('error', 'الدكتور أوقف حسابك');
         }
 
-        if ($user->role === 'doctor') {
+    if ($user->role === 'doctor') {
 
-            if (!$user->doctor) {
-                Auth::logout();
+        $doctor = $user->doctor;
 
-                return redirect()->route('login')
-                    ->with('error', 'لا يوجد حساب طبيب مرتبط بهذا الحساب.');
-            }
-
-            if (
-                Doctor::active()
-                    ->whereKey($user->doctor->id)
-                    ->exists()
-            ) {
-
-                if (! $user->hasVerifiedEmail()) {
-                    rescue(fn () => $user->sendEmailVerificationNotification());
-
-                    return redirect()->route('verification.notice');
-                }
-
-                return redirect()->intended(
-                    route('doctor.dashboard', absolute: false)
-                );
-            }
-
-            if (
-                Doctor::notactive()
-                    ->whereKey($user->doctor->id)
-                    ->exists()
-            ) {
-                Auth::logout();
-
-                return redirect()->route('login')
-                    ->with('error', 'لم يتم قبول حسابك بعد.');
-            }
-
-            if (
-                Doctor::rejected()
-                    ->whereKey($user->doctor->id)
-                    ->exists()
-            ) {
-                Auth::logout();
-
-                return redirect()->route('login')
-                    ->with('error', 'تم رفض حسابك.');
-            }
-
+        if (! $doctor) {
             Auth::logout();
+            return redirect()->route('login')
+                ->with('error', 'لا يوجد حساب طبيب مرتبط بهذا الحساب.');
+        }
 
+        if ($doctor->status === 'rejected') {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'تم رفض حسابك.');
+        }
+
+        if (! in_array($doctor->status, ['approved', 'pending'], true)) {
+            Auth::logout();
             return redirect()->route('login')
                 ->with('error', 'حالة حسابك غير معروفة، يرجى التواصل مع الإدارة.');
         }
+
+        if (! $user->hasVerifiedEmail()) {
+            rescue(fn () => $user->sendEmailVerificationNotification());
+            return redirect()->route('verification.notice');
+        }
+
+        return redirect()->intended(route('doctor.dashboard', absolute: false));
+    }
 
         return redirect()->intended(
             route('home', absolute: false)

@@ -4,7 +4,6 @@
 
 @section('content')
 
-```
 <div class="doctor-pending-page">
 
     {{-- Topbar --}}
@@ -67,16 +66,13 @@
             {{-- Search --}}
             <div class="doctor-pending-search">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input
-                    type="search"
-                    id="searchInput"
-                    placeholder="ابحث باسم الطبيب أو رقم الهاتف..."
-                >
+      <input type="search" data-live-search value="{{ request('search') }}"
+    placeholder="ابحث بالاسم أو الهاتف أو التخصص أو المنطقة أو الـ ID..." autocomplete="off">
             </div>
 
         </div>
 
-        {{-- Table --}}
+       <div id="live-results">
         @if ($doctors->isNotEmpty())
 
             <div class="doctor-pending-table-wrapper">
@@ -94,7 +90,7 @@
 
                             <th>التخصص</th>
 
-                            <th>المافظة</th>
+                            <th>المنطقة</th>
 
                             <th>تاريخ الإضافة</th>
 
@@ -179,7 +175,7 @@
                                 </td>
 
 
-                                {{-- المحافظة --}}
+                                {{-- المنطقة --}}
                                 <td>
                                     {{ $doctor->area->name ?? '—' }}
                                 </td>
@@ -192,6 +188,16 @@
                                         {{ $doctor->created_at ? $doctor->created_at->translatedFormat('d F Y') : '—' }}
                                     </span>
 
+                                                @if ($doctor->user?->email_verified_at)
+                                                    <span class="email-verify-badge verified"
+                                                        title="تم التأكيد في {{ $doctor->user->email_verified_at->translatedFormat('d F Y') }}">
+                                                        <i class="fa-solid fa-circle-check"></i> إيميل مؤكَّد
+                                                    </span>
+                                                @else
+                                                    <span class="email-verify-badge unverified" title="لم يؤكد الإيميل بعد">
+                                                        <i class="fa-solid fa-circle-xmark"></i> غير مؤكَّد
+                                                    </span>
+                                                @endif
                                 </td>
 
 
@@ -299,7 +305,7 @@
             />
 
         @endif
-
+</div>
     </div>
 
 </div>
@@ -307,6 +313,8 @@
 
 {{-- DETAILS MODAL --}}
 <x-admin.doctor_pending_modal />
-```
 
 @endsection
+@push('extra_java')
+    <script src="{{ asset('js/admin/live-search.js') }}?v={{ @filemtime(public_path('js/admin/live-search.js')) ?: time() }}"></script>
+@endpush

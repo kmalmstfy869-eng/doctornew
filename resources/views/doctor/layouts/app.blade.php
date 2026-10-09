@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/tokens.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/theme.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/sidebar.css') }}">
@@ -26,7 +27,7 @@
 
 <body>
 
-<x-home.info.flash-message/>
+    <x-home.info.flash-message />
 
     <div class="app">
 
@@ -44,7 +45,7 @@
 
         <main class="main">
 
-            <x-doctor.dashboard.header :doctor="$doctor" :doctorname="$doctor_name" :notifications="$notificationsheader"/>
+            <x-doctor.dashboard.header :doctor="$doctor" :doctorname="$doctor_name" :notifications="$notificationsheader" />
 
 
             @yield('content')

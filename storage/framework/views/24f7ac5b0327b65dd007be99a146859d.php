@@ -5,13 +5,42 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/account&notification.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/subscription.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/no_results.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/topbar.css')); ?>">
-    <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/account-notification.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/account-notification.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/subscription.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/pending-review.css')); ?>">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <?php if (isset($component)) { $__componentOriginal6dbffe04897c1afba1436b5a93e7af4e = $component; } ?>
+
+    <?php
+        $isPending = $doctor->status === 'pending';
+    ?>
+
+    <div class="doctor-dash-wrap">
+
+        <?php if($isPending): ?>
+            <?php if (isset($component)) { $__componentOriginal49dae8744d4514f7e46ad3c4fcd0a575 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal49dae8744d4514f7e46ad3c4fcd0a575 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.doctor.dashboard.pending-review','data' => ['doctorname' => $doctor_name]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('doctor.dashboard.pending-review'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['doctorname' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute($doctor_name)]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal49dae8744d4514f7e46ad3c4fcd0a575)): ?>
+<?php $attributes = $__attributesOriginal49dae8744d4514f7e46ad3c4fcd0a575; ?>
+<?php unset($__attributesOriginal49dae8744d4514f7e46ad3c4fcd0a575); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal49dae8744d4514f7e46ad3c4fcd0a575)): ?>
+<?php $component = $__componentOriginal49dae8744d4514f7e46ad3c4fcd0a575; ?>
+<?php unset($__componentOriginal49dae8744d4514f7e46ad3c4fcd0a575); ?>
+<?php endif; ?>
+        <?php else: ?>
+            <?php if (isset($component)) { $__componentOriginal6dbffe04897c1afba1436b5a93e7af4e = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal6dbffe04897c1afba1436b5a93e7af4e = $attributes; } ?>
 <?php $component = App\View\Components\Doctor\Dashboard\Topbar::resolve(['doctor' => $doctor,'doctorname' => $doctor_name] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('doctor.dashboard.topbar'); ?>
@@ -31,11 +60,10 @@
 <?php $component = $__componentOriginal6dbffe04897c1afba1436b5a93e7af4e; ?>
 <?php unset($__componentOriginal6dbffe04897c1afba1436b5a93e7af4e); ?>
 <?php endif; ?>
+        <?php endif; ?>
 
-
-    <section class="account-grid">
-
-        <?php if (isset($component)) { $__componentOriginalcce49ee99bad4ae8a1da4c9b45ef189d = $component; } ?>
+        <section class="account-grid">
+            <?php if (isset($component)) { $__componentOriginalcce49ee99bad4ae8a1da4c9b45ef189d = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalcce49ee99bad4ae8a1da4c9b45ef189d = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.doctor.dashboard.acount','data' => ['doctor' => $doctor,'doctorname' => $doctor_name]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('doctor.dashboard.acount'); ?>
@@ -55,8 +83,7 @@
 <?php $component = $__componentOriginalcce49ee99bad4ae8a1da4c9b45ef189d; ?>
 <?php unset($__componentOriginalcce49ee99bad4ae8a1da4c9b45ef189d); ?>
 <?php endif; ?>
-
-        <?php if (isset($component)) { $__componentOriginal0d6bedc8292d8d00c9b61c8d062ef93f = $component; } ?>
+            <?php if (isset($component)) { $__componentOriginal0d6bedc8292d8d00c9b61c8d062ef93f = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal0d6bedc8292d8d00c9b61c8d062ef93f = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.doctor.dashboard.norification','data' => ['notifications' => $notifications]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('doctor.dashboard.norification'); ?>
@@ -76,10 +103,10 @@
 <?php $component = $__componentOriginal0d6bedc8292d8d00c9b61c8d062ef93f; ?>
 <?php unset($__componentOriginal0d6bedc8292d8d00c9b61c8d062ef93f); ?>
 <?php endif; ?>
+        </section>
 
-    </section>
-
-    <?php if (isset($component)) { $__componentOriginal704fcd5fecafbaf4b82c7590ff0485f9 = $component; } ?>
+        <?php if (! ($isPending)): ?>
+            <?php if (isset($component)) { $__componentOriginal704fcd5fecafbaf4b82c7590ff0485f9 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal704fcd5fecafbaf4b82c7590ff0485f9 = $attributes; } ?>
 <?php $component = App\View\Components\Doctor\Dashboard\Subscription::resolve(['doctor' => $doctor] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('doctor.dashboard.subscription'); ?>
@@ -99,7 +126,9 @@
 <?php $component = $__componentOriginal704fcd5fecafbaf4b82c7590ff0485f9; ?>
 <?php unset($__componentOriginal704fcd5fecafbaf4b82c7590ff0485f9); ?>
 <?php endif; ?>
+        <?php endif; ?>
 
+    </div>
 
 <?php $__env->stopSection(); ?>
 

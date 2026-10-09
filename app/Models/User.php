@@ -68,7 +68,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->doctor ?? $this->doctorAssistant?->doctor;
     }
-
+    public function favoriteDoctors()
+    {
+        return $this->belongsToMany(Doctor::class, 'favorites')->withTimestamps();
+    }
     /*
     |--------------------------------------------------------------------------
     | Pending email

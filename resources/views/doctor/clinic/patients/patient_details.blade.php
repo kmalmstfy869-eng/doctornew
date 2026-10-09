@@ -1,36 +1,21 @@
+@use('App\Support\Money')
 @extends('doctor.layouts.app_clinc')
 
 @push('extra_style')
     <link rel="stylesheet" href="{{ asset('css/home/pagination.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/clinic/print.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/clinic/clinic-payments.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/doctor/clinic/patient-files.css') }}">
 @endpush
 
 @section('title', 'بيانات المريض | دليل الأطباء')
 
 @section('content')
 
+
+
     @php
-
-        $documents = [
-            [
-                'id' => 'd1',
-                'title' => 'تحليل صورة دم كاملة',
-                'kind' => 'تحاليل',
-                'dateLabel' => 'الخميس، 3 سبتمبر 2026',
-                'size' => '220 KB',
-            ],
-            [
-                'id' => 'd2',
-                'title' => 'تقرير أشعة',
-                'kind' => 'أشعة',
-                'dateLabel' => 'الأحد، 30 أغسطس 2026',
-                'size' => '1.8 MB',
-            ],
-        ];
-
-        $fmtMoney = fn($n) => rtrim(rtrim(number_format((float) $n, 2, '.', ','), '0'), '.');
-
+        $fmtMoney = [Money::class, 'fmt'];
     @endphp
 
 
@@ -258,7 +243,7 @@
                             الملفات
 
                             <span class="tab-count">
-                                {{ count($documents) }}
+                                {{ $patientFiles->total() }}
                             </span>
 
                         </button>
@@ -556,7 +541,7 @@
                                             <div class="flex justify-between gap-3">
                                                 <dt class="text-muted-foreground">عدد الملفات</dt>
                                                 <dd class="font-semibold">
-                                                    {{ count($documents) }}
+                                                    {{ $patientFiles->total() }}
                                                 </dd>
                                             </div>
 
@@ -928,85 +913,35 @@
 
                     </div>
 
-
                     <div class="mt-4 hidden patient-tab-panel" data-patient-panel="documents">
 
                         <h2 class="bq-print-heading">
                             الملفات
                         </h2>
+                        {{-- إعلان زيادة المساحة: بيظهر لما يتبقى جيجا واحدة أو أقل --}}
+                        <div class="bq-no-print">
+                            <x-doctor.clinic.storage-upsell :stats="$fileStats" />
+                        </div>
+                        <div class="bq-no-print mb-4">
+                            <x-doctor.clinic.storage-card :stats="$fileStats" :compact="true">
+                                <button type="button" class="btn btn-default btn-sm pf-upload-btn"
+                                    @click="$dispatch('pf-upload-open')">
+                                    <i data-lucide="upload" class="size-4"></i>
+                                    <span>رفع ملف جديد</span>
+                                </button>
+                            </x-doctor.clinic.storage-card>
+                        </div>
 
-                        @if (count($documents))
-                            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                        @include('doctor.clinic.files._list', [
+                            'files' => $patientFiles,
+                            'showPatient' => false,
+                        ])
 
-                                @foreach ($documents as $document)
-                                    <div class="clinic-surface-card p-4">
-
-                                        <div class="flex items-start justify-between gap-3">
-
-                                            <div
-                                                class="grid size-11 shrink-0 place-items-center rounded-xl bg-primary-soft text-primary">
-
-                                                <i data-lucide="file" class="size-5"></i>
-
-                                            </div>
-
-                                            <span class="badge badge-info">
-                                                {{ $document['kind'] }}
-                                            </span>
-
-                                        </div>
-
-
-                                        <h3 class="mt-4 font-semibold">
-                                            {{ $document['title'] }}
-                                        </h3>
-
-
-                                        <p class="mt-1 text-xs text-muted-foreground">
-
-                                            {{ $document['dateLabel'] }}
-
-                                            •
-
-                                            {{ $document['size'] }}
-
-                                        </p>
-
-
-                                        <div class="bq-no-print mt-4 flex gap-2">
-
-                                            <button type="button" class="btn btn-outline btn-sm flex-1">
-
-                                                <i data-lucide="eye" class="size-4"></i>
-
-                                                عرض
-
-                                            </button>
-
-
-                                            <button type="button" class="btn btn-outline btn-sm">
-
-                                                <i data-lucide="download" class="size-4"></i>
-
-                                            </button>
-
-                                        </div>
-
-                                    </div>
-                                @endforeach
-
-                            </div>
-                        @else
-                            <div class="clinic-surface-card p-6">
-
-                                <x-home.banner.no_results logo="fa-solid fa-folder-open" title="لا توجد ملفات طبية"
-                                    content="لم يتم تسجيل أي ملفات طبية لهذا المريض حتى الآن." />
-
-                            </div>
-                        @endif
+                        <div class="bq-no-print mt-4">
+                            {{ $patientFiles->appends(['tab' => 'documents'])->links('vendor.pagination.custom') }}
+                        </div>
 
                     </div>
-
 
                     <div class="mt-4 hidden patient-tab-panel" data-patient-panel="prescriptions">
 
@@ -1398,10 +1333,10 @@
                                             </div>
 
 
-                                            <div class="flex items-center gap-2">
+                                            @unless ($isAssistant)
+                                                <div class="flex items-center gap-2">
 
-                                                {{-- تعديل الدفع: مالي — ممنوع على مساعد الطبيب --}}
-                                                @unless ($isAssistant)
+                                                    {{-- تعديل الدفع: مالي — ممنوع على مساعد الطبيب --}}
                                                     <button type="button" class="btn btn-icon" data-edit-payment
                                                         data-id="{{ $booking->id }}"
                                                         data-name="{{ $booking->patient_name }}"
@@ -1412,29 +1347,29 @@
                                                         <i data-lucide="wallet" class="size-4"></i>
 
                                                     </button>
-                                                @endunless
 
 
-                                                {{-- حذف الحجز --}}
-                                                <form method="POST"
-                                                    action="{{ route('clinic.bookings.destroy', $booking) }}"
-                                                    onsubmit="return confirm('حذف هذا الحجز نهائيًا؟')">
 
-                                                    @csrf
-                                                    @method('DELETE')
+                                                    {{-- حذف الحجز --}}
+                                                    <form method="POST"
+                                                        action="{{ route('clinic.bookings.destroy', $booking) }}"
+                                                        onsubmit="return confirm('حذف هذا الحجز نهائيًا؟')">
 
-                                                    <button type="submit" class="btn btn-icon btn-destructive"
-                                                        title="حذف الحجز" aria-label="حذف الحجز">
+                                                        @csrf
+                                                        @method('DELETE')
 
-                                                        <i data-lucide="trash-2" class="h-4 w-4">
-                                                        </i>
+                                                        <button type="submit" class="btn btn-icon btn-destructive"
+                                                            title="حذف الحجز" aria-label="حذف الحجز">
 
-                                                    </button>
+                                                            <i data-lucide="trash-2" class="h-4 w-4">
+                                                            </i>
 
-                                                </form>
+                                                        </button>
 
-                                            </div>
+                                                    </form>
 
+                                                </div>
+                                            @endunless
                                         </div>
 
                                     </div>
@@ -1771,7 +1706,9 @@
 
         {{-- modal الروشتة --}}
         <x-doctor.clinic.prescription-form :patient="$patient" />
-
+        {{-- رفع ملف للمريض (محدد مسبقًا) + عارض الصور --}}
+        <x-doctor.clinic.file-upload-modal :patient="$patient" />
+        <x-doctor.clinic.file-viewer-modal />
 
         {{-- مودال عرض ملاحظة الحركة اليدوية --}}
         <div class="payment-note-modal" data-payment-note-modal aria-hidden="true">

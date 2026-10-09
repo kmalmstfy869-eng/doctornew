@@ -15,6 +15,7 @@ class Plan extends Model
         'duration',
         'features',
         'the_best',
+        'sort_order',
     ];
 
     protected $casts = [

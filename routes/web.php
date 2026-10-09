@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RatingsController;
 use App\Http\Controllers\Clinic\BookingController;
 use App\Models\Specialties;
 use App\Http\Controllers\User\HomeController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\User\JobsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Clinic\OnlineBookingController;
 use App\Http\Controllers\User\ContactMessageController;
+use App\Http\Controllers\User\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,29 +33,17 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('redirect_assistant');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Jobs (إنشاء وظيفة: تسجيل دخول + إيميل متفعل)
-| لازم يتعرفوا قبل resource عشان /jobs/create ما يتاخدش على أنه {job}
-|--------------------------------------------------------------------------
-*/
-Route::middleware([
-    'auth',
-    'verified',
-    'redirect_admin',
-    'redirect_doctor',
-    'redirect_assistant',
-])->group(function () {
+
 
     Route::get('/jobs/create', [JobsController::class, 'create'])
         ->name('jobs.create');
 
     Route::post('/jobs', [JobsController::class, 'store'])
         ->name('job.store')
-        ->middleware('throttle:jobs');
-});
-
+        ->middleware(['throttle:jobs','auth']);
 /*
+
+
 |--------------------------------------------------------------------------
 | Public pages
 | loginverified: المسجل دخول وغير المتأكد يتحول لصفحة التأكيد،
@@ -66,6 +56,9 @@ Route::middleware([
     'redirect_doctor',
     'redirect_assistant',
 ])->group(function () {
+
+    Route::post('/doctors/{doctor}/favorite', [FavoriteController::class, 'toggle'])
+        ->name('favorites.toggle');
 
     Route::get('/', [HomeController::class, 'index'])
         ->name('home');
@@ -98,6 +91,8 @@ Route::middleware([
     Route::get('/faq', function () {
         return view('home.info.faq');
     })->name('faq');
+
+    Route::post('ratings', [RatingsController::class, 'store'])->name('ratings.store');
 });
 
 

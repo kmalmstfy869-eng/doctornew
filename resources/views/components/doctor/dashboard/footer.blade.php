@@ -21,15 +21,15 @@
             حسابي
         </strong>
 
-        <a href="#">
+        <a href="{{ route('doctor.profile.show') }}">
             الملف الشخصي
         </a>
 
-        <a href="#">
+        <a href="{{ route('doctor.profile_doctor') }}">
             الإعدادات
         </a>
 
-        <a href="#subscription">
+        <a href="{{ route('doctor.subscription') }}">
             الاشتراك
         </a>
 
@@ -43,15 +43,9 @@
         </strong>
 
 
-        @php
-
-            $whatsapp = preg_replace('/\D/', '', config('services.whatsapp.support_number', ''));
-
-        @endphp
 
 
-        @if ($whatsapp)
-            <a href="https://wa.me/{{ $whatsapp }}" target="_blank" rel="noopener noreferrer" class="whatsapp-box">
+            <a href="{{App\Support\Whatsapp::link(null)}}" target="_blank" rel="noopener noreferrer" class="whatsapp-box">
 
                 <span class="whatsapp-icon">
                     ☎
@@ -60,17 +54,8 @@
                 تواصل معنا عبر واتساب
 
             </a>
-        @else
-            <span class="whatsapp-box">
 
-                <span class="whatsapp-icon">
-                    ☎
-                </span>
 
-                تواصل معنا عبر واتساب
-
-            </span>
-        @endif
 
     </div>
 
@@ -78,7 +63,7 @@
     <div class="footer-copy">
 
         © {{ date('Y') }}
-        دليلك الطبي — جميع الحقوق محفوظة
+        دليل الاطباء — جميع الحقوق محفوظة
 
     </div>
 
@@ -89,7 +74,7 @@
     <script src="{{ asset('sw.js') }}"></script>
     <script src="{{ asset('js/push-notifications.js') }}"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
+ @stack('scripts')
 </body>
 
 </html>

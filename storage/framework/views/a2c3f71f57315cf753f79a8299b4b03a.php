@@ -24,24 +24,13 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="<?php echo e(asset('css/home/doctor_details.css')); ?>">
+
 
     
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-
-
-
     <link rel="stylesheet" href="<?php echo e(asset('css/home/test.css')); ?>">
-
-
-
-
-
     <link rel="stylesheet" href="<?php echo e(asset('css/auth/auth.css')); ?>">
-
-    
     <link rel="stylesheet" href="<?php echo e(asset('css/home/settings.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/base/tokens.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/layouts/public-nav.css')); ?>">
@@ -57,6 +46,7 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/public/job-form.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/public/contact.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/public/ui-enhancements.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/public/search-ui.css')); ?>">
 
     <?php echo $__env->yieldPushContent('styles'); ?>
 

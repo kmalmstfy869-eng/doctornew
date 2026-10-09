@@ -2,26 +2,40 @@
     'booking' => null,
 ])
 
+{{-- يتحمّل مرة واحدة بس مهما اتستدعى الـ component أو غيره --}}
+@once('modal-variants-css')
+    @push('extra_style')
+        <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+    @endpush
+@endonce
+
 {{-- Edit Payment Modal --}}
 <div
     id="edit-payment-modal"
     class="modal-overlay @if ($errors->payment->any()) open @endif"
     data-edit-payment-modal>
 
-    <div class="modal-panel max-w-lg">
+    <div class="modal-panel max-w-lg modal-panel--edit">
 
         {{-- Header --}}
-        <div class="bq-modal-header">
+        <div class="modal-head">
 
-            <div class="min-w-0">
+            <span class="modal-head__icon">
+                <i
+                    data-lucide="wallet"
+                    class="h-5 w-5">
+                </i>
+            </span>
 
-                <h3 class="text-lg font-bold text-foreground">
+            <div class="min-w-0 flex-1">
+
+                <h3 class="modal-head__title">
                     تعديل الدفع
                 </h3>
 
                 <p
                     id="edit-payment-patient"
-                    class="mt-1 truncate text-sm text-muted-foreground">
+                    class="modal-head__sub truncate">
                 </p>
 
             </div>
@@ -225,7 +239,7 @@
 
                 <button
                     type="submit"
-                    class="btn btn-primary">
+                    class="btn btn-primary btn-submit">
 
                     <i
                         data-lucide="save"

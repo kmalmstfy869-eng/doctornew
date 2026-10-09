@@ -333,3 +333,12 @@
 
     margin-top: 14px;
 }
+.account-status.is-pending {
+    color: #b45309;
+    background: rgba(245, 158, 11, .14);
+    border-color: rgba(245, 158, 11, .35);
+}
+.account-status.is-pending i {
+    background: #f59e0b;
+    animation: pr-blink 1.4s infinite;
+}

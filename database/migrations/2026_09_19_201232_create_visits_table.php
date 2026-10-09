@@ -16,12 +16,12 @@ return new class extends Migration
 
 
             $table->foreignId('doctor_id')
-                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
 
 
             $table->foreignId('patient_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnDelete();
 

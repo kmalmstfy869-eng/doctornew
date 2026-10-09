@@ -15,7 +15,7 @@ class StoreBookingRequest extends FormRequest
 
     public function rules(): array
     {
-           $user = Auth::user();
+        $user = Auth::user();
         $doctor =$user->clinicDoctor();
 
         $isClinicSystem = $doctor?->hasFeature('clinic_system') ?? false;
@@ -24,6 +24,7 @@ class StoreBookingRequest extends FormRequest
             'appointment_date' => [
                 'required',
                 'date',
+                'after_or_equal:today',
             ],
 
             /*
@@ -42,13 +43,12 @@ class StoreBookingRequest extends FormRequest
                             $doctor?->id
                         );
                     }),
+
+                Rule::requiredIf(
+                    $isClinicSystem && ! $this->filled('new_patient_name')
+                ),
             ],
 
-            /*
-            |--------------------------------------------------------------------------
-            | اسم المريض الجديد
-            |--------------------------------------------------------------------------
-            */
             'new_patient_name' => [
                 $isClinicSystem && $this->filled('patient_id')
                     ? 'nullable'
@@ -57,8 +57,7 @@ class StoreBookingRequest extends FormRequest
                 'string',
                 'max:255',
             ],
-
-            /*
+                        /*
             |--------------------------------------------------------------------------
             | هاتف المريض
             |--------------------------------------------------------------------------
@@ -113,6 +112,9 @@ class StoreBookingRequest extends FormRequest
             'appointment_date.date' =>
                 'تاريخ الحجز غير صحيح.',
 
+            'appointment_date.after_or_equal' =>
+                'تاريخ الحجز يجب أن يكون اليوم أو تاريخًا مستقبليًا.',
+
             'patient_id.prohibited' =>
                 ' لا يمكن اختيار مريض موجود ليس متاح في هذا الاشتراك.',
 
@@ -120,7 +122,10 @@ class StoreBookingRequest extends FormRequest
                 'بيانات المريض غير صحيحة.',
 
             'patient_id.exists' =>
-                'المريض المحدد غير موجود أو لا ينتمي إلى حسابك.',
+            'المريض المحدد غير موجود أو لا ينتمي إلى حسابك.',
+
+            'patient_id.required' =>
+                'لابد من اختيار مريض.',
 
             'new_patient_name.required' =>
                 'اسم المريض مطلوب.',

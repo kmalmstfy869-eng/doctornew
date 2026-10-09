@@ -6,24 +6,34 @@
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/account&notification.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/subscription.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/no_results.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/topbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/account-notification.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/account-notification.css') }}">
     <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/readability/subscription.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/doctor/dashboard/pending-review.css') }}">
 @endpush
 
 @section('content')
-    <x-doctor.dashboard.topbar :doctor="$doctor" :doctorname="$doctor_name" />
 
+    @php
+        $isPending = $doctor->status === 'pending';
+    @endphp
 
-    <section class="account-grid">
+    <div class="doctor-dash-wrap">
 
-        <x-doctor.dashboard.acount :doctor="$doctor" :doctorname="$doctor_name" />
+        @if ($isPending)
+            <x-doctor.dashboard.pending-review :doctorname="$doctor_name" />
+        @else
+            <x-doctor.dashboard.topbar :doctor="$doctor" :doctorname="$doctor_name" />
+        @endif
 
-        <x-doctor.dashboard.norification  :notifications="$notifications" />
+        <section class="account-grid">
+            <x-doctor.dashboard.acount :doctor="$doctor" :doctorname="$doctor_name" />
+            <x-doctor.dashboard.norification :notifications="$notifications" />
+        </section>
 
-    </section>
+        @unless ($isPending)
+            <x-doctor.dashboard.subscription :doctor="$doctor" />
+        @endunless
 
-    <x-doctor.dashboard.subscription :doctor="$doctor" />
-
+    </div>
 
 @endsection

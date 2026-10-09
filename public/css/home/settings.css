@@ -1,4 +1,3 @@
-
 /* =========================================================
    SETTINGS / PROFILE
 ========================================================= */
@@ -774,116 +773,304 @@
 .favorites-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* عمود واحد على الشاشات الصغيرة، وأعمدة تلقائية على الكبيرة */
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(min(100%, 300px), 1fr)
+        );
 
-    gap: 12px;
+    gap: 14px;
+    align-items: stretch;
 }
 
 .favorite-doctor-card {
+    position: relative;
+
     display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
 
-    grid-template-columns: 58px minmax(0, 1fr);
-
-    gap: 12px;
-
-    padding: 15px;
+    min-width: 0;
+    padding: 16px;
 
     border: 1px solid var(--border, #e0e7ef);
-    border-radius: 16px;
+    border-radius: 18px;
 
     background: var(--input, #f8fafc);
 
-    transition: .25s;
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .favorite-doctor-card:hover {
+    transform: translateY(-3px);
+
     border-color: var(--primary, #1769d1);
-    transform: translateY(-2px);
+
+    box-shadow: 0 14px 32px rgba(23,105,209,.12);
 }
 
+
+/* الصورة */
+
 .favorite-doctor-image {
-    width: 58px;
-    height: 58px;
-
-    border-radius: 16px;
-
-    overflow: hidden;
+    width: 68px;
+    height: 68px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    overflow: hidden;
+
+    border-radius: 18px;
+
     background: var(--primary-light, #eaf3ff);
     color: var(--primary, #1769d1);
 
-    font-size: 22px;
+    font-size: 26px;
 }
 
 .favorite-doctor-image img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+    object-position: center top;
 }
+
+
+/* البيانات */
 
 .favorite-doctor-info {
     min-width: 0;
+
+    /* مساحة للقلب */
+    padding-left: 52px;
 }
 
 .favorite-doctor-info h3 {
-    margin: 2px 0 5px;
+    margin: 0 0 8px;
 
-    font-size: 12px;
+    color: var(--text, #172a3d);
+
+    font-size: 14px;
     font-weight: 900;
+    line-height: 1.6;
+
+    overflow-wrap: anywhere;
 }
 
 .favorite-doctor-info p {
     display: flex;
-    align-items: center;
-    gap: 6px;
+    align-items: flex-start;
+    gap: 8px;
 
-    margin: 3px 0;
+    margin: 0 0 5px;
 
     color: var(--text-light, #718197);
 
-    font-size: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
 }
 
 .favorite-doctor-info p i {
+    flex-shrink: 0;
+
+    width: 14px;
+    margin-top: 4px;
+
+    text-align: center;
+
     color: var(--primary, #1769d1);
+    font-size: 11px;
 }
+
+.favorite-doctor-info .favorite-price {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    margin: 8px 0 0;
+    padding: 5px 11px;
+
+    border-radius: 10px;
+
+    background: var(--success-light, #e7f8ef);
+    color: var(--success, #159b62);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.favorite-doctor-info .favorite-price i {
+    width: auto;
+    margin: 0;
+
+    color: inherit;
+}
+
+.favorite-doctor-info .favorite-price strong {
+    font-weight: 900;
+}
+
+
+/* زرار عرض الطبيب */
 
 .favorite-doctor-actions {
     grid-column: 1 / -1;
 
-    padding-top: 10px;
+    padding-top: 14px;
 
     border-top: 1px solid var(--border, #e0e7ef);
 }
 
 .favorite-view-button {
     width: 100%;
-    height: 35px;
+    min-height: 42px;
 
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
 
-    gap: 6px;
-
-    border-radius: 9px;
+    border-radius: 12px;
 
     background: var(--primary-light, #eaf3ff);
     color: var(--primary, #1769d1);
 
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 900;
+    text-decoration: none;
 
-    transition: .2s;
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
 }
 
 .favorite-view-button:hover {
     background: var(--primary, #1769d1);
     color: #fff;
+
+    transform: translateY(-1px);
+}
+
+
+/* القلب (فوق يسار الكارت) */
+
+.favorite-remove-form {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 3;
+
+    margin: 0;
+}
+
+.favorite-remove-button {
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(225, 29, 72, .22);
+    border-radius: 14px;
+
+    background: linear-gradient(145deg, #fff5f7, #ffe1e8);
+    color: #e11d48;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 16px rgba(225, 29, 72, .14),
+        inset 0 1px 0 rgba(255, 255, 255, .85);
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.favorite-remove-button i {
+    filter: drop-shadow(0 2px 3px rgba(225, 29, 72, .30));
+}
+
+.favorite-remove-button:hover {
+    background: linear-gradient(145deg, #fb4f73, #e11d48);
+    border-color: #e11d48;
+    color: #fff;
+
+    transform: translateY(-2px) scale(1.06);
+
+    box-shadow: 0 12px 26px rgba(225, 29, 72, .34);
+}
+
+.favorite-remove-button:hover i {
+    animation: favHeartbeat .9s ease-in-out infinite;
+}
+
+.favorite-remove-button:active {
+    transform: scale(.92);
+}
+
+.favorite-remove-button:focus-visible {
+    outline: none;
+
+    box-shadow: 0 0 0 4px rgba(225, 29, 72, .22);
+}
+
+@keyframes favHeartbeat {
+    0%, 100% { transform: scale(1); }
+    25%      { transform: scale(1.22); }
+    50%      { transform: scale(1); }
+    75%      { transform: scale(1.14); }
+}
+
+/* أجهزة اللمس: بدون حركات hover */
+@media (hover: none) {
+    .favorite-doctor-card:hover,
+    .favorite-view-button:hover,
+    .favorite-remove-button:hover {
+        transform: none;
+    }
+
+    .favorite-remove-button:hover i {
+        animation: none;
+    }
+}
+
+/* احترام إعداد تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+    .favorite-doctor-card,
+    .favorite-view-button,
+    .favorite-remove-button {
+        transition: none;
+    }
+
+    .favorite-remove-button:hover i {
+        animation: none;
+    }
 }
 
 
@@ -1422,15 +1609,65 @@ body.dark .notifications-toggle-thumb {
 }
 
 
+/* ---------- Dark: Favorites ---------- */
 
+body.dark .favorite-doctor-card:hover {
+    border-color: rgba(96,165,250,.45);
 
+    box-shadow: 0 14px 34px rgba(0,0,0,.35);
+}
 
+body.dark .favorite-doctor-info h3 {
+    color: #f8fafc;
+}
 
+body.dark .favorite-doctor-image {
+    background: rgba(59,130,246,.12);
+    color: #60a5fa;
+}
 
+body.dark .favorite-doctor-info p i {
+    color: #60a5fa;
+}
 
+body.dark .favorite-doctor-info .favorite-price {
+    background: rgba(21,155,98,.14);
+    color: #6ee7b7;
+}
 
+body.dark .favorite-doctor-info .favorite-price i {
+    color: inherit;
+}
 
+body.dark .favorite-doctor-actions {
+    border-color: rgba(255,255,255,.07);
+}
 
+body.dark .favorite-view-button {
+    background: rgba(59,130,246,.14);
+    color: #60a5fa;
+}
+
+body.dark .favorite-view-button:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+body.dark .favorite-remove-button {
+    background: rgba(225,29,72,.14);
+    border-color: rgba(251,113,133,.30);
+    color: #fb7185;
+
+    box-shadow: 0 6px 16px rgba(0,0,0,.30);
+}
+
+body.dark .favorite-remove-button:hover {
+    background: linear-gradient(145deg, #fb4f73, #e11d48);
+    border-color: #e11d48;
+    color: #fff;
+
+    box-shadow: 0 12px 26px rgba(225,29,72,.40);
+}
 
 
 /* =========================================================
@@ -1556,10 +1793,6 @@ body.dark .pending-email-content p {
         height: 48px;
     }
 
-    .favorites-grid {
-        grid-template-columns: 1fr;
-    }
-
     .job-item {
         align-items: flex-start;
         flex-wrap: wrap;
@@ -1671,6 +1904,41 @@ body.dark .pending-email-content p {
     }
 
 
+    /* ---------- Favorites ---------- */
+
+    .favorite-doctor-card {
+        grid-template-columns: 60px minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .favorite-doctor-image {
+        width: 60px;
+        height: 60px;
+
+        border-radius: 16px;
+
+        font-size: 23px;
+    }
+
+    .favorite-doctor-info {
+        padding-left: 46px;
+    }
+
+    .favorite-remove-form {
+        top: 12px;
+        left: 12px;
+    }
+
+    .favorite-remove-button {
+        width: 38px;
+        height: 38px;
+
+        border-radius: 12px;
+    }
+
+
     /* =====================================================
        NOTIFICATION CONTROL - MOBILE
     ===================================================== */
@@ -1777,5 +2045,63 @@ body.dark .pending-email-content p {
 
     .notifications-toggle:not(.is-active) .notifications-toggle-thumb {
         right: 25px;
+    }
+
+    /* ---------- Favorites ---------- */
+
+    .favorite-doctor-card {
+        grid-template-columns: 54px minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .favorite-doctor-image {
+        width: 54px;
+        height: 54px;
+
+        border-radius: 14px;
+
+        font-size: 21px;
+    }
+
+    .favorite-doctor-info {
+        padding-left: 42px;
+    }
+
+    .favorite-doctor-info h3 {
+        font-size: 13px;
+    }
+
+    .favorite-doctor-info p,
+    .favorite-doctor-info .favorite-price {
+        font-size: 11px;
+    }
+
+    .favorite-remove-form {
+        top: 10px;
+        left: 10px;
+    }
+
+    .favorite-remove-button {
+        width: 36px;
+        height: 36px;
+
+        font-size: 14px;
+    }
+}
+
+
+@media (max-width: 340px) {
+
+    .favorite-doctor-card {
+        grid-template-columns: 1fr;
+    }
+
+    .favorite-doctor-info {
+        padding-left: 0;
+    }
+
+    .favorite-doctor-image {
+        margin-top: 4px;
     }
 }

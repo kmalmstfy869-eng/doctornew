@@ -3,7 +3,7 @@
     <div class="doctors-grid" id="doctorsGrid">
 
         @foreach ($doctors as $doctor)
-            <x-home.doctors.card_doctor_clinic_system_component :doctor="$doctor" />
+            <x-home.doctors.card_doctor_clinic_system_component :doctor="$doctor" :favorite-ids="$favoriteIds ?? []"/>
         @endforeach
 
     </div>

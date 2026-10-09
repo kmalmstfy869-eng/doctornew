@@ -1,22 +1,24 @@
 <?php
 
 namespace App\Http\Controllers\Clinic;
-use Illuminate\Support\Facades\Validator;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Doctor\StoreBookingRequest;
 use App\Models\Booking;
 use App\Models\Patient;
+use App\Support\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
     public function index(Request $request)
     {
         $user = Auth::user();
-        $doctor =$user->clinicDoctor();
+        $doctor = $user->clinicDoctor();
 
         $isClinicSystem = $doctor->hasFeature('clinic_system');
 
@@ -40,25 +42,6 @@ class BookingController extends Controller
 
         if ($hasYesterdayOpenPatients) {
             $bookingDates[] = $yesterday;
-        }
-
-        $query = $doctor->bookings();
-
-        if ($request->filled('search')) {
-            $search = trim($request->search);
-
-            $query->where(function ($q) use ($search) {
-                $q->where('patient_name', 'like', "%{$search}%")
-                    ->orWhere('patient_phone', 'like', "%{$search}%");
-            });
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('source')) {
-            $query->where('booking_type', $request->source);
         }
 
         $todayBookings = $doctor->bookings()
@@ -99,8 +82,7 @@ class BookingController extends Controller
 
         $total = $todayBookings->count();
 
-        $bookings = $query
-            ->whereIn('appointment_date', $bookingDates)
+        $bookings = $this->buildFilteredBookingsQuery($request, $doctor, $bookingDates)
             ->orderByDesc('appointment_date')
             ->orderByDesc('start_time')
             ->paginate(20)
@@ -123,8 +105,8 @@ class BookingController extends Controller
 
     public function searchPatients(Request $request)
     {
-          $user = Auth::user();
-        $doctor =$user->clinicDoctor();
+        $user = Auth::user();
+        $doctor = $user->clinicDoctor();
 
         $search = trim(
             (string) $request->get('search', '')
@@ -154,112 +136,83 @@ class BookingController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        $doctor =$user->clinicDoctor();
+        $doctor = $user->clinicDoctor();
 
         try {
-            return DB::transaction(function () use ($request, $doctor,$user) {
+            return DB::transaction(function () use ($request, $doctor, $user) {
                 $validated = $request->validated();
 
-                $patientId = null;
-                $patientName = null;
-                $patientPhone = null;
+                $patient = null;
 
                 if (!empty($validated['patient_id'])) {
-                    $patient = $doctor->patients()
-                        ->findOrFail($validated['patient_id']);
+                    $patient = $doctor->patients()->findOrFail($validated['patient_id']);
 
-                    $patientId = $patient->id;
-                    $patientName = $patient->name;
-                    $patientPhone = $patient->phone;
+                    $patientName  = $patient->name;
+                    $patientPhone = PhoneNumber::normalize($patient->phone);
                 } else {
-                    $patientName = trim(
-                        $validated['new_patient_name'] ?? ''
-                    );
+                    $patientName  = trim($validated['new_patient_name'] ?? '');
+                    $patientPhone = PhoneNumber::normalize($validated['patient_phone'] ?? null);
 
-                    $patientPhone = $validated['patient_phone'] ?? null;
-
-
-
-                    if (
-                        $user->can('use-clinic-system') &&
-                        !empty($patientPhone)
-                    ) {
-                        $patient = Patient::updateOrCreate(
-                            [
-                                'doctor_id' => $doctor->id,
-                                'phone' => $patientPhone,
-                            ],
-                            [
-                                'name' => $patientName,
-                            ]
+                    // ملف المريض بيتعمل بس لو فيه رقم + نظام العيادة شغال
+                    if ($patientPhone && $user->can('use-clinic-system')) {
+                        $patient = Patient::firstOrCreate(
+                            ['doctor_id' => $doctor->id, 'phone' => $patientPhone],
+                            ['name' => $patientName]
                         );
 
-                        $patientId = $patient->id;
+                        // لو المريض موجود نسيب اسمه القديم، ولو جديد هو نفس الاسم المكتوب
+                        $patientName = $patient->name;
                     }
                 }
 
-                $exists = $doctor->bookings()
-                    ->where(
-                        'patient_id',
-                        $patientId
-                    )
-                    ->wherenotnull('patient_id')
-                    ->whereDate(
-                        'appointment_date',
-                        $validated['appointment_date']
-                    )
-                    ->whereNotIn(
-                        'status',
-                        [
-                            'cancelled',
-                            'completed',
-                        ]
-                    )
-                    ->exists();
+                // منع تكرار نفس الرقم/المريض في نفس اليوم
+                if ($patient || $patientPhone) {
+                    $exists = $doctor->bookings()
+                        ->whereDate('appointment_date', $validated['appointment_date'])
+                        ->whereNotIn('status', ['cancelled', 'no_show'])
+                        ->where(function ($q) use ($patient, $patientPhone) {
+                            if ($patient) {
+                                $q->where('patient_id', $patient->id);
+                            }
 
-                if ($exists) {
-                    return back()
-                        ->withErrors([
-                            'appointment_date' =>
-                                'هذا المريض لديه حجز بالفعل في هذا اليوم.',
-                        ])
-                        ->withInput();
+                            if ($patientPhone) {
+                                $q->orWhere('patient_phone', $patientPhone);
+                            }
+                        })
+                        ->lockForUpdate()
+                        ->exists();
+
+                    if ($exists) {
+                        return back()
+                            ->withErrors([
+                                'appointment_date' => 'يوجد حجز بنفس رقم الهاتف في هذا اليوم.',
+                            ])
+                            ->withInput();
+                    }
                 }
 
-                $price = (float) (
-                    $validated['price'] ?? 0
-                );
-
-                $paid = (float) (
-                    $validated['paid'] ?? 0
-                );
-
                 Booking::create([
-                    'doctor_id' => $doctor->id,
-                    'patient_id' => $patientId,
-                    'patient_name' => $patientName,
-                    'patient_phone' => $patientPhone,
-                    'booking_type' => 'clinic',
+                    'doctor_id'        => $doctor->id,
+                    'patient_id'       => $patient?->id,
+                    'patient_name'     => $patientName,
+                    'patient_phone'    => $patientPhone,
+                    'booking_type'     => 'clinic',
                     'appointment_date' => $validated['appointment_date'],
-                    'start_time' => null,
-                    'status' => 'confirmed',
-                    'price' => $price,
-                    'paid' => $paid,
-                    'service' => $validated['service'] ?? 'كشف',
-                    'arrived_at' => now(),
+                    'start_time'       => null,
+                    'status'           => 'confirmed',
+                    'price'            => (float) ($validated['price'] ?? 0),
+                    'paid'             => (float) ($validated['paid'] ?? 0),
+                    'service'          => $validated['service'] ?? 'كشف',
+                    'arrived_at'       => now(),
                 ]);
 
-                return back()->with(
-                    'success',
-                    'تم إنشاء الحجز بنجاح.'
-                );
+                return back()->with('success', 'تم إنشاء الحجز بنجاح.');
             });
         } catch (\Throwable $e) {
+            report($e);
+
             return back()
-                ->with(
-                    'error',
-                    'حدثت مشكلة أثناء إنشاء الحجز. برجاء التواصل مع الإدارة للمساعدة فورًا إذا استمرت المشكلة.'
-                )
+                ->with('error', 'حدثت مشكلة أثناء إنشاء الحجز. برجاء التواصل مع الإدارة للمساعدة فورًا إذا استمرت المشكلة.')
                 ->withInput();
         }
     }
@@ -268,7 +221,7 @@ class BookingController extends Controller
     {
         $this->authorizeBooking($booking);
         $user = Auth::user();
-        $doctor =$user->clinicDoctor();
+        $doctor = $user->clinicDoctor();
 
         if (
             in_array(
@@ -294,8 +247,6 @@ class BookingController extends Controller
             );
         }
 
-
-
         DB::transaction(function () use ($booking, $doctor, $user) {
             if (
                 $booking->booking_type === 'online' &&
@@ -303,18 +254,16 @@ class BookingController extends Controller
                 !empty($booking->patient_phone) &&
                 $user->can('use-clinic-system')
             ) {
-                $patient = Patient::updateOrCreate(
-                    [
-                        'doctor_id' => $doctor->id,
-                        'phone' => $booking->patient_phone,
-                    ],
-                    [
-                        'name' => $booking->patient_name,
-                    ]
+                $phone = PhoneNumber::normalize($booking->patient_phone);
+
+                $patient = Patient::firstOrCreate(
+                    ['doctor_id' => $doctor->id, 'phone' => $phone],
+                    ['name' => $booking->patient_name]
                 );
 
                 $booking->update([
-                    'patient_id' => $patient->id,
+                    'patient_id'    => $patient->id,
+                    'patient_phone' => $phone,
                 ]);
             }
 
@@ -436,6 +385,7 @@ class BookingController extends Controller
                     'completed',
                     'cancelled',
                     'in_progress',
+                    'no_show',
                 ]
             )
         ) {
@@ -448,7 +398,6 @@ class BookingController extends Controller
         DB::transaction(function () use ($booking) {
             $booking->update([
                 'status' => 'cancelled',
-
             ]);
         });
 
@@ -531,14 +480,14 @@ class BookingController extends Controller
             'paid.lte'       => 'المبلغ المدفوع لا يمكن أن يكون أكبر من سعر الكشف.',
         ]);
 
-    if ($validator->fails()) {
-        return back()
-            ->withErrors($validator, 'payment')
-            ->withInput(array_merge(
-                $request->all(),
-                ['_payment_booking_id' => $booking->id]
-            ));
-    }
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator, 'payment')
+                ->withInput(array_merge(
+                    $request->all(),
+                    ['_payment_booking_id' => $booking->id]
+                ));
+        }
 
         $booking->update($validator->validated());
 
@@ -549,7 +498,7 @@ class BookingController extends Controller
         Booking $booking
     ): void {
         $user = Auth::user();
-        $doctor =$user->clinicDoctor();
+        $doctor = $user->clinicDoctor();
 
         abort_unless(
             (int) $booking->doctor_id === (int) $doctor->id,
@@ -713,8 +662,8 @@ class BookingController extends Controller
 
     /*
     |--------------------------------------------------------------------------
-    | [إضافة] بناء نفس استعلام فلاتر جدول الحجوزات المستخدم في index()
-    | مستخدمة فقط داخل queueData() لتحديث الجدول تلقائيًا بنفس الفلاتر
+    | بناء استعلام فلاتر جدول الحجوزات (مستخدم في index() و queueData())
+    | with('patient:id,phone') لتفادي N+1 في عرض رقم الهاتف
     |--------------------------------------------------------------------------
     */
 
@@ -723,7 +672,7 @@ class BookingController extends Controller
         $doctor,
         array $bookingDates
     ) {
-        $query = $doctor->bookings();
+        $query = $doctor->bookings()->with('patient:id,phone');
 
         if ($request->filled('search')) {
             $search = trim($request->search);
@@ -833,12 +782,6 @@ class BookingController extends Controller
 
         $total = $todayBookings->count();
 
-        /*
-        |--------------------------------------------------------------------------
-        | [إضافة] جدول الحجوزات — نفس فلاتر index() بالظبط، لعرضه AJAX بدون Refresh
-        |--------------------------------------------------------------------------
-        */
-
         $bookings = $this->buildFilteredBookingsQuery($request, $doctor, $bookingDates)
             ->orderByDesc('appointment_date')
             ->orderByDesc('start_time')
@@ -881,9 +824,17 @@ class BookingController extends Controller
             'bookingsTotal' => $bookings->total(),
         ]);
     }
+
     public function destroy(Booking $booking)
     {
         $this->authorizeBooking($booking);
+
+        if (in_array($booking->status, ['completed', 'in_progress'], true)) {
+            return back()->with(
+                'error',
+                'لا يمكن حذف حجز تم الكشف عليه أو الكشف جاري عليه.'
+            );
+        }
 
         $booking->delete();
 

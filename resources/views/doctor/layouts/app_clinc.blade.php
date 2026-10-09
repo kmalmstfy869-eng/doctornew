@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('css/doctor/clinic/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base/tokens.css') }}">
     <link rel="stylesheet" href="{{ asset('css/clinic/theme.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/clinic/responsive.css') }}">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     @stack('extra_style')

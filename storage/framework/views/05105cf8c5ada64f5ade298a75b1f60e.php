@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/clinic/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/base/tokens.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/clinic/theme.css')); ?>">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/clinic/responsive.css')); ?>">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
     <?php echo $__env->yieldPushContent('extra_style'); ?>

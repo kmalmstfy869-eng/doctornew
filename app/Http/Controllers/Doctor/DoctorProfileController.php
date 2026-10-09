@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\View;
 
 class DoctorProfileController extends Controller
 {
-  use AuthorizesRequests;
+    use AuthorizesRequests;
 
     public function edit(
         Request $request,
     ) {
-        /** @var \App\Models\Doctor $doctor */
+
         $doctor = View::shared('doctor');
 
         if ($doctor) {
@@ -109,27 +109,11 @@ class DoctorProfileController extends Controller
                     $validated['bio'];
 
                 $doctor->services = json_decode(
-                    $validated['services'],
+                    $validated['services']??null,
                     true
                 );
 
-                /*
-                |--------------------------------------------------------------------------
-                | الصورة الشخصية
-                |--------------------------------------------------------------------------
-                |
-                | نفس فكرة صور العيادة:
-                |
-                | 1. لو الصورة القديمة موجودة وتم حذفها من الواجهة
-                |    يتم تسجيلها للحذف بعد نجاح الـTransaction.
-                |
-                | 2. لو تم اختيار صورة جديدة
-                |    يتم استبدال القديمة بها.
-                |
-                | 3. الصورة القديمة لا يتم حذفها فعليًا
-                |    إلا بعد نجاح الـTransaction.
-                |
-                */
+
 
                 $oldDoctorImage =
                     $doctor->doctor_image;
@@ -437,7 +421,7 @@ class DoctorProfileController extends Controller
 
         public function show(Request $request)
     {
-        /** @var \App\Models\Doctor $doctor */
+
         $doctor = View::shared('doctor');
 
         $doctor->loadMissing(['rating','area']);

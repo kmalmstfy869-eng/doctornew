@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Clinic;
 
 use App\Http\Controllers\Controller;
+use App\Services\Clinic\ClinicFinanceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,10 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    /**
-     * ترتيب أيام الأسبوع بالعربي، وقيمة DAYOFWEEK بتاعة MySQL لكل يوم
-     * (1 = الأحد ... 7 = السبت).
-     */
     private const WEEK_DAYS = [
         7 => 'السبت',
         1 => 'الأحد',
@@ -24,19 +21,12 @@ class ReportController extends Controller
         6 => 'الجمعة',
     ];
 
-    /**
-     * الحالات دي مش حجز فعلي (لسه في انتظار الحضور أو مؤكد بس ماحضرش)،
-     * فمستبعدة من أي عدّ للحجوزات في الصفحة دي — عدا الحجوزات الملغاة
-     * اللي بتتحسب لوحدها في خانتها الخاصة.
-     */
-    private const NOT_ACTUAL_BOOKING_STATUSES = ['pending', 'confirmed'];
+    private const NOT_ACTUAL_BOOKING_STATUSES = ClinicFinanceService::NOT_ACTUAL;
 
     public function index(Request $request)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        $doctor = $user->doctor()->firstOrFail();
+        $doctor = $user->clinicDoctor();
 
         $period = $request->query('period', 'month');
 
@@ -49,17 +39,7 @@ class ReportController extends Controller
         $fromDate = $from->toDateString();
         $toDate = $to->toDateString();
 
-        /*
-        |--------------------------------------------------------------------------
-        | كويري واحد: إحصائيات الحجوزات + مصادر الحجز خلال الفترة
-        |--------------------------------------------------------------------------
-        |
-        | مستبعد منها pending و confirmed لأنها مش حجز فعلي حتى الآن؛
-        | الملغاة و"لم يحضر" (cancelled, no_show) متضمنة في خانة واحدة
-        | لأنها منطقيًا نفس الشيء: مريض لم يُشاهَد.
-        |
-        */
-
+        // ---------- إحصائيات الحجوزات + المصادر ----------
         $stats = DB::table('bookings')
             ->where('doctor_id', $doctor->id)
             ->whereDate('appointment_date', '>=', $fromDate)
@@ -88,12 +68,7 @@ class ReportController extends Controller
         $daysInPeriod = max(1, $from->diffInDays($to->min(today())) + 1);
         $averageBookingsPerDay = round($total / $daysInPeriod, 1);
 
-        /*
-        |--------------------------------------------------------------------------
-        | كويري تاني: توزيع الحجوزات على أيام الأسبوع خلال نفس الفترة
-        |--------------------------------------------------------------------------
-        */
-
+        // ---------- توزيع أيام الأسبوع ----------
         $dayCounts = DB::table('bookings')
             ->where('doctor_id', $doctor->id)
             ->whereDate('appointment_date', '>=', $fromDate)
@@ -113,16 +88,9 @@ class ReportController extends Controller
         }
 
         $maxBusyDay = ! empty($busyDays) ? max(array_column($busyDays, 'count')) : 0;
-
         $topDay = collect($busyDays)->sortByDesc('count')->first();
 
-        /*
-        |--------------------------------------------------------------------------
-        | كويري تالت: الحجوزات شهريًا لآخر 6 شهور (أونلاين مقابل عيادة)
-        | مستقل عن فلتر الفترة، زي التصميم الأصلي
-        |--------------------------------------------------------------------------
-        */
-
+        // ---------- الحجوزات شهريًا (آخر 6 شهور) ----------
         $chartStart = today()->subMonths(5)->startOfMonth();
 
         $monthlyRowsFull = DB::table('bookings')
@@ -164,12 +132,7 @@ class ReportController extends Controller
             return $m;
         }, $months);
 
-        /*
-        |--------------------------------------------------------------------------
-        | كويري رابع: إجمالي المرضى + مرضى جدد هذا الشهر (aggregate واحد)
-        |--------------------------------------------------------------------------
-        */
-
+        // ---------- المرضى ----------
         $patientStats = DB::table('patients')
             ->where('doctor_id', $doctor->id)
             ->selectRaw('
@@ -180,12 +143,6 @@ class ReportController extends Controller
 
         $totalPatients = (int) $patientStats->total;
         $newPatientsThisMonth = (int) $patientStats->new_this_month;
-
-        /*
-        |--------------------------------------------------------------------------
-        | مصادر الحجز جاهزة للعرض
-        |--------------------------------------------------------------------------
-        */
 
         $bookingSources = [
             [

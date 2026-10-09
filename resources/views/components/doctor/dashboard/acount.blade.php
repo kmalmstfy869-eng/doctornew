@@ -1,7 +1,22 @@
 @props(['doctor', 'doctorname'])
 @php
-    $planSlug = strtolower($doctor->subscription?->plan?->slug ?? 'مجاني');
+    $planSlug = strtolower($doctor->subscription?->plan?->slug ?? '');
     $doctorImage = $doctor->doctor_image;
+
+    $planLabel = match (true) {
+        str_starts_with($planSlug, 'clinic-system-') => 'Clinic System',
+        str_starts_with($planSlug, 'professional-') => 'Professional',
+        str_starts_with($planSlug, 'prime-') => 'Prime',
+        default => 'مجاني',
+    };
+
+    $durationLabel = match (true) {
+        str_ends_with($planSlug, '-monthly') => 'شهري',
+        str_ends_with($planSlug, '-3-months') => '3 شهور',
+        str_ends_with($planSlug, '-yearly') => 'سنوي',
+        default => null,
+    };
+$isPending = $doctor->status === 'pending';
 @endphp
 
 <div class="panel" id="account-summary">
@@ -57,14 +72,17 @@
                 </span>
 
 
-                <div class="account-status">
-
-                    <i></i>
-
-                    الحساب نشط
-
-                </div>
-
+            @if ($isPending)
+            <div class="account-status is-pending">
+                <i></i>
+                قيد المراجعة
+            </div>
+        @else
+            <div class="account-status">
+                <i></i>
+                الحساب نشط
+            </div>
+        @endif
             </div>
 
         </div>
@@ -131,8 +149,11 @@
                         @php
                             $averageRating = $doctor->rating()->avg('rating');
                         @endphp
-
-                        {{ $averageRating ? number_format($averageRating, 1) . ' / 5' : 'لا توجد تقييمات' }}
+                        @if ($doctor->hasFeature('subscription'))
+                            {{ $averageRating ? number_format($averageRating, 1) . ' / 5' : 'لا توجد تقييمات' }}
+                        @else
+                            {{ 'الميزة غير متوفرة' }}
+                        @endif
                     </strong>
 
                 </div>
@@ -140,7 +161,7 @@
             </div>
 
 
-            <div class="account-row">
+            <a href="{{ route('doctor.subscription') }}" class="account-row">
 
                 <div class="account-row-icon">
                     ♛
@@ -151,18 +172,18 @@
                     <span>
                         الاشتراك
                     </span>
-                    @if ($doctor->hasFeature('subscription'))
-                        <strong>
-                            {{ $planSlug }}
-                        </strong>
-                    @else
-                        <strong>
-                            {{ 'مجاني' }}
-                        </strong>
-                    @endif
+
+                    <strong>
+                        @if ($doctor->hasFeature('subscription'))
+                            {{ $planLabel }}{{ $durationLabel ? ' · ' . $durationLabel : '' }}
+                        @else
+                            مجاني
+                        @endif
+                    </strong>
+
                 </div>
 
-            </div>
+            </a>
 
         </div>
 

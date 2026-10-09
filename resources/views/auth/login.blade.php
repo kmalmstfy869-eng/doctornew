@@ -164,7 +164,7 @@
 
                         <div class="doctor-login-stat">
 
-                            <strong>24/7</strong>
+                            <strong>24/24</strong>
 
                             <span>
                                 دعم مستمر

@@ -120,14 +120,14 @@
 
                     <i class="fa-solid fa-magnifying-glass"></i>
 
-                    <input type="search" id="searchInput" placeholder="ابحث باسم الطبيب أو رقم الهاتف...">
+                    <input type="search" data-live-search value="{{ request('search') }}"
+    placeholder="ابحث بالاسم أو الهاتف أو التخصص أو المنطقة أو الـ ID..." autocomplete="off">
 
                 </div>
 
             </div>
 
-
-            {{-- Table --}}
+<div id="live-results">
             @if ($doctors->isNotEmpty())
 
                 <div class="doctor-pending-table-wrapper">
@@ -152,7 +152,7 @@
                                 </th>
 
                                 <th>
-                                    المافظة
+                                    المنطقة
                                 </th>
 
                                 <th>
@@ -160,7 +160,7 @@
                                 </th>
 
                                 <th>
-                                    الحالة
+                                   نوع الاشتراك
                                 </th>
 
                                 <th>
@@ -245,7 +245,7 @@
                                     </td>
 
 
-                                    {{-- المحافظة --}}
+
                                     <td>
 
                                         {{ $doctor->area->name ?? '—' }}
@@ -341,8 +341,9 @@
                     content="لم يتم العثور على أطباء مشتركين حاليًا" />
 
             @endif
-
         </div>
+        </div>
+
 
     </div>
 
@@ -351,3 +352,6 @@
     <x-admin.doctor_pending_modal />
 
 @endsection
+@push('extra_java')
+    <script src="{{ asset('js/admin/live-search.js') }}?v={{ @filemtime(public_path('js/admin/live-search.js')) ?: time() }}"></script>
+@endpush

@@ -1,8 +1,13 @@
-
 @extends('doctor.layouts.app_clinc')
 @push('extra_style')
     <link rel="stylesheet" href="{{ asset('css/home/pagination.css') }}">
 @endpush
+
+@once('modal-variants-css')
+    @push('extra_style')
+        <link rel="stylesheet" href="{{ asset('css/clinic/modal_variants.css') }}">
+    @endpush
+@endonce
 @section('title', 'جدول العيادة | دليل الأطباء')
 
 @php
@@ -196,17 +201,25 @@
 
 <div id="modal-new-day" class="modal-overlay">
 
-    <div class="modal-panel">
+    <div class="modal-panel modal-panel--create">
 
-        <div class="mb-4">
+        <div class="modal-head">
 
-            <h2 class="text-base font-bold">
-                إضافة يوم عمل
-            </h2>
+            <span class="modal-head__icon">
+                <i data-lucide="calendar-plus" class="size-5"></i>
+            </span>
 
-            <p class="mt-1 text-sm text-muted-foreground">
-                أضف يومًا جديدًا إلى جدول العيادة.
-            </p>
+            <div class="min-w-0 flex-1">
+
+                <h2 class="modal-head__title">
+                    إضافة يوم عمل
+                </h2>
+
+                <p class="modal-head__sub">
+                    أضف يومًا جديدًا إلى جدول العيادة.
+                </p>
+
+            </div>
 
         </div>
 
@@ -364,7 +377,7 @@
 
             </div>
 
-            <div class="mt-6 flex justify-end gap-2">
+            <div class="modal-foot">
 
                 <button
                     type="button"
@@ -376,7 +389,7 @@
 
                 <button
                     type="submit"
-                    class="btn btn-default"
+                    class="btn btn-default btn-submit"
                 >
                     حفظ
                 </button>
@@ -454,17 +467,25 @@
 
     <div id="modal-edit-{{ $schedule->id }}" class="modal-overlay">
 
-        <div class="modal-panel">
+        <div class="modal-panel modal-panel--edit">
 
-            <div class="mb-4">
+            <div class="modal-head">
 
-                <h2 class="text-base font-bold">
-                    تعديل يوم {{ $dayName }}
-                </h2>
+                <span class="modal-head__icon">
+                    <i data-lucide="pencil" class="size-5"></i>
+                </span>
 
-                <p class="mt-1 text-sm text-muted-foreground">
-                    تعديل أوقات العمل ومدة الموعد وحالة اليوم.
-                </p>
+                <div class="min-w-0 flex-1">
+
+                    <h2 class="modal-head__title">
+                        تعديل يوم {{ $dayName }}
+                    </h2>
+
+                    <p class="modal-head__sub">
+                        تعديل أوقات العمل ومدة الموعد وحالة اليوم.
+                    </p>
+
+                </div>
 
             </div>
 
@@ -627,7 +648,7 @@
 
                 </div>
 
-                <div class="mt-6 flex justify-end gap-2">
+                <div class="modal-foot">
 
                     <button
                         type="button"
@@ -639,7 +660,7 @@
 
                     <button
                         type="submit"
-                        class="btn btn-default"
+                        class="btn btn-default btn-submit"
                     >
                         حفظ التعديل
                     </button>
@@ -742,4 +763,3 @@
 
 
 @endsection
-

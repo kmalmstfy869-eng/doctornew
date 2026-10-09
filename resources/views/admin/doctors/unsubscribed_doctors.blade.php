@@ -65,247 +65,222 @@
                 {{-- Search --}}
                 <div class="doctor-pending-search">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="search" id="searchInput" placeholder="ابحث باسم الطبيب أو رقم الهاتف...">
+                    <input type="search" data-live-search value="{{ request('search') }}"
+                        placeholder="ابحث بالاسم أو الهاتف أو التخصص أو المنطقة أو الـ ID..." autocomplete="off">
                 </div>
             </div>
 
-            {{-- Table --}}
-            @if ($doctors->isNotEmpty())
+            <div id="live-results">
+                @if ($doctors->isNotEmpty())
 
-                <div class="doctor-pending-table-wrapper">
+                    <div class="doctor-pending-table-wrapper">
 
-                    <table class="doctor-pending-table">
+                        <table class="doctor-pending-table">
 
-                        <thead>
+                            <thead>
 
-                            <tr>
+                                <tr>
 
-                                {{-- ID --}}
-                                <th>
-                                    ID
-                                </th>
+                                    {{-- ID --}}
+                                    <th>
+                                        ID
+                                    </th>
 
-                                <th>
-                                    الطبيب
-                                </th>
+                                    <th>
+                                        الطبيب
+                                    </th>
 
-                                <th>
-                                    التخصص
-                                </th>
+                                    <th>
+                                        التخصص
+                                    </th>
 
-                                <th>
-                                    المافظة
-                                </th>
+                                    <th>
+                                        المنطقة
+                                    </th>
 
-                                <th>
-                                    تاريخ الإضافة
-                                </th>
+                                    <th>
+                                        تاريخ الإضافة
+                                    </th>
 
-                                <th>
-                                    الحالة
-                                </th>
+                                    <th>
+                                        الحالة
+                                    </th>
 
-                                <th>
-                                    الإجراءات
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="requestsBody">
-
-                            @foreach ($doctors as $doctor)
-
-                                <tr
-                                    data-id="{{ $doctor->id }}"
-                                    data-name="{{ $doctor->user->name ?? '' }}"
-                                    data-phone="{{ $doctor->phone ?? '' }}"
-                                    data-specialty="{{ $doctor->specialty->name ?? '' }}"
-                                    data-area="{{ $doctor->area->name ?? '' }}"
-                                    data-status="{{ $doctor->subscription->plan->name == 'free' ? 'لم يشترك ' : 'اشتراك منتهي' }}"
-                                >
-
-                                    {{-- =========================================
-                                         DOCTOR ID
-                                    ========================================== --}}
-                                    <td>
-
-                                        <span class="doctor-pending-doctor-id">
-                                            #{{ $doctor->id }}
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- الطبيب --}}
-                                    <td>
-
-                                        <div class="doctor-pending-doctor-info">
-
-                                            <div class="doctor-pending-avatar">
-
-                                                @if (!empty($doctor->doctor_image))
-
-                                                    <img
-                                                        src="{{ asset('storage/' . $doctor->doctor_image) }}"
-                                                        alt="صورة الطبيب"
-                                                    >
-
-                                                @else
-
-                                                    <i class="fa-solid fa-user-doctor"></i>
-
-                                                @endif
-
-                                            </div>
-
-                                            <div>
-
-                                                <div class="doctor-pending-name">
-                                                    د. {{ $doctor->user->name ?? 'غير محدد' }}
-                                                </div>
-
-                                                <div class="doctor-pending-phone">
-                                                    {{ $doctor->phone ?? '—' }}
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-
-                                    </td>
-
-
-                                    {{-- التخصص --}}
-                                    <td>
-
-                                        <span class="doctor-pending-specialty">
-                                            {{ $doctor->specialty->name ?? '—' }}
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- المحافظة --}}
-                                    <td>
-                                        {{ $doctor->area->name ?? '—' }}
-                                    </td>
-
-
-                                    {{-- تاريخ الإضافة --}}
-                                    <td>
-
-                                        <span class="doctor-pending-date">
-
-                                            {{
-                                                $doctor->created_at
-                                                    ? $doctor->created_at->translatedFormat('d F Y')
-                                                    : '—'
-                                            }}
-
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- الحالة --}}
-                                    <td>
-
-                                        <span class="doctor-pending-status">
-
-                                            <i class="fa-solid fa-circle-exclamation"></i>
-
-                                            {{
-                                                $doctor->subscription->plan->name == 'free'
-                                                    ? 'لم يشترك '
-                                                    : 'اشتراك منتهي'
-                                            }}
-
-                                        </span>
-
-                                    </td>
-
-
-                                    {{-- الإجراءات --}}
-                                    <td>
-
-                                        <div class="doctor-pending-actions">
-
-                                            {{-- عرض التفاصيل --}}
-                                            <button
-                                                type="button"
-                                                class="doctor-pending-action view"
-                                                title="عرض التفاصيل"
-                                            >
-                                                <i class="fa-solid fa-eye"></i>
-                                            </button>
-
-
-                                            {{-- تعديل --}}
-                                            <a
-                                                href="{{ route('admin.doctor.edit', $doctor->id) }}"
-                                                class="doctor-pending-action edit-btn"
-                                                title="تعديل الطبيب"
-                                            >
-                                                <i class="fa-solid fa-pen"></i>
-                                            </a>
-
-
-                                            {{-- حذف --}}
-                                            <form
-                                                action="{{ route('admin.doctor.destroy', $doctor->id) }}"
-                                                method="POST"
-                                                onsubmit="return confirm('هل أنت متأكد من حذف هذا الطبيب؟')"
-                                            >
-
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="doctor-pending-action delete-btn"
-                                                    title="حذف الطبيب"
-                                                >
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-
-                                            </form>
-
-                                        </div>
-
-                                    </td>
+                                    <th>
+                                        الإجراءات
+                                    </th>
 
                                 </tr>
 
-                            @endforeach
-
-                        </tbody>
-
-                    </table>
-
-                </div>
+                            </thead>
 
 
-                {{-- Pagination --}}
-                <div class="doctor-pending-pagination">
+                            <tbody id="requestsBody">
 
-                    {{ $doctors->links('vendor.pagination.custom') }}
+                                @foreach ($doctors as $doctor)
+                                    <tr data-id="{{ $doctor->id }}" data-name="{{ $doctor->user->name ?? '' }}"
+                                        data-phone="{{ $doctor->phone ?? '' }}"
+                                        data-specialty="{{ $doctor->specialty->name ?? '' }}"
+                                        data-area="{{ $doctor->area->name ?? '' }}"
+                                        data-status="{{ $doctor->subscription->plan->name == 'free' ? 'لم يشترك ' : 'اشتراك منتهي' }}">
 
-                </div>
+                                        {{-- =========================================
+                                         DOCTOR ID
+                                    ========================================== --}}
+                                        <td>
+
+                                            <span class="doctor-pending-doctor-id">
+                                                #{{ $doctor->id }}
+                                            </span>
+
+                                        </td>
 
 
-            @else
+                                        {{-- الطبيب --}}
+                                        <td>
 
-                <x-home.banner.no_results
-                    logo="fa-solid fa-user-doctor"
-                    title="لا يوجد أطباء"
-                    content="لم يتم العثور على أطباء غير مشتركين حاليًا"
-                />
+                                            <div class="doctor-pending-doctor-info">
 
-            @endif
+                                                <div class="doctor-pending-avatar">
 
+                                                    @if (!empty($doctor->doctor_image))
+                                                        <img src="{{ asset('storage/' . $doctor->doctor_image) }}"
+                                                            alt="صورة الطبيب">
+                                                    @else
+                                                        <i class="fa-solid fa-user-doctor"></i>
+                                                    @endif
+
+                                                </div>
+
+                                                <div>
+
+                                                    <div class="doctor-pending-name">
+                                                        د. {{ $doctor->user->name ?? 'غير محدد' }}
+                                                    </div>
+
+                                                    <div class="doctor-pending-phone">
+                                                        {{ $doctor->phone ?? '—' }}
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        {{-- التخصص --}}
+                                        <td>
+
+                                            <span class="doctor-pending-specialty">
+                                                {{ $doctor->specialty->name ?? '—' }}
+                                            </span>
+
+                                        </td>
+
+
+                                        {{-- المنطقة --}}
+                                        <td>
+                                            {{ $doctor->area->name ?? '—' }}
+                                        </td>
+
+
+                                        {{-- تاريخ الإضافة --}}
+                                        <td>
+                                            <div class="doctor-date-cell">
+                                                <span class="doctor-pending-date">
+                                                    {{ $doctor->created_at ? $doctor->created_at->translatedFormat('d F Y') : '—' }}
+                                                </span>
+
+                                                @if ($doctor->user?->email_verified_at)
+                                                    <span class="email-verify-badge verified"
+                                                        title="تم التأكيد في {{ $doctor->user->email_verified_at->translatedFormat('d F Y') }}">
+                                                        <i class="fa-solid fa-circle-check"></i> إيميل مؤكَّد
+                                                    </span>
+                                                @else
+                                                    <span class="email-verify-badge unverified" title="لم يؤكد الإيميل بعد">
+                                                        <i class="fa-solid fa-circle-xmark"></i> غير مؤكَّد
+                                                    </span>
+                                                @endif
+                                            </div>
+                                        </td>
+
+
+                                        {{-- الحالة --}}
+                                        <td>
+
+                                            <span class="doctor-pending-status">
+
+                                                <i class="fa-solid fa-circle-exclamation"></i>
+
+                                                {{ $doctor->subscription->plan->name == 'free' ? 'لم يشترك ' : 'اشتراك منتهي' }}
+
+                                            </span>
+
+                                        </td>
+
+
+                                        {{-- الإجراءات --}}
+                                        <td>
+
+                                            <div class="doctor-pending-actions">
+
+                                                {{-- عرض التفاصيل --}}
+                                                <button type="button" class="doctor-pending-action view"
+                                                    title="عرض التفاصيل">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </button>
+
+
+                                                {{-- تعديل --}}
+                                                <a href="{{ route('admin.doctor.edit', $doctor->id) }}"
+                                                    class="doctor-pending-action edit-btn" title="تعديل الطبيب">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+
+
+                                                {{-- حذف --}}
+                                                <form action="{{ route('admin.doctor.destroy', $doctor->id) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('هل أنت متأكد من حذف هذا الطبيب؟')">
+
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="submit" class="doctor-pending-action delete-btn"
+                                                        title="حذف الطبيب">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+
+                                                </form>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    {{-- Pagination --}}
+                    <div class="doctor-pending-pagination">
+
+                        {{ $doctors->links('vendor.pagination.custom') }}
+
+                    </div>
+                @else
+                    <x-home.banner.no_results logo="fa-solid fa-user-doctor" title="لا يوجد أطباء"
+                        content="لم يتم العثور على أطباء غير مشتركين حاليًا" />
+
+                @endif
+
+            </div>
         </div>
 
     </div>
@@ -315,3 +290,8 @@
     <x-admin.doctor_pending_modal />
 
 @endsection
+@push('extra_java')
+    <script
+        src="{{ asset('js/admin/live-search.js') }}?v={{ @filemtime(public_path('js/admin/live-search.js')) ?: time() }}">
+    </script>
+@endpush

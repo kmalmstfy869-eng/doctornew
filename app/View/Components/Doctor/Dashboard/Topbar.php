@@ -7,6 +7,8 @@ use App\Models\Subscription;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\Favorite;
+use App\Models\SiteVisitStat;
 
 class Topbar extends Component
 {
@@ -36,8 +38,13 @@ class Topbar extends Component
 
     public int $completion = 0;
 
+    public int $profileViews = 0;
 
-    public function __construct(Doctor $doctor , string $doctorname="طبيب")
+    public int $uniqueVisitors = 0;
+
+    public int $favoritesCount = 0;
+
+    public function __construct(Doctor $doctor, string $doctorname = "طبيب")
     {
         $this->doctor = $doctor;
 
@@ -47,27 +54,21 @@ class Topbar extends Component
 
         $this->prepareRating();
 
+        $this->prepareStatistics();
+
         $this->prepareProfileCompletion();
     }
 
-
-
     protected function prepareSubscription(): void
     {
-
         $subscription = $this->doctor->subscription;
-
 
         $this->isSubscribed = $this->doctor->hasFeature('subscription');
 
         if (! $this->isSubscribed || ! $subscription) {
-
             $this->planName = 'مجاني';
-
             $this->subscriptionStatus = 'مجاني';
-
             $this->remainingDaysText = 'غير محدد';
-
             $this->expirationDate = null;
 
             return;
@@ -75,68 +76,46 @@ class Topbar extends Component
 
         $this->subscription = $subscription;
 
-
-        $this->planName =
-            $subscription->plan?->name
-            ?? 'اشتراك نشط';
-
-
+        $this->planName = $subscription->plan?->name ?? 'اشتراك نشط';
 
         if ($subscription->end_date) {
+            $this->expirationDate = $subscription->end_date->translatedFormat('d F Y');
 
-            $this->expirationDate =
-                $subscription->end_date
-                    ->translatedFormat('d F Y');
-        }
+            $remainingDays = max(
+                0,
+                (int) ceil(now()->diffInSeconds($subscription->end_date, false) / 86400)
+            );
 
-
-
-        if ($subscription->end_date) {
-
-            $remainingDays =
-                max(
-                    0,
-                    now()->diffInHours(
-                        $subscription->end_date,
-                        false
-                    ) / 24
-                );
-
-
-
-            $this->remainingDaysText =
-                $this->formatRemainingDays($remainingDays);
-
-
+            $this->remainingDaysText = $this->formatRemainingDays($remainingDays);
 
             if ($remainingDays <= 7) {
-
                 $this->isExpiringSoon = true;
-
-                $this->subscriptionStatus =
-                    'أوشك على الانتهاء';
+                $this->subscriptionStatus = 'أوشك على الانتهاء';
 
                 return;
             }
         }
 
-
         $this->subscriptionStatus = 'نشط';
     }
 
+    protected function prepareStatistics(): void
+    {
+        $stats = SiteVisitStat::forDoctor($this->doctor->id);
 
+        $this->profileViews   = $stats['views'];
+        $this->uniqueVisitors = $stats['unique_visitors'];
+        $this->favoritesCount = Favorite::where('doctor_id', $this->doctor->id)->count();
+    }
 
     protected function prepareRating(): void
     {
-
-    $rating = $this->doctor->rating()->avg('rating');
+        $rating = $this->doctor->rating()->avg('rating');
 
         $this->rating = $rating
             ? number_format((float) $rating, 1) . ' / 5'
             : 'لا توجد تقييمات';
     }
-
-
 
     protected function prepareProfileCompletion(): void
     {
@@ -162,23 +141,18 @@ class Topbar extends Component
         $this->completion = (int) round(($doneItems / $totalItems) * 100);
     }
 
-
-
-    protected function formatRemainingDays(float $days): string
+    protected function formatRemainingDays(int $days): string
     {
         if ($days <= 0) {
             return 'منتهي';
         }
 
-        if ($days < 1) {
-            return 'أقل من يوم';
+        if ($days === 1) {
+            return 'متبقي يوم واحد';
         }
 
-        $days = round($days, 1);
-
-        return 'متبقي ' . number_format($days, 1) . ' يوم';
+        return 'متبقي ' . $days . ' يوم';
     }
-
 
     public function render(): View|Closure|string
     {

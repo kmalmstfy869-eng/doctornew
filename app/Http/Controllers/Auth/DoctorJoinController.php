@@ -9,7 +9,7 @@ use App\Models\Doctor;
 use App\Models\Specialties;
 use App\Models\Subscription;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,71 +27,73 @@ class DoctorJoinController extends Controller
         ));
     }
 
-        public function store(DoctorJoinRequest $request)
+    public function store(DoctorJoinRequest $request)
     {
-
         try {
-            DB::beginTransaction();
-
             $validated = $request->validated();
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => 'doctor',
-        ]);
+            $user = DB::transaction(function () use ($validated) {
 
-            $userId = $user->id;
-
-            $doctor = Doctor::create([
-                'working_hours' => $validated['working_hours'],
-                'address' => $validated['location'],
-                'clinic_name' => $validated['clinic_name'] ?? null,
-                'consultation_price' => $validated['consultation_price'],
-                'bio' => $validated['bio'] ?? null,
-                'experience' => $validated['experience'],
-                'whatsapp' => $validated['whatsapp'] ?? null,
-                'phone' => $validated['phone'],
-                'area_id' => $validated['area_id'],
-                'specialty_id' => $validated['specialty_id'],
-                'user_id' => $userId,
-                'status' => "pending",
-            ]);
-
-
-                $startDate = now();
-                $doctorId=$doctor->id;
-
-            Subscription::create([
-                'doctor_id' => $doctorId,
-                'plan_id' => "1",
-                'start_date' => $startDate,
-                'end_date' => $startDate->copy()->addYears(10),
-                "price"=>0,
+                $user = User::create([
+                    'name'     => $validated['name'],
+                    'email'    => $validated['email'],
+                    'password' => Hash::make($validated['password']),
+                    'role'     => 'doctor',
                 ]);
 
+                $doctor = Doctor::create([
+                    'user_id'            => $user->id,
+                    'working_hours'      => $validated['working_hours'],
+                    'address'            => $validated['location'],
+                    'clinic_name'        => $validated['clinic_name'] ?? null,
+                    'consultation_price' => $validated['consultation_price'],
+                    'bio'                => $validated['bio'] ?? null,
+                    'experience'         => $validated['experience'],
+                    'whatsapp'           => $validated['whatsapp'] ?? null,
+                    'phone'              => $validated['phone'],
+                    'area_id'            => $validated['area_id'],
+                    'specialty_id'       => $validated['specialty_id'],
+                    'status'             => 'pending',
+                ]);
 
-            DB::commit();
+                $startDate = now();
 
-            return redirect()
-                ->route('doctor_join')
-                ->with(
-                    'success',
-                    'تم إرسال طلب الانضمام بنجاح، وسيتم مراجعته من الإدارة وإخبارك.'
-                );
+                Subscription::create([
+                    'doctor_id'  => $doctor->id,
+                    'plan_id'    => 1,
+                    'start_date' => $startDate,
+                    'end_date'   => $startDate->copy()->addYears(10),
+                    'price'      => 0,
+                ]);
+
+                return $user;
+            });
 
         } catch (\Throwable $e) {
 
-            DB::rollBack();
+            report($e);
 
             return back()
                 ->withInput()
                 ->with(
                     'error',
-                    ' حدث خطأ أثناء إرسال طلب الانضمام، حاول مرة أخرى او تواصل معنا للاضافه اسرع'
+                    'حصل خطأ أثناء إرسال طلب الانضمام، حاول تاني أو تواصل معانا وهنساعدك بسرعة.'
                 );
         }
+
+        // إرسال إيميل التأكيد (لو فشل مايبوظش التسجيل)
+        rescue(fn () => $user->sendEmailVerificationNotification());
+
+        // تسجيل دخول تلقائي
+        Auth::login($user);
+
+        $request->session()->regenerate();
+
+        return redirect()
+            ->route('verification.notice')
+            ->with(
+                'success',
+                'أهلاً بيك 🎉 بعتنالك لينك تأكيد على إيميلك، أكد حسابك وبعدها هنراجع طلبك ونبلغك أول ما يتقبل.'
+            );
     }
 }
-

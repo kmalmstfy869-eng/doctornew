@@ -3,6 +3,7 @@
 <?php $__env->startPush('extra_style'); ?>
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/ratings.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/readability/ratings.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('css/doctor/dashboard/reviews-page.css')); ?>">
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startSection('content'); ?>
