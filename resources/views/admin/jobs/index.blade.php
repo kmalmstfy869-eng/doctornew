@@ -37,7 +37,27 @@
                     </p>
 
                 </div>
+            <div class="users-count-card">
 
+                <div class="users-count-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <div class="users-count-data">
+
+                    <span>
+                        إجمالي الوظائف
+                    </span>
+
+                    <strong>
+                        {{ $jobs->total() }}
+                    </strong>
+
+                </div>
+
+            </div>
             </div>
 
 
@@ -65,7 +85,7 @@
                         <tr>
 
                             <th>
-                                #
+
                             </th>
 
                             <th>
@@ -115,7 +135,7 @@
                             <tr>
 
                                 <td>
-                                    {{ $jobs->firstItem() + $loop->index }}
+                                    🧡{{ $jobs->firstItem() + $loop->index }}
                                 </td>
 
 

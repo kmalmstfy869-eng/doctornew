@@ -62,15 +62,20 @@ class ExtraStorageController extends Controller
             ->whereBetween('entry_date', [now()->startOfMonth()->toDateString(), now()->endOfMonth()->toDateString()])
             ->sum('amount');
 
-        return view('admin.storage.extra', [
-            'subs' => $subs, 'counts' => $counts, 'planStats' => $planStats,
-            'extraGb' => $extraGb, 'monthIncome' => $monthIncome,
-            'search' => $search, 'state' => $state, 'soonDays' => self::SOON_DAYS,
+        return view('admin.subscriptions.storage-subscriptions', [
+            'subs' => $subs,
+            'counts' => $counts,
+            'planStats' => $planStats,
+            'extraGb' => $extraGb,
+            'monthIncome' => $monthIncome,
+            'search' => $search,
+            'state' => $state,
+            'soonDays' => self::SOON_DAYS,
             'cfg' => $this->svc->settings(),
         ]);
     }
 
-    /** بحث لايف: الأطباء المعتمدين اللي مالهمش اشتراك مساحة ساري */
+
     public function searchDoctors(Request $request)
     {
         $q = trim((string) $request->input('q', ''));
@@ -135,8 +140,10 @@ class ExtraStorageController extends Controller
                 'locked_price' => $data['amount'],
             ]);
 
-            $this->income("اشتراك مساحة +{$gb} GB ({$sub->period_label}) - د. {$doctor->user->name}", (float) $data['amount'], $data['note'] ?? null);
-            AdminAuditLog::record('extra_storage.create', "extra#{$sub->id}", ['doctor_id' => $doctor->id, 'gb' => $gb, 'amount' => (float) $data['amount']]);
+            $this->income(
+                'اشتراك مساحة ' . $this->gbText($gb) . ' (' . $sub->period_label . ') - د. ' . $this->iso($doctor->user->name),
+                (float) $data['amount'], $data['note'] ?? null
+            );
 
             $this->svc->sync($doctor->id);
 
@@ -146,7 +153,6 @@ class ExtraStorageController extends Controller
         return back()->with('success', $msg);
     }
 
-    /* ------------------------------ تعديل (باقة/وحدات) ------------------------------ */
 
     public function change(Request $request, StorageSubscription $extra)
     {
@@ -173,7 +179,7 @@ class ExtraStorageController extends Controller
             $q = $this->quote($sub, $data['period'], (float) $data['new_price']);
             $units = (int) $data['units'];
             $gb = $units * StorageSubscription::unitGb();
-            $oldLabel = "+{$sub->gb_label} GB ({$sub->period_label})";
+            $oldLabel = $this->gbText($sub->gb_label) . ' (' . $sub->period_label . ')';
 
             $sub->update([
                 'period' => $data['period'], 'units' => $units, 'gb' => $gb,
@@ -182,12 +188,10 @@ class ExtraStorageController extends Controller
             ]);
 
             $this->income(
-                "تعديل مساحة د. {$sub->doctor->user->name}: {$oldLabel} ← +{$gb} GB ({$sub->period_label})",
+                'تعديل مساحة د. ' . $this->iso($sub->doctor->user->name) . ': ' . $oldLabel
+                    . ' ← ' . $this->gbText($gb) . ' (' . $sub->period_label . ')',
                 (float) $data['collected'], $data['note'] ?? null
             );
-            AdminAuditLog::record('extra_storage.change', "extra#{$sub->id}", [
-                'gb' => $gb, 'period' => $sub->period, 'credit' => $q['credit'], 'collected' => (float) $data['collected'],
-            ]);
 
             return 'تم تعديل الاشتراك وتسجيل المبلغ في المالية.' . $this->overUsageNote($sub->doctor_id);
         });
@@ -213,7 +217,6 @@ class ExtraStorageController extends Controller
             $this->guard($sub, 'extRenew', $data['sub_token']);
 
             if ($sub->is_running) {
-                // لسه ساري: نفس الباقة، والأيام المتبقية بتتحفظ (النهاية القديمة + المدة)
                 $sub->update([
                     'end_date' => $sub->end_date->copy()->addDays(StorageSubscription::periodDays($sub->period)),
                     'locked_price' => $data['amount'],
@@ -235,8 +238,10 @@ class ExtraStorageController extends Controller
                 ]);
             }
 
-            $this->income("تجديد مساحة +{$sub->gb_label} GB ({$sub->period_label}) - د. {$sub->doctor->user->name}", (float) $data['amount'], $data['note'] ?? null);
-            AdminAuditLog::record('extra_storage.renew', "extra#{$sub->id}", ['amount' => (float) $data['amount']]);
+            $this->income(
+                'تجديد مساحة ' . $this->gbText($sub->gb_label) . ' (' . $sub->period_label . ') - د. ' . $this->iso($sub->doctor->user->name),
+                (float) $data['amount'], $data['note'] ?? null
+            );
 
             $this->svc->sync($sub->doctor_id);
 
@@ -291,6 +296,18 @@ class ExtraStorageController extends Controller
             'type' => 'income', 'category' => 'extra_storage', 'title' => $title, 'amount' => $amount,
             'entry_date' => now('Africa/Cairo')->toDateString(), 'note' => $note, 'created_by' => auth()->id(),
         ]);
+    }
+
+    /** يعزل نص (اسم/رقم إنجليزي) جوه جملة عربي عشان ترتيبه ميتلخبطش */
+    private function iso(string $s): string
+    {
+        return "\u{2068}{$s}\u{2069}";
+    }
+
+    /** بيرجّع "+25 GB" كوحدة واحدة معزولة */
+    private function gbText(string|int|float $gb): string
+    {
+        return $this->iso("+{$gb} GB");
     }
 
     private function fail(string $bag, string $field, string $msg): never

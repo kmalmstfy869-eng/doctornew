@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\PatientRestoreController;
 use App\Http\Controllers\Admin\PatientStorageController;
 use App\Http\Controllers\Admin\PendingDoctorController;
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\RatingsController;
 use App\Http\Controllers\Admin\RejectedDoctorsController;
 use App\Http\Controllers\Admin\SiteStatsController;
@@ -29,20 +30,12 @@ Route::middleware(['auth', 'verified', 'is_admin', 'redirect_doctor', 'redirect_
 
         Route::get('stats', [SiteStatsController::class, 'index'])->name('stats');
 
-        /*
-        |--------------------------------------------------------------------------
-        | 1) الرئيسية والإعدادات
-        |--------------------------------------------------------------------------
-        */
+
         Route::get('/', [AdminDashboardController::class, 'index']);
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::get('/profile', [AdminDashboardController::class, 'profileadmin'])->name('profile_admin');
 
-        /*
-        |--------------------------------------------------------------------------
-        | 2) الأطباء (الترتيب هنا زي ما كان بالظبط)
-        |--------------------------------------------------------------------------
-        */
+
         Route::resource('unsubscribed_doctors', UnsubscribedDoctorController::class);
         Route::resource('subscribed_doctors', subscribedDoctorController::class);
         Route::resource('pending_doctors', PendingDoctorController::class);
@@ -67,6 +60,14 @@ Route::middleware(['auth', 'verified', 'is_admin', 'redirect_doctor', 'redirect_
         | 3) الاشتراكات والمالية
         |--------------------------------------------------------------------------
         */
+
+        // الباقات: عرض وتعديل فقط (مفيش إضافة ولا حذف)
+        Route::prefix('plans')->name('plans.')->group(function () {
+            Route::get('/', [PlanController::class, 'index'])->name('index');
+            Route::put('/order', [PlanController::class, 'updateOrder'])->name('order');
+            Route::put('/tiers/{tier}', [PlanController::class, 'updateTier'])->where('tier', '[a-z0-9\-]+')->name('tiers.update');
+        });
+
         Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
             Route::get('/', [SubscriptionController::class, 'index'])->name('index');
             Route::get('/doctors', [SubscriptionController::class, 'searchDoctors'])->name('doctors');

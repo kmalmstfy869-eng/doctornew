@@ -383,3 +383,4 @@ body.dark .sp-page,
     color: #169b64;
     margin-bottom: 4px;
 }
+   .sp-plan-tag[hidden] { display: none; }

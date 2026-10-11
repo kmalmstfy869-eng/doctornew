@@ -122,14 +122,26 @@
         <section class="sp-plans">
 
             <?php $__currentLoopData = $tiers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tier): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php $featured = $tier['key'] === 'professional'; ?>
+                <?php
+                    // المدد اللي الأدمن علّمها «الأفضل» في الباقة دي
+                    $bestKeys = collect($tier['durations'])->filter(fn ($d) => $d['best'] ?? false)->keys()->all();
+                    $isFeatured = $tier['state'] !== 'current' && in_array($initialDuration, $bestKeys, true);
+                ?>
 
-                <article class="sp-plan <?php echo e($tier['state'] === 'current' ? 'is-current' : ''); ?> <?php echo e($tier['state'] === 'lower' ? 'is-lower' : ''); ?> <?php echo e($featured && $tier['state'] !== 'current' ? 'is-featured' : ''); ?>">
+                <article class="sp-plan <?php echo e($tier['state'] === 'current' ? 'is-current' : ''); ?> <?php echo e($tier['state'] === 'lower' ? 'is-lower' : ''); ?> <?php echo e($isFeatured ? 'is-featured' : ''); ?>"
+                    data-best="<?php echo e(implode(',', $bestKeys)); ?>">
 
                     <?php if($tier['state'] === 'current'): ?>
                         <span class="sp-plan-tag">باقتك الحالية</span>
-                    <?php elseif($featured): ?>
-                        <span class="sp-plan-tag gold"><i class="fa-solid fa-star"></i> الأفضل للأطباء</span>
+                    <?php else: ?>
+                        
+                        <?php $__currentLoopData = $tier['durations']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dKey => $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if($d['best'] ?? false): ?>
+                                <span class="sp-plan-tag gold" data-d="<?php echo e($dKey); ?>" <?php if($dKey !== $initialDuration): ?> hidden <?php endif; ?>>
+                                    <i class="fa-solid fa-star"></i> الأفضل للأطباء
+                                </span>
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php endif; ?>
 
                     <div class="sp-plan-icon">
@@ -165,7 +177,7 @@
 
                         <?php $__currentLoopData = $tier['durations']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $dKey => $d): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <a href="<?php echo e($d['link']); ?>" target="_blank" rel="noopener"
-                                class="sp-btn <?php echo e($featured ? 'sp-btn-primary' : 'sp-btn-outline'); ?> sp-btn-block"
+                                class="sp-btn <?php echo e(($d['best'] ?? false) ? 'sp-btn-primary' : 'sp-btn-outline'); ?> sp-btn-block"
                                 data-d="<?php echo e($dKey); ?>" <?php if($dKey !== $initialDuration): ?> hidden <?php endif; ?>>
                                 <?php echo e($tier['state'] === 'new' ? 'تواصل معنا للاشتراك' : 'ترقية اشتراكك'); ?>
 
@@ -240,6 +252,12 @@
                 buttons.forEach(b => b.classList.toggle('active', b.dataset.duration === d));
                 document.querySelectorAll('#spPage [data-d]').forEach(el => {
                     el.hidden = el.dataset.d !== d;
+                });
+
+                // الكارت يتحدد بس لو المدة المختارة هي الأفضل في باقته
+                document.querySelectorAll('#spPage .sp-plan').forEach(card => {
+                    const best = (card.dataset.best || '').split(',').filter(Boolean);
+                    card.classList.toggle('is-featured', !card.classList.contains('is-current') && best.includes(d));
                 });
             }
 

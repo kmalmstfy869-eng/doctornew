@@ -54,17 +54,10 @@
                             <span class="ap-badge ap-badge--<?php echo e($tone); ?>"><?php echo e($full ? 'ممتلئ' : ($near ? 'قرب من الحد' : 'طبيعي')); ?></span>
                         </td>
                         <td data-label="إجراء">
-                            <button type="button" class="ap-btn ap-btn--primary ap-btn--sm"
-                                @click="$dispatch('ap-quota-open', <?php echo \Illuminate\Support\Js::from([
-                                    'id' => $d->id,
-                                    'name' => $d->doctor_name,
-                                    'quota' => $quotaGb,
-                                    'used' => PatientFileService::formatBytes($used),
-                                    'used_bytes' => $used,
-                                    'files' => (int) $d->files_count,
-                                ])->toHtml() ?>)">
-                                <i class="fa-solid fa-sliders"></i> تعديل
-                            </button>
+                            <a href="<?php echo e(route('admin.storage.extra.index', ['search' => $d->doctor_name])); ?>"
+                                class="ap-btn ap-btn--primary ap-btn--sm">
+                                <i class="fa-solid fa-cubes-stacked"></i> اشتراك المساحة
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

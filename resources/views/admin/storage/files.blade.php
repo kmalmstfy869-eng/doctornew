@@ -10,7 +10,7 @@
 
 @section('content')
 
-    @include('admin.storage._nav')
+    @include('admin.storage.partials._nav')
 
     {{-- x-data فاضي: عشان أزرار الجدول تشتغل حتى بعد إعادة رسمها من البحث الحي --}}
     <div x-data>
@@ -87,7 +87,7 @@
             </form>
 
             <div id="ap-list">
-                @include('admin.storage._files_list')
+                @include('admin.storage.partials._files_list')
             </div>
 
             <div id="ap-pagination" class="ap-card__foot">

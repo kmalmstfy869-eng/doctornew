@@ -1,0 +1,154 @@
+/* ===================== تفاصيل الوظيفة (أدمن) ===================== */
+
+.jd-page {
+    --jd-line: color-mix(in srgb, currentColor 11%, transparent);
+    --jd-soft: color-mix(in srgb, currentColor 4%, transparent);
+    --jd-accent: #2563eb;
+
+    display: flex; flex-direction: column; gap: 1.25rem;
+    max-width: 1180px; margin-inline: auto;
+    padding-inline: 24px; /* نفس المسافة يمين وشمال */
+    padding-block: .25rem 2rem;
+}
+.jd-page,
+.jd-page *,
+.jd-page *::before,
+.jd-page *::after { box-sizing: border-box; }
+
+@media (max-width: 991px) {
+    .jd-page { padding-inline: 0; }
+}
+
+/* الكروت: الخلفية بتيجي من users-card عشان تتبع الثيم (فاتح/داكن) */
+.jd-page .jd-card {
+    margin: 0; padding: 0; overflow: hidden;
+    border: 1px solid var(--jd-line);
+    border-radius: 16px;
+}
+
+/* ---------- الهيدر ---------- */
+.jd-page .jd-hero {
+    display: flex; align-items: flex-start; gap: 1.1rem;
+    padding: 1.4rem 1.5rem;
+}
+.jd-page .jd-hero__main { flex: 1; min-width: 0; }
+.jd-page .jd-hero h2 {
+    margin: 0 0 .3rem; font-size: 1.55rem; font-weight: 800; line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+.jd-page .jd-hero__sub { margin: 0; font-size: .92rem; line-height: 1.7; opacity: .75; }
+.jd-page .jd-hero__status { flex: none; }
+
+.jd-page .jd-chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.jd-page .jd-chip {
+    display: inline-flex; align-items: center; gap: .45rem;
+    padding: .32rem .85rem; border-radius: 999px;
+    font-size: .8rem; font-weight: 600;
+    border: 1px solid var(--jd-line);
+    background: var(--jd-soft);
+}
+.jd-page .jd-chip i { font-size: .75rem; color: var(--jd-accent); }
+
+/* ---------- الأقسام ---------- */
+.jd-page .jd-grid {
+    display: grid; gap: 1.25rem; align-items: start;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 1100px) {
+    .jd-page .jd-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .jd-page .jd-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+    .jd-page .jd-grid { grid-template-columns: 1fr; }
+}
+
+.jd-page .jd-sec__head {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .95rem 1.25rem;
+    border-bottom: 1px solid var(--jd-line);
+    background: var(--jd-soft);
+}
+.jd-page .jd-sec__head h3 { margin: 0; font-size: .98rem; font-weight: 800; }
+.jd-page .jd-sec__head i { color: var(--jd-accent); }
+
+.jd-page .jd-list { margin: 0; padding: .3rem 1.25rem; }
+.jd-page .jd-row {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: .8rem 0; border-bottom: 1px solid var(--jd-line);
+}
+.jd-page .jd-row:last-child { border-bottom: 0; }
+.jd-page .jd-row dt {
+    flex: 0 0 7.5rem; margin: 0;
+    font-size: .82rem; font-weight: 600; opacity: .65;
+}
+.jd-page .jd-row dd {
+    flex: 1; min-width: 0; margin: 0;
+    font-size: .95rem; font-weight: 600; line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+.jd-page .jd-muted { opacity: .55; font-weight: 500; }
+
+/* روابط الهاتف والواتساب: الرقم يفضل ملاصق للعنوان ومقروء */
+.jd-page .jd-link {
+    display: inline-flex; align-items: center; gap: .5rem;
+    direction: ltr; unicode-bidi: isolate;
+    color: inherit; text-decoration: none; font-weight: 700;
+}
+.jd-page .jd-link i { font-size: .85rem; opacity: .7; }
+.jd-page .jd-link--wa i { color: #16a34a; opacity: 1; }
+.jd-page .jd-link:hover { color: var(--jd-accent); }
+
+/* ---------- الوصف: بيظهر كامل مهما كان طويل ---------- */
+.jd-page .jd-desc__body {
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem; line-height: 2;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere; word-break: break-word;
+}
+
+/* ---------- الأزرار ---------- */
+.jd-page .jd-actions {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .6rem;
+    padding: 1rem 1.25rem;
+}
+.jd-page .jd-actions form { margin: 0; }
+
+.jd-page .jd-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    min-height: 42px; padding: .5rem 1.2rem;
+    border: 1px solid transparent; border-radius: 12px;
+    font: inherit; font-size: .9rem; font-weight: 700; line-height: 1;
+    cursor: pointer; text-decoration: none;
+    transition: filter .15s ease;
+}
+.jd-page .jd-btn:hover { filter: brightness(.95); }
+.jd-page .jd-btn:focus-visible { outline: 2px solid var(--jd-accent); outline-offset: 2px; }
+
+.jd-page .jd-btn--ok     { background: #16a34a; color: #fff; }
+.jd-page .jd-btn--reject { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+.jd-page .jd-btn--delete { background: #fef2f2; color: #b91c1c; border-color: #fecaca; margin-inline-start: auto; }
+
+/* ---------- موبايل ---------- */
+@media (max-width: 640px) {
+    .jd-page { gap: 1rem; }
+
+    .jd-page .jd-hero { flex-wrap: wrap; gap: .85rem; padding: 1.1rem; }
+    .jd-page .jd-hero h2 { font-size: 1.2rem; }
+    .jd-page .jd-hero__main { flex-basis: calc(100% - 4.5rem); }
+    .jd-page .jd-hero__status { width: 100%; }
+
+    .jd-page .jd-sec__head { padding: .85rem 1rem; }
+    .jd-page .jd-list { padding: .2rem 1rem; }
+    .jd-page .jd-desc__body { padding: 1rem; font-size: .96rem; line-height: 1.9; }
+
+    .jd-page .jd-actions { padding: .9rem 1rem; gap: .5rem; }
+    .jd-page .jd-actions form { flex: 1 1 calc(50% - .5rem); }
+    .jd-page .jd-actions .jd-btn { width: 100%; }
+    .jd-page .jd-actions form:last-child { flex-basis: 100%; }
+    .jd-page .jd-btn--delete { margin-inline-start: 0; }
+}
+
+@media (max-width: 480px) {
+    .jd-page .jd-row { flex-direction: column; gap: .1rem; padding: .7rem 0; }
+    .jd-page .jd-row dt { flex: none; }
+}

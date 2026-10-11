@@ -26,17 +26,12 @@ class PatientFileService
         'image/webp' => 'webp',
     ];
 
-    // نستخدم Disk مخصص لملفات المرضى حتى نقدر ننقل التخزين لاحقًا إلى Cloudflare R2 بدون تغيير منطق النظام.
+
     public function disk(): FilesystemAdapter
     {
         return Storage::disk(config('clinic.patient_files_disk', 'medical_files'));
     }
 
-    /* ------------------------------------------------------------------ */
-    /* المساحة                                                             */
-    /* ------------------------------------------------------------------ */
-
-    // الحد بيتقرأ من عمود المساحة المسموحة الخاص بالطبيب، ولو فاضي بنستخدم الرقم الافتراضي من config.
     public function limitBytes(int $doctorId): int
     {
         $gb = Doctor::query()->whereKey($doctorId)->value('patient_files_quota_gb');
@@ -45,13 +40,12 @@ class PatientFileService
         return (int) round($gb * 1024 ** 3);
     }
 
-    // المساحة المستخدمة بتتحسب من أحجام الملفات الموجودة فعلًا، فالحذف بيحرر المساحة تلقائيًا.
+
     public function usedBytes(int $doctorId): int
     {
         return (int) PatientFile::query()->where('doctor_id', $doctorId)->sum('size');
     }
 
-    // بنحدّث عمود المتبقي من أحجام الملفات الفعلية، فمهما حصل مفيش رقم بيتراكم غلط.
     public function syncRemaining(int $doctorId): void
     {
         $remaining = max(0, $this->limitBytes($doctorId) - $this->usedBytes($doctorId));
@@ -91,9 +85,7 @@ class PatientFileService
         return $bytes . ' B';
     }
 
-    /* ------------------------------------------------------------------ */
-    /* الرفع                                                               */
-    /* ------------------------------------------------------------------ */
+
 
     public function store(int $doctorId, int $patientId, UploadedFile $file): PatientFile
     {
@@ -151,9 +143,7 @@ class PatientFileService
         });
     }
 
-    /* ------------------------------------------------------------------ */
-    /* العرض / التحميل                                                     */
-    /* ------------------------------------------------------------------ */
+
 
     // الملف بيتبعت عن طريق route محمي وstream من الـ Disk، من غير روابط عامة.
     public function response(PatientFile $file, bool $download = false): StreamedResponse
@@ -171,9 +161,7 @@ class PatientFileService
         ], $download ? 'attachment' : 'inline');
     }
 
-    /* ------------------------------------------------------------------ */
-    /* الحذف                                                               */
-    /* ------------------------------------------------------------------ */
+
 
     public function delete(PatientFile $file): void
     {
@@ -198,7 +186,7 @@ class PatientFileService
         });
     }
 
-    // لما مريض يتحذف، سجلات ملفاته بتتمسح بالـ cascade. هنا بنسجل وقت الحذف للـ Backup ونمسح الملفات من الـ Storage بعد نجاح الـ commit.
+
     public function handlePatientDeleting(Patient $patient): void
     {
         $paths = $patient->files()->pluck('stored_path')->all();

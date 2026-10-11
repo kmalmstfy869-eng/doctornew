@@ -54,7 +54,7 @@
                         </td>
                         <td data-label="إجراء">
                             @if ($deleted || $needs)
-                                @include('admin.storage._restore_btn', ['id' => $b->id, 'deleted' => $deleted])
+                                @include('admin.storage.partials._restore_btn', ['id' => $b->id, 'deleted' => $deleted])
                             @else
                                 <span class="ap-sub">—</span>
                             @endif

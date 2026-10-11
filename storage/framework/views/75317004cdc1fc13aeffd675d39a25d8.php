@@ -10,7 +10,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <?php echo $__env->make('admin.storage._nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php echo $__env->make('admin.storage.partials._nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <div class="dashboard-card ap-card">
 
@@ -19,7 +19,7 @@
                 <h3>التشغيلات</h3>
                 <p><?php echo e($runs->total()); ?> تشغيل • "جزئي" مش بيتحسب نجاح كامل</p>
             </div>
-            <?php echo $__env->make('admin.storage._run_button', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+            <?php echo $__env->make('admin.storage.partials._run_button', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         </div>
 
         <form method="GET" class="ap-filters">

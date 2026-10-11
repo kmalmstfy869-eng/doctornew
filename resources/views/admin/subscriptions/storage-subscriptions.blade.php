@@ -277,7 +277,7 @@
                                 </div>
                             </div>
 
-                            @include('admin.storage.partials.ext-picker')
+                            @include('admin.subscriptions.partials.ext-picker')
 
                             <div class="ext-grid-2">
                                 <div class="ap-field">
@@ -352,7 +352,7 @@
                                         <div><span>الاستهلاك</span><b x-text="sub.used_gb + ' GB'"></b></div>
                                     </div>
 
-                                    @include('admin.storage.partials.ext-picker')
+                                    @include('admin.subscriptions.partials.ext-picker')
 
                                     <template x-if="!same">
                                         <div class="ext-diff">
@@ -438,7 +438,7 @@
                                     </div>
 
                                     <div x-show="!sub.running" class="ext-stack">
-                                        @include('admin.storage.partials.ext-picker')
+                                        @include('admin.subscriptions.partials.ext-picker')
                                         <div class="ap-field">
                                             <label>تاريخ بداية التجديد</label>
                                             <input type="date" name="start_date" x-model="start" :max="today" class="ap-input" :required="!sub.running">

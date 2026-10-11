@@ -11,7 +11,7 @@
 
 @section('content')
 
-    @include('admin.storage._nav')
+    @include('admin.storage.partials._nav')
 
     <div class="dashboard-card ap-card">
 
@@ -20,7 +20,7 @@
                 <h3>التشغيلات</h3>
                 <p>{{ $runs->total() }} تشغيل • "جزئي" مش بيتحسب نجاح كامل</p>
             </div>
-            @include('admin.storage._run_button')
+            @include('admin.storage.partials._run_button')
         </div>
 
         <form method="GET" class="ap-filters">

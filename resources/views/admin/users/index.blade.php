@@ -1,4 +1,3 @@
-
 @extends('admin.layout.app')
 
 @section('title', 'لوحة الإدارة | المستخدمون')
@@ -81,7 +80,7 @@
                         <tr>
 
                             <th>
-                                #
+
                             </th>
 
                             <th>
@@ -90,6 +89,10 @@
 
                             <th>
                                 البريد الإلكتروني
+                            </th>
+
+                            <th>
+                                توثيق البريد
                             </th>
 
                             <th>
@@ -124,7 +127,7 @@
                                 {{-- ID --}}
 
                                 <td>
-                                    {{ $users->firstItem() + $loop->index }}
+                                  🧡  {{ $users->firstItem() + $loop->index }}
                                 </td>
 
 
@@ -158,6 +161,32 @@
                                 <td>
 
                                     {{ $user->email }}
+
+                                </td>
+
+
+                                {{-- EMAIL VERIFIED --}}
+
+                                <td>
+
+                                    @if ($user->email_verified_at)
+                                        <span class="status-badge has-jobs"
+                                            title="تم التوثيق في {{ $user->email_verified_at->format('Y-m-d H:i') }}">
+
+                                            <i class="fa-solid fa-circle-check"></i>
+
+                                            موثّق
+
+                                        </span>
+                                    @else
+                                        <span class="status-badge pending" title="لم يتم توثيق البريد بعد">
+
+                                            <i class="fa-solid fa-clock"></i>
+
+                                            غير موثّق
+
+                                        </span>
+                                    @endif
 
                                 </td>
 
@@ -267,7 +296,7 @@
 
                             <tr>
 
-                                <td colspan="8">
+                                <td colspan="9">
 
                                     <x-home.banner.no_results logo="fa-solid fa-users" title="لا يوجد مستخدمون"
                                         content="لم يتم العثور على أي مستخدمين." />
@@ -292,4 +321,3 @@
     </div>
 
 @endsection
-

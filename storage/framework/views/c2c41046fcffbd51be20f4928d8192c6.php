@@ -6,7 +6,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <?php echo $__env->make('admin.storage._nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php echo $__env->make('admin.storage.partials._nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     
     <div class="stats-grid">
@@ -90,7 +90,7 @@
                     <h3>آخر تشغيل للنسخ الاحتياطي</h3>
                     <p>الجدولة اليومية الساعة 4 الفجر بتوقيت القاهرة</p>
                 </div>
-                <?php echo $__env->make('admin.storage._run_button', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                <?php echo $__env->make('admin.storage.partials._run_button', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             </div>
 
             <div class="ap-card__body">

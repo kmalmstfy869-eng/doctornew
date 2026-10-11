@@ -8,7 +8,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <?php echo $__env->make('admin.storage._nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+    <?php echo $__env->make('admin.storage.partials._nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
     <?php if($errors->any()): ?>
         <div class="ap-alert ap-alert--bad">
@@ -127,7 +127,7 @@
             </form>
 
             <div id="ap-list">
-                <?php echo $__env->make('admin.storage._restore_list', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                <?php echo $__env->make('admin.storage.partials._restore_list', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             </div>
 
             <div id="ap-pagination" class="ap-card__foot"><?php echo e($rows->links('vendor.pagination.custom')); ?></div>

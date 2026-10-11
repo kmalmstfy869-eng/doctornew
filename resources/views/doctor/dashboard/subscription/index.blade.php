@@ -123,14 +123,26 @@
         <section class="sp-plans">
 
             @foreach ($tiers as $tier)
-                @php $featured = $tier['key'] === 'professional'; @endphp
+                @php
+                    // المدد اللي الأدمن علّمها «الأفضل» في الباقة دي
+                    $bestKeys = collect($tier['durations'])->filter(fn ($d) => $d['best'] ?? false)->keys()->all();
+                    $isFeatured = $tier['state'] !== 'current' && in_array($initialDuration, $bestKeys, true);
+                @endphp
 
-                <article class="sp-plan {{ $tier['state'] === 'current' ? 'is-current' : '' }} {{ $tier['state'] === 'lower' ? 'is-lower' : '' }} {{ $featured && $tier['state'] !== 'current' ? 'is-featured' : '' }}">
+                <article class="sp-plan {{ $tier['state'] === 'current' ? 'is-current' : '' }} {{ $tier['state'] === 'lower' ? 'is-lower' : '' }} {{ $isFeatured ? 'is-featured' : '' }}"
+                    data-best="{{ implode(',', $bestKeys) }}">
 
                     @if ($tier['state'] === 'current')
                         <span class="sp-plan-tag">باقتك الحالية</span>
-                    @elseif ($featured)
-                        <span class="sp-plan-tag gold"><i class="fa-solid fa-star"></i> الأفضل للأطباء</span>
+                    @else
+                        {{-- شارة «الأفضل للأطباء» بتظهر بس مع المدة اللي الأدمن علّمها كأفضل --}}
+                        @foreach ($tier['durations'] as $dKey => $d)
+                            @if ($d['best'] ?? false)
+                                <span class="sp-plan-tag gold" data-d="{{ $dKey }}" @if ($dKey !== $initialDuration) hidden @endif>
+                                    <i class="fa-solid fa-star"></i> الأفضل للأطباء
+                                </span>
+                            @endif
+                        @endforeach
                     @endif
 
                     <div class="sp-plan-icon">
@@ -166,7 +178,7 @@
 
                         @foreach ($tier['durations'] as $dKey => $d)
                             <a href="{{ $d['link'] }}" target="_blank" rel="noopener"
-                                class="sp-btn {{ $featured ? 'sp-btn-primary' : 'sp-btn-outline' }} sp-btn-block"
+                                class="sp-btn {{ ($d['best'] ?? false) ? 'sp-btn-primary' : 'sp-btn-outline' }} sp-btn-block"
                                 data-d="{{ $dKey }}" @if ($dKey !== $initialDuration) hidden @endif>
                                 {{ $tier['state'] === 'new' ? 'تواصل معنا للاشتراك' : 'ترقية اشتراكك' }}
                                 <i class="fa-solid fa-crown"></i>
@@ -240,6 +252,12 @@
                 buttons.forEach(b => b.classList.toggle('active', b.dataset.duration === d));
                 document.querySelectorAll('#spPage [data-d]').forEach(el => {
                     el.hidden = el.dataset.d !== d;
+                });
+
+                // الكارت يتحدد بس لو المدة المختارة هي الأفضل في باقته
+                document.querySelectorAll('#spPage .sp-plan').forEach(card => {
+                    const best = (card.dataset.best || '').split(',').filter(Boolean);
+                    card.classList.toggle('is-featured', !card.classList.contains('is-current') && best.includes(d));
                 });
             }
 

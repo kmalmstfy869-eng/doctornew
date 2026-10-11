@@ -58,7 +58,7 @@
                 </a>
             </li>
             
-            <li class="ap-menu-label">الأطباء</li>
+            <li class="menu-title">الأطباء</li>
 
             <li class="doctors-menu">
                 <details
@@ -124,11 +124,10 @@
                         <i class="fa-solid fa-chevron-down doctors-arrow"></i>
                     </summary>
                     <ul class="doctors-submenu">
-                        
                         <li>
-                            <a class="ap-soon" aria-disabled="true">
+                            <a href="<?php echo e(route('admin.plans.index')); ?>"
+                                class="<?php echo e(request()->routeIs('admin.plans.*') ? 'submenu-active' : ''); ?>">
                                 <i class="fa-solid fa-layer-group"></i><span>الباقات</span>
-                                <em class="ap-soon-tag">قريبًا</em>
                             </a>
                         </li>
                         <li>

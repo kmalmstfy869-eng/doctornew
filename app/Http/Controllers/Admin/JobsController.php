@@ -21,9 +21,7 @@ class JobsController extends Controller
         return view('admin.jobs.index', compact('jobs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function approve(Job $job)
     {
         $job->status = "approved";
@@ -45,9 +43,7 @@ class JobsController extends Controller
 
 
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Job $job)
     {
         $job->load('user');

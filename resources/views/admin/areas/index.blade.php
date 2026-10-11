@@ -144,14 +144,13 @@
                 </div>
 
 
-                {{-- Search --}}
-                <div class="doctor-pending-search">
+                {{-- <div class="doctor-pending-search">
 
                     <i class="fa-solid fa-magnifying-glass"></i>
 
                     <input type="search" id="searchInput" placeholder="ابحث باسم المنطقه...">
 
-                </div>
+                </div> --}}
 
             </div>
 

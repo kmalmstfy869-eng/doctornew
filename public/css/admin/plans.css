@@ -1,0 +1,229 @@
+/* ===================== صفحة الباقات ===================== */
+
+.pl-page {
+    --pl-radius: 16px;
+    --pl-line: color-mix(in srgb, currentColor 11%, transparent);
+    --pl-soft: color-mix(in srgb, currentColor 5%, transparent);
+
+    display: flex; flex-direction: column; gap: 1.5rem;
+    padding-inline: 24px; /* نفس المسافة يمين وشمال */
+    padding-block: .25rem 2rem;
+    max-width: 1480px; margin-inline: auto;
+    font-variant-numeric: tabular-nums;
+}
+@media (max-width: 991px) {
+    .pl-page { padding-inline: 0; }
+}
+
+/* لون كل باقة */
+.pl-tier, .pl-ord, .pl-free { --accent: #64748b; }
+[data-tier="prime"] { --accent: #0d9488; }
+[data-tier="professional"] { --accent: #2563eb; }
+[data-tier="clinic-system"] { --accent: #7c3aed; }
+[data-tier="free"] { --accent: #64748b; }
+
+/* ---------- نصوص عامة ---------- */
+.pl-hint {
+    display: flex; align-items: center; gap: .6rem;
+    margin: 0; padding: .7rem 1rem;
+    font-size: .85rem; line-height: 1.6;
+    border: 1px solid var(--pl-line); border-radius: 12px;
+    background: var(--pl-soft);
+}
+.pl-hint i { opacity: .6; }
+.pl-hint { opacity: 1; color: inherit; }
+
+.pl-name { margin: 0; font-size: 1.35rem; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; }
+.pl-desc { margin: 0; font-size: .9rem; line-height: 1.75; opacity: .8; }
+.pl-total { font-size: .85rem; opacity: .75; }
+.pl-total b { font-size: 1rem; opacity: 1; }
+
+/* ---------- الباقات الأم ---------- */
+.pl-tiers {
+    display: grid; gap: 1.25rem; align-items: stretch;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 1180px) { .pl-tiers { grid-template-columns: 1fr; } }
+
+.pl-tier.dashboard-card {
+    display: flex; flex-direction: column; padding: 0; overflow: hidden;
+    border: 1px solid var(--pl-line);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--pl-radius);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 24px -12px rgba(15, 23, 42, .12);
+}
+
+.pl-tier__head {
+    display: flex; flex-direction: column; gap: .6rem;
+    padding: 1.4rem 1.5rem 1.1rem;
+    border-bottom: 1px solid var(--pl-line);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
+}
+.pl-tier__top { display: flex; justify-content: space-between; align-items: center; gap: .5rem; min-height: 1.9rem; }
+.pl-tier__top .pl-name { color: var(--accent); }
+
+.pl-best {
+    display: inline-flex; align-items: center; gap: .35rem;
+    padding: .25rem .75rem; border-radius: 999px;
+    background: var(--accent); color: #fff; font-size: .74rem; font-weight: 700;
+}
+
+/* سلّم الأسعار */
+.pl-ladder { list-style: none; margin: 0; padding: .35rem 1.5rem 0; }
+
+.pl-rung {
+    display: grid; align-items: baseline; column-gap: .9rem; row-gap: .15rem;
+    grid-template-columns: 4.8rem 1fr auto;
+    grid-template-areas:
+        "lbl price subs"
+        "lbl meta  subs"
+        "bar bar   bar";
+    padding: 1rem 0;
+    border-top: 1px solid var(--pl-line);
+}
+.pl-rung:first-child { border-top: 0; }
+
+.pl-rung__label { grid-area: lbl; font-weight: 700; font-size: .9rem; }
+.pl-rung__price { grid-area: price; font-size: 1.45rem; font-weight: 800; line-height: 1.2; }
+.pl-rung__price small { font-size: .75rem; font-weight: 500; opacity: .65; margin-inline-start: .15rem; }
+.pl-rung__meta { grid-area: meta; font-size: .8rem; opacity: .75; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.pl-rung__subs { grid-area: subs; font-size: .8rem; opacity: .7; white-space: nowrap; }
+
+.pl-save {
+    font-style: normal; font-weight: 700; font-size: .72rem;
+    padding: .1rem .55rem; border-radius: 999px;
+    color: #15803d; background: rgba(22, 163, 74, .12);
+}
+
+.pl-bar {
+    grid-area: bar; display: block; height: 5px; margin-top: .65rem; overflow: hidden;
+    border-radius: 999px; background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.pl-bar i { display: block; height: 100%; width: var(--w, 100%); border-radius: inherit; background: var(--accent); }
+
+.pl-feats {
+    list-style: none; flex: 1; margin: .5rem 1.5rem 0; padding: 1.1rem 0 0;
+    display: flex; flex-direction: column; gap: .6rem;
+    border-top: 1px solid var(--pl-line);
+}
+.pl-feats li { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; line-height: 1.6; }
+.pl-feats li i {
+    flex: none; margin-top: .22rem; width: 1.1rem; height: 1.1rem;
+    display: inline-grid; place-items: center;
+    font-size: .6rem; border-radius: 50%;
+    color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, transparent);
+}
+.pl-feats .pl-empty { opacity: .55; }
+
+.pl-tier__foot {
+    display: flex; justify-content: space-between; align-items: center; gap: .5rem;
+    margin-top: 1.25rem; padding: 1rem 1.5rem;
+    border-top: 1px solid var(--pl-line); background: var(--pl-soft);
+}
+
+/* ---------- المجانية ---------- */
+.pl-free.dashboard-card {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; padding: 1.15rem 1.5rem;
+    border: 1px solid var(--pl-line);
+    border-inline-start: 4px solid var(--accent);
+    border-radius: var(--pl-radius);
+}
+.pl-free__id { display: flex; align-items: center; gap: .75rem; }
+.pl-free__body { flex: 1; min-width: 260px; display: flex; flex-direction: column; gap: .65rem; }
+.pl-free__chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+.pl-free__act { display: flex; align-items: center; gap: 1rem; }
+
+.pl-chip {
+    font-size: .78rem; padding: .25rem .7rem; border-radius: 999px;
+    border: 1px solid var(--pl-line);
+    background: var(--pl-soft);
+}
+.pl-chip--solid { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+
+/* ---------- ترتيب الظهور ---------- */
+.pl-orderbox.dashboard-card {
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 1.1rem;
+    border: 1px solid var(--pl-line); border-radius: var(--pl-radius);
+}
+.pl-orderbox__head h3 { margin: 0 0 .3rem; font-size: 1.1rem; font-weight: 800; }
+.pl-orderbox__head p { margin: 0; font-size: .85rem; line-height: 1.7; opacity: .75; }
+
+.pl-order { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
+
+.pl-ord {
+    display: grid; align-items: center; gap: .85rem;
+    grid-template-columns: 2.2rem 1fr auto auto;
+    padding: .65rem .9rem; border-radius: 12px;
+    border: 1px solid var(--pl-line);
+    border-inline-start: 4px solid var(--accent);
+    transition: background-color .15s ease;
+}
+.pl-ord:hover { background: var(--pl-soft); }
+.pl-ord__rank {
+    width: 1.9rem; height: 1.9rem; display: grid; place-items: center;
+    border-radius: 50%; font-weight: 800; font-size: .85rem;
+    background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent);
+}
+.pl-ord__name { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.pl-ord__price { font-size: .85rem; opacity: .8; white-space: nowrap; }
+.pl-ord__btns { display: flex; gap: .3rem; }
+
+.pl-savebar {
+    display: flex; justify-content: flex-end; align-items: center; gap: 1rem;
+    margin-top: 1.1rem; padding-top: 1.1rem;
+    border-top: 1px solid var(--pl-line);
+}
+.pl-savebar__msg { font-size: .85rem; color: #b45309; }
+
+/* ---------- المودال ---------- */
+.pl-prices { display: flex; flex-direction: column; gap: .7rem; }
+
+.pl-price-row {
+    display: grid; align-items: center; gap: .25rem .75rem;
+    grid-template-columns: 5rem 1fr;
+}
+.pl-price-row__label { font-weight: 700; font-size: .9rem; }
+.pl-price-row small { grid-column: 2; opacity: .7; }
+
+.pl-warn {
+    margin: .6rem 0 0; padding: .55rem .8rem; font-size: .85rem;
+    color: #b91c1c; background: rgba(220, 38, 38, .08);
+    border-radius: 10px;
+}
+
+.pl-feat-list { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .6rem; }
+.pl-feat { display: flex; align-items: center; gap: .4rem; }
+.pl-feat .ap-input { flex: 1; }
+
+.pl-check {
+    display: flex; align-items: center; gap: .6rem; cursor: pointer; font-weight: 500;
+    padding: .75rem .9rem; border: 1px solid var(--pl-line); border-radius: 12px;
+}
+.pl-check input[type="checkbox"] { width: 1.1rem; height: 1.1rem; }
+
+/* ---------- موبايل ---------- */
+@media (max-width: 600px) {
+    .pl-page { gap: 1rem; }
+    .pl-tiers { gap: .9rem; }
+    .pl-tier__head { padding: 1.1rem 1.1rem .9rem; }
+    .pl-ladder { padding-inline: 1.1rem; }
+    .pl-feats { margin-inline: 1.1rem; }
+    .pl-tier__foot { padding: .9rem 1.1rem; }
+    .pl-rung { grid-template-columns: 4rem 1fr auto; }
+    .pl-rung__price { font-size: 1.3rem; }
+    .pl-free.dashboard-card { padding: 1rem 1.1rem; }
+    .pl-free__act { width: 100%; justify-content: space-between; }
+    .pl-orderbox.dashboard-card { padding: 1.1rem; }
+    .pl-ord { grid-template-columns: 1.9rem 1fr auto; gap: .6rem; padding: .55rem .7rem; }
+    .pl-ord__price { display: none; }
+    .pl-savebar { flex-direction: column-reverse; align-items: stretch; }
+    .pl-savebar .ap-btn { width: 100%; }
+}
+
+/* رسالة التحذير في فوتر المودال */
+.pl-warn--foot { flex-basis: 100%; margin: 0 0 .5rem; }
+
+/* شارة «الأفضل» على المدة + اختيار المدة الأفضل في المودال */
+.pl-best--sm { padding: .08rem .55rem; font-size: .7rem; }
+.pl-best-pick { display: flex; flex-wrap: wrap; gap: .5rem; }
+.pl-best-pick .pl-check { padding: .55rem .9rem; }

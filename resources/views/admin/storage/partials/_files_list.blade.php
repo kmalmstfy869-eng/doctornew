@@ -43,7 +43,7 @@
                         <td data-label="حجم النسخة"><span class="ap-num" dir="ltr">{{ PatientFileService::formatBytes((int) $b->size) }}</span></td>
                         <td data-label="اتحذف">{{ $b->source_deleted_at->copy()->timezone('Africa/Cairo')->translatedFormat('d M Y') }}</td>
                         <td data-label="تتمسح بعد"><span class="ap-badge {{ $left <= 5 ? 'ap-badge--bad' : 'ap-badge--warn' }}">{{ $left }} يوم</span></td>
-                        <td data-label="">@include('admin.storage._restore_btn', ['id' => $b->id, 'deleted' => true])</td>
+                        <td data-label="">@include('admin.storage.partials._restore_btn', ['id' => $b->id, 'deleted' => true])</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -102,7 +102,7 @@
                         <td data-label="إجراء">
                             {{-- الاسترجاع بيظهر بس لو الملف مفقود من الـ Primary وليه نسخة --}}
                             @if (! $f->primary_ok && $f->backup_id)
-                                @include('admin.storage._restore_btn', ['id' => $f->backup_id, 'deleted' => false])
+                                @include('admin.storage.partials._restore_btn', ['id' => $f->backup_id, 'deleted' => false])
                             @else
                                 <span class="ap-sub">—</span>
                             @endif

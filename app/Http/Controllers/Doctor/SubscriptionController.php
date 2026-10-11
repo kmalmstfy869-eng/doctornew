@@ -111,6 +111,7 @@ class SubscriptionController extends Controller
                     'unit'   => $d['unit'],
                     'price'  => $price,
                     'locked' => $locked,
+                    'best'   => (bool) $plan->the_best,
                     'link'   => $link,
                 ];
             }

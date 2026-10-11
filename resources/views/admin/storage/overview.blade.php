@@ -7,7 +7,7 @@
 
 @section('content')
 
-    @include('admin.storage._nav')
+    @include('admin.storage.partials._nav')
 
     {{-- كل الأرقام محسوبة من الداتابيز. حجم النسخ = مجموع أحجام سجلات النسخ (مش فحص فعلي للتخزين). --}}
     <div class="stats-grid">
@@ -91,7 +91,7 @@
                     <h3>آخر تشغيل للنسخ الاحتياطي</h3>
                     <p>الجدولة اليومية الساعة 4 الفجر بتوقيت القاهرة</p>
                 </div>
-                @include('admin.storage._run_button')
+                @include('admin.storage.partials._run_button')
             </div>
 
             <div class="ap-card__body">

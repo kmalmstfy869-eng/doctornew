@@ -10,7 +10,7 @@
 
 @section('content')
 
-    @include('admin.storage._nav')
+    @include('admin.storage.partials._nav')
 
     @if ($errors->any())
         <div class="ap-alert ap-alert--bad">
@@ -60,7 +60,7 @@
         </form>
 
         <div id="ap-list">
-            @include('admin.storage._quotas_list')
+            @include('admin.storage.partials._quotas_list')
         </div>
 
         <div id="ap-pagination" class="ap-card__foot">{{ $doctors->links('vendor.pagination.custom') }}</div>

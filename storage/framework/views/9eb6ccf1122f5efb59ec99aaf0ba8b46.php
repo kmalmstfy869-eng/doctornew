@@ -1,4 +1,4 @@
-{{-- يتطلب في الـ Alpine scope: cfg, period, units, setPeriod(), setUnits(), saving(), money() --}}
+
 <div class="ext-picker">
     <div class="ext-periods">
         <template x-for="p in cfg.plans" :key="p.key">
@@ -30,3 +30,4 @@
         <div class="ext-units__gb">+<b x-text="units * cfg.unit_gb"></b> GB</div>
     </div>
 </div>
+<?php /**PATH C:\Users\DELL\Desktop\doctors-ai\resources\views/admin/subscriptions/partials/ext-picker.blade.php ENDPATH**/ ?>
